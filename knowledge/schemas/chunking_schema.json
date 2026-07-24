@@ -1,0 +1,68 @@
+{
+  "id": "",
+  "name": "",
+  "canonical_name": "",
+  "aliases": [],
+  "category": "Chunking Strategy",
+  "description": "",
+
+  "developer": "",
+  "organization": "",
+
+  "license": "",
+  "open_source": false,
+
+  "sources": [],
+
+  "schema_version": "1.0",
+  "data_version": "",
+  "created_at": "",
+  "updated_at": "",
+  "verified": false,
+  "confidence_score": 0.0,
+
+  "chunking": {
+    "chunking_type": "",
+    "splitting_method": "",
+    "preserves_semantics": false,
+    "overlap_supported": false,
+    "hierarchical": false,
+    "recursive": false,
+    "structure_aware": false
+  },
+
+  "performance": {
+    "processing_speed": "",
+    "retrieval_quality": "",
+    "token_efficiency": "",
+    "scalability": "",
+    "memory_usage": ""
+  },
+
+  "adoption": {
+    "implementation_complexity": "",
+    "learning_curve": "",
+    "maintenance_effort": ""
+  },
+
+  "compatibility": {
+    "compatible_embedding_models": [],
+    "compatible_vector_databases": [],
+    "compatible_retrieval_strategies": [],
+    "compatible_frameworks": []
+  },
+
+  "recommendation": {
+    "best_for": [],
+    "not_recommended_for": [],
+    "advantages": [],
+    "limitations": []
+  },
+
+  "constraints": {
+    "requires_document_structure": false,
+    "requires_metadata": false,
+    "language_dependent": false,
+    "token_limit_sensitive": false
+  }
+}

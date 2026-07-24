@@ -1,0 +1,58 @@
+{
+  "id": "",
+  "name": "",
+  "canonical_name": "",
+  "aliases": [],
+  "category": "Retrieval Strategy",
+  "description": "",
+
+  "developer": "",
+  "organization": "",
+
+  "license": "",
+  "open_source": false,
+
+  "sources": [],
+
+  "schema_version": "1.0",
+  "data_version": "",
+  "created_at": "",
+  "updated_at": "",
+  "verified": false,
+  "confidence_score": 0.0,
+
+  "retrieval_type": "",
+  "search_method": "",
+
+  "capabilities": {
+    "metadata_filtering_support": false,
+    "hybrid_compatible": false,
+    "requires_reranker": false,
+    "supports_query_expansion": false
+  },
+
+  "performance": {
+    "latency": "",
+    "throughput": "",
+    "memory_usage": "",
+    "scalability": ""
+  },
+
+  "adoption": {
+    "implementation_complexity": "",
+    "learning_curve": "",
+    "maintenance_effort": ""
+  },
+
+  "integrations": {
+    "compatible_vector_databases": [],
+    "compatible_frameworks": [],
+    "compatible_rerankers": []
+  },
+
+  "recommendation": {
+    "best_for": [],
+    "advantages": [],
+    "limitations": []
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "id": "",
+  "name": "",
+  "canonical_name": "",
+  "aliases": [],
+  "category": "Reranker",
+  "description": "",
+
+  "developer": "",
+  "organization": "",
+
+  "license": "",
+  "open_source": false,
+
+  "sources": [],
+
+  "schema_version": "1.0",
+  "data_version": "",
+  "created_at": "",
+  "updated_at": "",
+  "verified": false,
+  "confidence_score": 0.0,
+
+  "reranking": {
+    "reranker_type": "",
+    "scoring_method": "",
+    "cross_encoder": false,
+    "bi_encoder": false,
+    "llm_based": false,
+    "semantic_similarity": false,
+    "supports_multilingual": false,
+    "supports_long_documents": false,
+    "supports_batch_inference": false
+  },
+
+  "performance": {
+    "latency": "",
+    "throughput": "",
+    "inference_cost": "",
+    "memory_usage": "",
+    "scalability": "",
+    "ranking_quality": ""
+  },
+
+  "adoption": {
+    "implementation_complexity": "",
+    "learning_curve": "",
+    "maintenance_effort": ""
+  },
+
+  "compatibility": {
+    "compatible_embedding_models": [],
+    "compatible_retrieval_strategies": [],
+    "compatible_vector_databases": [],
+    "compatible_frameworks": [],
+    "recommended_chunking_strategies": []
+  },
+
+  "recommendation": {
+    "best_for": [],
+    "not_recommended_for": [],
+    "advantages": [],
+    "limitations": []
+  },
+
+  "constraints": {
+    "requires_gpu": false,
+    "requires_large_memory": false,
+    "high_inference_cost": false,
+    "suitable_for_real_time": false,
+    "supports_local_deployment": false,
+    "supports_cloud_deployment": false
+  }
+}

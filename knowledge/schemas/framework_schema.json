@@ -1,0 +1,73 @@
+{
+  "id": "",
+  "name": "",
+  "canonical_name": "",
+  "aliases": [],
+  "category": "Framework",
+  "description": "",
+
+  "developer": "",
+  "organization": "",
+
+  "license": "",
+  "open_source": false,
+
+  "sources": [],
+
+  "schema_version": "1.0",
+  "data_version": "",
+  "created_at": "",
+  "updated_at": "",
+  "verified": false,
+  "confidence_score": 0.0,
+
+  "framework": {
+    "primary_paradigm": "",
+    "programming_languages": [],
+    "capabilities": {
+      "supports_rag": false,
+      "supports_agents": false,
+      "supports_tool_calling": false,
+      "supports_mcp": false,
+      "supports_local_llms": false,
+      "supports_memory": false,
+      "supports_streaming": false
+    }
+  },
+
+  "production_readiness": {
+    "is_production_ready": false,
+    "observability_integrations": []
+  },
+
+  "deployment": {
+    "deployment_options": []
+  },
+
+  "adoption": {
+    "implementation_complexity": "",
+    "learning_curve": "",
+    "maintenance_effort": ""
+  },
+
+  "compatibility": {
+    "compatible_llms": [],
+    "compatible_agents": [],
+    "compatible_retrieval_strategies": [],
+    "compatible_prompting_strategies": [],
+    "compatible_vector_databases": [],
+    "compatible_embedding_models": []
+  },
+
+  "recommendation": {
+    "best_for": [],
+    "not_recommended_for": [],
+    "advantages": [],
+    "limitations": []
+  },
+
+  "constraints": {
+    "high_infrastructure_cost": false,
+    "suitable_for_real_time": false
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "id": "",
+  "name": "",
+  "canonical_name": "",
+  "aliases": [],
+  "category": "Embedding Model",
+  "description": "",
+
+  "developer": "",
+  "organization": "",
+
+  "license": "",
+  "open_source": false,
+
+  "sources": [],
+
+  "schema_version": "1.0",
+  "data_version": "",
+  "created_at": "",
+  "updated_at": "",
+  "verified": false,
+  "confidence_score": 0.0,
+
+  "embedding": {
+    "embedding_dimension": 0,
+    "max_input_tokens": 0,
+    "multilingual": false,
+    "modalities": []
+  },
+
+  "performance": {
+    "latency": "",
+    "throughput": "",
+    "memory_usage": ""
+  },
+
+  "deployment": {
+    "deployment_options": []
+  },
+
+  "compatibility": {
+    "compatible_vector_databases": [],
+    "compatible_retrieval_strategies": [],
+    "compatible_rerankers": [],
+    "compatible_frameworks": []
+  },
+
+  "recommendation": {
+    "best_for": [],
+    "not_recommended_for": [],
+    "advantages": [],
+    "limitations": []
+  },
+
+  "constraints": {
+    "requires_gpu": false,
+    "token_limit_sensitive": false
+  }
+}

@@ -1,0 +1,75 @@
+{
+  "id": "",
+  "name": "",
+  "canonical_name": "",
+  "aliases": [],
+  "category": "Prompting Strategy",
+  "description": "",
+
+  "developer": "",
+  "organization": "",
+
+  "license": "",
+  "open_source": false,
+
+  "sources": [],
+
+  "schema_version": "1.0",
+  "data_version": "",
+  "created_at": "",
+  "updated_at": "",
+  "verified": false,
+  "confidence_score": 0.0,
+
+  "prompting": {
+    "prompting_type": "",
+    "reasoning_based": false,
+    "few_shot": false,
+    "zero_shot": false,
+    "chain_of_thought_capable": false,
+    "tree_of_thought_capable": false,
+    "self_consistency": false,
+    "reflection_based": false,
+    "tool_calling_friendly": false,
+    "structured_output_friendly": false,
+    "multimodal_support": false
+  },
+
+  "performance": {
+    "token_efficiency": "",
+    "reasoning_quality": "",
+    "hallucination_resistance": "",
+    "execution_speed": "",
+    "scalability": ""
+  },
+
+  "adoption": {
+    "implementation_complexity": "",
+    "learning_curve": "",
+    "maintenance_effort": ""
+  },
+
+  "compatibility": {
+    "compatible_llms": [],
+    "compatible_frameworks": [],
+    "compatible_agents": [],
+    "compatible_rag_pipelines": [],
+    "compatible_tool_calling_systems": []
+  },
+
+  "recommendation": {
+    "best_for": [],
+    "not_recommended_for": [],
+    "advantages": [],
+    "limitations": []
+  },
+
+  "constraints": {
+    "requires_reasoning_model": false,
+    "high_token_usage": false,
+    "sensitive_to_prompt_order": false,
+    "deterministic": false,
+    "supports_streaming": false,
+    "requires_tool_calling": false
+  }
+}
