@@ -8,12 +8,15 @@ dependencies = [
     "uvicorn",
     "pydantic",
     "pydantic-settings",
+    "httpx",
+    "beautifulsoup4",
+    "aiofiles"
 ]
 
 [project.optional-dependencies]
 dev = [
     "pytest",
-    "httpx",
+    "pytest-asyncio",
     "ruff",
     "black",
     "isort",
