@@ -42,3 +42,6 @@ venv.bak/
 *.swo
 *~
 .DS_Store
+
+# Forge v2.0 Runtime Data
+data/
