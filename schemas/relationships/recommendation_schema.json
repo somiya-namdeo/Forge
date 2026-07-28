@@ -1,0 +1,256 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://forge.ai/schemas/relationships/recommendation_schema.json",
+  "title": "Recommendation Schema",
+  "description": "Forge's evidence-backed expert evaluation for a technology, encapsulating strengths, weaknesses, trade-offs, suitability for specific workloads, and the underlying supporting citations.",
+  "type": "object",
+  "properties": {
+    "id": {
+      "title": "Recommendation ID",
+      "description": "Unique identifier for this recommendation.",
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^recommendation-[a-z0-9][a-z0-9.-]*$",
+      "examples": [
+        "recommendation-qdrant",
+        "recommendation-gpt-4o"
+      ]
+    },
+    "recommendation_score": {
+      "title": "Recommendation Score",
+      "description": "Overall score representing Forge's recommendation level for this technology, from 0 to 10.",
+      "type": "number",
+      "minimum": 0,
+      "maximum": 10,
+      "examples": [
+        8.5,
+        9.0
+      ]
+    },
+    "confidence": {
+      "title": "Confidence",
+      "description": "Level of confidence in this recommendation, from 0 (lowest) to 1 (highest).",
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1,
+      "examples": [
+        0.8,
+        0.95
+      ]
+    },
+    "production_ready": {
+      "title": "Production Ready",
+      "description": "Indicates whether the technology is considered reliable and stable enough for production workloads.",
+      "type": "boolean",
+      "examples": [
+        true,
+        false
+      ]
+    },
+    "maturity": {
+      "title": "Maturity",
+      "description": "The current lifecycle and adoption maturity stage of the technology.",
+      "type": "string",
+      "enum": [
+        "experimental",
+        "beta",
+        "stable",
+        "enterprise"
+      ],
+      "examples": [
+        "stable",
+        "enterprise"
+      ]
+    },
+    "difficulty": {
+      "title": "Difficulty",
+      "description": "The assessed level of expertise required to successfully implement and maintain the technology.",
+      "type": "string",
+      "enum": [
+        "beginner",
+        "intermediate",
+        "advanced",
+        "expert"
+      ],
+      "examples": [
+        "intermediate",
+        "advanced"
+      ]
+    },
+    "best_for": {
+      "title": "Best For",
+      "description": "Optimal scenarios, domains, or specific use cases where this technology excels.",
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true,
+      "minItems": 0,
+      "examples": [
+        [
+          "High-throughput vector similarity search",
+          "Real-time recommendation engines"
+        ]
+      ]
+    },
+    "avoid_for": {
+      "title": "Avoid For",
+      "description": "Scenarios, architectures, or specific use cases where this technology should explicitly not be used.",
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true,
+      "minItems": 0,
+      "examples": [
+        [
+          "Low-memory edge devices",
+          "ACID-compliant transactional workloads"
+        ]
+      ]
+    },
+    "strengths": {
+      "title": "Strengths",
+      "description": "The primary technical and operational strengths of the technology.",
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true,
+      "minItems": 0,
+      "examples": [
+        [
+          "Memory-safe Rust architecture",
+          "Excellent documentation and community support"
+        ]
+      ]
+    },
+    "weaknesses": {
+      "title": "Weaknesses",
+      "description": "Known limitations, architectural flaws, or operational weaknesses of the technology.",
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true,
+      "minItems": 0,
+      "examples": [
+        [
+          "High memory consumption during index building",
+          "Steep learning curve for advanced configurations"
+        ]
+      ]
+    },
+    "tradeoffs": {
+      "title": "Tradeoffs",
+      "description": "Notable compromises or trade-offs inherent in adopting this technology (e.g., speed vs accuracy).",
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true,
+      "minItems": 0,
+      "examples": [
+        [
+          "Sacrifices absolute recall for lower query latency",
+          "Increases operational complexity for better horizontal scalability"
+        ]
+      ]
+    },
+    "prerequisites": {
+      "title": "Prerequisites",
+      "description": "Technical, architectural, or skill-based requirements needed prior to adopting this technology.",
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true,
+      "minItems": 0,
+      "examples": [
+        [
+          "Familiarity with HNSW indexing parameters",
+          "Kubernetes deployment experience"
+        ]
+      ]
+    },
+    "reasoning": {
+      "title": "Reasoning",
+      "description": "Detailed justification and analytical reasoning behind the recommendation score and stance.",
+      "type": "string",
+      "minLength": 10,
+      "examples": [
+        "Qdrant consistently delivers high throughput and low latency. Its Rust-based architecture ensures memory safety and high performance under load. While index building requires substantial memory, the query-time performance makes it a top-tier choice for production RAG systems."
+      ]
+    },
+    "alternatives": {
+      "title": "Alternatives",
+      "description": "Forge entity IDs of alternative or competing technologies that could fulfill a similar role.",
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true,
+      "minItems": 0,
+      "examples": [
+        [
+          "vectordb-milvus",
+          "vectordb-pinecone"
+        ]
+      ]
+    },
+    "tags": {
+      "title": "Tags",
+      "description": "Relevant keywords for search, filtering, and categorization of this recommendation.",
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true,
+      "minItems": 0,
+      "examples": [
+        [
+          "vector-search",
+          "rust",
+          "high-performance"
+        ]
+      ]
+    },
+    "last_evaluated": {
+      "title": "Last Evaluated",
+      "description": "Timestamp indicating when Forge experts last reviewed or updated this recommendation.",
+      "type": "string",
+      "format": "date-time",
+      "examples": [
+        "2023-11-15T10:30:00Z"
+      ]
+    },
+    "supporting_citations": {
+      "title": "Supporting Citations",
+      "description": "A required list of citations and references that support the provided evaluation and reasoning.",
+      "type": "array",
+      "items": {
+        "$ref": "../base/citation_schema.json"
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    }
+  },
+  "required": [
+    "id",
+    "recommendation_score",
+    "confidence",
+    "production_ready",
+    "difficulty",
+    "reasoning",
+    "supporting_citations"
+  ],
+  "additionalProperties": false
+}

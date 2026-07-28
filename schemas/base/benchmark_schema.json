@@ -1,0 +1,157 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://forge.ai/schemas/base/benchmark_schema.json",
+  "title": "Benchmark Schema",
+  "description": "A reusable object representing one benchmark measurement for one technology within the Forge knowledge base.",
+  "type": "object",
+  "properties": {
+    "id": {
+      "title": "Benchmark ID",
+      "description": "Unique benchmark identifier.",
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^benchmark-[a-z0-9][a-z0-9.-]*$",
+      "examples": [
+        "benchmark-mteb",
+        "benchmark-livebench",
+        "benchmark-ragbench"
+      ]
+    },
+    "name": {
+      "title": "Benchmark Name",
+      "description": "Official name of the benchmark.",
+      "type": "string",
+      "minLength": 1,
+      "examples": [
+        "MTEB",
+        "LiveBench",
+        "MMLU",
+        "HumanEval",
+        "RAGBench"
+      ]
+    },
+    "category": {
+      "title": "Category",
+      "description": "Primary evaluation category.",
+      "type": "string",
+      "enum": [
+        "reasoning",
+        "knowledge",
+        "coding",
+        "mathematics",
+        "multilingual",
+        "retrieval",
+        "embedding",
+        "rag",
+        "generation",
+        "agent",
+        "vector_database",
+        "other"
+      ]
+    },
+    "metric": {
+      "title": "Metric",
+      "description": "Metric measured by this benchmark.",
+      "type": "string",
+      "minLength": 1,
+      "examples": [
+        "accuracy",
+        "f1",
+        "precision",
+        "recall",
+        "latency",
+        "tokens_per_second",
+        "recall@10",
+        "ndcg@10"
+      ]
+    },
+    "score": {
+      "title": "Score",
+      "description": "Numeric benchmark result.",
+      "type": "number",
+      "examples": [
+        85.4,
+        0.92,
+        150
+      ]
+    },
+    "unit": {
+      "title": "Unit",
+      "description": "Measurement unit.",
+      "type": "string",
+      "minLength": 1,
+      "examples": [
+        "%",
+        "accuracy",
+        "f1",
+        "ms",
+        "seconds",
+        "tokens_per_second",
+        "recall@10",
+        "ndcg@10"
+      ]
+    },
+    "benchmark_version": {
+      "title": "Benchmark Version",
+      "description": "Version of the benchmark.",
+      "type": "string",
+      "minLength": 1,
+      "examples": [
+        "1.0",
+        "2.1",
+        "MTEB v2"
+      ]
+    },
+    "dataset": {
+      "title": "Dataset",
+      "description": "Dataset used during evaluation.",
+      "type": "string",
+      "minLength": 1,
+      "examples": [
+        "GSM8K",
+        "MS MARCO"
+      ]
+    },
+    "evaluation_date": {
+      "title": "Evaluation Date",
+      "description": "Date when the benchmark evaluation was performed.",
+      "type": "string",
+      "format": "date"
+    },
+    "source": {
+      "title": "Source",
+      "description": "Organization or platform publishing the benchmark.",
+      "type": "string",
+      "minLength": 1,
+      "examples": [
+        "Hugging Face",
+        "OpenAI",
+        "Meta",
+        "MTEB",
+        "Stanford"
+      ]
+    },
+    "citation": {
+      "title": "Citation",
+      "description": "Reference supporting this benchmark result.",
+      "$ref": "citation_schema.json"
+    },
+    "notes": {
+      "title": "Notes",
+      "description": "Optional implementation notes, caveats or benchmark-specific observations.",
+      "type": "string",
+      "minLength": 1
+    }
+  },
+  "required": [
+    "id",
+    "name",
+    "category",
+    "metric",
+    "score",
+    "unit",
+    "source",
+    "citation"
+  ],
+  "additionalProperties": false
+}
