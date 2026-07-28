@@ -4,7 +4,7 @@ import os
 import datetime
 from collections import defaultdict
 
-base_dir = r"c:\Users\namde\OneDrive\Desktop\forge"
+base_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 sources_dir = os.path.join(base_dir, "sources")
 files = glob.glob(os.path.join(sources_dir, "*", "*.json"))
 
@@ -117,7 +117,7 @@ else:
     for e in errors:
         report += f"- {e}\n"
 
-with open(os.path.join(base_dir, "validation_report.md"), "w", encoding="utf-8") as r:
+with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "validation_report.md"), "w", encoding="utf-8") as r:
     r.write(report)
 
 print("Generated manifest and validation report.")
