@@ -1,0 +1,23 @@
+{
+  "id": "source-flashrank",
+  "category": "rerankers",
+  "name": "FlashRank",
+  "organization": "FlashRank",
+  "official_documentation": [
+    "https://github.com/PrithivirajDamodaran/FlashRank/blob/main/README.md"
+  ],
+  "github_repository": [
+    "https://github.com/PrithivirajDamodaran/FlashRank"
+  ],
+  "api_reference": [],
+  "technical_blog": [],
+  "release_notes": [],
+  "research_papers": [],
+  "benchmark_pages": [],
+  "license": "Apache-2.0",
+  "community_resources": [],
+  "priority": "high",
+  "ingestion": true,
+  "update_frequency": "weekly",
+  "last_verified": "2026-07-28T14:07:10Z"
+}

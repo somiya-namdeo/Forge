@@ -1,0 +1,23 @@
+{
+  "id": "source-rankt5",
+  "category": "rerankers",
+  "name": "RankT5",
+  "organization": "Google",
+  "official_documentation": [],
+  "github_repository": [
+    "https://github.com/google-research/google-research/tree/master/rankt5"
+  ],
+  "api_reference": [],
+  "technical_blog": [],
+  "release_notes": [],
+  "research_papers": [
+    "https://arxiv.org/abs/2210.10634"
+  ],
+  "benchmark_pages": [],
+  "license": "Apache-2.0",
+  "community_resources": [],
+  "priority": "high",
+  "ingestion": true,
+  "update_frequency": "weekly",
+  "last_verified": "2026-07-28T14:07:10Z"
+}

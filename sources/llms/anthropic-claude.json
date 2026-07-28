@@ -1,0 +1,29 @@
+{
+  "id": "source-anthropic-claude",
+  "category": "llm",
+  "name": "Anthropic Claude",
+  "organization": "Anthropic",
+  "official_documentation": [
+    "https://docs.anthropic.com/en/home"
+  ],
+  "github_repository": [
+    "https://github.com/anthropics/anthropic-sdk-python"
+  ],
+  "api_reference": [
+    "https://docs.anthropic.com/en/api/getting-started"
+  ],
+  "technical_blog": [
+    "https://www.anthropic.com/news"
+  ],
+  "release_notes": [
+    "https://docs.anthropic.com/en/release-notes/overview"
+  ],
+  "research_papers": [],
+  "benchmark_pages": [],
+  "license": "Proprietary",
+  "community_resources": [],
+  "priority": "high",
+  "ingestion": true,
+  "update_frequency": "weekly",
+  "last_verified": "2026-07-28T13:42:00Z"
+}

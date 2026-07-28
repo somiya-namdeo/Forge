@@ -1,0 +1,21 @@
+{
+  "id": "source-chain-of-thought",
+  "category": "prompting",
+  "name": "Chain-of-Thought (CoT)",
+  "organization": "Independent Research",
+  "official_documentation": [],
+  "github_repository": [],
+  "api_reference": [],
+  "technical_blog": [],
+  "release_notes": [],
+  "research_papers": [
+    "https://arxiv.org/abs/2201.11903"
+  ],
+  "benchmark_pages": [],
+  "license": "",
+  "community_resources": [],
+  "priority": "high",
+  "ingestion": true,
+  "update_frequency": "weekly",
+  "last_verified": "2026-07-28T14:34:34Z"
+}

@@ -1,0 +1,23 @@
+{
+  "id": "source-llama-factory",
+  "category": "fine_tuning",
+  "name": "LLaMA-Factory",
+  "organization": "hiyouga",
+  "official_documentation": [
+    "https://github.com/hiyouga/LlamaFactory/blob/main/README.md"
+  ],
+  "github_repository": [
+    "https://github.com/hiyouga/LlamaFactory"
+  ],
+  "api_reference": [],
+  "technical_blog": [],
+  "release_notes": [],
+  "research_papers": [],
+  "benchmark_pages": [],
+  "license": "Apache-2.0",
+  "community_resources": [],
+  "priority": "high",
+  "ingestion": true,
+  "update_frequency": "weekly",
+  "last_verified": "2026-07-28T14:38:49Z"
+}

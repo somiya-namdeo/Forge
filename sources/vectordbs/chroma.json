@@ -1,0 +1,31 @@
+{
+  "id": "source-chroma",
+  "category": "vectordb",
+  "name": "Chroma",
+  "organization": "Chroma",
+  "official_documentation": [
+    "https://docs.trychroma.com/"
+  ],
+  "github_repository": [
+    "https://github.com/chroma-core/chroma"
+  ],
+  "api_reference": [
+    "https://docs.trychroma.com/cloud/sync/overview#reference"
+  ],
+  "technical_blog": [
+    "https://www.trychroma.com/blog"
+  ],
+  "release_notes": [
+    "https://github.com/chroma-core/chroma/releases"
+  ],
+  "research_papers": [],
+  "benchmark_pages": [],
+  "license": "Apache 2.0",
+  "community_resources": [
+    "https://discord.gg/MMeYNTmh3x"
+  ],
+  "priority": "high",
+  "ingestion": true,
+  "update_frequency": "weekly",
+  "last_verified": "2026-07-28T12:28:29Z"
+}

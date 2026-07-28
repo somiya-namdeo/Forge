@@ -1,0 +1,23 @@
+{
+  "id": "source-nvidia-triton",
+  "category": "deployment",
+  "name": "NVIDIA Triton Inference Server",
+  "organization": "NVIDIA",
+  "official_documentation": [
+    "https://docs.nvidia.com/deeplearning/triton-inference-server/user-guide/docs/index.html"
+  ],
+  "github_repository": [
+    "https://github.com/triton-inference-server/server"
+  ],
+  "api_reference": [],
+  "technical_blog": [],
+  "release_notes": [],
+  "research_papers": [],
+  "benchmark_pages": [],
+  "license": "BSD-3-Clause",
+  "community_resources": [],
+  "priority": "high",
+  "ingestion": true,
+  "update_frequency": "weekly",
+  "last_verified": "2026-07-28T14:42:36Z"
+}

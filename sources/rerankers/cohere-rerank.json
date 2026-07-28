@@ -1,0 +1,21 @@
+{
+  "id": "source-cohere-rerank",
+  "category": "rerankers",
+  "name": "Cohere Rerank",
+  "organization": "Cohere",
+  "official_documentation": [],
+  "github_repository": [],
+  "api_reference": [
+    "https://docs.cohere.com/reference/rerank"
+  ],
+  "technical_blog": [],
+  "release_notes": [],
+  "research_papers": [],
+  "benchmark_pages": [],
+  "license": "",
+  "community_resources": [],
+  "priority": "high",
+  "ingestion": true,
+  "update_frequency": "weekly",
+  "last_verified": "2026-07-28T14:07:10Z"
+}

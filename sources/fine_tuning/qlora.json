@@ -1,0 +1,23 @@
+{
+  "id": "source-qlora",
+  "category": "fine_tuning",
+  "name": "QLoRA",
+  "organization": "Independent Research",
+  "official_documentation": [],
+  "github_repository": [
+    "https://github.com/artidoro/qlora"
+  ],
+  "api_reference": [],
+  "technical_blog": [],
+  "release_notes": [],
+  "research_papers": [
+    "https://arxiv.org/abs/2305.14314"
+  ],
+  "benchmark_pages": [],
+  "license": "MIT",
+  "community_resources": [],
+  "priority": "high",
+  "ingestion": true,
+  "update_frequency": "weekly",
+  "last_verified": "2026-07-28T14:38:49Z"
+}

@@ -1,0 +1,23 @@
+{
+  "id": "source-fixed-size-chunking",
+  "category": "chunking",
+  "name": "Fixed-Size Chunking",
+  "organization": "LangChain",
+  "official_documentation": [
+    "https://github.com/langchain-ai/langchain/blob/master/README.md"
+  ],
+  "github_repository": [
+    "https://github.com/langchain-ai/langchain"
+  ],
+  "api_reference": [],
+  "technical_blog": [],
+  "release_notes": [],
+  "research_papers": [],
+  "benchmark_pages": [],
+  "license": "MIT",
+  "community_resources": [],
+  "priority": "high",
+  "ingestion": true,
+  "update_frequency": "weekly",
+  "last_verified": "2026-07-28T14:18:49Z"
+}

@@ -1,0 +1,23 @@
+{
+  "id": "source-weights-biases",
+  "category": "deployment",
+  "name": "Weights & Biases",
+  "organization": "Weights & Biases",
+  "official_documentation": [
+    "https://docs.wandb.ai/"
+  ],
+  "github_repository": [
+    "https://github.com/wandb/wandb"
+  ],
+  "api_reference": [],
+  "technical_blog": [],
+  "release_notes": [],
+  "research_papers": [],
+  "benchmark_pages": [],
+  "license": "MIT",
+  "community_resources": [],
+  "priority": "high",
+  "ingestion": true,
+  "update_frequency": "weekly",
+  "last_verified": "2026-07-28T14:42:36Z"
+}

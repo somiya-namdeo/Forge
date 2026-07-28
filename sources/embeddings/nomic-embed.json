@@ -1,0 +1,27 @@
+{
+  "id": "source-nomic-embed",
+  "category": "embedding",
+  "name": "Nomic Embed",
+  "organization": "Nomic AI",
+  "official_documentation": [
+    "https://docs.nomic.ai/"
+  ],
+  "github_repository": [
+    "https://github.com/nomic-ai/contrastors"
+  ],
+  "api_reference": [],
+  "technical_blog": [],
+  "release_notes": [
+    "https://github.com/nomic-ai/contrastors/releases"
+  ],
+  "research_papers": [
+    "https://arxiv.org/abs/2402.01613"
+  ],
+  "benchmark_pages": [],
+  "license": "Apache 2.0",
+  "community_resources": [],
+  "priority": "high",
+  "ingestion": true,
+  "update_frequency": "weekly",
+  "last_verified": "2026-07-28T12:48:10Z"
+}

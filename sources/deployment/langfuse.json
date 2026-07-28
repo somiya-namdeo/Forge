@@ -1,0 +1,23 @@
+{
+  "id": "source-langfuse",
+  "category": "deployment",
+  "name": "Langfuse",
+  "organization": "Langfuse",
+  "official_documentation": [
+    "https://langfuse.com/docs"
+  ],
+  "github_repository": [
+    "https://github.com/langfuse/langfuse"
+  ],
+  "api_reference": [],
+  "technical_blog": [],
+  "release_notes": [],
+  "research_papers": [],
+  "benchmark_pages": [],
+  "license": "MIT",
+  "community_resources": [],
+  "priority": "high",
+  "ingestion": true,
+  "update_frequency": "weekly",
+  "last_verified": "2026-07-28T14:42:36Z"
+}

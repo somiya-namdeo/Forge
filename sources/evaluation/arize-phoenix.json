@@ -1,0 +1,23 @@
+{
+  "id": "source-arize-phoenix",
+  "category": "evaluation",
+  "name": "Arize Phoenix",
+  "organization": "Arize AI",
+  "official_documentation": [
+    "https://github.com/Arize-ai/phoenix/blob/main/README.md"
+  ],
+  "github_repository": [
+    "https://github.com/Arize-ai/phoenix"
+  ],
+  "api_reference": [],
+  "technical_blog": [],
+  "release_notes": [],
+  "research_papers": [],
+  "benchmark_pages": [],
+  "license": "",
+  "community_resources": [],
+  "priority": "high",
+  "ingestion": true,
+  "update_frequency": "weekly",
+  "last_verified": "2026-07-28T14:29:33Z"
+}

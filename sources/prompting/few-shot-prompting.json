@@ -1,0 +1,21 @@
+{
+  "id": "source-few-shot-prompting",
+  "category": "prompting",
+  "name": "Few-Shot Prompting",
+  "organization": "Independent Research",
+  "official_documentation": [],
+  "github_repository": [],
+  "api_reference": [],
+  "technical_blog": [],
+  "release_notes": [],
+  "research_papers": [
+    "https://arxiv.org/abs/2005.14165"
+  ],
+  "benchmark_pages": [],
+  "license": "",
+  "community_resources": [],
+  "priority": "high",
+  "ingestion": true,
+  "update_frequency": "weekly",
+  "last_verified": "2026-07-28T14:34:34Z"
+}

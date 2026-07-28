@@ -1,0 +1,23 @@
+{
+  "id": "source-mlflow-evaluation",
+  "category": "evaluation",
+  "name": "MLflow Evaluation",
+  "organization": "Databricks",
+  "official_documentation": [
+    "https://mlflow.org/docs/latest/llms/llm-evaluate/index.html"
+  ],
+  "github_repository": [
+    "https://github.com/mlflow/mlflow"
+  ],
+  "api_reference": [],
+  "technical_blog": [],
+  "release_notes": [],
+  "research_papers": [],
+  "benchmark_pages": [],
+  "license": "Apache-2.0",
+  "community_resources": [],
+  "priority": "high",
+  "ingestion": true,
+  "update_frequency": "weekly",
+  "last_verified": "2026-07-28T14:29:33Z"
+}

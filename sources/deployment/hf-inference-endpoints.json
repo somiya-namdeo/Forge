@@ -1,0 +1,21 @@
+{
+  "id": "source-hf-inference-endpoints",
+  "category": "deployment",
+  "name": "Hugging Face Inference Endpoints",
+  "organization": "Hugging Face",
+  "official_documentation": [
+    "https://huggingface.co/docs/inference-endpoints/index"
+  ],
+  "github_repository": [],
+  "api_reference": [],
+  "technical_blog": [],
+  "release_notes": [],
+  "research_papers": [],
+  "benchmark_pages": [],
+  "license": "",
+  "community_resources": [],
+  "priority": "high",
+  "ingestion": true,
+  "update_frequency": "weekly",
+  "last_verified": "2026-07-28T14:42:36Z"
+}

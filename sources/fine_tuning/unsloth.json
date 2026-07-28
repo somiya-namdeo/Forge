@@ -1,0 +1,23 @@
+{
+  "id": "source-unsloth",
+  "category": "fine_tuning",
+  "name": "Unsloth",
+  "organization": "Unsloth AI",
+  "official_documentation": [
+    "https://github.com/unslothai/unsloth/blob/main/README.md"
+  ],
+  "github_repository": [
+    "https://github.com/unslothai/unsloth"
+  ],
+  "api_reference": [],
+  "technical_blog": [],
+  "release_notes": [],
+  "research_papers": [],
+  "benchmark_pages": [],
+  "license": "Apache-2.0",
+  "community_resources": [],
+  "priority": "high",
+  "ingestion": true,
+  "update_frequency": "weekly",
+  "last_verified": "2026-07-28T14:38:49Z"
+}

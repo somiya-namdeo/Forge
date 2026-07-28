@@ -1,0 +1,23 @@
+{
+  "id": "source-lora",
+  "category": "fine_tuning",
+  "name": "LoRA",
+  "organization": "Independent Research",
+  "official_documentation": [],
+  "github_repository": [
+    "https://github.com/microsoft/LoRA"
+  ],
+  "api_reference": [],
+  "technical_blog": [],
+  "release_notes": [],
+  "research_papers": [
+    "https://arxiv.org/abs/2106.09685"
+  ],
+  "benchmark_pages": [],
+  "license": "MIT",
+  "community_resources": [],
+  "priority": "high",
+  "ingestion": true,
+  "update_frequency": "weekly",
+  "last_verified": "2026-07-28T14:38:49Z"
+}

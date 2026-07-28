@@ -1,0 +1,23 @@
+{
+  "id": "source-kserve",
+  "category": "deployment",
+  "name": "KServe",
+  "organization": "Kubeflow",
+  "official_documentation": [
+    "https://kserve.github.io/website/latest/"
+  ],
+  "github_repository": [
+    "https://github.com/kserve/kserve"
+  ],
+  "api_reference": [],
+  "technical_blog": [],
+  "release_notes": [],
+  "research_papers": [],
+  "benchmark_pages": [],
+  "license": "Apache-2.0",
+  "community_resources": [],
+  "priority": "high",
+  "ingestion": true,
+  "update_frequency": "weekly",
+  "last_verified": "2026-07-28T14:42:36Z"
+}

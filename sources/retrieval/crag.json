@@ -1,0 +1,25 @@
+{
+  "id": "source-crag",
+  "category": "retrieval",
+  "name": "CRAG",
+  "organization": "Independent Research",
+  "official_documentation": [
+    "https://github.com/HuskyInSalt/CRAG/blob/main/README.md"
+  ],
+  "github_repository": [
+    "https://github.com/HuskyInSalt/CRAG"
+  ],
+  "api_reference": [],
+  "technical_blog": [],
+  "release_notes": [],
+  "research_papers": [
+    "https://arxiv.org/abs/2401.15884"
+  ],
+  "benchmark_pages": [],
+  "license": "MIT",
+  "community_resources": [],
+  "priority": "high",
+  "ingestion": true,
+  "update_frequency": "weekly",
+  "last_verified": "2026-07-28T14:18:49Z"
+}

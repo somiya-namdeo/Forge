@@ -1,0 +1,23 @@
+{
+  "id": "source-dspy",
+  "category": "prompting",
+  "name": "DSPy",
+  "organization": "Stanford University",
+  "official_documentation": [
+    "https://github.com/stanfordnlp/dspy/blob/main/README.md"
+  ],
+  "github_repository": [
+    "https://github.com/stanfordnlp/dspy"
+  ],
+  "api_reference": [],
+  "technical_blog": [],
+  "release_notes": [],
+  "research_papers": [],
+  "benchmark_pages": [],
+  "license": "MIT",
+  "community_resources": [],
+  "priority": "high",
+  "ingestion": true,
+  "update_frequency": "weekly",
+  "last_verified": "2026-07-28T14:34:34Z"
+}

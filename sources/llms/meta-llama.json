@@ -1,0 +1,29 @@
+{
+  "id": "source-meta-llama",
+  "category": "llm",
+  "name": "Meta Llama",
+  "organization": "Meta",
+  "official_documentation": [
+    "https://llama.meta.com/docs/overview"
+  ],
+  "github_repository": [
+    "https://github.com/meta-llama/llama-models"
+  ],
+  "api_reference": [],
+  "technical_blog": [
+    "https://ai.meta.com/blog/"
+  ],
+  "release_notes": [],
+  "research_papers": [
+    "https://arxiv.org/abs/2407.21783"
+  ],
+  "benchmark_pages": [
+    "https://github.com/meta-llama/llama-models/blob/main/models/llama3_1/MODEL_CARD.md"
+  ],
+  "license": "Llama 3 Community License",
+  "community_resources": [],
+  "priority": "high",
+  "ingestion": true,
+  "update_frequency": "weekly",
+  "last_verified": "2026-07-28T13:42:00Z"
+}

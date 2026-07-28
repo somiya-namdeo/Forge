@@ -1,0 +1,29 @@
+{
+  "id": "source-langchain",
+  "category": "framework",
+  "name": "LangChain",
+  "organization": "LangChain, Inc.",
+  "official_documentation": [
+    "https://python.langchain.com/"
+  ],
+  "github_repository": [
+    "https://github.com/langchain-ai/langchain"
+  ],
+  "api_reference": [
+    "https://api.python.langchain.com/en/latest/"
+  ],
+  "technical_blog": [
+    "https://blog.langchain.dev/"
+  ],
+  "release_notes": [
+    "https://github.com/langchain-ai/langchain/releases"
+  ],
+  "research_papers": [],
+  "benchmark_pages": [],
+  "license": "MIT",
+  "community_resources": [],
+  "priority": "high",
+  "ingestion": true,
+  "update_frequency": "weekly",
+  "last_verified": "2026-07-28T12:41:20Z"
+}

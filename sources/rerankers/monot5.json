@@ -1,0 +1,25 @@
+{
+  "id": "source-monot5",
+  "category": "rerankers",
+  "name": "MonoT5",
+  "organization": "University of Waterloo",
+  "official_documentation": [
+    "https://github.com/castorini/pygaggle/blob/master/README.md"
+  ],
+  "github_repository": [
+    "https://github.com/castorini/pygaggle"
+  ],
+  "api_reference": [],
+  "technical_blog": [],
+  "release_notes": [],
+  "research_papers": [
+    "https://arxiv.org/abs/2003.06713"
+  ],
+  "benchmark_pages": [],
+  "license": "Apache-2.0",
+  "community_resources": [],
+  "priority": "high",
+  "ingestion": true,
+  "update_frequency": "weekly",
+  "last_verified": "2026-07-28T14:07:10Z"
+}

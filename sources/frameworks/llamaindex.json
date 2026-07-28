@@ -1,0 +1,29 @@
+{
+  "id": "source-llamaindex",
+  "category": "framework",
+  "name": "LlamaIndex",
+  "organization": "LlamaIndex",
+  "official_documentation": [
+    "https://docs.llamaindex.ai/"
+  ],
+  "github_repository": [
+    "https://github.com/run-llama/llama_index"
+  ],
+  "api_reference": [
+    "https://docs.llamaindex.ai/en/stable/api_reference/"
+  ],
+  "technical_blog": [
+    "https://www.llamaindex.ai/blog"
+  ],
+  "release_notes": [
+    "https://github.com/run-llama/llama_index/releases"
+  ],
+  "research_papers": [],
+  "benchmark_pages": [],
+  "license": "MIT",
+  "community_resources": [],
+  "priority": "high",
+  "ingestion": true,
+  "update_frequency": "weekly",
+  "last_verified": "2026-07-28T12:41:20Z"
+}

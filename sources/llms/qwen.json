@@ -1,0 +1,27 @@
+{
+  "id": "source-qwen",
+  "category": "llm",
+  "name": "Qwen",
+  "organization": "Alibaba Cloud",
+  "official_documentation": [
+    "https://qwen.readthedocs.io/en/latest/"
+  ],
+  "github_repository": [
+    "https://github.com/QwenLM/Qwen2.5"
+  ],
+  "api_reference": [],
+  "technical_blog": [],
+  "release_notes": [
+    "https://github.com/QwenLM/Qwen2.5/releases"
+  ],
+  "research_papers": [
+    "https://arxiv.org/abs/2407.10671"
+  ],
+  "benchmark_pages": [],
+  "license": "Apache 2.0",
+  "community_resources": [],
+  "priority": "high",
+  "ingestion": true,
+  "update_frequency": "weekly",
+  "last_verified": "2026-07-28T13:30:00Z"
+}

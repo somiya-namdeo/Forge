@@ -1,0 +1,19 @@
+{
+  "id": "source-agentic-chunking",
+  "category": "chunking",
+  "name": "Agentic Chunking",
+  "organization": "Independent Research",
+  "official_documentation": [],
+  "github_repository": [],
+  "api_reference": [],
+  "technical_blog": [],
+  "release_notes": [],
+  "research_papers": [],
+  "benchmark_pages": [],
+  "license": "",
+  "community_resources": [],
+  "priority": "high",
+  "ingestion": true,
+  "update_frequency": "weekly",
+  "last_verified": "2026-07-28T14:05:55Z"
+}

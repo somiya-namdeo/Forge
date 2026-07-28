@@ -1,0 +1,35 @@
+{
+  "id": "source-milvus",
+  "category": "vectordb",
+  "name": "Milvus",
+  "organization": "Zilliz / LF AI & Data Foundation",
+  "official_documentation": [
+    "https://milvus.io/docs"
+  ],
+  "github_repository": [
+    "https://github.com/milvus-io/milvus"
+  ],
+  "api_reference": [
+    "https://milvus.io/api-reference/pymilvus/v2.4.x/About.md"
+  ],
+  "technical_blog": [
+    "https://milvus.io/blog"
+  ],
+  "release_notes": [
+    "https://github.com/milvus-io/milvus/releases"
+  ],
+  "research_papers": [
+    "https://dl.acm.org/doi/10.1145/3448016.3457550"
+  ],
+  "benchmark_pages": [
+    "https://milvus.io/docs/benchmark.md"
+  ],
+  "license": "Apache 2.0",
+  "community_resources": [
+    "https://discord.gg/8uyFbECzPR"
+  ],
+  "priority": "high",
+  "ingestion": true,
+  "update_frequency": "weekly",
+  "last_verified": "2026-07-28T12:28:29Z"
+}

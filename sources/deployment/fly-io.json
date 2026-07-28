@@ -1,0 +1,21 @@
+{
+  "id": "source-fly-io",
+  "category": "deployment",
+  "name": "Fly.io",
+  "organization": "Fly.io",
+  "official_documentation": [
+    "https://fly.io/docs/"
+  ],
+  "github_repository": [],
+  "api_reference": [],
+  "technical_blog": [],
+  "release_notes": [],
+  "research_papers": [],
+  "benchmark_pages": [],
+  "license": "",
+  "community_resources": [],
+  "priority": "high",
+  "ingestion": true,
+  "update_frequency": "weekly",
+  "last_verified": "2026-07-28T14:42:36Z"
+}

@@ -1,0 +1,21 @@
+{
+  "id": "source-azure-ai-foundry",
+  "category": "deployment",
+  "name": "Azure AI Foundry",
+  "organization": "Microsoft",
+  "official_documentation": [
+    "https://learn.microsoft.com/en-us/azure/ai-studio/"
+  ],
+  "github_repository": [],
+  "api_reference": [],
+  "technical_blog": [],
+  "release_notes": [],
+  "research_papers": [],
+  "benchmark_pages": [],
+  "license": "",
+  "community_resources": [],
+  "priority": "high",
+  "ingestion": true,
+  "update_frequency": "weekly",
+  "last_verified": "2026-07-28T14:42:36Z"
+}

@@ -1,0 +1,21 @@
+{
+  "id": "source-vertex-ai",
+  "category": "deployment",
+  "name": "Vertex AI",
+  "organization": "Google",
+  "official_documentation": [
+    "https://cloud.google.com/vertex-ai/docs"
+  ],
+  "github_repository": [],
+  "api_reference": [],
+  "technical_blog": [],
+  "release_notes": [],
+  "research_papers": [],
+  "benchmark_pages": [],
+  "license": "",
+  "community_resources": [],
+  "priority": "high",
+  "ingestion": true,
+  "update_frequency": "weekly",
+  "last_verified": "2026-07-28T14:42:36Z"
+}

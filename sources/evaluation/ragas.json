@@ -1,0 +1,25 @@
+{
+  "id": "source-ragas",
+  "category": "evaluation",
+  "name": "Ragas",
+  "organization": "Vibrant Labs AI",
+  "official_documentation": [
+    "https://docs.ragas.io/en/stable/"
+  ],
+  "github_repository": [
+    "https://github.com/vibrantlabsai/ragas"
+  ],
+  "api_reference": [],
+  "technical_blog": [],
+  "release_notes": [],
+  "research_papers": [
+    "https://arxiv.org/abs/2309.15217"
+  ],
+  "benchmark_pages": [],
+  "license": "MIT",
+  "community_resources": [],
+  "priority": "high",
+  "ingestion": true,
+  "update_frequency": "weekly",
+  "last_verified": "2026-07-28T14:29:33Z"
+}
