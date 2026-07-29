@@ -1,0 +1,7 @@
+{
+  "technology": "railway",
+  "source": "official_documentation",
+  "path": "railway/official_documentation.txt",
+  "content": "Railway Documentation\nRailway is an all-in-one intelligent cloud provider that makes it easy to provision infrastructure, develop locally, and deploy to the cloud.\nQuick Start\nDeploy in minutes. Jump into our quickstart guide to get your first app running.\nAI\nBuild with Railway using Agent Skills and the MCP server for AI-powered workflows.\nCLI\nDevelop locally and deploy from your terminal with the Railway CLI.\nTemplates\nOne-click deployable applications and starters for common use cases.\nYour stack, your way\nUse your favorite language and framework.\nDeploy an app in minutes\nQuickly set up a project with popular templates.",
+  "character_count": 630
+}

@@ -1,0 +1,25 @@
+# Forge Project
+
+# Knowledge Base ignore
+knowledge_base/embeddings.npy
+knowledge_base/vector_store/
+
+# Python ignore
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+.env
+.venv
+
+# Jupyter Notebook ignore
+.ipynb_checkpoints
+*/.ipynb_checkpoints/*
+
+# Colab / Temporary
+.cache/
+logs/

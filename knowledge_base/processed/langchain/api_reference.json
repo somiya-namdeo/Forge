@@ -1,0 +1,7 @@
+{
+  "technology": "langchain",
+  "source": "api_reference",
+  "path": "langchain/api_reference.txt",
+  "content": "Reference Docs\nUnified API reference documentation for LangChain, LangGraph, Deep Agents, LangSmith, and integrations. Browse Python and TypeScript packages, explore classes, functions, and types across the entire LangChain ecosystem.\nLooking for guides, tutorials, and conceptual docs? Visit the main documentation site.",
+  "character_count": 321
+}

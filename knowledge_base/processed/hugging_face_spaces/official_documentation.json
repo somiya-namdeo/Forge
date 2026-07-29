@@ -1,0 +1,7 @@
+{
+  "technology": "hugging_face_spaces",
+  "source": "official_documentation",
+  "path": "hugging_face_spaces/official_documentation.txt",
+  "content": "Hub documentation\nSpaces\nSpaces\nHugging Face Spaces offer a simple way to host ML demo apps directly on your profile or your organization’s profile. This allows you to create your ML portfolio, showcase your projects at conferences or to stakeholders, and work collaboratively with other people in the ML ecosystem.\nWe have built-in support for an awesome SDK that let you build cool apps in Python in a matter of minutes: Gradio, but you can also unlock the whole power of Docker and host an arbitrary Dockerfile. Finally, you can create static Spaces using JavaScript and HTML.\nYou’ll also be able to upgrade your Space to run on a GPU or other accelerated hardware. ⚡️\nContents\n- Spaces Overview\n- Spaces Dev Mode\n- Spaces GPU Upgrades\n- Spaces Disk Usage & Storage\n- Gradio Spaces\n- Docker Spaces\n- Static HTML Spaces\n- Custom Python Spaces\n- Embed your Space\n- Run your Space with Docker\n- Reference\n- Changelog\nContact\nFeel free to ask questions on the forum if you need help with making a Space, or if you run into any other issues on the Hub.\nIf you’re interested in infra challenges, custom demos, advanced GPUs, or something else, please reach out to us by sending an email to website at huggingface.co.\nYou can also tag us on Twitter! 🤗\nUpdate on GitHub",
+  "character_count": 1264
+}

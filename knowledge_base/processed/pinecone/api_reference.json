@@ -1,0 +1,7 @@
+{
+  "technology": "pinecone",
+  "source": "api_reference",
+  "path": "pinecone/api_reference.txt",
+  "content": "SDK versions are pinned to specific API versions.\nDatabase\nUse the Database API to store and query records in Pinecone Database. The following Pinecone SDKs support the Database API:CLI\nPython SDK\nNode.js SDK\nJava SDK\nGo SDK\nInference\nUse the Inference API to generate vector embeddings and rerank results using embedding models and reranking models hosted on Pinecone’s infrastructure. There are two ways to use the Inference API:- As a standalone service, through the Rerank documents and Generate vectors endpoints.\n- As an integrated part of database operations, through the Create an index with integrated embedding, Upsert text, and Search with text endpoints.",
+  "character_count": 666
+}

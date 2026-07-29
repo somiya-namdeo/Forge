@@ -1,0 +1,7 @@
+{
+  "technology": "weaviate",
+  "source": "technical_blog",
+  "path": "weaviate/technical_blog.txt",
+  "content": "Query Profiling: See Where a Slow Query Spends Its Time\nQuery Profiling: See Where a Slow Query Spends Its Time\nWhen a Weaviate query is slow, the first question is where the time went. Query profiling returns a per-stage, per-shard timing breakdown, making query performance issues visible.",
+  "character_count": 291
+}

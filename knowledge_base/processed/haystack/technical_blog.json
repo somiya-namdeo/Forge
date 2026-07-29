@@ -1,0 +1,7 @@
+{
+  "technology": "haystack",
+  "source": "technical_blog",
+  "path": "haystack/technical_blog.txt",
+  "content": "Blog\nThank you! Your submission has been received!\nOops! Something went wrong while submitting the form.\nHarness Engineering: How to Build Reliable AI Agents by Engineering the System, Not the Model\nAgent reliability doesn't come from picking the right model, it comes from engineering the system around it. Learn what harness engineering is, how to classify and fix agent failures, and how to build production-grade agent harnesses with Haystack.\nErkenntnisse aus dem KIWise-Whitepaper 2025: Wie KMU ihre KI-Strategie in die Tat umsetzen können\nKleine und mittlere Unternehmen (KMU) bilden das Rückgrat der europäischen Wirtschaft. Sie treiben Innovationen voran, beschäftigen Millionen von Menschen und sorgen für Flexibilität in der Industrie. Wie das 2025 erschienene KIWise-Whitepaper jedoch hervorhebt, haben viele KMU noch immer Schwierigkeiten, den Schritt vom Bewusstsein für KI zur Umsetzung von KI zu vollziehen.",
+  "character_count": 923
+}

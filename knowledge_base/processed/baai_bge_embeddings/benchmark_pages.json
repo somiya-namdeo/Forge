@@ -1,0 +1,7 @@
+{
+  "technology": "baai_bge_embeddings",
+  "source": "benchmark_pages",
+  "path": "baai_bge_embeddings/benchmark_pages.txt",
+  "content": "Spaces\nmteb\n/\nleaderboard\nlike\n7.59k\nRunning\non\nCPU Upgrade\nApp\nFiles\nFiles\nCommunity\n190\nFetching metadata from the HF Docker repository...\nRefreshing",
+  "character_count": 151
+}

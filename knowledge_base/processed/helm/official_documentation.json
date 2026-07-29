@@ -1,0 +1,7 @@
+{
+  "technology": "helm",
+  "source": "official_documentation",
+  "path": "helm/official_documentation.txt",
+  "content": "Welcome\nWelcome to the Helm documentation. Helm is the package manager for Kubernetes, and you can read detailed background information in the CNCF Helm Project Journey report.\nDocs Home\nEverything you need to know about how the documentation is organized.\nHelm 4 Overview\nHelm v4 represents a significant evolution from v3, introducing breaking changes, new architectural patterns, and enhanced functionality while maintaining backwards compatibility for charts.\nFull Changelog\nScope: 449 PRs from (v4.2.3) compared to v3.19.0\nIntroduction\n5 items\nHow-to\n3 items\nTopics\n14 items\nBest Practices\n8 items\nChart Template Guide\n16 items\nPlugins\n4 items\nHelm Commands\n59 items\nGo SDK\n2 items\nGlossary\nTerms used to describe components of Helm's architecture.",
+  "character_count": 753
+}

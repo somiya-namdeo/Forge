@@ -1,0 +1,7 @@
+{
+  "technology": "docker",
+  "source": "official_documentation",
+  "path": "docker/official_documentation.txt",
+  "content": "I'm Gordon, your AI assistant for Docker and documentation questions.\nTry asking\nGet started with Docker\nDocker Hardened Images\nMCP Toolkit\nCreate an org\nremaining in this thread.\nYou've reached the maximum of questions per thread. For better answer quality, start a new thread.\nWhen enabled, Gordon considers the current page you're viewing to provide more relevant answers.\nLearn Docker basics.\nOptimize your development workflows with Docker.\nInstall, set up, configure, and use Docker products.\nBrowse the CLI and API documentation.",
+  "character_count": 536
+}

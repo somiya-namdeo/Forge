@@ -1,0 +1,7 @@
+{
+  "technology": "aws_sagemaker",
+  "source": "official_documentation",
+  "path": "aws_sagemaker/official_documentation.txt",
+  "content": "Use Machine Learning Environments Learn about machine learning environments that Amazon SageMaker AI offers.\nLabel Data with a Human-in-the-loop Learn how to use a human-in-the-loop to help label data more accurately.\nCreate, Store, and Share Features Learn how to create, store, and share extracted data signals (features) for machine learning.\nUse Docker Containers to Build Models Learn how to use Docker containers to build your machine learning models.\nDetect Bias and Understand Explanations Learn how to detect bias and understand explanations in machine learning models.\nAmazon SageMaker AI Python SDK Use the Amazon SageMaker AI Python SDK library to train and deploy models using popular deep learning frameworks and algorithms.\nAWS SDK for Python (Boto3) Use the AWS SDK for Python (Boto3) to format model data and build applications to build, train, and deploy machine learning models.",
+  "character_count": 897
+}

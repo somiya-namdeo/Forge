@@ -1,0 +1,7 @@
+{
+  "technology": "qdrant",
+  "source": "official_documentation",
+  "path": "qdrant/official_documentation.txt",
+  "content": "Qdrant Documentation\nQdrant is an AI-native vector search and a semantic search engine. You can use it to extract meaningful information from unstructured data.\nClone this repo now and build a search engine in five minutes.\nIntroducing Qdrant Edge\nQdrant Edge is a lightweight, embedded vector search engine for in-process retrieval — no background services, minimal memory footprint, and no network required. Built for robots, kiosks, mobile devices, and any environment requiring offline-capable AI search.\nRun vector search anywhere, even offline\nGet StartedQdrant User Manual\nLearn how to manage your data, run powerful searches, and leverage inference to build AI-native applications.\nSupport\nGet help from the Qdrant community or contact our support team.",
+  "character_count": 761
+}
