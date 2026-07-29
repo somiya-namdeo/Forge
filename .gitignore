@@ -3,6 +3,7 @@
 # Knowledge Base ignore
 knowledge_base/embeddings.npy
 knowledge_base/vector_store/
+knowledge_base/raw/
 
 # Python ignore
 __pycache__/
