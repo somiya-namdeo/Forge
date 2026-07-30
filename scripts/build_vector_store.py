@@ -4,7 +4,6 @@ import sys
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
-# Ensure project root directory is in sys.path
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
@@ -28,13 +27,7 @@ def build_vector_store(
     qdrant_path: Optional[Path] = None,
     collection_name: Optional[str] = None
 ) -> int:
-    """
-    Loads embeddings (.npy) and metadata (.json), safely recreates the Qdrant
-    collection, uploads point vectors with metadata payloads, and verifies the total count.
-
-    Returns:
-        int: Total number of vectors successfully stored in the collection.
-    """
+    
     if embeddings_path is None:
         embeddings_path = BASE_DIR / "knowledge_base" / "embeddings.npy"
 

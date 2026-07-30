@@ -4,7 +4,7 @@ import sys
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
 
-# Ensure project root directory is in sys.path
+
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
@@ -27,13 +27,7 @@ def build_embeddings(
     model_name: str = EMBEDDING_MODEL,
     batch_size: int = 32
 ) -> Tuple[Path, Path]:
-    """
-    Loads processed text chunks, generates embeddings using SentenceTransformer,
-    and saves both the embeddings matrix (.npy) and metadata (.json).
-
-    Returns:
-        Tuple[Path, Path]: Paths to (embeddings.npy, embedding_metadata.json)
-    """
+    
     if chunks_path is None:
         chunks_path = BASE_DIR / "knowledge_base" / "chunks.json"
 
