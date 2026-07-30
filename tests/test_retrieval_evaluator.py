@@ -3,15 +3,32 @@ from ai_engine.retrieval.retriever import Retriever
 from ai_engine.retrieval.retrieval_evaluator import RetrievalEvaluator
 
 
-encoder = QueryEncoder()
-retriever = Retriever()
-evaluator = RetrievalEvaluator()
+def main():
+    encoder = QueryEncoder()
+    retriever = Retriever()
+    evaluator = RetrievalEvaluator()
 
-query = "Best open source vector database for RAG"
+    try:
+        query = "Best open source vector database for RAG"
 
-embedding = encoder.encode(query)
-results = retriever.search(embedding)
+        print("=" * 60)
+        print("Testing Retrieval Evaluator")
+        print("=" * 60)
 
-evaluation = evaluator.evaluate(results)
+        embedding = encoder.encode(query)
+        results = retriever.search(embedding)
 
-print(evaluation)
+        evaluation = evaluator.evaluate(results)
+
+        print("\nEvaluation Results")
+        print("-" * 60)
+        print(evaluation)
+
+        print("\n✓ Retrieval evaluation completed successfully.")
+
+    finally:
+        retriever.close()
+
+
+if __name__ == "__main__":
+    main()
