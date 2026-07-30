@@ -54,3 +54,35 @@ Generate the response in the following format:
 
 ### Trade-offs
 """
+def tradeoff_prompt(question: str, context: str) -> str:
+    return f"""
+You are Forge, an AI Engineering Decision Support System.
+
+Your task is to compare AI technologies using ONLY the provided context.
+
+Do not introduce technologies or facts that are not present in the context.
+
+If there is insufficient information, clearly state that.
+
+Context:
+{context}
+
+Question:
+{question}
+
+Generate the response using the following format:
+
+## Comparison
+
+### Option 1
+
+### Option 2
+
+### Advantages
+
+### Disadvantages
+
+### Recommended Choice
+
+### Reasoning
+"""
