@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Saying goodbye to our Public Slack - Announcements - Weaviate Community Forum</title>
+    <meta name="description" content="Hi everyone ! :waving_hand: We have a small (but exciting!) community update to share! 
+We’ll be saying goodbye to our public Slack and officially moving the conversation here. 
+Before you panic — this is actually a glow…">
+    <meta name="generator" content="Discourse 2026.7.0-latest - https://github.com/discourse/discourse version 2937da0e36f3be5ccf14443713eb58f60d1aa94a">
+<link rel="icon" type="image/png" href="https://canada1.discourse-cdn.com/flex027/uploads/weaviate/optimized/1X/1e4f79946085f797748d20c51e18000db67735b2_2_32x32.png">
+<link rel="apple-touch-icon" type="image/png" href="https://canada1.discourse-cdn.com/flex027/uploads/weaviate/optimized/1X/1e4f79946085f797748d20c51e18000db67735b2_2_180x180.png">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#fff">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#111111">
+
+<meta name="color-scheme" content="light dark">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, viewport-fit=cover">
+<link rel="canonical" href="https://forum.weaviate.io/t/saying-goodbye-to-our-public-slack/22266" />
+
+<meta name="discourse-track-view-session-id" content="OoJz1xhN3rg6CozKJcuYIFI0sMlu9y3i"><meta name="discourse-engagement-tracking-enabled" content="true">
+<link rel="search" type="application/opensearchdescription+xml" href="https://forum.weaviate.io/opensearch.xml" title="Weaviate Community Forum Search">
+
+    
+    <link href="https://yyz1.discourse-cdn.com/flex027/stylesheets/color_definitions_light-default_-1_1_ce2c95c025c76df8c34e877778565bfd6092ea16.css?__ws=forum.weaviate.io" media="(prefers-color-scheme: light)" rel="stylesheet" class="light-scheme"/><link href="https://yyz1.discourse-cdn.com/flex027/stylesheets/color_definitions_dark_1_1_1b9859b9496942ecf4baf7e80c07f4d1d029888a.css?__ws=forum.weaviate.io" media="(prefers-color-scheme: dark)" rel="stylesheet" class="dark-scheme" data-scheme-id="1"/>
+
+<link href="https://yyz1.discourse-cdn.com/flex027/stylesheets/common_98523c16ac7ee61e1a1fcb4c3d2d7ed04ab2b00a.css?__ws=forum.weaviate.io" media="all" rel="stylesheet" data-target="common"  />
+
+
+
+  <link href="https://yyz1.discourse-cdn.com/flex027/stylesheets/checklist_98523c16ac7ee61e1a1fcb4c3d2d7ed04ab2b00a.css?__ws=forum.weaviate.io" media="all" rel="stylesheet" data-target="checklist"  />
+  <link href="https://yyz1.discourse-cdn.com/flex027/stylesheets/discourse-ai_98523c16ac7ee61e1a1fcb4c3d2d7ed04ab2b00a.css?__ws=forum.weaviate.io" media="all" rel="stylesheet" data-target="discourse-ai"  />
+  <link href="https://yyz1.discourse-cdn.com/flex027/stylesheets/discourse-cakeday_98523c16ac7ee61e1a1fcb4c3d2d7ed04ab2b00a.css?__ws=forum.weaviate.io" media="all" rel="stylesheet" data-target="discourse-cakeday"  />
+  <link href="https://yyz1.discourse-cdn.com/flex027/stylesheets/discourse-details_98523c16ac7ee61e1a1fcb4c3d2d7ed04ab2b00a.css?__ws=forum.weaviate.io" media="all" rel="stylesheet" data-target="discourse-details"  />
+  <link href="https://yyz1.discourse-cdn.com/flex027/stylesheets/discourse-github_98523c16ac7ee61e1a1fcb4c3d2d7ed04ab2b00a.css?__ws=forum.weaviate.io" media="all" rel="stylesheet" data-target="discourse-github"  />
+  <link href="https://yyz1.discourse-cdn.com/flex027/stylesheets/discourse-lazy-videos_98523c16ac7ee61e1a1fcb4c3d2d7ed04ab2b00a.css?__ws=forum.weaviate.io" media="all" rel="stylesheet" data-target="discourse-lazy-videos"  />
+  <link href="https://yyz1.discourse-cdn.com/flex027/stylesheets/discourse-local-dates_98523c16ac7ee61e1a1fcb4c3d2d7ed04ab2b00a.css?__ws=forum.weaviate.io" media="all" rel="stylesheet" data-target="discourse-local-dates"  />
+  <link href="https://yyz1.discourse-cdn.com/flex027/stylesheets/discourse-narrative-bot_98523c16ac7ee61e1a1fcb4c3d2d7ed04ab2b00a.css?__ws=forum.weaviate.io" media="all" rel="stylesheet" data-target="discourse-narrative-bot"  />
+  <link href="https://yyz1.discourse-cdn.com/flex027/stylesheets/discourse-presence_98523c16ac7ee61e1a1fcb4c3d2d7ed04ab2b00a.css?__ws=forum.weaviate.io" media="all" rel="stylesheet" data-target="discourse-presence"  />
+  <link href="https://yyz1.discourse-cdn.com/flex027/stylesheets/discourse-reactions_98523c16ac7ee61e1a1fcb4c3d2d7ed04ab2b00a.css?__ws=forum.weaviate.io" media="all" rel="stylesheet" data-target="discourse-reactions"  />
+  <link href="https://yyz1.discourse-cdn.com/flex027/stylesheets/discourse-solved_98523c16ac7ee61e1a1fcb4c3d2d7ed04ab2b00a.css?__ws=forum.weaviate.io" media="all" rel="stylesheet" data-target="discourse-solved"  />
+  <link href="https://yyz1.discourse-cdn.com/flex027/stylesheets/footnote_98523c16ac7ee61e1a1fcb4c3d2d7ed04ab2b00a.css?__ws=forum.weaviate.io" media="all" rel="stylesheet" data-target="footnote"  />
+  <link href="https://yyz1.discourse-cdn.com/flex027/stylesheets/hosted-site_98523c16ac7ee61e1a1fcb4c3d2d7ed04ab2b00a.css?__ws=forum.weaviate.io" media="all" rel="stylesheet" data-target="hosted-site"  />
+  <link href="https://yyz1.discourse-cdn.com/flex027/stylesheets/poll_98523c16ac7ee61e1a1fcb4c3d2d7ed04ab2b00a.css?__ws=forum.weaviate.io" media="all" rel="stylesheet" data-target="poll"  />
+  <link href="https://yyz1.discourse-cdn.com/flex027/stylesheets/spoiler-alert_98523c16ac7ee61e1a1fcb4c3d2d7ed04ab2b00a.css?__ws=forum.weaviate.io" media="all" rel="stylesheet" data-target="spoiler-alert"  />
+  <link href="https://yyz1.discourse-cdn.com/flex027/stylesheets/discourse-ai_mobile_98523c16ac7ee61e1a1fcb4c3d2d7ed04ab2b00a.css?__ws=forum.weaviate.io" media="(width < 40rem)" rel="stylesheet" data-target="discourse-ai_mobile"  />
+  <link href="https://yyz1.discourse-cdn.com/flex027/stylesheets/discourse-reactions_mobile_98523c16ac7ee61e1a1fcb4c3d2d7ed04ab2b00a.css?__ws=forum.weaviate.io" media="(width < 40rem)" rel="stylesheet" data-target="discourse-reactions_mobile"  />
+  <link href="https://yyz1.discourse-cdn.com/flex027/stylesheets/discourse-ai_desktop_98523c16ac7ee61e1a1fcb4c3d2d7ed04ab2b00a.css?__ws=forum.weaviate.io" media="(width >= 40rem)" rel="stylesheet" data-target="discourse-ai_desktop"  />
+  <link href="https://yyz1.discourse-cdn.com/flex027/stylesheets/discourse-reactions_desktop_98523c16ac7ee61e1a1fcb4c3d2d7ed04ab2b00a.css?__ws=forum.weaviate.io" media="(width >= 40rem)" rel="stylesheet" data-target="discourse-reactions_desktop"  />
+  <link href="https://yyz1.discourse-cdn.com/flex027/stylesheets/poll_desktop_98523c16ac7ee61e1a1fcb4c3d2d7ed04ab2b00a.css?__ws=forum.weaviate.io" media="(width >= 40rem)" rel="stylesheet" data-target="poll_desktop"  />
+
+  <link href="https://yyz1.discourse-cdn.com/flex027/stylesheets/common_theme_1_b057cdd68684b027322256df746aaac8bd61282c.css?__ws=forum.weaviate.io" media="all" rel="stylesheet" data-target="common_theme" data-theme-id="1" data-theme-name="default"/>
+  
+  
+
+    <img src="https://static.scarf.sh/a.png?x-pxid=a41b0758-a3a9-4874-a880-8b5d5a363d40" referrerpolicy="no-referrer-when-downgrade" style="display: none;">
+    <meta id="data-ga-universal-analytics" data-tracking-code="G-5EZE5GHXBD" data-json="{&quot;cookieDomain&quot;:&quot;auto&quot;}" data-auto-link-domains="">
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-5EZE5GHXBD" nonce="NhnODATFfAhEDEDBad44CXohP"></script>
+  <script defer src="https://canada1.discourse-cdn.com/flex027/assets/br/google-universal-analytics-v4-43cb071f.js" data-discourse-entrypoint="js/google-universal-analytics-v4" nonce="NhnODATFfAhEDEDBad44CXohP"></script>
+
+
+        <link rel="alternate nofollow" type="application/rss+xml" title="RSS feed of &#39;Saying goodbye to our Public Slack&#39;" href="https://forum.weaviate.io/t/saying-goodbye-to-our-public-slack/22266.rss" />
+    <meta property="og:site_name" content="Weaviate Community Forum" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://canada1.discourse-cdn.com/flex027/uploads/weaviate/original/1X/d2a519e685505de66407d9355c7b4e64da0d28e0.png" />
+<meta property="og:image" content="https://canada1.discourse-cdn.com/flex027/uploads/weaviate/original/1X/1e4f79946085f797748d20c51e18000db67735b2.png" />
+<meta property="og:url" content="https://forum.weaviate.io/t/saying-goodbye-to-our-public-slack/22266" />
+<meta name="twitter:url" content="https://forum.weaviate.io/t/saying-goodbye-to-our-public-slack/22266" />
+<meta property="og:title" content="Saying goodbye to our Public Slack" />
+<meta name="twitter:title" content="Saying goodbye to our Public Slack" />
+<meta property="og:description" content="Hi everyone ! 👋 We have a small (but exciting!) community update to share!  We’ll be saying goodbye to our public Slack and officially moving the conversation here.  Before you panic — this is actually a glow-up 🌟  While Slack has been a great place to connect, there’s one big downside: conversations slowly disappear and aren’t searchable in the long term.  That means valuable answers, insights, and “aha!” 💡 ! moments get lost over time. And we think the knowl..." />
+<meta name="twitter:description" content="Hi everyone ! 👋 We have a small (but exciting!) community update to share!  We’ll be saying goodbye to our public Slack and officially moving the conversation here.  Before you panic — this is actually a glow-up 🌟  While Slack has been a great place to connect, there’s one big downside: conversations slowly disappear and aren’t searchable in the long term.  That means valuable answers, insights, and “aha!” 💡 ! moments get lost over time. And we think the knowl..." />
+<meta property="og:article:section" content="Announcements" />
+<meta property="og:article:section:color" content="BF1E2E" />
+<meta name="twitter:label1" value="Reading time" />
+<meta name="twitter:data1" value="1 min 🕑" />
+<meta name="twitter:label2" value="Likes" />
+<meta name="twitter:data2" value="2 ❤" />
+<meta property="article:published_time" content="2026-03-16T19:18:11+00:00" />
+<meta property="og:ignore_canonical" content="true" />
+
+
+    
+  </head>
+  <body class="crawler ">
+    <!-- <div id="top" style="width:100%; height:30px;text-align:center;background-color:#00c342; padding: 10px 0 0 0; color:white;">
+       📅 Launching Agentic Workflows into Production | 
+    <a href="https://luma.com/weaviate-agents-2025-11-04?umt_source=forum" target="_blank">Join online! <b>November 4th</b></a>
+</div>-->
+    <header>
+  <a href="/">Weaviate Community Forum</a>
+</header>
+
+    <div id="main-outlet" class="wrap" role="main">
+        <div id="topic-title">
+    <h1>
+      <a href="/t/saying-goodbye-to-our-public-slack/22266">Saying goodbye to our Public Slack</a>
+    </h1>
+
+      <div class="topic-category" itemscope itemtype="http://schema.org/BreadcrumbList">
+          <span itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+            <a href="/c/announcements/7" class="badge-wrapper bullet" itemprop="item">
+              <span class='badge-category-bg' style='background-color: #BF1E2E'></span>
+              <span class='badge-category clear-badge'>
+                <span class='category-name' itemprop='name'>Announcements</span>
+              </span>
+            </a>
+            <meta itemprop="position" content="1" />
+          </span>
+      </div>
+
+  </div>
+
+  
+
+    <div itemscope="itemscope" itemtype="http://schema.org/DiscussionForumPosting">
+      <meta itemprop='headline' content='Saying goodbye to our Public Slack'>
+      <link itemprop='url' href='https://forum.weaviate.io/t/saying-goodbye-to-our-public-slack/22266'>
+      <meta itemprop='datePublished' content='2026-03-16T19:18:11Z'>
+      <meta itemprop='keywords' content=''>
+          <meta itemprop='articleSection' content='Announcements'>
+        <div itemprop='publisher' itemscope itemtype="http://schema.org/Organization">
+          <meta itemprop='name' content='Weaviate, B.V.'>
+            <div itemprop='logo' itemscope itemtype="http://schema.org/ImageObject">
+              <meta itemprop='url' content='https://canada1.discourse-cdn.com/flex027/uploads/weaviate/original/1X/d2a519e685505de66407d9355c7b4e64da0d28e0.png'>
+            </div>
+        </div>
+
+
+
+          <div id='post_1'  class='topic-body crawler-post'>
+            <div class='crawler-post-meta'>
+              <span class="creator" itemprop="author" itemscope="itemscope" itemtype="http://schema.org/Person">
+                <a rel='nofollow' href='https://forum.weaviate.io/u/DudaNogueira'><span itemprop="name">DudaNogueira</span></a>
+                  <meta itemprop='url' content='https://forum.weaviate.io/u/DudaNogueira'>
+                
+              </span>
+
+                <link itemprop="mainEntityOfPage" href="https://forum.weaviate.io/t/saying-goodbye-to-our-public-slack/22266">
+
+
+              <span class="crawler-post-infos">
+                  <time  datetime='2026-03-16T19:18:11Z' class='post-time'>
+                    March 16, 2026,  7:18pm
+                  </time>
+                  <meta itemprop='dateModified' content='2026-03-16T19:18:11Z'>
+              <span itemprop="position">1</span>
+              </span>
+            </div>
+            <div class='post' itemprop="text">
+              <p>Hi everyone ! <img src="https://emoji.discourse-cdn.com/twitter/waving_hand.png?v=15" title=":waving_hand:" class="emoji" alt=":waving_hand:" loading="lazy" width="20" height="20"> We have a small (but exciting!) community update to share!</p>
+<p>We’ll be <strong>saying goodbye to our public Slack</strong> and officially <strong>moving the conversation here</strong>.</p>
+<p>Before you panic — this is actually a glow-up <img src="https://emoji.discourse-cdn.com/twitter/glowing_star.png?v=15" title=":glowing_star:" class="emoji" alt=":glowing_star:" loading="lazy" width="20" height="20"></p>
+<p>While Slack has been a great place to connect, there’s one big downside: <em>conversations slowly disappear and aren’t searchable in the long term</em>.</p>
+<p>That means valuable answers, insights, and “aha!” <img src="https://emoji.discourse-cdn.com/twitter/light_bulb.png?v=15" title=":light_bulb:" class="emoji" alt=":light_bulb:" loading="lazy" width="20" height="20"> ! moments get lost over time. And we think the knowledge we create as a community deserves better.</p>
+<p><a href="https://forum.weaviate.io/">https://forum.weaviate.io/</a></p>
+<p>Our forum is built to be a lasting, searchable home for all those great discussions.</p>
+<ul>
+<li>Better indexing.</li>
+<li>Better discoverability.</li>
+<li>Better for future-you (and everyone else who runs into the same question six months from now).</li>
+</ul>
+<p>Think of it as moving from a busy group chat to a cozy, well-organized library… that still feels like a living room. <img src="https://emoji.discourse-cdn.com/twitter/couch_and_lamp.png?v=15" title=":couch_and_lamp:" class="emoji" alt=":couch_and_lamp:" loading="lazy" width="20" height="20"></p>
+<p>We’d absolutely love for you to keep the conversation going there — start threads, share ideas, ask questions, and help others.<br>
+The community isn’t changing — and neither is the forum — we’re just making it our main address.</p>
+<p>And if you ever have a question you’d rather not ask in public, no worries at all.<br>
+You can always reach us directly at <a href="mailto:support@weaviate.io">support@weaviate.io</a>. We’re here for you.</p>
+<p><strong>Thanks for being part of this community!</strong></p>
+<p>We’re really excited about what’s ahead — and we can’t wait to build it together with you!</p>
+<p>See you around <img src="https://emoji.discourse-cdn.com/twitter/green_heart.png?v=15" title=":green_heart:" class="emoji" alt=":green_heart:" loading="lazy" width="20" height="20"><br>
+The Weaviate Team</p>
+            </div>
+
+              <div itemprop="interactionStatistic" itemscope="itemscope" itemtype="http://schema.org/InteractionCounter">
+                  <meta itemprop="interactionType" content="http://schema.org/LikeAction"/>
+                  <meta itemprop="userInteractionCount" content="2" />
+                <span class='post-likes'>2 Likes</span>
+              </div>
+
+
+            
+
+
+          </div>
+
+    </div>
+
+
+    <div id="related-topics" class="more-topics__list " role="complementary" aria-labelledby="related-topics-title">
+  <h3 id="related-topics-title" class="more-topics__list-title">
+    Related topics
+  </h3>
+  <div class="topic-list-container" itemscope itemtype='http://schema.org/ItemList'>
+    <meta itemprop='itemListOrder' content='http://schema.org/ItemListOrderDescending'>
+    <table class='topic-list'>
+      <thead>
+        <tr>
+          <th>Topic</th>
+          <th></th>
+          <th class="replies">Replies</th>
+          <th class="views">Views</th>
+          <th>Activity</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="topic-list-item" id="topic-list-item-233">
+            <td class="main-link" itemprop='itemListElement' itemscope itemtype='http://schema.org/ListItem'>
+              <meta itemprop='position' content='1'>
+              <span class="link-top-line">
+                <a itemprop='url' href='https://forum.weaviate.io/t/discord-server/233' class='title raw-link raw-topic-link'>Discord Server</a>
+              </span>
+              <div class="link-bottom-line">
+                  <a href='/c/general/4' class='badge-wrapper bullet'>
+                    <span class='badge-category-bg' style='background-color: #25AAE2'></span>
+                    <span class='badge-category clear-badge'>
+                      <span class='category-name'>General</span>
+                    </span>
+                  </a>
+                  <div class="discourse-tags">
+                  </div>
+              </div>
+            </td>
+            <td class="replies">
+              <span class='posts' title='posts'>2</span>
+            </td>
+            <td class="views">
+              <span class='views' title='views'>1569</span>
+            </td>
+            <td>
+              September 28, 2023
+            </td>
+          </tr>
+          <tr class="topic-list-item" id="topic-list-item-49">
+            <td class="main-link" itemprop='itemListElement' itemscope itemtype='http://schema.org/ListItem'>
+              <meta itemprop='position' content='2'>
+              <span class="link-top-line">
+                <a itemprop='url' href='https://forum.weaviate.io/t/weaviate-monthly-introductions-may-2023/49' class='title raw-link raw-topic-link'>🎉 Weaviate Monthly Introductions - May 2023</a>
+              </span>
+              <div class="link-bottom-line">
+                  <a href='/c/general/4' class='badge-wrapper bullet'>
+                    <span class='badge-category-bg' style='background-color: #25AAE2'></span>
+                    <span class='badge-category clear-badge'>
+                      <span class='category-name'>General</span>
+                    </span>
+                  </a>
+                  <div class="discourse-tags">
+                  </div>
+              </div>
+            </td>
+            <td class="replies">
+              <span class='posts' title='posts'>7</span>
+            </td>
+            <td class="views">
+              <span class='views' title='views'>1305</span>
+            </td>
+            <td>
+              May 26, 2023
+            </td>
+          </tr>
+          <tr class="topic-list-item" id="topic-list-item-38">
+            <td class="main-link" itemprop='itemListElement' itemscope itemtype='http://schema.org/ListItem'>
+              <meta itemprop='position' content='3'>
+              <span class="link-top-line">
+                <a itemprop='url' href='https://forum.weaviate.io/t/a-place-for-users-to-introduce-themselves/38' class='title raw-link raw-topic-link'>A place for users to introduce themselves?</a>
+              </span>
+              <div class="link-bottom-line">
+                  <a href='/c/forum-feedback/2' class='badge-wrapper bullet'>
+                    <span class='badge-category-bg' style='background-color: #808281'></span>
+                    <span class='badge-category clear-badge'>
+                      <span class='category-name'>Forum feedback</span>
+                    </span>
+                  </a>
+                  <div class="discourse-tags">
+                  </div>
+              </div>
+            </td>
+            <td class="replies">
+              <span class='posts' title='posts'>3</span>
+            </td>
+            <td class="views">
+              <span class='views' title='views'>1221</span>
+            </td>
+            <td>
+              May 24, 2023
+            </td>
+          </tr>
+          <tr class="topic-list-item" id="topic-list-item-22339">
+            <td class="main-link" itemprop='itemListElement' itemscope itemtype='http://schema.org/ListItem'>
+              <meta itemprop='position' content='4'>
+              <span class="link-top-line">
+                <a itemprop='url' href='https://forum.weaviate.io/t/beever-atlas-an-open-source-llm-wiki-on-weaviate-3-tier-schema-for-chat-memory/22339' class='title raw-link raw-topic-link'>Beever Atlas: an open-source LLM Wiki on Weaviate (3-tier schema for chat memory)</a>
+              </span>
+              <div class="link-bottom-line">
+                  <a href='/c/showcase/5' class='badge-wrapper bullet'>
+                    <span class='badge-category-bg' style='background-color: #3AB54A'></span>
+                    <span class='badge-category clear-badge'>
+                      <span class='category-name'>Showcase</span>
+                    </span>
+                  </a>
+                  <div class="discourse-tags">
+                      <a href='https://forum.weaviate.io/tag/integration/5' class='discourse-tag'>integration</a>
+                      ,&nbsp;
+                      <a href='https://forum.weaviate.io/tag/developer-experience/6' class='discourse-tag'>developer-experience</a>
+                      ,&nbsp;
+                      <a href='https://forum.weaviate.io/tag/python/11' class='discourse-tag'>python</a>
+                      ,&nbsp;
+                      <a href='https://forum.weaviate.io/tag/documentation/17' class='discourse-tag'>documentation</a>
+                      ,&nbsp;
+                      <a href='https://forum.weaviate.io/tag/technical/18' class='discourse-tag'>technical</a>
+                      
+                  </div>
+              </div>
+            </td>
+            <td class="replies">
+              <span class='posts' title='posts'>0</span>
+            </td>
+            <td class="views">
+              <span class='views' title='views'>95</span>
+            </td>
+            <td>
+              April 27, 2026
+            </td>
+          </tr>
+          <tr class="topic-list-item" id="topic-list-item-305">
+            <td class="main-link" itemprop='itemListElement' itemscope itemtype='http://schema.org/ListItem'>
+              <meta itemprop='position' content='5'>
+              <span class="link-top-line">
+                <a itemprop='url' href='https://forum.weaviate.io/t/is-the-weaviate-blog-open-to-community-contributions/305' class='title raw-link raw-topic-link'>Is the Weaviate blog open to community contributions?</a>
+              </span>
+              <div class="link-bottom-line">
+                  <a href='/c/resources/8' class='badge-wrapper bullet'>
+                    <span class='badge-category-bg' style='background-color: #0088CC'></span>
+                    <span class='badge-category clear-badge'>
+                      <span class='category-name'>Resources</span>
+                    </span>
+                  </a>
+                  <div class="discourse-tags">
+                  </div>
+              </div>
+            </td>
+            <td class="replies">
+              <span class='posts' title='posts'>0</span>
+            </td>
+            <td class="views">
+              <span class='views' title='views'>686</span>
+            </td>
+            <td>
+              June 30, 2023
+            </td>
+          </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+
+
+
+    </div>
+    <footer class="container wrap">
+  <nav class='crawler-nav'>
+    <ul>
+      <li itemscope itemtype='http://schema.org/SiteNavigationElement'>
+        <span itemprop='name'>
+          <a href='/' itemprop="url">Home </a>
+        </span>
+      </li>
+      <li itemscope itemtype='http://schema.org/SiteNavigationElement'>
+        <span itemprop='name'>
+          <a href='/categories' itemprop="url">Categories </a>
+        </span>
+      </li>
+      <li itemscope itemtype='http://schema.org/SiteNavigationElement'>
+        <span itemprop='name'>
+          <a href='/guidelines' itemprop="url">Guidelines </a>
+        </span>
+      </li>
+        <li itemscope itemtype='http://schema.org/SiteNavigationElement'>
+          <span itemprop='name'>
+            <a href='https://weaviate.io/service/general-terms' itemprop="url">Terms of Service </a>
+          </span>
+        </li>
+        <li itemscope itemtype='http://schema.org/SiteNavigationElement'>
+          <span itemprop='name'>
+            <a href='/privacy' itemprop="url">Privacy Policy </a>
+          </span>
+        </li>
+    </ul>
+  </nav>
+  <p class='powered-by-link'>Powered by <a href="https://www.discourse.org">Discourse</a>, best viewed with JavaScript enabled</p>
+</footer>
+
+    
+    
+  </body>
+  
+</html>

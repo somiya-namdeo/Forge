@@ -1,0 +1,254 @@
+
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <meta name=viewport content="width=device-width,initial-scale=1">
+    
+    
+    
+    
+    
+    
+    
+    
+    <meta name="service-name" content="Documentation" />
+    <meta name="guide-name" content="Landing Page" />
+    <link rel='canonical' href='https://docs.aws.amazon.com/sagemaker/'/>
+    
+    <meta name="landing-page-locale" content="en_us">
+    <link rel="icon" type="image/ico" href="/assets/r/images/favicon.ico" />
+    <link rel="shortcut icon" type="image/ico" href="/assets/r/images/favicon.ico" />
+    <link rel='alternate' type='text/markdown' href='https://docs.aws.amazon.com/sagemaker/index.md'/>
+     <script defer src="/assets/r/awsdocs-landing-page.2.0.0.js"></script>
+
+    <script id="awsc-panorama-bundle" type="text/javascript" src="https://prod.pa.cdn.uis.awsstatic.com/panorama-nav-init.js" data-config="{'appEntity':'aws-documentation','region':'us-east-1', 'service':'sagemaker'}" defer></script>
+  </head>
+  <body class="awsdocs awsui awsui-visual-refresh landing-page">
+    <input type="text" id="landing-page-xml" style="display: none;" value="%3C%3Fxml%20version%3D%221.0%22%20encoding%3D%22UTF-8%22%3F%3E%0A%3Clanding-page%20version%3D%222.0%22%3E%0A%20%20%20%3Ctitle%3EAmazon%20SageMaker%20AI%20Documentation%3C%2Ftitle%3E%0A%20%20%20%3Ctitleabbrev%3EAmazon%20SageMaker%20AI%3C%2Ftitleabbrev%3E%0A%20%20%20%3Cabstract%3EAmazon%20SageMaker%20AI%20is%20a%20fully%20managed%20machine%20learning%20service.%20With%20Amazon%20SageMaker%20AI%2C%0A%20%20%20%20data%20scientists%20and%20developers%20can%20quickly%20build%20and%20train%20machine%20learning%20models%2C%20and%20then%0A%20%20%20%20deploy%20them%20into%20a%20production-ready%20hosted%20environment.%3C%2Fabstract%3E%0A%20%20%20%3CfeedbackCTI%3ESageMaker%3C%2FfeedbackCTI%3E%0A%20%20%20%3Csections%3E%0A%20%20%20%20%20%20%3Csection%20id%3D%22automation-and-environments%22%3E%0A%20%20%20%20%20%20%20%20%20%3Ctitle%3EAutomation%20and%20Environments%3C%2Ftitle%3E%0A%20%20%20%20%20%20%20%20%20%3Ccards%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Clayout%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ccolumns%20xxs%3D%222%22%20m%3D%223%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Flayout%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Csimple-card%20href%3D%22%2Fsagemaker%2Flatest%2Fdg%2Fgs.html%3Ficmpid%3Ddocs_sagemaker_lp%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20guide%3D%22true%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctitle%3EGet%20Started%3C%2Ftitle%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cabstract%3EOnboard%20to%20the%20Amazon%20SageMaker%20AI%20role%20and%20domain.%3C%2Fabstract%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fsimple-card%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Csimple-card%20href%3D%22%2Fsagemaker%2Flatest%2Fdg%2Fuse-auto-ml.html%3Ficmpid%3Ddocs_sagemaker_lp%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20guide%3D%22true%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctitle%3EUse%20Automated%20ML%3C%2Ftitle%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cabstract%3ELearn%20how%20to%20automate%20machine%20learning%20from%20start%20to%20finish.%3C%2Fabstract%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fsimple-card%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Csimple-card%20href%3D%22%2Fsagemaker%2Flatest%2Fdg%2Fmachine-learning-environments.html%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20guide%3D%22true%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctitle%3EUse%20Machine%20Learning%20Environments%3C%2Ftitle%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cabstract%3ELearn%20about%20machine%20learning%20environments%20that%20Amazon%20SageMaker%20AI%20offers.%3C%2Fabstract%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fsimple-card%3E%0A%20%20%20%20%20%20%20%20%20%3C%2Fcards%3E%0A%20%20%20%20%20%20%3C%2Fsection%3E%0A%20%20%20%20%20%20%3Csection%20id%3D%22work-with-data%22%3E%0A%20%20%20%20%20%20%20%20%20%3Ctitle%3EWork%20with%20Data%3C%2Ftitle%3E%0A%20%20%20%20%20%20%20%20%20%3Ccards%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Clayout%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ccolumns%20xxs%3D%222%22%20m%3D%223%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Flayout%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Csimple-card%20href%3D%22%2Fsagemaker%2Flatest%2Fdg%2Fdata-label.html%22%20guide%3D%22true%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctitle%3ELabel%20Data%20with%20a%20Human-in-the-loop%3C%2Ftitle%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cabstract%3ELearn%20how%20to%20use%20a%20human-in-the-loop%20to%20help%20label%20data%20more%20accurately.%3C%2Fabstract%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fsimple-card%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Csimple-card%20href%3D%22%2Fsagemaker%2Flatest%2Fdg%2Fdata-prep.html%22%20guide%3D%22true%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctitle%3EPrepare%20Data%3C%2Ftitle%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cabstract%3ELearn%20how%20to%20prepare%20data%20for%20machine%20learning.%3C%2Fabstract%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fsimple-card%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Csimple-card%20href%3D%22%2Fsagemaker%2Flatest%2Fdg%2Fprocessing-job.html%22%20guide%3D%22true%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctitle%3EProcess%20Data%3C%2Ftitle%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cabstract%3ELearn%20how%20to%20process%20data%20for%20machine%20learning.%3C%2Fabstract%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fsimple-card%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Csimple-card%20href%3D%22%2Fsagemaker%2Flatest%2Fdg%2Ffeature-store.html%22%20guide%3D%22true%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctitle%3ECreate%2C%20Store%2C%20and%20Share%20Features%3C%2Ftitle%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cabstract%3ELearn%20how%20to%20create%2C%20store%2C%20and%20share%20extracted%20data%20signals%20%28features%29%20for%20machine%20learning.%3C%2Fabstract%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fsimple-card%3E%0A%20%20%20%20%20%20%20%20%20%3C%2Fcards%3E%0A%20%20%20%20%20%20%3C%2Fsection%3E%0A%20%20%20%20%20%20%3Csection%20id%3D%22work-with-models%22%3E%0A%20%20%20%20%20%20%20%20%20%3Ctitle%3EWork%20with%20Models%3C%2Ftitle%3E%0A%20%20%20%20%20%20%20%20%20%3Ccards%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Clayout%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ccolumns%20xxs%3D%222%22%20m%3D%223%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Flayout%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Csimple-card%20href%3D%22%2Fsagemaker%2Flatest%2Fdg%2Ftrain-model.html%22%20guide%3D%22true%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctitle%3ETrain%20Models%3C%2Ftitle%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cabstract%3ELearn%20how%20to%20train%20your%20machine%20learning%20models.%3C%2Fabstract%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fsimple-card%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Csimple-card%20href%3D%22%2Fsagemaker%2Flatest%2Fdg%2Fdeploy-model.html%22%20guide%3D%22true%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctitle%3EDeploy%20Models%20for%20Inference%3C%2Ftitle%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cabstract%3ELearn%20how%20to%20deploy%20your%20machine%20learning%20models%20for%20inference.%3C%2Fabstract%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fsimple-card%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Csimple-card%20href%3D%22%2Fsagemaker%2Flatest%2Fdg%2Fmlops.html%22%20guide%3D%22true%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctitle%3EImplement%20MLOps%3C%2Ftitle%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cabstract%3ELearn%20how%20to%20implement%20machine%20learning%20operations%20on%20Amazon%20SageMaker%20AI.%3C%2Fabstract%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fsimple-card%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Csimple-card%20href%3D%22%2Fsagemaker%2Flatest%2Fdg%2Fmodel-monitor.html%22%20guide%3D%22true%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctitle%3EMonitor%20Data%20and%20Model%20Quality%3C%2Ftitle%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cabstract%3ELearn%20how%20to%20monitor%20data%20and%20model%20quality.%3C%2Fabstract%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fsimple-card%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Csimple-card%20href%3D%22%2Fsagemaker%2Flatest%2Fdg%2Fdocker-containers.html%22%20guide%3D%22true%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctitle%3EUse%20Docker%20Containers%20to%20Build%20Models%3C%2Ftitle%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cabstract%3ELearn%20how%20to%20use%20Docker%20containers%20to%20build%20your%20machine%20learning%20models.%3C%2Fabstract%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fsimple-card%3E%0A%20%20%20%20%20%20%20%20%20%3C%2Fcards%3E%0A%20%20%20%20%20%20%3C%2Fsection%3E%0A%20%20%20%20%20%20%3Csection%20id%3D%22responsible-ai%22%3E%0A%20%20%20%20%20%20%20%20%20%3Ctitle%3EResponsible%20AI%3C%2Ftitle%3E%0A%20%20%20%20%20%20%20%20%20%3Ccards%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Clayout%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ccolumns%20xxs%3D%222%22%20m%3D%223%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Flayout%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Csimple-card%20href%3D%22%2Fsagemaker%2Flatest%2Fdg%2Fmodel-explainability.html%22%20guide%3D%22true%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctitle%3EDetect%20Bias%20and%20Understand%20Explanations%3C%2Ftitle%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cabstract%3ELearn%20how%20to%20detect%20bias%20and%20understand%20explanations%20in%20machine%20learning%20models.%3C%2Fabstract%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fsimple-card%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Csimple-card%20href%3D%22%2Fsagemaker%2Flatest%2Fdg%2Fgovernance.html%22%20guide%3D%22true%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctitle%3EUse%20Governance%3C%2Ftitle%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cabstract%3ELearn%20how%20to%20use%20governance%20to%20document%20and%20track%20model%20performance.%3C%2Fabstract%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fsimple-card%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Csimple-card%20href%3D%22%2Fsagemaker%2Flatest%2Fdg%2Fsecurity.html%22%20guide%3D%22true%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctitle%3EConfigure%20Security%20in%20Amazon%20SageMaker%20AI%3C%2Ftitle%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cabstract%3ELearn%20how%20to%20secure%20resources%20in%20Amazon%20SageMaker%20AI.%3C%2Fabstract%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fsimple-card%3E%0A%20%20%20%20%20%20%20%20%20%3C%2Fcards%3E%0A%20%20%20%20%20%20%3C%2Fsection%3E%0A%20%20%20%20%20%20%3Csection%20id%3D%22reference%22%3E%0A%20%20%20%20%20%20%20%20%20%3Ctitle%3EReference%3C%2Ftitle%3E%0A%20%20%20%20%20%20%20%20%20%3Ccards%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Clayout%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ccolumns%20xxs%3D%222%22%20m%3D%223%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Flayout%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Csimple-card%20href%3D%22%2Fsagemaker%2Flatest%2FAPIReference%2FWelcome.html%3Ficmpid%3Ddocs_sagemaker_lp%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20generic%3D%22true%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20guide%3D%22true%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctitle%3EAPI%20Reference%3C%2Ftitle%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cabstract%3EDescribes%20all%20of%20the%20API%20operations%20for%20Amazon%20SageMaker%20AI%20in%20detail.%3C%2Fabstract%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cfooter%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cembeddable-link%20href%3D%22%2Fsagemaker%2Flatest%2FAPIReference%2FWelcome.html%3Ficmpid%3Ddocs_sagemaker_lp%22%3EHTML%3C%2Fembeddable-link%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cembeddable-link%20href%3D%22%2Fsagemaker%2Flatest%2FAPIReference%2Fsagemaker-api.pdf%3Ficmpid%3Ddocs_sagemaker_lp%22%3EPDF%3C%2Fembeddable-link%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Ffooter%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fsimple-card%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Csimple-card%20href%3D%22https%3A%2F%2Fsagemaker.readthedocs.io%2Fen%2Fstable%2Findex.html%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20generic%3D%22true%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20guide%3D%22true%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctitle%3EAmazon%20SageMaker%20AI%20Python%20SDK%3C%2Ftitle%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cabstract%3EUse%20the%20Amazon%20SageMaker%20AI%20Python%20SDK%20library%20to%20train%20and%20deploy%20models%20using%20popular%20deep%20learning%20frameworks%20and%20algorithms.%3C%2Fabstract%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cfooter%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cembeddable-link%20href%3D%22https%3A%2F%2Fsagemaker.readthedocs.io%2Fen%2Fstable%2Findex.html%22%3EHTML%3C%2Fembeddable-link%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cembeddable-link%20href%3D%22https%3A%2F%2Fgithub.com%2Faws%2Fsagemaker-python-sdk%2Ftree%2Ff01fcae617ce2430804c0712a71e0c0234fc1967%22%3EGitHub%3C%2Fembeddable-link%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Ffooter%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fsimple-card%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Csimple-card%20href%3D%22https%3A%2F%2Fboto3.amazonaws.com%2Fv1%2Fdocumentation%2Fapi%2Flatest%2Freference%2Fservices%2Fsagemaker.html%3Ficmpid%3Ddocs_sagemaker_lp%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20generic%3D%22true%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20guide%3D%22true%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctitle%3EAWS%20SDK%20for%20Python%20%28Boto3%29%3C%2Ftitle%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cabstract%3EUse%20the%20AWS%20SDK%20for%20Python%20%28Boto3%29%20to%20format%20model%20data%20and%20build%20applications%20to%20build%2C%20train%2C%20and%20deploy%20machine%20learning%20models.%3C%2Fabstract%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cfooter%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cembeddable-link%20href%3D%22http%3A%2F%2Fgithub.com%2Fboto%2Fboto%23installation%22%3EInstalar%3C%2Fembeddable-link%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cembeddable-link%20href%3D%22https%3A%2F%2Fboto3.amazonaws.com%2Fv1%2Fdocumentation%2Fapi%2Flatest%2Freference%2Fservices%2Fsagemaker.html%3Ficmpid%3Ddocs_sagemaker_lp%22%3ESageMaker%3C%2Fembeddable-link%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cembeddable-link%20href%3D%22https%3A%2F%2Fboto3.amazonaws.com%2Fv1%2Fdocumentation%2Fapi%2Flatest%2Freference%2Fservices%2Fsagemaker-runtime.html%3Ficmpid%3Ddocs_sagemaker_lp%22%3ESageMakerRuntime%3C%2Fembeddable-link%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Ffooter%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fsimple-card%3E%0A%20%20%20%20%20%20%20%20%20%3C%2Fcards%3E%0A%20%20%20%20%20%20%3C%2Fsection%3E%0A%20%20%20%3C%2Fsections%3E%0A%20%20%20%3Cside-nav%3E%0A%20%20%20%20%20%20%3Cside-nav-sections%3E%0A%20%20%20%20%20%20%20%20%20%3Cside-nav-section%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Ctitle%3EGet%20Started%3C%2Ftitle%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Clinks%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Csimple-link%20href%3D%22https%3A%2F%2Fdocs.aws.amazon.com%2Fsagemaker%2Flatest%2Fdg%2Fgs.html%3Ficmpid%3Ddocs_sagemaker_lp%22%3ECreate%2C%20Train%2C%20and%20Deploy%20a%20Simple%20Machine%20Learning%20Model%3C%2Fsimple-link%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Csimple-link%20href%3D%22https%3A%2F%2Faws.amazon.com%2Fquickstart%2Farchitecture%2Fpredictive-data-science-sagemaker-and-data-lake%2F%3Ficmpid%3Ddocs_sagemaker_lp%22%3EAWS%20Quick%20Start%20-%20Predictive%20Data%20Science%20with%20Amazon%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20SageMaker%20and%20a%20Data%20Lake%20on%20AWS%0A%20%20%20%20%20%20%20%20%20%20%3C%2Fsimple-link%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Flinks%3E%0A%20%20%20%20%20%20%20%20%20%3C%2Fside-nav-section%3E%0A%20%20%20%20%20%20%20%20%20%3Cside-nav-section%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Ctitle%3ERelated%20Info%3C%2Ftitle%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Clinks%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Csimple-link%20href%3D%22https%3A%2F%2Faws.amazon.com%2Fsagemaker%2F%3Ficmpid%3Ddocs_sagemaker_lp%22%3EProduct%0A%20%20%20%20%20%20%20%20%20%20%20%20Information%20%3C%2Fsimple-link%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Csimple-link%20href%3D%22https%3A%2F%2Faws.amazon.com%2Fsagemaker%2Fpricing%2F%3Ficmpid%3Ddocs_sagemaker_lp%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20Pricing%3C%2Fsimple-link%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Csimple-link%20href%3D%22https%3A%2F%2Faws.amazon.com%2Fsagemaker%2Ffaqs%2F%3Ficmpid%3Ddocs_sagemaker_lp%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20FAQs%3C%2Fsimple-link%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Csimple-link%20href%3D%22https%3A%2F%2Faws.amazon.com%2Fblogs%2Fmachine-learning%2F%3Ficmpid%3Ddocs_sagemaker_lp%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20AWS%20Machine%20Learning%20Blog%3C%2Fsimple-link%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Csimple-link%20href%3D%22https%3A%2F%2Fforums.aws.amazon.com%2Fforum.jspa%3FforumID%3D285%22%3EAmazon%20SageMaker%0A%20%20%20%20%20%20%20%20%20%20%20%20Forum%3C%2Fsimple-link%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Csimple-link%20href%3D%22https%3A%2F%2Faws.amazon.com%2Ftools%2F%22%3ESDKs%20%26amp%3B%20Tools%3C%2Fsimple-link%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Csimple-link%20href%3D%22%2Fgeneral%2Flatest%2Fgr%2FWelcome.html%3Ficmpid%3Ddocs_sagemaker_lp%22%3EAWS%20General%0A%20%20%20%20%20%20%20%20%20%20%20%20Reference%3C%2Fsimple-link%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Csimple-link%20href%3D%22https%3A%2F%2Faws.amazon.com%2Ftraining%2Flearning-paths%2Fmachine-learning%2F%3Ficmpid%3Ddocs_sagemaker_lp%22%3EAWS%20Training%3C%2Fsimple-link%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Csimple-link%20href%3D%22https%3A%2F%2Faws.amazon.com%2Fmachine-learning%2Fcustomers%2F%3Ficmpid%3Ddocs_sagemaker_lp%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20Machine%20Learning%20Customers%20and%20Case%20Studies%3C%2Fsimple-link%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Csimple-link%20href%3D%22https%3A%2F%2Faws.amazon.com%2Fwhitepapers%2F%3Ficmpid%3Ddocs_sagemaker_lp%23machine-learning%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20AWS%20Whitepapers%3C%2Fsimple-link%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Csimple-link%20href%3D%22https%3A%2F%2Faws.amazon.com%2Fcontact-us%2F%3Ficmpid%3Ddocs_sagemaker_lp%22%3EContact%20Us%0A%20%20%20%20%20%20%20%20%20%20%3C%2Fsimple-link%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Flinks%3E%0A%20%20%20%20%20%20%20%20%20%3C%2Fside-nav-section%3E%0A%20%20%20%20%20%20%3C%2Fside-nav-sections%3E%0A%20%20%20%3C%2Fside-nav%3E%0A%3C%2Flanding-page%3E%0A" />
+    <div class="awsdocs-container">
+    <div style="display:none;">
+        <header class="awsdocs-page-header">
+            <h1 class="awsdocs-page-title">Amazon SageMaker AI Documentation</h1>
+            <div class="awsdocs-page-abstract">Amazon SageMaker AI is a fully managed machine learning service. With Amazon SageMaker AI,
+    data scientists and developers can quickly build and train machine learning models, and then
+    deploy them into a production-ready hosted environment.</div>
+        </header>
+        <main class="awsdocs-main">
+            <section class="awsdocs-section" aria-labelledby="automation-and-environments">
+                <h2 class="awsdocs-section-title" id="automation-and-environments">Automation and Environments</h2>
+                <div class="awsdocs-cards" data-component="Grid" data-grid-definition="[{&quot;colspan&quot;:{&quot;xxs&quot;:6,&quot;m&quot;:4}}]">
+                    <article class="awsdocs-card">
+                        <a href="/sagemaker/latest/dg/gs.html?icmpid=docs_sagemaker_lp" class="awsdocs-card-link">
+                            <h3 class="awsdocs-card-title">Get Started</h3>
+                            <div class="awsdocs-abstract">Onboard to the Amazon SageMaker AI role and domain.</div>
+                        </a>
+                    </article>
+                    <article class="awsdocs-card">
+                        <a href="/sagemaker/latest/dg/use-auto-ml.html?icmpid=docs_sagemaker_lp" class="awsdocs-card-link">
+                            <h3 class="awsdocs-card-title">Use Automated ML</h3>
+                            <div class="awsdocs-abstract">Learn how to automate machine learning from start to finish.</div>
+                        </a>
+                    </article>
+                    <article class="awsdocs-card">
+                        <a href="/sagemaker/latest/dg/machine-learning-environments.html" class="awsdocs-card-link">
+                            <h3 class="awsdocs-card-title">Use Machine Learning Environments</h3>
+                            <div class="awsdocs-abstract">Learn about machine learning environments that Amazon SageMaker AI offers.</div>
+                        </a>
+                    </article>
+                </div>
+            </section>
+            <section class="awsdocs-section" aria-labelledby="work-with-data">
+                <h2 class="awsdocs-section-title" id="work-with-data">Work with Data</h2>
+                <div class="awsdocs-cards" data-component="Grid" data-grid-definition="[{&quot;colspan&quot;:{&quot;xxs&quot;:6,&quot;m&quot;:4}}]">
+                    <article class="awsdocs-card">
+                        <a href="/sagemaker/latest/dg/data-label.html" class="awsdocs-card-link">
+                            <h3 class="awsdocs-card-title">Label Data with a Human-in-the-loop</h3>
+                            <div class="awsdocs-abstract">Learn how to use a human-in-the-loop to help label data more accurately.</div>
+                        </a>
+                    </article>
+                    <article class="awsdocs-card">
+                        <a href="/sagemaker/latest/dg/data-prep.html" class="awsdocs-card-link">
+                            <h3 class="awsdocs-card-title">Prepare Data</h3>
+                            <div class="awsdocs-abstract">Learn how to prepare data for machine learning.</div>
+                        </a>
+                    </article>
+                    <article class="awsdocs-card">
+                        <a href="/sagemaker/latest/dg/processing-job.html" class="awsdocs-card-link">
+                            <h3 class="awsdocs-card-title">Process Data</h3>
+                            <div class="awsdocs-abstract">Learn how to process data for machine learning.</div>
+                        </a>
+                    </article>
+                    <article class="awsdocs-card">
+                        <a href="/sagemaker/latest/dg/feature-store.html" class="awsdocs-card-link">
+                            <h3 class="awsdocs-card-title">Create, Store, and Share Features</h3>
+                            <div class="awsdocs-abstract">Learn how to create, store, and share extracted data signals (features) for machine learning.</div>
+                        </a>
+                    </article>
+                </div>
+            </section>
+            <section class="awsdocs-section" aria-labelledby="work-with-models">
+                <h2 class="awsdocs-section-title" id="work-with-models">Work with Models</h2>
+                <div class="awsdocs-cards" data-component="Grid" data-grid-definition="[{&quot;colspan&quot;:{&quot;xxs&quot;:6,&quot;m&quot;:4}}]">
+                    <article class="awsdocs-card">
+                        <a href="/sagemaker/latest/dg/train-model.html" class="awsdocs-card-link">
+                            <h3 class="awsdocs-card-title">Train Models</h3>
+                            <div class="awsdocs-abstract">Learn how to train your machine learning models.</div>
+                        </a>
+                    </article>
+                    <article class="awsdocs-card">
+                        <a href="/sagemaker/latest/dg/deploy-model.html" class="awsdocs-card-link">
+                            <h3 class="awsdocs-card-title">Deploy Models for Inference</h3>
+                            <div class="awsdocs-abstract">Learn how to deploy your machine learning models for inference.</div>
+                        </a>
+                    </article>
+                    <article class="awsdocs-card">
+                        <a href="/sagemaker/latest/dg/mlops.html" class="awsdocs-card-link">
+                            <h3 class="awsdocs-card-title">Implement MLOps</h3>
+                            <div class="awsdocs-abstract">Learn how to implement machine learning operations on Amazon SageMaker AI.</div>
+                        </a>
+                    </article>
+                    <article class="awsdocs-card">
+                        <a href="/sagemaker/latest/dg/model-monitor.html" class="awsdocs-card-link">
+                            <h3 class="awsdocs-card-title">Monitor Data and Model Quality</h3>
+                            <div class="awsdocs-abstract">Learn how to monitor data and model quality.</div>
+                        </a>
+                    </article>
+                    <article class="awsdocs-card">
+                        <a href="/sagemaker/latest/dg/docker-containers.html" class="awsdocs-card-link">
+                            <h3 class="awsdocs-card-title">Use Docker Containers to Build Models</h3>
+                            <div class="awsdocs-abstract">Learn how to use Docker containers to build your machine learning models.</div>
+                        </a>
+                    </article>
+                </div>
+            </section>
+            <section class="awsdocs-section" aria-labelledby="responsible-ai">
+                <h2 class="awsdocs-section-title" id="responsible-ai">Responsible AI</h2>
+                <div class="awsdocs-cards" data-component="Grid" data-grid-definition="[{&quot;colspan&quot;:{&quot;xxs&quot;:6,&quot;m&quot;:4}}]">
+                    <article class="awsdocs-card">
+                        <a href="/sagemaker/latest/dg/model-explainability.html" class="awsdocs-card-link">
+                            <h3 class="awsdocs-card-title">Detect Bias and Understand Explanations</h3>
+                            <div class="awsdocs-abstract">Learn how to detect bias and understand explanations in machine learning models.</div>
+                        </a>
+                    </article>
+                    <article class="awsdocs-card">
+                        <a href="/sagemaker/latest/dg/governance.html" class="awsdocs-card-link">
+                            <h3 class="awsdocs-card-title">Use Governance</h3>
+                            <div class="awsdocs-abstract">Learn how to use governance to document and track model performance.</div>
+                        </a>
+                    </article>
+                    <article class="awsdocs-card">
+                        <a href="/sagemaker/latest/dg/security.html" class="awsdocs-card-link">
+                            <h3 class="awsdocs-card-title">Configure Security in Amazon SageMaker AI</h3>
+                            <div class="awsdocs-abstract">Learn how to secure resources in Amazon SageMaker AI.</div>
+                        </a>
+                    </article>
+                </div>
+            </section>
+            <section class="awsdocs-section" aria-labelledby="reference">
+                <h2 class="awsdocs-section-title" id="reference">Reference</h2>
+                <div class="awsdocs-cards" data-component="Grid" data-grid-definition="[{&quot;colspan&quot;:{&quot;xxs&quot;:6,&quot;m&quot;:4}}]">
+                    <article class="awsdocs-card">
+                        <a href="/sagemaker/latest/APIReference/Welcome.html?icmpid=docs_sagemaker_lp" class="awsdocs-card-link">
+                            <h3 class="awsdocs-card-title">API Reference</h3>
+                            <div class="awsdocs-abstract">Describes all of the API operations for Amazon SageMaker AI in detail.</div>
+                        </a>
+                        <div class="awsdocs-card-footer">
+                                              <a href="/sagemaker/latest/APIReference/Welcome.html?icmpid=docs_sagemaker_lp" class="awsdocs-link">HTML</a>
+                  <a href="/sagemaker/latest/APIReference/sagemaker-api.pdf?icmpid=docs_sagemaker_lp" class="awsdocs-link">PDF</a>
+               
+                        </div>
+                    </article>
+                    <article class="awsdocs-card">
+                        <a href="https://sagemaker.readthedocs.io/en/stable/index.html" class="awsdocs-card-link">
+                            <h3 class="awsdocs-card-title">Amazon SageMaker AI Python SDK</h3>
+                            <div class="awsdocs-abstract">Use the Amazon SageMaker AI Python SDK library to train and deploy models using popular deep learning frameworks and algorithms.</div>
+                        </a>
+                        <div class="awsdocs-card-footer">
+                                              <a href="https://sagemaker.readthedocs.io/en/stable/index.html" class="awsdocs-link" rel="noopener noreferrer" target="_blank">HTML</a>
+                  <a href="https://github.com/aws/sagemaker-python-sdk/tree/f01fcae617ce2430804c0712a71e0c0234fc1967" class="awsdocs-link" rel="noopener noreferrer" target="_blank">GitHub</a>
+               
+                        </div>
+                    </article>
+                    <article class="awsdocs-card">
+                        <a href="https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/sagemaker.html?icmpid=docs_sagemaker_lp" class="awsdocs-card-link">
+                            <h3 class="awsdocs-card-title">AWS SDK for Python (Boto3)</h3>
+                            <div class="awsdocs-abstract">Use the AWS SDK for Python (Boto3) to format model data and build applications to build, train, and deploy machine learning models.</div>
+                        </a>
+                        <div class="awsdocs-card-footer">
+                                              <a href="http://github.com/boto/boto#installation" class="awsdocs-link" rel="noopener noreferrer" target="_blank">Instalar</a>
+                  <a href="https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/sagemaker.html?icmpid=docs_sagemaker_lp" class="awsdocs-link" rel="noopener noreferrer" target="_blank">SageMaker</a>
+                  <a href="https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/sagemaker-runtime.html?icmpid=docs_sagemaker_lp" class="awsdocs-link" rel="noopener noreferrer" target="_blank">SageMakerRuntime</a>
+               
+                        </div>
+                    </article>
+                </div>
+            </section>
+        </main>
+        <aside class="awsdocs-side-nav">
+            <nav class="awsdocs-side-nav-section">
+                <h2 class="awsdocs-side-nav-title">Get Started</h2>
+                <ul class="awsdocs-side-nav-list">
+                    <li>
+                        <a href="https://docs.aws.amazon.com/sagemaker/latest/dg/gs.html?icmpid=docs_sagemaker_lp" class="awsdocs-link">Create, Train, and Deploy a Simple Machine Learning Model</a>
+                    </li>
+                    <li>
+                        <a href="https://aws.amazon.com/quickstart/architecture/predictive-data-science-sagemaker-and-data-lake/?icmpid=docs_sagemaker_lp" class="awsdocs-link">AWS Quick Start - Predictive Data Science with Amazon
+              SageMaker and a Data Lake on AWS
+          </a>
+                    </li>
+                </ul>
+            </nav>
+            <nav class="awsdocs-side-nav-section">
+                <h2 class="awsdocs-side-nav-title">Related Info</h2>
+                <ul class="awsdocs-side-nav-list">
+                    <li>
+                        <a href="https://aws.amazon.com/sagemaker/?icmpid=docs_sagemaker_lp" class="awsdocs-link">Product
+            Information </a>
+                    </li>
+                    <li>
+                        <a href="https://aws.amazon.com/sagemaker/pricing/?icmpid=docs_sagemaker_lp" class="awsdocs-link">
+            Pricing</a>
+                    </li>
+                    <li>
+                        <a href="https://aws.amazon.com/sagemaker/faqs/?icmpid=docs_sagemaker_lp" class="awsdocs-link">
+            FAQs</a>
+                    </li>
+                    <li>
+                        <a href="https://aws.amazon.com/blogs/machine-learning/?icmpid=docs_sagemaker_lp" class="awsdocs-link">
+            AWS Machine Learning Blog</a>
+                    </li>
+                    <li>
+                        <a href="https://forums.aws.amazon.com/forum.jspa?forumID=285" class="awsdocs-link">Amazon SageMaker
+            Forum</a>
+                    </li>
+                    <li>
+                        <a href="https://aws.amazon.com/tools/" class="awsdocs-link">SDKs &amp; Tools</a>
+                    </li>
+                    <li>
+                        <a href="/general/latest/gr/Welcome.html?icmpid=docs_sagemaker_lp" class="awsdocs-link">AWS General
+            Reference</a>
+                    </li>
+                    <li>
+                        <a href="https://aws.amazon.com/training/learning-paths/machine-learning/?icmpid=docs_sagemaker_lp" class="awsdocs-link">AWS Training</a>
+                    </li>
+                    <li>
+                        <a href="https://aws.amazon.com/machine-learning/customers/?icmpid=docs_sagemaker_lp" class="awsdocs-link">
+            Machine Learning Customers and Case Studies</a>
+                    </li>
+                    <li>
+                        <a href="https://aws.amazon.com/whitepapers/?icmpid=docs_sagemaker_lp#machine-learning" class="awsdocs-link">
+            AWS Whitepapers</a>
+                    </li>
+                    <li>
+                        <a href="https://aws.amazon.com/contact-us/?icmpid=docs_sagemaker_lp" class="awsdocs-link">Contact Us
+          </a>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+    </div>
+</div>
+
+  </body>
+</html>

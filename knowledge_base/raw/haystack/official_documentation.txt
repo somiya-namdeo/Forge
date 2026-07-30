@@ -1,0 +1,2386 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+	<meta name="generator" content="Hugo 0.155.2">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+  <title>
+    
+      Haystack | Haystack
+    
+  </title>
+
+  <meta name="description" content="Create agentic, context engineered AI systems using Haystack’s modular and customizable building blocks, built for real-world, production-ready applications." />
+
+  
+  
+
+
+
+  <meta property="og:title" content="Haystack | Haystack" />
+
+
+
+<meta
+  property="og:description"
+  content="
+    Create agentic, context engineered AI systems using Haystack’s modular and customizable building blocks, built for real-world, production-ready applications.
+  "
+/>
+<meta
+  property="og:type"
+  content="
+    website
+  "
+/>
+<meta property="og:url" content="/" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:creator" content="@haystack_ai" />
+<meta name="twitter:site" content="@haystack_ai" />
+
+
+  <meta name="twitter:title" content="Haystack | Haystack" />
+
+
+<meta
+  name="twitter:description"
+  content="
+    Create agentic, context engineered AI systems using Haystack’s modular and customizable building blocks, built for real-world, production-ready applications.
+  
+  "
+/>
+    <meta property="og:image" content="https://haystack.deepset.ai/images/haystack-ogimage.png" />
+  
+    <meta name="twitter:image" content="https://haystack.deepset.ai/images/haystack-ogimage.png" />
+  
+  <meta property="og:site_name" content="Haystack" />
+
+
+
+  
+  
+  <link rel="stylesheet" href="/sass/main.min.fb0a441283e15d2d530a37729e6dbeddb159b5203f6ef2fd1202bed687e4facd.css" />
+
+  
+  
+
+  
+  <script id="usercentrics-cmp" src="https://web.cmp.usercentrics.eu/ui/loader.js" data-settings-id="DqIWN6P3BV8hRR" async></script>
+
+  <link href="https://www.googletagmanager.com" rel="preconnect" crossorigin />
+  <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+
+  
+  
+
+
+
+<script>
+    (function(w,d,s,l,i){
+        w[l]=w[l]||[];
+        w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});
+        var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })
+    (window,document,'script','dataLayer', "GTM-WCKQG9T");
+</script>
+  <script type="text/javascript">
+  window.dataLayer = window.dataLayer || [];
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+  gtag("consent", "default", {
+    ad_user_data: "denied",
+    ad_personalization: "denied",
+    ad_storage: "denied",
+    analytics_storage: "denied",
+    wait_for_update: 500
+  });
+  gtag("set", "ads_data_redaction", true);
+</script>
+</head>
+
+
+  <body>
+    
+    
+
+
+
+<noscript>
+    <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WCKQG9T" height="0" width="0" style="display:none;visibility:hidden"></iframe>
+</noscript>
+
+    
+    
+
+
+
+
+
+
+
+<header class="site-header">
+  <div class="container">
+    <a class="site-title" href="/"><img src="/images/logos/haystack.png" alt="Haystack" aria-label="Haystack logo"></a>
+
+    
+    <button class="nav-toggle nav-toggle-open" aria-label="Open menu">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 22" role="presentation" focusable="false"
+        class="header_hamburger-icon">
+        <path stroke="#000" stroke-linecap="round" stroke-width="2" d="M23 11H1M23 21H1M23 1H1"></path>
+      </svg>
+    </button>
+
+    
+    
+<nav class="nav mobile-nav">
+  <button class="nav-toggle nav-toggle-close" aria-label="Close menu">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 14 14"
+      role="img"
+      aria-label="Cross icon"
+      focusable="false"
+    >
+      <path
+        d="M1 1l12 12m0-12L1 13"
+        stroke="#000"
+        stroke-linecap="round"
+        stroke-width="2"
+      ></path>
+    </svg>
+  </button>
+  <ul role="list">
+    
+    
+    
+      
+        <li>
+          <span class="menu-label">
+            Overview
+          </span>
+          <ul class="sub-menu" role="list">
+            
+              <li
+                class=""
+              >
+              
+                <a href="/overview/intro" >
+                  
+
+                  What is Haystack?
+                </a>
+              </li>
+            
+              <li
+                class=""
+              >
+              
+                <a href="/overview/quick-start" >
+                  
+
+                  Get Started
+                </a>
+              </li>
+            
+              <li
+                class=""
+              >
+              
+                <a href="/overview/demo" >
+                  
+
+                  Demos
+                </a>
+              </li>
+            
+              <li
+                class=""
+              >
+              
+                <a href="/ambassadors" >
+                  
+
+                  Ambassadors
+                </a>
+              </li>
+            
+          </ul>
+        </li>
+      
+    
+    
+      
+      
+        <li>
+          <a href="https://docs.haystack.deepset.ai/docs" class=""  target="_blank" rel="noopener">
+            
+            
+            Documentation
+          </a>
+        </li>
+      
+    
+    
+      
+        <li>
+          <span class="menu-label">
+            Learn
+          </span>
+          <ul class="sub-menu" role="list">
+            
+              <li
+                class=""
+              >
+              
+                <a href="/tutorials" >
+                  
+
+                  📚 Tutorials &amp; Walkthroughs
+                </a>
+              </li>
+            
+              <li
+                class=""
+              >
+              
+                <a href="/cookbook" >
+                  
+
+                  🧑‍🍳 Cookbook
+                </a>
+              </li>
+            
+              <li
+                class=""
+              >
+              
+                <a href="https://github.com/deepset-ai/haystack-experimental"  target="_blank" rel="noopener">
+                  
+
+                  🧪 Experiments
+                </a>
+              </li>
+            
+              <li
+                class=""
+              >
+              
+                <a href="/release-notes" >
+                  
+
+                  ⭐️ Release Notes
+                </a>
+              </li>
+            
+              <li
+                class=""
+              >
+              
+                <a href="https://app.datacamp.com/learn/courses/building-ai-agents-with-haystack"  target="_blank" rel="noopener">
+                  
+                    <span span class="menu-item-tag">New</span>
+                  
+
+                  💚 DataCamp Course: Building AI Agents
+                </a>
+              </li>
+            
+              <li
+                class=""
+              >
+              
+                <a href="https://www.deeplearning.ai/short-courses/building-ai-applications-with-haystack/"  target="_blank" rel="noopener">
+                  
+
+                  🚀 DeepLearning.AI: Building AI Applications
+                </a>
+              </li>
+            
+          </ul>
+        </li>
+      
+    
+    
+      
+      
+        <li>
+          <a href="/integrations" class="" >
+            
+            
+            Integrations
+          </a>
+        </li>
+      
+    
+    
+      
+      
+        <li>
+          <a href="/blog" class="" >
+            
+            
+            Blog
+          </a>
+        </li>
+      
+    
+    
+      
+        <li>
+          <span class="menu-label">
+            Haystack Enterprise
+          </span>
+          <ul class="sub-menu" role="list">
+            
+              <li
+                class=""
+              >
+              
+                <a href="https://www.deepset.ai/deepset-studio"  target="_blank" rel="noopener">
+                  
+                    <span span class="menu-item-tag">Sign up</span>
+                  
+
+                  Haystack Enterprise Trial
+                </a>
+              </li>
+            
+              <li
+                class=""
+              >
+              
+                <a href="https://www.deepset.ai/products-and-services/deepset-ai-platform"  target="_blank" rel="noopener">
+                  
+
+                  Haystack Enterprise Platform
+                </a>
+              </li>
+            
+              <li
+                class=""
+              >
+              
+                <a href="https://www.deepset.ai/blog"  target="_blank" rel="noopener">
+                  
+
+                  Haystack Enterprise Blog
+                </a>
+              </li>
+            
+              <li
+                class=""
+              >
+              
+                <a href="https://www.deepset.ai/careers"  target="_blank" rel="noopener">
+                  
+
+                  Careers
+                </a>
+              </li>
+            
+          </ul>
+        </li>
+      
+    
+
+  
+    
+  <a class="btn btn-dark-blue arrow-button" href="https://www.deepset.ai/products-and-services/haystack-enterprise"  target="_blank" rel="noopener">
+    <div class="button-wrapper">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="16px"
+        height="16px"
+        viewBox="0 0 13 14"
+        role="presentation"
+        focusable="false"
+        class="button-arrow first"
+      >
+        <path
+          d="M6.33.8a.43.43 0 01.61 0l5.93 6.05c.09.09.13.21.13.32 0 .11-.04.23-.13.31l-5.93 6.05a.43.43 0 01-.61 0L5.31 12.5a.44.44 0 010-.62L8.62 8.5c.05-.06.02-.15-.06-.15H.43A.44.44 0 010 7.91V6.44C0 6.2.19 6 .43 6h8.14c.08 0 .12-.09.06-.15L5.31 2.46a.44.44 0 010-.62L6.33.8z"
+          fill="#fff"
+          fill-rule="evenodd"
+          clip-rule="evenodd"
+        ></path>
+      </svg>
+      
+      <div class="text-wrapper">
+        Get Enterprise Support
+      </div>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="16px"
+        height="16px"
+        viewBox="0 0 13 14"
+        role="presentation"
+        focusable="false"
+        class="button-arrow second"
+      >
+        <path
+          d="M6.33.8a.43.43 0 01.61 0l5.93 6.05c.09.09.13.21.13.32 0 .11-.04.23-.13.31l-5.93 6.05a.43.43 0 01-.61 0L5.31 12.5a.44.44 0 010-.62L8.62 8.5c.05-.06.02-.15-.06-.15H.43A.44.44 0 010 7.91V6.44C0 6.2.19 6 .43 6h8.14c.08 0 .12-.09.06-.15L5.31 2.46a.44.44 0 010-.62L6.33.8z"
+          fill="#fff"
+          fill-rule="evenodd"
+          clip-rule="evenodd"
+        ></path>
+      </svg>
+    </div>
+  </a>
+
+
+
+
+  
+    
+  <a class="btn btn-deepset-blue arrow-button" href="/overview/quick-start" >
+    <div class="button-wrapper">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="16px"
+        height="16px"
+        viewBox="0 0 13 14"
+        role="presentation"
+        focusable="false"
+        class="button-arrow first"
+      >
+        <path
+          d="M6.33.8a.43.43 0 01.61 0l5.93 6.05c.09.09.13.21.13.32 0 .11-.04.23-.13.31l-5.93 6.05a.43.43 0 01-.61 0L5.31 12.5a.44.44 0 010-.62L8.62 8.5c.05-.06.02-.15-.06-.15H.43A.44.44 0 010 7.91V6.44C0 6.2.19 6 .43 6h8.14c.08 0 .12-.09.06-.15L5.31 2.46a.44.44 0 010-.62L6.33.8z"
+          fill="#fff"
+          fill-rule="evenodd"
+          clip-rule="evenodd"
+        ></path>
+      </svg>
+      
+      <div class="text-wrapper">
+        Get Started
+      </div>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="16px"
+        height="16px"
+        viewBox="0 0 13 14"
+        role="presentation"
+        focusable="false"
+        class="button-arrow second"
+      >
+        <path
+          d="M6.33.8a.43.43 0 01.61 0l5.93 6.05c.09.09.13.21.13.32 0 .11-.04.23-.13.31l-5.93 6.05a.43.43 0 01-.61 0L5.31 12.5a.44.44 0 010-.62L8.62 8.5c.05-.06.02-.15-.06-.15H.43A.44.44 0 010 7.91V6.44C0 6.2.19 6 .43 6h8.14c.08 0 .12-.09.06-.15L5.31 2.46a.44.44 0 010-.62L6.33.8z"
+          fill="#fff"
+          fill-rule="evenodd"
+          clip-rule="evenodd"
+        ></path>
+      </svg>
+    </div>
+  </a>
+
+
+
+
+
+  </ul>
+</nav>
+
+    
+<nav class="nav desktop-nav">
+  <ul role="list">
+    
+    
+      
+      
+        <li class="dropdown-menu">
+          
+
+          
+          
+            
+          
+            
+          
+            
+          
+            
+          
+
+          <a
+            href="#"
+            class="dropdown-button "
+          >
+            Overview
+          </a>
+
+          <ul class="sub-menu" role="list">
+            
+              <li
+                class=""
+              >
+                <a
+                  class="btn arrow-link"
+                  href="/overview/intro"
+                  
+                >
+                  <div class="button-wrapper">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16px"
+                      height="16px"
+                      viewBox="0 0 13 14"
+                      role="presentation"
+                      focusable="false"
+                      class="button-arrow first"
+                    >
+                      <path
+                        d="M6.33.8a.43.43 0 01.61 0l5.93 6.05c.09.09.13.21.13.32 0 .11-.04.23-.13.31l-5.93 6.05a.43.43 0 01-.61 0L5.31 12.5a.44.44 0 010-.62L8.62 8.5c.05-.06.02-.15-.06-.15H.43A.44.44 0 010 7.91V6.44C0 6.2.19 6 .43 6h8.14c.08 0 .12-.09.06-.15L5.31 2.46a.44.44 0 010-.62L6.33.8z"
+                        fill="#2b2f55"
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
+                      ></path>
+                    </svg>
+                    <div class="text-wrapper">
+                      
+
+                      What is Haystack?
+                    </div>
+                  </div>
+                </a>
+              </li>
+            
+              <li
+                class=""
+              >
+                <a
+                  class="btn arrow-link"
+                  href="/overview/quick-start"
+                  
+                >
+                  <div class="button-wrapper">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16px"
+                      height="16px"
+                      viewBox="0 0 13 14"
+                      role="presentation"
+                      focusable="false"
+                      class="button-arrow first"
+                    >
+                      <path
+                        d="M6.33.8a.43.43 0 01.61 0l5.93 6.05c.09.09.13.21.13.32 0 .11-.04.23-.13.31l-5.93 6.05a.43.43 0 01-.61 0L5.31 12.5a.44.44 0 010-.62L8.62 8.5c.05-.06.02-.15-.06-.15H.43A.44.44 0 010 7.91V6.44C0 6.2.19 6 .43 6h8.14c.08 0 .12-.09.06-.15L5.31 2.46a.44.44 0 010-.62L6.33.8z"
+                        fill="#2b2f55"
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
+                      ></path>
+                    </svg>
+                    <div class="text-wrapper">
+                      
+
+                      Get Started
+                    </div>
+                  </div>
+                </a>
+              </li>
+            
+              <li
+                class=""
+              >
+                <a
+                  class="btn arrow-link"
+                  href="/overview/demo"
+                  
+                >
+                  <div class="button-wrapper">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16px"
+                      height="16px"
+                      viewBox="0 0 13 14"
+                      role="presentation"
+                      focusable="false"
+                      class="button-arrow first"
+                    >
+                      <path
+                        d="M6.33.8a.43.43 0 01.61 0l5.93 6.05c.09.09.13.21.13.32 0 .11-.04.23-.13.31l-5.93 6.05a.43.43 0 01-.61 0L5.31 12.5a.44.44 0 010-.62L8.62 8.5c.05-.06.02-.15-.06-.15H.43A.44.44 0 010 7.91V6.44C0 6.2.19 6 .43 6h8.14c.08 0 .12-.09.06-.15L5.31 2.46a.44.44 0 010-.62L6.33.8z"
+                        fill="#2b2f55"
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
+                      ></path>
+                    </svg>
+                    <div class="text-wrapper">
+                      
+
+                      Demos
+                    </div>
+                  </div>
+                </a>
+              </li>
+            
+              <li
+                class=""
+              >
+                <a
+                  class="btn arrow-link"
+                  href="/ambassadors"
+                  
+                >
+                  <div class="button-wrapper">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16px"
+                      height="16px"
+                      viewBox="0 0 13 14"
+                      role="presentation"
+                      focusable="false"
+                      class="button-arrow first"
+                    >
+                      <path
+                        d="M6.33.8a.43.43 0 01.61 0l5.93 6.05c.09.09.13.21.13.32 0 .11-.04.23-.13.31l-5.93 6.05a.43.43 0 01-.61 0L5.31 12.5a.44.44 0 010-.62L8.62 8.5c.05-.06.02-.15-.06-.15H.43A.44.44 0 010 7.91V6.44C0 6.2.19 6 .43 6h8.14c.08 0 .12-.09.06-.15L5.31 2.46a.44.44 0 010-.62L6.33.8z"
+                        fill="#2b2f55"
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
+                      ></path>
+                    </svg>
+                    <div class="text-wrapper">
+                      
+
+                      Ambassadors
+                    </div>
+                  </div>
+                </a>
+              </li>
+            
+          </ul>
+        </li>
+      
+    
+      
+      
+        
+        <li>
+          <a
+            href="https://docs.haystack.deepset.ai/docs"
+            class=""
+            
+              target="_blank" rel="noopener"
+            
+            >
+            
+            
+            Documentation</a
+          >
+        </li>
+      
+    
+      
+      
+        <li class="dropdown-menu">
+          
+            <span class="menu-item-tag">New</span>
+          
+
+          
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+
+          <a
+            href="#"
+            class="dropdown-button "
+          >
+            Learn
+          </a>
+
+          <ul class="sub-menu" role="list">
+            
+              <li
+                class=""
+              >
+                <a
+                  class="btn arrow-link"
+                  href="/tutorials"
+                  
+                >
+                  <div class="button-wrapper">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16px"
+                      height="16px"
+                      viewBox="0 0 13 14"
+                      role="presentation"
+                      focusable="false"
+                      class="button-arrow first"
+                    >
+                      <path
+                        d="M6.33.8a.43.43 0 01.61 0l5.93 6.05c.09.09.13.21.13.32 0 .11-.04.23-.13.31l-5.93 6.05a.43.43 0 01-.61 0L5.31 12.5a.44.44 0 010-.62L8.62 8.5c.05-.06.02-.15-.06-.15H.43A.44.44 0 010 7.91V6.44C0 6.2.19 6 .43 6h8.14c.08 0 .12-.09.06-.15L5.31 2.46a.44.44 0 010-.62L6.33.8z"
+                        fill="#2b2f55"
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
+                      ></path>
+                    </svg>
+                    <div class="text-wrapper">
+                      
+
+                      📚 Tutorials &amp; Walkthroughs
+                    </div>
+                  </div>
+                </a>
+              </li>
+            
+              <li
+                class=""
+              >
+                <a
+                  class="btn arrow-link"
+                  href="/cookbook"
+                  
+                >
+                  <div class="button-wrapper">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16px"
+                      height="16px"
+                      viewBox="0 0 13 14"
+                      role="presentation"
+                      focusable="false"
+                      class="button-arrow first"
+                    >
+                      <path
+                        d="M6.33.8a.43.43 0 01.61 0l5.93 6.05c.09.09.13.21.13.32 0 .11-.04.23-.13.31l-5.93 6.05a.43.43 0 01-.61 0L5.31 12.5a.44.44 0 010-.62L8.62 8.5c.05-.06.02-.15-.06-.15H.43A.44.44 0 010 7.91V6.44C0 6.2.19 6 .43 6h8.14c.08 0 .12-.09.06-.15L5.31 2.46a.44.44 0 010-.62L6.33.8z"
+                        fill="#2b2f55"
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
+                      ></path>
+                    </svg>
+                    <div class="text-wrapper">
+                      
+
+                      🧑‍🍳 Cookbook
+                    </div>
+                  </div>
+                </a>
+              </li>
+            
+              <li
+                class=""
+              >
+                <a
+                  class="btn arrow-link"
+                  href="https://github.com/deepset-ai/haystack-experimental"
+                  
+                    target="_blank" rel="noopener"
+                  
+                >
+                  <div class="button-wrapper">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16px"
+                      height="16px"
+                      viewBox="0 0 13 14"
+                      role="presentation"
+                      focusable="false"
+                      class="button-arrow first"
+                    >
+                      <path
+                        d="M6.33.8a.43.43 0 01.61 0l5.93 6.05c.09.09.13.21.13.32 0 .11-.04.23-.13.31l-5.93 6.05a.43.43 0 01-.61 0L5.31 12.5a.44.44 0 010-.62L8.62 8.5c.05-.06.02-.15-.06-.15H.43A.44.44 0 010 7.91V6.44C0 6.2.19 6 .43 6h8.14c.08 0 .12-.09.06-.15L5.31 2.46a.44.44 0 010-.62L6.33.8z"
+                        fill="#2b2f55"
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
+                      ></path>
+                    </svg>
+                    <div class="text-wrapper">
+                      
+
+                      🧪 Experiments
+                    </div>
+                  </div>
+                </a>
+              </li>
+            
+              <li
+                class=""
+              >
+                <a
+                  class="btn arrow-link"
+                  href="/release-notes"
+                  
+                >
+                  <div class="button-wrapper">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16px"
+                      height="16px"
+                      viewBox="0 0 13 14"
+                      role="presentation"
+                      focusable="false"
+                      class="button-arrow first"
+                    >
+                      <path
+                        d="M6.33.8a.43.43 0 01.61 0l5.93 6.05c.09.09.13.21.13.32 0 .11-.04.23-.13.31l-5.93 6.05a.43.43 0 01-.61 0L5.31 12.5a.44.44 0 010-.62L8.62 8.5c.05-.06.02-.15-.06-.15H.43A.44.44 0 010 7.91V6.44C0 6.2.19 6 .43 6h8.14c.08 0 .12-.09.06-.15L5.31 2.46a.44.44 0 010-.62L6.33.8z"
+                        fill="#2b2f55"
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
+                      ></path>
+                    </svg>
+                    <div class="text-wrapper">
+                      
+
+                      ⭐️ Release Notes
+                    </div>
+                  </div>
+                </a>
+              </li>
+            
+              <li
+                class=""
+              >
+                <a
+                  class="btn arrow-link"
+                  href="https://app.datacamp.com/learn/courses/building-ai-agents-with-haystack"
+                  
+                    target="_blank" rel="noopener"
+                  
+                >
+                  <div class="button-wrapper">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16px"
+                      height="16px"
+                      viewBox="0 0 13 14"
+                      role="presentation"
+                      focusable="false"
+                      class="button-arrow first"
+                    >
+                      <path
+                        d="M6.33.8a.43.43 0 01.61 0l5.93 6.05c.09.09.13.21.13.32 0 .11-.04.23-.13.31l-5.93 6.05a.43.43 0 01-.61 0L5.31 12.5a.44.44 0 010-.62L8.62 8.5c.05-.06.02-.15-.06-.15H.43A.44.44 0 010 7.91V6.44C0 6.2.19 6 .43 6h8.14c.08 0 .12-.09.06-.15L5.31 2.46a.44.44 0 010-.62L6.33.8z"
+                        fill="#2b2f55"
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
+                      ></path>
+                    </svg>
+                    <div class="text-wrapper">
+                      
+                        <span class="menu-item-tag">New</span>
+                      
+
+                      💚 DataCamp Course: Building AI Agents
+                    </div>
+                  </div>
+                </a>
+              </li>
+            
+              <li
+                class=""
+              >
+                <a
+                  class="btn arrow-link"
+                  href="https://www.deeplearning.ai/short-courses/building-ai-applications-with-haystack/"
+                  
+                    target="_blank" rel="noopener"
+                  
+                >
+                  <div class="button-wrapper">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16px"
+                      height="16px"
+                      viewBox="0 0 13 14"
+                      role="presentation"
+                      focusable="false"
+                      class="button-arrow first"
+                    >
+                      <path
+                        d="M6.33.8a.43.43 0 01.61 0l5.93 6.05c.09.09.13.21.13.32 0 .11-.04.23-.13.31l-5.93 6.05a.43.43 0 01-.61 0L5.31 12.5a.44.44 0 010-.62L8.62 8.5c.05-.06.02-.15-.06-.15H.43A.44.44 0 010 7.91V6.44C0 6.2.19 6 .43 6h8.14c.08 0 .12-.09.06-.15L5.31 2.46a.44.44 0 010-.62L6.33.8z"
+                        fill="#2b2f55"
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
+                      ></path>
+                    </svg>
+                    <div class="text-wrapper">
+                      
+
+                      🚀 DeepLearning.AI: Building AI Applications
+                    </div>
+                  </div>
+                </a>
+              </li>
+            
+          </ul>
+        </li>
+      
+    
+      
+      
+        
+        <li>
+          <a
+            href="/integrations"
+            class=""
+            
+            >
+            
+            
+            Integrations</a
+          >
+        </li>
+      
+    
+      
+      
+        
+        <li>
+          <a
+            href="/blog"
+            class=""
+            
+            >
+            
+            
+            Blog</a
+          >
+        </li>
+      
+    
+      
+      
+        <li class="dropdown-menu">
+          
+
+          
+          
+            
+          
+            
+          
+            
+          
+            
+          
+
+          <a
+            href="#"
+            class="dropdown-button "
+          >
+            Haystack Enterprise
+          </a>
+
+          <ul class="sub-menu" role="list">
+            
+              <li
+                class=""
+              >
+                <a
+                  class="btn arrow-link"
+                  href="https://www.deepset.ai/deepset-studio"
+                  
+                    target="_blank" rel="noopener"
+                  
+                >
+                  <div class="button-wrapper">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16px"
+                      height="16px"
+                      viewBox="0 0 13 14"
+                      role="presentation"
+                      focusable="false"
+                      class="button-arrow first"
+                    >
+                      <path
+                        d="M6.33.8a.43.43 0 01.61 0l5.93 6.05c.09.09.13.21.13.32 0 .11-.04.23-.13.31l-5.93 6.05a.43.43 0 01-.61 0L5.31 12.5a.44.44 0 010-.62L8.62 8.5c.05-.06.02-.15-.06-.15H.43A.44.44 0 010 7.91V6.44C0 6.2.19 6 .43 6h8.14c.08 0 .12-.09.06-.15L5.31 2.46a.44.44 0 010-.62L6.33.8z"
+                        fill="#2b2f55"
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
+                      ></path>
+                    </svg>
+                    <div class="text-wrapper">
+                      
+                        <span class="menu-item-tag">Sign up</span>
+                      
+
+                      Haystack Enterprise Trial
+                    </div>
+                  </div>
+                </a>
+              </li>
+            
+              <li
+                class=""
+              >
+                <a
+                  class="btn arrow-link"
+                  href="https://www.deepset.ai/products-and-services/deepset-ai-platform"
+                  
+                    target="_blank" rel="noopener"
+                  
+                >
+                  <div class="button-wrapper">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16px"
+                      height="16px"
+                      viewBox="0 0 13 14"
+                      role="presentation"
+                      focusable="false"
+                      class="button-arrow first"
+                    >
+                      <path
+                        d="M6.33.8a.43.43 0 01.61 0l5.93 6.05c.09.09.13.21.13.32 0 .11-.04.23-.13.31l-5.93 6.05a.43.43 0 01-.61 0L5.31 12.5a.44.44 0 010-.62L8.62 8.5c.05-.06.02-.15-.06-.15H.43A.44.44 0 010 7.91V6.44C0 6.2.19 6 .43 6h8.14c.08 0 .12-.09.06-.15L5.31 2.46a.44.44 0 010-.62L6.33.8z"
+                        fill="#2b2f55"
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
+                      ></path>
+                    </svg>
+                    <div class="text-wrapper">
+                      
+
+                      Haystack Enterprise Platform
+                    </div>
+                  </div>
+                </a>
+              </li>
+            
+              <li
+                class=""
+              >
+                <a
+                  class="btn arrow-link"
+                  href="https://www.deepset.ai/blog"
+                  
+                    target="_blank" rel="noopener"
+                  
+                >
+                  <div class="button-wrapper">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16px"
+                      height="16px"
+                      viewBox="0 0 13 14"
+                      role="presentation"
+                      focusable="false"
+                      class="button-arrow first"
+                    >
+                      <path
+                        d="M6.33.8a.43.43 0 01.61 0l5.93 6.05c.09.09.13.21.13.32 0 .11-.04.23-.13.31l-5.93 6.05a.43.43 0 01-.61 0L5.31 12.5a.44.44 0 010-.62L8.62 8.5c.05-.06.02-.15-.06-.15H.43A.44.44 0 010 7.91V6.44C0 6.2.19 6 .43 6h8.14c.08 0 .12-.09.06-.15L5.31 2.46a.44.44 0 010-.62L6.33.8z"
+                        fill="#2b2f55"
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
+                      ></path>
+                    </svg>
+                    <div class="text-wrapper">
+                      
+
+                      Haystack Enterprise Blog
+                    </div>
+                  </div>
+                </a>
+              </li>
+            
+              <li
+                class=""
+              >
+                <a
+                  class="btn arrow-link"
+                  href="https://www.deepset.ai/careers"
+                  
+                    target="_blank" rel="noopener"
+                  
+                >
+                  <div class="button-wrapper">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16px"
+                      height="16px"
+                      viewBox="0 0 13 14"
+                      role="presentation"
+                      focusable="false"
+                      class="button-arrow first"
+                    >
+                      <path
+                        d="M6.33.8a.43.43 0 01.61 0l5.93 6.05c.09.09.13.21.13.32 0 .11-.04.23-.13.31l-5.93 6.05a.43.43 0 01-.61 0L5.31 12.5a.44.44 0 010-.62L8.62 8.5c.05-.06.02-.15-.06-.15H.43A.44.44 0 010 7.91V6.44C0 6.2.19 6 .43 6h8.14c.08 0 .12-.09.06-.15L5.31 2.46a.44.44 0 010-.62L6.33.8z"
+                        fill="#2b2f55"
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
+                      ></path>
+                    </svg>
+                    <div class="text-wrapper">
+                      
+
+                      Careers
+                    </div>
+                  </div>
+                </a>
+              </li>
+            
+          </ul>
+        </li>
+      
+    
+  </ul>
+</nav>
+
+<div class="nav-button-container">
+  
+    
+  <a class="btn btn-dark-blue arrow-button" href="https://www.deepset.ai/products-and-services/haystack-enterprise"  target="_blank" rel="noopener">
+    <div class="button-wrapper">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="16px"
+        height="16px"
+        viewBox="0 0 13 14"
+        role="presentation"
+        focusable="false"
+        class="button-arrow first"
+      >
+        <path
+          d="M6.33.8a.43.43 0 01.61 0l5.93 6.05c.09.09.13.21.13.32 0 .11-.04.23-.13.31l-5.93 6.05a.43.43 0 01-.61 0L5.31 12.5a.44.44 0 010-.62L8.62 8.5c.05-.06.02-.15-.06-.15H.43A.44.44 0 010 7.91V6.44C0 6.2.19 6 .43 6h8.14c.08 0 .12-.09.06-.15L5.31 2.46a.44.44 0 010-.62L6.33.8z"
+          fill="#fff"
+          fill-rule="evenodd"
+          clip-rule="evenodd"
+        ></path>
+      </svg>
+      
+      <div class="text-wrapper">
+        Get Enterprise Support
+      </div>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="16px"
+        height="16px"
+        viewBox="0 0 13 14"
+        role="presentation"
+        focusable="false"
+        class="button-arrow second"
+      >
+        <path
+          d="M6.33.8a.43.43 0 01.61 0l5.93 6.05c.09.09.13.21.13.32 0 .11-.04.23-.13.31l-5.93 6.05a.43.43 0 01-.61 0L5.31 12.5a.44.44 0 010-.62L8.62 8.5c.05-.06.02-.15-.06-.15H.43A.44.44 0 010 7.91V6.44C0 6.2.19 6 .43 6h8.14c.08 0 .12-.09.06-.15L5.31 2.46a.44.44 0 010-.62L6.33.8z"
+          fill="#fff"
+          fill-rule="evenodd"
+          clip-rule="evenodd"
+        ></path>
+      </svg>
+    </div>
+  </a>
+
+
+
+
+  
+    
+  <a class="btn btn-deepset-blue arrow-button" href="/overview/quick-start" >
+    <div class="button-wrapper">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="16px"
+        height="16px"
+        viewBox="0 0 13 14"
+        role="presentation"
+        focusable="false"
+        class="button-arrow first"
+      >
+        <path
+          d="M6.33.8a.43.43 0 01.61 0l5.93 6.05c.09.09.13.21.13.32 0 .11-.04.23-.13.31l-5.93 6.05a.43.43 0 01-.61 0L5.31 12.5a.44.44 0 010-.62L8.62 8.5c.05-.06.02-.15-.06-.15H.43A.44.44 0 010 7.91V6.44C0 6.2.19 6 .43 6h8.14c.08 0 .12-.09.06-.15L5.31 2.46a.44.44 0 010-.62L6.33.8z"
+          fill="#fff"
+          fill-rule="evenodd"
+          clip-rule="evenodd"
+        ></path>
+      </svg>
+      
+      <div class="text-wrapper">
+        Get Started
+      </div>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="16px"
+        height="16px"
+        viewBox="0 0 13 14"
+        role="presentation"
+        focusable="false"
+        class="button-arrow second"
+      >
+        <path
+          d="M6.33.8a.43.43 0 01.61 0l5.93 6.05c.09.09.13.21.13.32 0 .11-.04.23-.13.31l-5.93 6.05a.43.43 0 01-.61 0L5.31 12.5a.44.44 0 010-.62L8.62 8.5c.05-.06.02-.15-.06-.15H.43A.44.44 0 010 7.91V6.44C0 6.2.19 6 .43 6h8.14c.08 0 .12-.09.06-.15L5.31 2.46a.44.44 0 010-.62L6.33.8z"
+          fill="#fff"
+          fill-rule="evenodd"
+          clip-rule="evenodd"
+        ></path>
+      </svg>
+    </div>
+  </a>
+
+
+
+
+</div>
+
+
+
+  </div>
+</header>
+
+    
+    
+
+<a href="/launch-week/haystack-3/" class="announcement-bar blue">
+  <div class="container">
+      <span>🚀 <strong>Launch Week, Day 5/5:</strong> Human-in-the-Loop from Terminal to Prod</span>
+      <span>
+          <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="14px"
+      height="14px"
+      viewBox="0 0 13 14"
+      role="presentation"
+      focusable="false"
+      class="arrow"
+    >
+      <path
+        d="M6.33.8a.43.43 0 01.61 0l5.93 6.05c.09.09.13.21.13.32 0 .11-.04.23-.13.31l-5.93 6.05a.43.43 0 01-.61 0L5.31 12.5a.44.44 0 010-.62L8.62 8.5c.05-.06.02-.15-.06-.15H.43A.44.44 0 010 7.91V6.44C0 6.2.19 6 .43 6h8.14c.08 0 .12-.09.06-.15L5.31 2.46a.44.44 0 010-.62L6.33.8z"
+        fill="#fff"
+        fill-rule="evenodd"
+        clip-rule="evenodd"
+      ></path>
+    </svg>
+      </span>
+  </div>
+</a>
+     
+
+    
+    <main>
+
+<section class="index-hero" >
+  <div class="bg-images">
+    <div class="background-gradient">
+    <div class="left-image">
+      <img src="/images/white-hero-left.svg" />
+    </div>
+    </div>
+    <div class="right-image">
+      <img src="/images/white-hero-right.svg" />
+    </div>
+  </div>
+  <div class="">
+    <div class="inner hero-inner">
+      <div class="container container-padded hero-text">
+        
+        <span class="hero-logo">
+          <img src="/images/logos/haystack.png" alt="Haystack" aria-label="Haystack logo">
+        </span>
+
+        
+        <h1>The Open Source AI Framework <br/>for Production Ready <br/> Agents, RAG & Context Engineering</h1>
+
+        
+        <div class="hero-button-container">
+          
+            <button class="white-button" onclick="navigator.clipboard.writeText(this.innerText); document.getElementById('tick').style.stroke = 'black'">pip install haystack-ai
+              <svg width="30" height="20" viewBox="0 0 24 23" fill="none">
+                <path d="m 16,4 c 0.93,0 1.395,0 1.7765,0.10222 1.0352,0.2774 1.8439,1.08605 2.1213,2.12132 C 20,6.60504 20,7.07003 20,8 v 9.2 c 0,1.6802 0,2.5202 -0.327,3.162 -0.2876,0.5645 -0.7465,1.0234 -1.311,1.311 C 17.7202,22 16.8802,22 15.2,22 H 8.8 C 7.11984,22 6.27976,22 5.63803,21.673 5.07354,21.3854 4.6146,20.9265 4.32698,20.362 4,19.7202 4,18.8802 4,17.2 V 8 C 4,7.07003 4,6.60504 4.10222,6.22354 4.37962,5.18827 5.18827,4.37962 6.22354,4.10222 6.60504,4 7.07003,4 8,4 m 1.6,2 h 4.8 C 14.9601,6 15.2401,6 15.454,5.89101 15.6422,5.79513 15.7951,5.64215 15.891,5.45399 16,5.24008 16,4.96005 16,4.4 V 3.6 C 16,3.03995 16,2.75992 15.891,2.54601 15.7951,2.35785 15.6422,2.20487 15.454,2.10899 15.2401,2 14.9601,2 14.4,2 H 9.6 C 9.03995,2 8.75992,2 8.54601,2.10899 8.35785,2.20487 8.20487,2.35785 8.10899,2.54601 8,2.75992 8,3.03995 8,3.6 V 4.4 C 8,4.96005 8,5.24008 8.10899,5.45399 8.20487,5.64215 8.35785,5.79513 8.54601,5.89101 8.75992,6 9.03995,6 9.6,6 Z" stroke="black" id="board" />  
+                <path d="M 9.0000002,15 11,17 15.5,12.5" stroke="white" id="tick" />
+              </svg>
+            </button>
+          
+
+          <div>
+            
+              
+            
+              
+                <a href="/overview/quick-start/" class="button blue">Get Started with Haystack
+                  <svg xmlns="http://www.w3.org/2000/svg" width="15" height="12" viewBox="0 0 15 12" fill="none">
+                    <path d="M8.61373 0.929565L13.4237 5.73953M13.4237 5.73953L8.61373 10.5495M13.4237 5.73953H0.196289" 
+                      stroke="white" stroke-width="1.80374" />
+                  </svg>
+                </a>
+              
+            
+          </div>
+
+        </div>
+
+        
+        <div class="hero-github-stars">
+          
+
+
+<a class="github-stars-btn" href="https://github.com/deepset-ai/haystack" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 32 30" fill="none">
+  <path d="M15.5556 0C6.96111 0 0 6.88228 0 15.3794C0 22.1848 4.45278 27.9328 10.6361 29.9706C11.4139 30.1052 11.7056 29.6438 11.7056 29.2401C11.7056 28.8748 11.6861 27.6637 11.6861 26.3757C7.77778 27.087 6.76667 25.4337 6.45556 24.5686C6.28056 24.1264 5.52222 22.7615 4.86111 22.3963C4.31667 22.1079 3.53889 21.3966 4.84167 21.3774C6.06667 21.3582 6.94167 22.4924 7.23333 22.9538C8.63333 25.2799 10.8694 24.6263 11.7639 24.2226C11.9 23.2229 12.3083 22.5501 12.7556 22.1656C9.29444 21.7811 5.67778 20.4546 5.67778 14.572C5.67778 12.8995 6.28056 11.5153 7.27222 10.4388C7.11667 10.0543 6.57222 8.4779 7.42778 6.36323C7.42778 6.36323 8.73056 5.95952 11.7056 7.93962C12.95 7.59358 14.2722 7.42056 15.5944 7.42056C16.9167 7.42056 18.2389 7.59358 19.4833 7.93962C22.4583 5.9403 23.7611 6.36323 23.7611 6.36323C24.6167 8.4779 24.0722 10.0543 23.9167 10.4388C24.9083 11.5153 25.5111 12.8803 25.5111 14.572C25.5111 20.4738 21.875 21.7811 18.4139 22.1656C18.9778 22.6462 19.4639 23.5689 19.4639 25.0108C19.4639 27.0678 19.4444 28.721 19.4444 29.2401C19.4444 29.6438 19.7361 30.1244 20.5139 29.9706C23.602 28.9399 26.2853 26.9777 28.1864 24.3603C30.0874 21.7428 31.1103 18.6018 31.1111 15.3794C31.1111 6.88228 24.15 0 15.5556 0Z" fill="#2B2F55"/>
+</svg>
+  Stars <span class="separator">|</span><span class="github-stars-js">
+<div class="loader">
+  <svg
+    width="100%"
+    height="100%"
+    viewBox="0 0 24 24"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M12 22c5.421 0 10-4.579 10-10h-2c0 4.337-3.663 8-8 8s-8-3.663-8-8c0-4.336 3.663-8 8-8V2C6.579 2 2 6.58 2 12c0 5.421 4.579 10 10 10z"
+    />
+  </svg>
+</div>
+</span></a>
+          
+
+
+<a class="github-stars-btn" href="https://discord.com/invite/xYvH6drSmA" target="_blank" rel="noopener">
+  <svg class="discord-logo" viewBox="0 -28.5 256 256" version="1.1" xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMid">
+    <g>
+      <path
+        d="M216.856339,16.5966031 C200.285002,8.84328665 182.566144,3.2084988 164.041564,0 C161.766523,4.11318106 159.108624,9.64549908 157.276099,14.0464379 C137.583995,11.0849896 118.072967,11.0849896 98.7430163,14.0464379 C96.9108417,9.64549908 94.1925838,4.11318106 91.8971895,0 C73.3526068,3.2084988 55.6133949,8.86399117 39.0420583,16.6376612 C5.61752293,67.146514 -3.4433191,116.400813 1.08711069,164.955721 C23.2560196,181.510915 44.7403634,191.567697 65.8621325,198.148576 C71.0772151,190.971126 75.7283628,183.341335 79.7352139,175.300261 C72.104019,172.400575 64.7949724,168.822202 57.8887866,164.667963 C59.7209612,163.310589 61.5131304,161.891452 63.2445898,160.431257 C105.36741,180.133187 151.134928,180.133187 192.754523,160.431257 C194.506336,161.891452 196.298154,163.310589 198.110326,164.667963 C191.183787,168.842556 183.854737,172.420929 176.223542,175.320965 C180.230393,183.341335 184.861538,190.991831 190.096624,198.16893 C211.238746,191.588051 232.743023,181.531619 254.911949,164.955721 C260.227747,108.668201 245.831087,59.8662432 216.856339,16.5966031 Z M85.4738752,135.09489 C72.8290281,135.09489 62.4592217,123.290155 62.4592217,108.914901 C62.4592217,94.5396472 72.607595,82.7145587 85.4738752,82.7145587 C98.3405064,82.7145587 108.709962,94.5189427 108.488529,108.914901 C108.508531,123.290155 98.3405064,135.09489 85.4738752,135.09489 Z M170.525237,135.09489 C157.88039,135.09489 147.510584,123.290155 147.510584,108.914901 C147.510584,94.5396472 157.658606,82.7145587 170.525237,82.7145587 C183.391518,82.7145587 193.761324,94.5189427 193.539891,108.914901 C193.539891,123.290155 183.391518,135.09489 170.525237,135.09489 Z"
+        fill="#2B2F55" fill-rule="nonzero"></path>
+    </g>
+  </svg>
+  Join Discord</a>
+        </div>
+
+        
+        
+      </div>
+
+      <div class="logo-marquee">
+  <div class="container container-padded">
+    <h2>
+      Haystack Sets the Standard for Agentic AI Across Industries
+    </h2>
+  </div>
+  
+  <div class="splide logo-slider row1" aria-label="Logo Slider">
+    <div class="splide__track">
+      <ul class="splide__list">
+        
+        <li class="splide__slide logo-slide">
+          <img src="/images/logos/telus.png" alt="Telus Agriculture and Consumer Goods" />
+        </li>
+        
+        <li class="splide__slide logo-slide">
+          <img src="/images/logos/lufthansa.png" alt="Lufthansa Industry Solutions" />
+        </li>
+        
+        <li class="splide__slide logo-slide">
+          <img src="/images/logos/accenture.png" alt="Accenture" />
+        </li>
+        
+        <li class="splide__slide logo-slide">
+          <img src="/images/logos/nvidia.png" alt="NVIDIA" />
+        </li>
+        
+        <li class="splide__slide logo-slide">
+          <img src="/images/logos/airbus.png" alt="Airbus" />
+        </li>
+        
+        <li class="splide__slide logo-slide">
+          <img src="/images/logos/aws.png" alt="AWS" />
+        </li>
+        
+        <li class="splide__slide logo-slide">
+          <img src="/images/logos/comcast.png" alt="Comcast" />
+        </li>
+        
+        <li class="splide__slide logo-slide">
+          <img src="/images/logos/zeit-online.png" alt="Zeit Online" />
+        </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  <div class="splide logo-slider row2" aria-label="Logo Slider">
+    <div class="splide__track">
+      <ul class="splide__list">
+        
+      </ul>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const config = {
+      type: "loop",
+      fixedWidth: "224px",
+      fixedHeight: "100px",
+      gap: "4px",
+      arrows: false,
+      pagination: false,
+      drag: false,
+      autoScroll: {
+        speed: 0.5,
+        pauseOnHover: false,
+        pauseOnFocus: false
+      },
+    }
+
+    const splide_row1 = new Splide(".logo-slider.row1", config);
+    splide_row1.mount(window.splide.Extensions);
+
+    const splide_row2 = new Splide(".logo-slider.row2", { ...config, autoScroll: { ...config.autoScroll, speed: -0.5 } });
+    splide_row2.mount(window.splide.Extensions);
+  });
+</script>
+    </div>
+  </div>
+</section>
+
+
+<div class="index-features">
+  <div class="index-features-cards">
+    <div class="container">
+      <h2>Why Teams Choose Haystack for their AI Workflows</h2>
+    </div>
+
+    <div class="container">
+
+      <div class="feature-grid">
+        
+        <div class="feature-item">
+          <img src="/images/icons/star-icon.svg" alt="" />
+          <h3>Build Transparent, Context Engineered AI Systems</h3>
+          <p><p>Orchestrate every step of your AI agent, from retrieval to reasoning to memory and tool use.</p>
+<p>Haystack’s modular framework gives you full visibility to inspect, debug, and optimize every decision your AI makes.</p>
+</p>
+        </div>
+        
+        <div class="feature-item">
+          <img src="/images/icons/bot.svg" alt="" />
+          <h3>Integrate Freely with Your AI Stack</h3>
+          <p><p>Connect to OpenAI, Anthropic, Mistral, Hugging Face, Weaviate, Pinecone, Elasticsearch, and more with no vendor lock-in.</p>
+<p>Haystack’s open architecture lets you mix and match components to fit your workflow.</p>
+</p>
+        </div>
+        
+        <div class="feature-item">
+          <img src="/images/icons/develop.svg" alt="" />
+          <h3>Develop and Deploy Faster</h3>
+          <p><p>Move from prototype to production using the same composable building blocks.</p>
+<p>Haystack lets you go from a proof-of-concept to a full production system with unified tooling for building, testing, and shipping your AI use cases.</p>
+</p>
+        </div>
+        
+        <div class="feature-item">
+          <img src="/images/icons/enterprise.svg" alt="" />
+          <h3>Operate at Enterprise Scale</h3>
+          <p><p>Run production workloads across any environment with built-in reliability and observability.</p>
+<p>Haystack Pipelines are serializable, cloud-agnostic, and Kubernetes-ready, with logging, monitoring, and deployment guides to support you.</p>
+</p>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+</div>
+<div class="index-comparison">
+  <div class="heading">
+    <div class="container">
+      <h2>Build and Scale with the Haystack Ecosystem</h2>
+      <h3>From open source to enterprise: tools for every step of your AI journey</h3>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="comparison-cards">
+      
+      <div class="comparison-card">
+        <div class="comparison-image">
+          <img src="/images/haystack-oss.png" alt="Haystack, AI Orchestration Framework" />
+        </div>
+
+        <h3>Haystack, AI Orchestration Framework</h3>
+
+        <div class="text">
+          Open Source AI framework for building production-ready, LLM-powered agents and applications, on your own or with Community support.
+        </div>
+
+        <div class="btn-container">
+          
+  <a class="btn btn-deepset-blue arrow-button" href="/overview/quick-start" >
+    <div class="button-wrapper">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="16px"
+        height="16px"
+        viewBox="0 0 13 14"
+        role="presentation"
+        focusable="false"
+        class="button-arrow first"
+      >
+        <path
+          d="M6.33.8a.43.43 0 01.61 0l5.93 6.05c.09.09.13.21.13.32 0 .11-.04.23-.13.31l-5.93 6.05a.43.43 0 01-.61 0L5.31 12.5a.44.44 0 010-.62L8.62 8.5c.05-.06.02-.15-.06-.15H.43A.44.44 0 010 7.91V6.44C0 6.2.19 6 .43 6h8.14c.08 0 .12-.09.06-.15L5.31 2.46a.44.44 0 010-.62L6.33.8z"
+          fill="#fff"
+          fill-rule="evenodd"
+          clip-rule="evenodd"
+        ></path>
+      </svg>
+      
+      <div class="text-wrapper">
+        Start with Haystack
+      </div>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="16px"
+        height="16px"
+        viewBox="0 0 13 14"
+        role="presentation"
+        focusable="false"
+        class="button-arrow second"
+      >
+        <path
+          d="M6.33.8a.43.43 0 01.61 0l5.93 6.05c.09.09.13.21.13.32 0 .11-.04.23-.13.31l-5.93 6.05a.43.43 0 01-.61 0L5.31 12.5a.44.44 0 010-.62L8.62 8.5c.05-.06.02-.15-.06-.15H.43A.44.44 0 010 7.91V6.44C0 6.2.19 6 .43 6h8.14c.08 0 .12-.09.06-.15L5.31 2.46a.44.44 0 010-.62L6.33.8z"
+          fill="#fff"
+          fill-rule="evenodd"
+          clip-rule="evenodd"
+        ></path>
+      </svg>
+    </div>
+  </a>
+
+
+
+
+
+        </div>
+      </div>
+      
+      <div class="comparison-card">
+        <div class="comparison-image">
+          <img src="/images/haystack-enterprise-starter.png" alt="Enterprise Support" />
+        </div>
+
+        <h3>Enterprise Support</h3>
+
+        <div class="text">
+          <p>Enterprise-support for the Haystack framework, with exclusive access to:</p>
+<ul>
+<li>Private, secure engineering support</li>
+<li>Best practices templates &amp; deployment guides</li>
+<li>Access to flexible services</li>
+<li>Flexible pricing based on company size</li>
+</ul>
+        </div>
+
+        <div class="btn-container">
+          
+  <a class="btn btn-deepset-blue arrow-button" href="https://www.deepset.ai/products-and-services/haystack-enterprise"  target="_blank" rel="noopener">
+    <div class="button-wrapper">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="16px"
+        height="16px"
+        viewBox="0 0 13 14"
+        role="presentation"
+        focusable="false"
+        class="button-arrow first"
+      >
+        <path
+          d="M6.33.8a.43.43 0 01.61 0l5.93 6.05c.09.09.13.21.13.32 0 .11-.04.23-.13.31l-5.93 6.05a.43.43 0 01-.61 0L5.31 12.5a.44.44 0 010-.62L8.62 8.5c.05-.06.02-.15-.06-.15H.43A.44.44 0 010 7.91V6.44C0 6.2.19 6 .43 6h8.14c.08 0 .12-.09.06-.15L5.31 2.46a.44.44 0 010-.62L6.33.8z"
+          fill="#fff"
+          fill-rule="evenodd"
+          clip-rule="evenodd"
+        ></path>
+      </svg>
+      
+      <div class="text-wrapper">
+        Get Enterprise Support
+      </div>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="16px"
+        height="16px"
+        viewBox="0 0 13 14"
+        role="presentation"
+        focusable="false"
+        class="button-arrow second"
+      >
+        <path
+          d="M6.33.8a.43.43 0 01.61 0l5.93 6.05c.09.09.13.21.13.32 0 .11-.04.23-.13.31l-5.93 6.05a.43.43 0 01-.61 0L5.31 12.5a.44.44 0 010-.62L8.62 8.5c.05-.06.02-.15-.06-.15H.43A.44.44 0 010 7.91V6.44C0 6.2.19 6 .43 6h8.14c.08 0 .12-.09.06-.15L5.31 2.46a.44.44 0 010-.62L6.33.8z"
+          fill="#fff"
+          fill-rule="evenodd"
+          clip-rule="evenodd"
+        ></path>
+      </svg>
+    </div>
+  </a>
+
+
+
+
+
+        </div>
+      </div>
+      
+      <div class="comparison-card">
+        <div class="comparison-image">
+          <img src="/images/haystack-enterprise-platform.png" alt="AI Orchestration Platform" />
+        </div>
+
+        <h3>AI Orchestration Platform</h3>
+
+        <div class="text">
+          <p>Sovereign AI toolset built on Haystack to accelerate and scale AI use cases with:</p>
+<ul>
+<li>Visual, code-aligned pipeline design</li>
+<li>Data, retrieval, and testing workflows</li>
+<li>Secure access controls and auditability</li>
+<li>Scalable cloud or on-prem deployment</li>
+</ul>
+        </div>
+
+        <div class="btn-container">
+          
+  <a class="btn btn-deepset-blue arrow-button" href="https://www.deepset.ai/deepset-studio"  target="_blank" rel="noopener">
+    <div class="button-wrapper">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="16px"
+        height="16px"
+        viewBox="0 0 13 14"
+        role="presentation"
+        focusable="false"
+        class="button-arrow first"
+      >
+        <path
+          d="M6.33.8a.43.43 0 01.61 0l5.93 6.05c.09.09.13.21.13.32 0 .11-.04.23-.13.31l-5.93 6.05a.43.43 0 01-.61 0L5.31 12.5a.44.44 0 010-.62L8.62 8.5c.05-.06.02-.15-.06-.15H.43A.44.44 0 010 7.91V6.44C0 6.2.19 6 .43 6h8.14c.08 0 .12-.09.06-.15L5.31 2.46a.44.44 0 010-.62L6.33.8z"
+          fill="#fff"
+          fill-rule="evenodd"
+          clip-rule="evenodd"
+        ></path>
+      </svg>
+      
+      <div class="text-wrapper">
+        Try Haystack Enterprise Platform for free
+      </div>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="16px"
+        height="16px"
+        viewBox="0 0 13 14"
+        role="presentation"
+        focusable="false"
+        class="button-arrow second"
+      >
+        <path
+          d="M6.33.8a.43.43 0 01.61 0l5.93 6.05c.09.09.13.21.13.32 0 .11-.04.23-.13.31l-5.93 6.05a.43.43 0 01-.61 0L5.31 12.5a.44.44 0 010-.62L8.62 8.5c.05-.06.02-.15-.06-.15H.43A.44.44 0 010 7.91V6.44C0 6.2.19 6 .43 6h8.14c.08 0 .12-.09.06-.15L5.31 2.46a.44.44 0 010-.62L6.33.8z"
+          fill="#fff"
+          fill-rule="evenodd"
+          clip-rule="evenodd"
+        ></path>
+      </svg>
+    </div>
+  </a>
+
+
+
+
+
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+
+<section class="index-usecases"  id="use-cases" >
+  <div class="container container-padded">
+    <div class="inner">
+      
+      <h2>Haystack Use Cases</h2>
+    </div>
+  </div>
+
+  
+  <div class="splide usecases-slider" aria-label="Use Cases Slider">
+    <div class="splide__track">
+      <ul class="splide__list">
+        
+        <li class="splide__slide usecase-slide">
+          <div class="slide-icon">
+            <img src="/images/icons/use-case-1.svg" alt="" />
+          </div>
+
+          <div class="slide-content">
+            <h3>Advanced<br> RAG</h3>
+            <span class="slide-separator"></span>
+            <p>Build highly performant RAG pipelines with a multitude of retrieval and generation strategies. From hybrid retrieval to self-correction loops, Haystack has got you covered.</p>
+          </div>
+        </li>
+        
+        <li class="splide__slide usecase-slide">
+          <div class="slide-icon">
+            <img src="/images/icons/use-case-4.svg" alt="" />
+          </div>
+
+          <div class="slide-content">
+            <h3>AI<br> Agents</h3>
+            <span class="slide-separator"></span>
+            <p>Design production-ready AI agents with standardized tool calling and scalable context engineering. Branching and looping pipelines give you full control over complex, multi-step decision flows.</p>
+          </div>
+        </li>
+        
+        <li class="splide__slide usecase-slide">
+          <div class="slide-icon">
+            <img src="/images/icons/use-case-1.svg" alt="" />
+          </div>
+
+          <div class="slide-content">
+            <h3>Multimodal<br> AI</h3>
+            <span class="slide-separator"></span>
+            <p>Architect a next generation AI app around all modalities, not just text. Haystack can do tasks like image processing and audio transcription too.</p>
+          </div>
+        </li>
+        
+        <li class="splide__slide usecase-slide">
+          <div class="slide-icon">
+            <img src="/images/icons/use-case-2.svg" alt="" />
+          </div>
+
+          <div class="slide-content">
+            <h3>Conversational<br> AI</h3>
+            <span class="slide-separator"></span>
+            <p>All of our generators provide a standardized interface so that you can focus on building the perfect bot for your users.</p>
+          </div>
+        </li>
+        
+        <li class="splide__slide usecase-slide">
+          <div class="slide-icon">
+            <img src="/images/icons/use-case-3.svg" alt="" />
+          </div>
+
+          <div class="slide-content">
+            <h3>Content<br> Generation</h3>
+            <span class="slide-separator"></span>
+            <p>The flexibility and composability of Haystack’s prompt flow is unparalleled. Leverage our Jinja-2 templates and build a content generation engine that exactly matches your workflow.</p>
+          </div>
+        </li>
+        
+      </ul>
+    </div>
+
+    <div class="splide__arrows arrow-div">
+      <button class="splide__arrow splide__arrow--prev arrow arrow-prev">
+        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40" fill="none">
+          <circle cx="20" cy="20" r="20" fill="#EDEDED" />
+          <path d="M23 13L16 20L23 27" stroke="black" stroke-width="2" />
+        </svg>
+      </button>
+      <button class="splide__arrow splide__arrow--next arrow arrow-next">
+        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40" fill="none">
+          <circle cx="20" cy="20" r="20" transform="rotate(-180 20 20)" fill="#EDEDED" />
+          <path d="M17 27L24 20L17 13" stroke="black" stroke-width="2" />
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="container container-padded">
+    <div class="inner border-div"></div>
+  </div>
+</section>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    var splide = new Splide(".usecases-slider", {
+      type: "loop",
+      perPage: 4,
+      perMove: 1,
+      flickMaxPages: 1,
+      arrows: true,
+      pagination: false,
+      drag: true,
+      padding: { right: "20%" },
+      flickMaxPages: 1,
+
+      breakpoints: {
+        1280: {
+          perPage: 3,
+        },
+        1024: {
+          perPage: 2,
+        },
+        624: {
+          perPage: 1,
+        },
+      },
+
+      classes: {
+        arrows: "splide__arrows arrow-div",
+        arrow : "splide__arrow arrow",
+        prev  : "splide__arrow--prev arrow-prev",
+        next  : "splide__arrow--next arrow-next",
+      },
+    });
+    splide.mount();
+  });
+</script>
+<section class="index-community"  id="community" >
+  <div class="container container-padded">
+    <div class="inner">
+
+      
+      <h2>Join the community</h2>
+
+      
+      <div class="community-cards">
+        
+<div class="discord-card">
+  <svg class="discord-logo" viewBox="0 -28.5 256 256" version="1.1" xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMid">
+    <g>
+      <path
+        d="M216.856339,16.5966031 C200.285002,8.84328665 182.566144,3.2084988 164.041564,0 C161.766523,4.11318106 159.108624,9.64549908 157.276099,14.0464379 C137.583995,11.0849896 118.072967,11.0849896 98.7430163,14.0464379 C96.9108417,9.64549908 94.1925838,4.11318106 91.8971895,0 C73.3526068,3.2084988 55.6133949,8.86399117 39.0420583,16.6376612 C5.61752293,67.146514 -3.4433191,116.400813 1.08711069,164.955721 C23.2560196,181.510915 44.7403634,191.567697 65.8621325,198.148576 C71.0772151,190.971126 75.7283628,183.341335 79.7352139,175.300261 C72.104019,172.400575 64.7949724,168.822202 57.8887866,164.667963 C59.7209612,163.310589 61.5131304,161.891452 63.2445898,160.431257 C105.36741,180.133187 151.134928,180.133187 192.754523,160.431257 C194.506336,161.891452 196.298154,163.310589 198.110326,164.667963 C191.183787,168.842556 183.854737,172.420929 176.223542,175.320965 C180.230393,183.341335 184.861538,190.991831 190.096624,198.16893 C211.238746,191.588051 232.743023,181.531619 254.911949,164.955721 C260.227747,108.668201 245.831087,59.8662432 216.856339,16.5966031 Z M85.4738752,135.09489 C72.8290281,135.09489 62.4592217,123.290155 62.4592217,108.914901 C62.4592217,94.5396472 72.607595,82.7145587 85.4738752,82.7145587 C98.3405064,82.7145587 108.709962,94.5189427 108.488529,108.914901 C108.508531,123.290155 98.3405064,135.09489 85.4738752,135.09489 Z M170.525237,135.09489 C157.88039,135.09489 147.510584,123.290155 147.510584,108.914901 C147.510584,94.5396472 157.658606,82.7145587 170.525237,82.7145587 C183.391518,82.7145587 193.761324,94.5189427 193.539891,108.914901 C193.539891,123.290155 183.391518,135.09489 170.525237,135.09489 Z"
+        fill="#fff" fill-rule="nonzero"></path>
+    </g>
+  </svg>
+
+  <h3>Join our Discord</h3>
+
+  
+  <p>Our community on Discord is for everyone interested in NLP, using Haystack or even just getting started!</p>
+  
+
+  <a href="https://discord.com/invite/xYvH6drSmA">GET STARTED
+    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="12" viewBox="0 0 15 12" fill="none">
+      <path d="M8.61373 0.929565L13.4237 5.73953M13.4237 5.73953L8.61373 10.5495M13.4237 5.73953H0.196289"
+        stroke="white" stroke-width="1.80374" />
+    </svg>
+  </a>
+</div>
+        
+
+
+<div class="newsletter-card">
+  
+  <svg version="1.1" class="email-icon"  id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 330.001 330.001" style="enable-background:new 0 0 330.001 330.001;" xml:space="preserve">
+    <g id="XMLID_348_">
+      <path fill="#2b2f55" id="XMLID_350_" d="M173.871,177.097c-2.641,1.936-5.756,2.903-8.87,2.903c-3.116,0-6.23-0.967-8.871-2.903L30,84.602
+        L0.001,62.603L0,275.001c0.001,8.284,6.716,15,15,15L315.001,290c8.285,0,15-6.716,15-14.999V62.602l-30.001,22L173.871,177.097z"
+        />
+      <polygon fill="#2b2f55" id="XMLID_351_" points="165.001,146.4 310.087,40.001 19.911,40"/>
+    </g>
+  </svg>
+
+  <h3>Sign up for<br> Haystack updates</h3>
+  
+    <p>Stay tuned for the latest Haystack community news and events.</p>
+  
+
+  <form
+    class="js-newsletter-form disabled"
+    aria-label="Subscribe to our community updates"
+  >
+    <input
+      type="email"
+      name="email"
+      placeholder="Enter your email"
+      aria-label="Email"
+    />
+    
+
+
+  <button type="submit" class="btn btn-deepset-blue arrow-button" disabled>
+    <div class="button-wrapper">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="16px"
+        height="16px"
+        viewBox="0 0 13 14"
+        role="presentation"
+        focusable="false"
+        class="button-arrow first"
+      >
+        <path
+          d="M6.33.8a.43.43 0 01.61 0l5.93 6.05c.09.09.13.21.13.32 0 .11-.04.23-.13.31l-5.93 6.05a.43.43 0 01-.61 0L5.31 12.5a.44.44 0 010-.62L8.62 8.5c.05-.06.02-.15-.06-.15H.43A.44.44 0 010 7.91V6.44C0 6.2.19 6 .43 6h8.14c.08 0 .12-.09.06-.15L5.31 2.46a.44.44 0 010-.62L6.33.8z"
+          fill="#fff"
+          fill-rule="evenodd"
+          clip-rule="evenodd"
+        ></path>
+      </svg>
+      <div class="text-wrapper">
+        Subscribe
+      </div>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="16px"
+        height="16px"
+        viewBox="0 0 13 14"
+        role="presentation"
+        focusable="false"
+        class="button-arrow second"
+      >
+        <path
+          d="M6.33.8a.43.43 0 01.61 0l5.93 6.05c.09.09.13.21.13.32 0 .11-.04.23-.13.31l-5.93 6.05a.43.43 0 01-.61 0L5.31 12.5a.44.44 0 010-.62L8.62 8.5c.05-.06.02-.15-.06-.15H.43A.44.44 0 010 7.91V6.44C0 6.2.19 6 .43 6h8.14c.08 0 .12-.09.06-.15L5.31 2.46a.44.44 0 010-.62L6.33.8z"
+          fill="#fff"
+          fill-rule="evenodd"
+          clip-rule="evenodd"
+        ></path>
+      </svg>
+    </div>
+  </button>
+
+
+    <span class="success-message">Thanks! You&#39;ll soon receive a confirmation email 📧</span>
+  </form>
+  
+</div>
+
+      </div>
+
+      
+      <div class="upcoming-events">
+        <h3>Upcoming Haystack Events</h3>
+        <div class="luma-embed">
+          <iframe
+                src="https://lu.ma/embed/calendar/cal-O155CdRencJk5U2/events?lt=light"
+                width="100%"
+                height="450"
+                frameborder="0"
+                style="border: 2px solid #2558ff; border-radius: 4px;"
+                allowfullscreen=""
+                aria-hidden="false"
+                tabindex="0"
+                ></iframe>
+        </div>
+      </div>
+
+      
+      
+    </div>
+  </div>
+
+  
+  <div class="splide talks-slider" aria-label="Community Talks Slider">
+    <div class="splide__track">
+      <ul class="splide__list">
+        
+        <li class="splide__slide talks-slide">
+          <div class="video-card">
+            <div class="video-container">
+              <iframe width="100%" height="100%" src="https://www.youtube.com/embed/4HvosulBp7I"
+                title="YouTube video player" frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen></iframe>
+            </div>
+
+            <div class="talks-slide-content">
+              <h4>Breaking Down DeepSeek-R1</h4>
+            </div>
+          </div>
+        </li>
+        
+        <li class="splide__slide talks-slide">
+          <div class="video-card">
+            <div class="video-container">
+              <iframe width="100%" height="100%" src="https://www.youtube.com/embed/Dy-n_yC3Cto"
+                title="YouTube video player" frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen></iframe>
+            </div>
+
+            <div class="talks-slide-content">
+              <h4>Evaluating AI with Haystack</h4>
+            </div>
+          </div>
+        </li>
+        
+        <li class="splide__slide talks-slide">
+          <div class="video-card">
+            <div class="video-container">
+              <iframe width="100%" height="100%" src="https://www.youtube.com/embed/QWx3OzW2Pvo"
+                title="YouTube video player" frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen></iframe>
+            </div>
+
+            <div class="talks-slide-content">
+              <h4>Adding Tools to Agentic Pipelines &amp; Other Experimental Features</h4>
+            </div>
+          </div>
+        </li>
+        
+      </ul>
+    </div>
+
+    <div class="splide__arrows talks-arrow-div">
+      <button class="splide__arrow splide__arrow--prev talks-arrow talks-arrow-prev">
+        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40" fill="none">
+          <circle cx="20" cy="20" r="20" fill="#EDEDED" />
+          <path d="M23 13L16 20L23 27" stroke="black" stroke-width="2" />
+        </svg>
+      </button>
+      <button class="splide__arrow splide__arrow--next talks-arrow talks-arrow-next">
+        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40" fill="none">
+          <circle cx="20" cy="20" r="20" transform="rotate(-180 20 20)" fill="#EDEDED" />
+          <path d="M17 27L24 20L17 13" stroke="black" stroke-width="2" />
+        </svg>
+      </button>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    var splide = new Splide(".talks-slider", {
+      type: "slide",
+      perPage: 1,
+      perMove: 1,
+      flickMaxPages: 1,
+      arrows: true,
+      pagination: false,
+      drag: true,
+      padding: { right: "20%" },
+      flickMaxPages: 1,
+
+      mediaQuery: "min",
+      breakpoints: {
+        768: {
+          destroy: true,
+        },
+
+        512: {
+          perPage: 2,
+        },
+      },
+
+      classes: {
+        arrows: "splide__arrows talks-arrow-div",
+        arrow: "splide__arrow talks-arrow",
+        prev: "splide__arrow--prev talks-arrow-prev",
+        next: "splide__arrow--next talks-arrow-next",
+      },
+    });
+    splide.mount();
+  });
+</script>
+
+
+<link rel="stylesheet" href="/sass/splide-core.min.css" />
+
+
+<script src="/js/splide.min.js"></script>
+
+<script src="/js/splide-extension-auto-scroll.min.js"></script>
+</main>
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+<footer
+  class="footer footer-dark"
+>
+  <div class="container">
+    <div class="inner">
+      <div class="footer-secondary-links">
+        
+        <a
+          class="footer-deepset-logo"
+          aria-label="Go to Deepset AI's homepage"
+          href="https://www.deepset.ai/"
+        >
+        <img src="/images/logos/deepset.png" alt="deepset" aria-label="deepset logo">
+        </a>
+
+        
+        <p class="footer-tagline">
+          Build custom AI agents and RAG applications with smart context engineering, powered by open AI orchestration.
+        </p>
+
+        
+        <div class="footer-legal desktop" role="list" aria-label="Legal pages">
+          <small class="copyright">© 2026 deepset GmbH. All rights reserved.</small>
+          <a href="#" onClick="UC_UI.showSecondLayer();" aria-label="Open privacy settings">Privacy Settings</a>
+          <a
+            target="_self"
+            href="https://www.deepset.ai/privacy-policy"
+            aria-label="Go to the Privacy page"
+            >Privacy</a
+          >
+
+          <a
+            target="_self"
+            href="https://www.deepset.ai/imprint"
+            aria-label="Go to the Imprint page"
+            >Imprint</a
+          >
+        </div>
+
+      </div>
+
+      <div>
+        
+        <ul class="footer-socials" role="list" aria-label="Social pages">
+          
+          <li>
+            <a
+              target="_blank"
+              href="https://twitter.com/haystack_ai"
+              rel="noreferrer noopener"
+              aria-label="Go to our Twitter page"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 35 28"
+                role="img"
+                aria-label="Twitter logo"
+                focusable="false"
+                class="footer-socials-icon twitter-icon"
+              >
+                <path
+                  d="M31.42 6.97c.02.3.02.61.02.91 0 9.34-7.22 20.12-20.43 20.12v-.01C7.11 28 3.28 26.9 0 24.83a14.649 14.649 0 0010.63-2.93c-3.07-.06-5.77-2.03-6.71-4.91 1.08.2 2.19.16 3.24-.12C3.81 16.2 1.4 13.3 1.4 9.93v-.09c1 .55 2.12.85 3.26.88C1.5 8.65.53 4.52 2.44 1.29c3.65 4.42 9.02 7.1 14.8 7.39-.58-2.46.21-5.03 2.08-6.75 2.89-2.68 7.44-2.54 10.16.31 1.61-.31 3.15-.89 4.56-1.72a7.11 7.11 0 01-3.16 3.91c1.42-.17 2.81-.55 4.12-1.12a14.48 14.48 0 01-3.58 3.66z"
+                ></path>
+              </svg>
+            </a>
+          </li>
+
+          
+          <li class="footer-socials-link">
+            <a
+              target="_blank"
+              href="https://github.com/deepset-ai"
+              rel="noreferrer noopener"
+              aria-label="Go to our GitHub page"
+              ><svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+                role="img"
+                aria-label="GitHub logo"
+                focusable="false"
+                class="footer-socials-icon github-icon"
+              >
+                <path
+                  d="M10 0C4.48 0 0 4.59 0 10.25c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.5l-.01-1.74c-2.78.62-3.37-1.37-3.37-1.37-.45-1.18-1.11-1.5-1.11-1.5-.91-.64.07-.62.07-.62 1 .08 1.53 1.06 1.53 1.06.89 1.57 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.25-4.55-1.13-4.55-5.06 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.09-2.71 0 0 .84-.28 2.75 1.05a9.43 9.43 0 015 0c1.91-1.33 2.75-1.05 2.75-1.05.55 1.41.2 2.45.1 2.71a4.02 4.02 0 011.03 2.75c0 3.94-2.34 4.8-4.57 5.06.36.31.68.94.68 1.9l-.01 2.81c0 .28.18.59.69.49a10.23 10.23 0 006.83-9.72A10.12 10.12 0 0010 0z"
+                  fill-rule="evenodd"
+                  clip-rule="evenodd"
+                ></path>
+              </svg>
+            </a>
+          </li>
+
+          
+          <li class="footer-socials-link">
+            <a
+              target="_blank"
+              href="https://www.linkedin.com/company/deepset-ai"
+              rel="noreferrer noopener"
+              aria-label="Go to our LinkedIn page"
+              ><svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 19 19"
+                role="img"
+                aria-label="LinkedIn logo"
+                focusable="false"
+                class="footer-socials-icon linkedin-icon"
+              >
+                <path
+                  d="M4.534 6.3h-3.6a.45.45 0 00-.45.45v11.7c0 .249.202.45.45.45h3.6a.45.45 0 00.45-.45V6.75a.45.45 0 00-.45-.45zM2.716 4.5a2.241 2.241 0 002.232-2.25A2.24 2.24 0 002.716 0 2.241 2.241 0 00.484 2.25c0 1.243 1 2.25 2.232 2.25zm12.619 14.4h2.7a.45.45 0 00.45-.45v-7.56c0-3.393-1.917-5.04-4.599-5.04a3.789 3.789 0 00-2.853 1.143.369.369 0 01-.648-.243.45.45 0 00-.45-.45h-2.7a.45.45 0 00-.45.45v11.7a.45.45 0 00.45.45h2.7a.45.45 0 00.45-.45V11.7a2.25 2.25 0 114.5 0v6.75a.45.45 0 00.45.45z"
+                ></path>
+              </svg>
+            </a>
+          </li>
+
+          
+          <li class="footer-socials-link">
+            <a
+              target="_blank"
+              href="https://www.youtube.com/channel/UC5dfn9m310oyt-cbeegfvZw"
+              rel="noreferrer noopener"
+              aria-label="Go to our YouTube channel"
+              ><svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 34 24"
+                role="img"
+                aria-label="YouTube logo"
+                focusable="false"
+                class="footer-socials-icon youtube-icon"
+              >
+                <path
+                  d="M33.29 3.75A4.25 4.25 0 0030.28.72C27.63 0 17 0 17 0S6.37 0 3.72.72A4.25 4.25 0 00.71 3.75C0 6.42 0 12 0 12s0 5.58.71 8.25a4.25 4.25 0 003.01 3.03C6.37 24 17 24 17 24s10.63 0 13.28-.72a4.32 4.32 0 003.01-3.03C34 17.58 34 12 34 12s0-5.58-.71-8.25zM13.6 17.14V6.86L22.43 12l-8.83 5.14z"
+                ></path>
+              </svg>
+            </a>
+          </li>
+
+          
+          <li class="footer-socials-link">
+            <a
+              target="_blank"
+              href="https://discord.com/invite/xYvH6drSmA"
+              rel="noreferrer noopener"
+              aria-label="Join our Discord"
+            >
+              <svg
+                viewBox="0 -28.5 256 256"
+                version="1.1"
+                xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink"
+                preserveAspectRatio="xMidYMid"
+                class="footer-socials-icon discord-icon"
+              >
+                <g>
+                  <path
+                    d="M216.856339,16.5966031 C200.285002,8.84328665 182.566144,3.2084988 164.041564,0 C161.766523,4.11318106 159.108624,9.64549908 157.276099,14.0464379 C137.583995,11.0849896 118.072967,11.0849896 98.7430163,14.0464379 C96.9108417,9.64549908 94.1925838,4.11318106 91.8971895,0 C73.3526068,3.2084988 55.6133949,8.86399117 39.0420583,16.6376612 C5.61752293,67.146514 -3.4433191,116.400813 1.08711069,164.955721 C23.2560196,181.510915 44.7403634,191.567697 65.8621325,198.148576 C71.0772151,190.971126 75.7283628,183.341335 79.7352139,175.300261 C72.104019,172.400575 64.7949724,168.822202 57.8887866,164.667963 C59.7209612,163.310589 61.5131304,161.891452 63.2445898,160.431257 C105.36741,180.133187 151.134928,180.133187 192.754523,160.431257 C194.506336,161.891452 196.298154,163.310589 198.110326,164.667963 C191.183787,168.842556 183.854737,172.420929 176.223542,175.320965 C180.230393,183.341335 184.861538,190.991831 190.096624,198.16893 C211.238746,191.588051 232.743023,181.531619 254.911949,164.955721 C260.227747,108.668201 245.831087,59.8662432 216.856339,16.5966031 Z M85.4738752,135.09489 C72.8290281,135.09489 62.4592217,123.290155 62.4592217,108.914901 C62.4592217,94.5396472 72.607595,82.7145587 85.4738752,82.7145587 C98.3405064,82.7145587 108.709962,94.5189427 108.488529,108.914901 C108.508531,123.290155 98.3405064,135.09489 85.4738752,135.09489 Z M170.525237,135.09489 C157.88039,135.09489 147.510584,123.290155 147.510584,108.914901 C147.510584,94.5396472 157.658606,82.7145587 170.525237,82.7145587 C183.391518,82.7145587 193.761324,94.5189427 193.539891,108.914901 C193.539891,123.290155 183.391518,135.09489 170.525237,135.09489 Z"
+                    fill-rule="nonzero"
+                  ></path>
+                </g>
+              </svg>
+            </a>
+          </li>
+        </ul>
+
+        
+        <div class="footer-main-links">
+          
+          <ul role="list" aria-label="Community pages">
+            <li class="footer-label">Community</li>
+            <li>
+              <a aria-label="Subscribe to the Luma calendar" href="https://luma.com/haystack">Events</a>
+            </li>
+            <li>
+              <a
+                aria-label="Go to Haystack's Github discussions"
+                href="https://github.com/deepset-ai/haystack/discussions"
+                >GitHub Discussions</a
+              >
+            </li>
+            <li>
+              <a
+                aria-label="Join Discord"
+                href="https://discord.com/invite/xYvH6drSmA"
+                >Discord</a
+              >
+            </li>
+            <li>
+              <a
+                aria-label="Go to Haystack's Hugging Face page"
+                href="https://huggingface.co/deepset"
+                >Hugging Face</a
+              >
+            </li>
+          </ul>
+
+          
+          <ul role="list" aria-label="Resources pages">
+            <li class="footer-label">Resources</li>
+            <li>
+              <a
+                href="https://docs.haystack.deepset.ai/docs/intro"
+                aria-label="Go to the documentation"
+                >Docs</a
+              >
+            </li>
+            <li>
+              <a
+                href="/tutorials"
+                aria-label="Go to the tutorials page"
+                >Tutorials</a
+              >
+            </li>
+            <li>
+              <a
+                href="/cookbook"
+                aria-label="Go to the cookbook page"
+                >Cookbook</a
+              >
+            </li>
+            <li>
+            <a
+                href="/release-notes"
+                aria-label="Go to the release notes page"
+                >Release Notes</a>
+            </li>
+                        <li>
+            <a
+                href="https://github.com/deepset-ai/haystack-experimental"
+                aria-label="Go to the haystack-experimental repo"
+                >Experiments</a>
+            </li>
+          </ul>
+
+          
+          <ul role="list" aria-label="Company pages">
+            <li class="footer-label">Company</li>
+            <li>
+              <a
+                href="https://www.deepset.ai/about"
+                aria-label="Go to the About page"
+                >About</a
+              >
+            </li>
+            <li>
+              <a
+                href="https://www.deepset.ai/careers"
+                aria-label="Go to the Jobs page"
+                >Careers</a
+              >
+            </li>
+          </ul>
+        </div>
+
+        
+        <div class="footer-legal mobile" role="list" aria-label="Legal pages">
+          <div class="legal-links">
+            <a href="#" onClick="UC_UI.showSecondLayer();">Privacy Settings</a>
+            <a
+            target="_self"
+            href="https://www.deepset.ai/privacy-policy"
+            aria-label="Go to the Privacy page"
+            >Privacy</a
+          >
+
+          <a
+            target="_self"
+            href="https://www.deepset.ai/imprint"
+            aria-label="Go to the Imprint page"
+            >Imprint</a
+          >
+          </div>
+
+          <small class="copyright">© 2026 deepset GmbH. All rights reserved.</small>
+        </div>
+
+        
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+
+<script src="/js/script.min.5f36dc463c1d05c8273118c4b696b833f1b7fed4cb4c235d0cc67c2b920adb41.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

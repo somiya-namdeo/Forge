@@ -1,0 +1,708 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="./">
+  <head><!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-NLGDMK5');</script>
+<!-- End Google Tag Manager -->
+<meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta property="og:title" content="BentoML Documentation" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="http://docs.bentoml.com/index.html" />
+<meta property="og:site_name" content="BentoML Documentation" />
+<meta property="og:description" content="github_stars pypi_status actions_status documentation_status join_slack BentoML is a Unified Inference Platform for deploying and scaling AI systems with any model, on any cloud. Featured examples:..." />
+<meta property="og:image" content="https://docs.bentoml.com/en/latest/_static/img/bentoml-banner.jpg" />
+<meta property="og:image:alt" content="BentoML Documentation" />
+<meta name="description" content="github_stars pypi_status actions_status documentation_status join_slack BentoML is a Unified Inference Platform for deploying and scaling AI systems with any model, on any cloud. Featured examples:..." />
+<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="Hello world" href="get-started/hello-world.html" />
+        <link rel="canonical" href="https://docs.bentoml.com/en/latest/index.html" />
+
+    <link rel="shortcut icon" href="_static/favicon-32x32.png"/><!-- Generated with Sphinx 7.4.7 and Furo 2024.08.06 -->
+<script>
+window.Papercups = {
+    config: {
+        // Pass in your Papercups account token here after signing up
+        accountId: '25ad5fd9-293b-4e0f-9601-5b0cd7846b48',
+        token: '25ad5fd9-293b-4e0f-9601-5b0cd7846b48',
+        inbox: 'ac3ebd50-fc10-4299-9a1c-496841b49a6f',
+        title: 'Welcome to BentoML!',
+        subtitle: 'Ask us anything in the chat window below 😊',
+        // newMessagePlaceholder: 'Start typing...',
+        primaryColor: '#47AFD1',
+        // Optionally pass in a default greeting
+        greeting: "Hi there! How can I help you? If we couldn't get back to you in " +
+                "time, feel free to join our community on Slack and post your " +
+                "question in the #support channel: https://l.bentoml.com/join-slack",
+        // Optionally pass in metadata to identify the customer
+        // customer: {
+        //   name: 'Test User',
+        //   email: 'test@test.com',
+        //   external_id: '123',
+        //   metadata: {version: 1, plan: 'premium'}, // Custom fields go here
+        // },
+        // Optionally specify the base URL
+        baseUrl: 'https://yatai-community-papercups.herokuapp.com',
+        // Add this if you want to require the customer to enter
+        // their email before being able to send you a message
+        requireEmailUpfront: true,
+        // Add this if you want to indicate when you/your agents
+        // are online or offline to your customers
+        showAgentAvailability: true,
+    },
+};
+</script>
+<script
+  type="text/javascript"
+  async
+  defer
+  src="https://app.papercups.io/widget.js"
+></script>
+
+        <title>BentoML</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=c824535d" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=354aac6f" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/tabs.css?v=4c969af8" />
+    <link rel="stylesheet" type="text/css" href="_static/css/tooltipster.custom.css" />
+    <link rel="stylesheet" type="text/css" href="_static/css/tooltipster.bundle.min.css" />
+    <link rel="stylesheet" type="text/css" href="_static/css/tooltipster-sideTip-shadow.min.css" />
+    <link rel="stylesheet" type="text/css" href="_static/css/tooltipster-sideTip-punk.min.css" />
+    <link rel="stylesheet" type="text/css" href="_static/css/tooltipster-sideTip-noir.min.css" />
+    <link rel="stylesheet" type="text/css" href="_static/css/tooltipster-sideTip-light.min.css" />
+    <link rel="stylesheet" type="text/css" href="_static/css/tooltipster-sideTip-borderless.min.css" />
+    <link rel="stylesheet" type="text/css" href="_static/css/micromodal.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=302659d7" />
+    <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=38aebdce" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #3f3f3f;
+  --color-code-foreground: #dcdccc;
+  --color-brand-primary: #4dad8c ;
+  --color-brand-content: #4dad8c ;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #272822;
+  --color-code-foreground: #f8f8f2;
+  --color-brand-primary: #4dad8c ;
+  --color-brand-content: #4dad8c ;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #272822;
+  --color-code-foreground: #f8f8f2;
+  --color-brand-primary: #4dad8c ;
+  --color-brand-content: #4dad8c ;
+  
+      }
+    }
+  }
+</style><script async type="text/javascript" src="/_/static/javascript/readthedocs-addons.js"></script><meta name="readthedocs-project-slug" content="bentoml" /><meta name="readthedocs-version-slug" content="latest" /><meta name="readthedocs-resolver-filename" content="/" /><meta name="readthedocs-http-status" content="200" /></head>
+  <body>
+    <!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NLGDMK5"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="#"><div class="brand">BentoML</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="#">
+  
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo only-light" src="_static/img/logo-light.svg" alt="Light Logo"/>
+    <img class="sidebar-logo only-dark" src="_static/img/logo-dark.svg" alt="Dark Logo"/>
+  </div>
+  
+  <span class="sidebar-brand-text">BentoML</span>
+  
+</a><form class="sidebar-search-container" method="get" action="search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Get Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="get-started/hello-world.html">Hello world</a></li>
+<li class="toctree-l1"><a class="reference internal" href="get-started/adaptive-batching.html">Adaptive batching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="get-started/model-composition.html">Model composition</a></li>
+<li class="toctree-l1"><a class="reference internal" href="get-started/async-task-queues.html">Async task queues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="get-started/packaging-for-deployment.html">Packaging for deployment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="get-started/cloud-deployment.html">Cloud deployment</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Learn by Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="examples/overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/vllm.html">LLM inference: vLLM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/function-calling.html">Agent: Function calling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/langgraph.html">Agent: LangGraph</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/shieldgemma.html">LLM safety: ShieldGemma</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/rag.html">RAG: Document ingestion and search</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/sdxl-turbo.html">Stable Diffusion XL Turbo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/comfyui.html">ComfyUI: Deploy workflows as APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/controlnet.html">ControlNet</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/mlflow.html">MLflow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/xgboost.html">XGBoost</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Build with BentoML</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="build-with-bentoml/services.html">Create online API Services</a></li>
+<li class="toctree-l1"><a class="reference internal" href="build-with-bentoml/iotypes.html">Define input and output types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="build-with-bentoml/model-loading-and-management.html">Load and manage models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="build-with-bentoml/gpu-inference.html">Work with GPUs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="build-with-bentoml/clients.html">Call an API endpoint</a></li>
+<li class="toctree-l1"><a class="reference internal" href="build-with-bentoml/parallelize-requests.html">Parallelize requests handling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="build-with-bentoml/runtime-environment.html">Define the runtime environment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="build-with-bentoml/distributed-services.html">Run distributed Services</a></li>
+<li class="toctree-l1"><a class="reference internal" href="build-with-bentoml/template-arguments.html">Configure template arguments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="build-with-bentoml/lifecycle-hooks.html">Configure lifecycle hooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="build-with-bentoml/asgi.html">Mount ASGI applications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="build-with-bentoml/streaming.html">Stream responses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="build-with-bentoml/websocket.html">Define a WebSocket endpoint</a></li>
+<li class="toctree-l1"><a class="reference internal" href="build-with-bentoml/gradio.html">Add a UI with Gradio</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="build-with-bentoml/observability/index.html">Observability</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Observability</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="build-with-bentoml/observability/monitoring-and-data-collection.html">Monitoring</a></li>
+<li class="toctree-l2"><a class="reference internal" href="build-with-bentoml/observability/logging.html">Logging</a></li>
+<li class="toctree-l2"><a class="reference internal" href="build-with-bentoml/observability/metrics.html">Metrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="build-with-bentoml/observability/tracing.html">Tracing</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="build-with-bentoml/error-handling.html">Customize error responses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="build-with-bentoml/testing.html">Test API endpoints</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Scale with BentoCloud</span></p>
+<ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="scale-with-bentocloud/deployment/index.html">Deployment</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of Deployment</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="scale-with-bentocloud/deployment/create-deployments.html">Create Deployments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scale-with-bentocloud/deployment/configure-deployments.html">Configure Deployments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scale-with-bentocloud/deployment/manage-deployments.html">Manage Deployments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scale-with-bentocloud/deployment/call-deployment-endpoints.html">Call Deployment endpoints</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scale-with-bentocloud/deployment/canary-deployments.html">Create canary Deployments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scale-with-bentocloud/deployment/sandboxes.html">Sandboxes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scale-with-bentocloud/deployment/batch-inference-jobs.html">Batch inference jobs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scale-with-bentocloud/deployment/ci-cd-pipelines.html">Build CI/CD pipelines</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="scale-with-bentocloud/scaling/index.html">Scaling</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of Scaling</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="scale-with-bentocloud/scaling/autoscaling.html">Concurrency and autoscaling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scale-with-bentocloud/scaling/gateways.html">Scale across multiple regions with Gateways</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="scale-with-bentocloud/manage-secrets-and-env-vars.html">Manage secrets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="scale-with-bentocloud/manage-api-tokens.html">Manage API tokens</a></li>
+<li class="toctree-l1"><a class="reference internal" href="scale-with-bentocloud/codespaces.html">Develop with Codespaces</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="scale-with-bentocloud/administering/index.html">Administering</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle navigation of Administering</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="scale-with-bentocloud/administering/manage-users.html">Manage users</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scale-with-bentocloud/administering/split-staging-and-prod.html">Split staging and production environments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scale-with-bentocloud/administering/bring-your-own-cloud.html">Bring Your Own Cloud</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scale-with-bentocloud/administering/configure-standby-instances.html">Configure standby instances</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">References</span></p>
+<ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="reference/bentoml/index.html">BentoML</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><div class="visually-hidden">Toggle navigation of BentoML</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="reference/bentoml/stores.html">Bento and model APIs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/bentoml/sdk.html">BentoML SDK</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/bentoml/bento-build-options.html">Bento build options</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/bentoml/cli.html">BentoML CLI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/bentoml/client.html">Client API</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="reference/bentoml/frameworks/index.html">Framework APIs</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><div class="visually-hidden">Toggle navigation of Framework APIs</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="reference/bentoml/frameworks/diffusers.html">Diffusers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/bentoml/frameworks/onnx.html">ONNX</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/bentoml/frameworks/sklearn.html">Scikit-Learn</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/bentoml/frameworks/transformers.html">Transformers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/bentoml/frameworks/flax.html">Flax</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/bentoml/frameworks/tensorflow.html">TensorFlow</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/bentoml/frameworks/torchscript.html">TorchScript</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/bentoml/frameworks/xgboost.html">XGBoost</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/bentoml/frameworks/picklable_model.html">Picklable Model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/bentoml/frameworks/pytorch.html">PyTorch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/bentoml/frameworks/lightgbm.html">LightGBM</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/bentoml/frameworks/mlflow.html">MLflow</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/bentoml/frameworks/catboost.html">CatBoost</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/bentoml/frameworks/fastai.html">fast.ai</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/bentoml/frameworks/easyocr.html">EasyOCR</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/bentoml/frameworks/keras.html">Keras</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/bentoml/frameworks/ray.html">Ray</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/bentoml/frameworks/detectron.html">Detectron</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="reference/bentoml/configurations.html">Configurations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/bentoml/batch.html">Batch inference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/bentoml/exceptions.html">Exceptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/bentoml/container.html">Container APIs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/bentoml/types.html">Types</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="reference/bentocloud/index.html">BentoCloud</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><div class="visually-hidden">Toggle navigation of BentoCloud</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="reference/bentocloud/deployment-details.html">Deployment details</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/bentocloud/bentocloud-cli.html">BentoCloud CLI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/bentocloud/bentocloud-api.html">BentoCloud API</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="view-this-page">
+  <a class="muted-link" href="https://github.com/bentoml/bentoml/blob/main/docs/source/index.rst?plain=true" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div><div class="edit-this-page">
+  <a class="muted-link" href="https://github.com/bentoml/bentoml/edit/main/docs/source/index.rst" title="Edit this page">
+    <svg><use href="#svg-pencil"></use></svg>
+    <span class="visually-hidden">Edit this page</span>
+  </a>
+</div><div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <section id="bentoml-documentation">
+<h1>BentoML Documentation<a class="headerlink" href="#bentoml-documentation" title="Link to this heading">¶</a></h1>
+<p><a class="reference external" href="https://github.com/bentoml/bentoml"><img alt="github_stars" src="https://img.shields.io/github/stars/bentoml/BentoML?color=%23c9378a&amp;label=github&amp;logo=github&amp;style=flat-square" /></a> <a class="reference external" href="https://pypi.org/project/BentoML"><img alt="pypi_status" src="https://img.shields.io/pypi/v/bentoml.svg?style=flat-square" /></a> <a class="reference external" href="https://github.com/bentoml/bentoml/actions"><img alt="actions_status" src="https://github.com/bentoml/bentoml/actions/workflows/ci.yml/badge.svg?branch=main" /></a> <a class="reference external" href="https://docs.bentoml.com/"><img alt="documentation_status" src="https://readthedocs.org/projects/bentoml/badge/?version=latest&amp;style=flat-square" /></a> <a class="reference external" href="https://forum.modular.com/c/bento/31"><img alt="join_slack" src="https://badgen.net/badge/Join/Community%20Forum/cyan?style=flat-square" /></a></p>
+<hr class="docutils" />
+<p>BentoML is a <strong>Unified Inference Platform</strong> for deploying and scaling AI systems with any model, on any cloud.</p>
+<section id="featured-examples">
+<h2>Featured examples<a class="headerlink" href="#featured-examples" title="Link to this heading">¶</a></h2>
+<div class="sd-container-fluid sd-sphinx-override sd-m-0 sd-pt-3 sd-pb-4 sd-pl-0 sd-pr-0 docutils">
+<div class="sd-row sd-row-cols-1 sd-row-cols-xs-1 sd-row-cols-sm-2 sd-row-cols-md-2 sd-row-cols-lg-2 sd-g-3 sd-g-xs-3 sd-g-sm-3 sd-g-md-3 sd-g-lg-3 docutils">
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-card-hover docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+<a class="reference internal" href="examples/vllm.html"><span class="doc">Deploy an open-source LLM endpoint</span></a></div>
+<p class="sd-card-text">Serve large language models with OpenAI-compatible APIs and vLLM inference backend.</p>
+</div>
+<a class="sd-stretched-link sd-hide-link-text reference internal" href="examples/vllm.html"><span class="doc">LLM inference: vLLM</span></a></div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-card-hover docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+<a class="reference internal" href="examples/rag.html"><span class="doc">Document Q&amp;A with RAG</span></a></div>
+<p class="sd-card-text">Deploy private RAG systems with open-source embedding and large language models.</p>
+</div>
+<a class="sd-stretched-link sd-hide-link-text reference internal" href="examples/rag.html"><span class="doc">RAG: Document ingestion and search</span></a></div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-card-hover docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+<a class="reference internal" href="examples/sdxl-turbo.html"><span class="doc">Serve diffusion models</span></a></div>
+<p class="sd-card-text">Deploy image generation APIs with flexible customization and optimized batch processing.</p>
+</div>
+<a class="sd-stretched-link sd-hide-link-text reference internal" href="examples/sdxl-turbo.html"><span class="doc">Stable Diffusion XL Turbo</span></a></div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-card-hover docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+<a class="reference internal" href="examples/comfyui.html"><span class="doc">Deploy ComfyUI pipelines</span></a></div>
+<p class="sd-card-text">Automate reproducible workflows with queued execution using ComfyUI pipelines.</p>
+</div>
+<a class="sd-stretched-link sd-hide-link-text reference internal" href="examples/comfyui.html"><span class="doc">ComfyUI: Deploy workflows as APIs</span></a></div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-card-hover docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+<a class="reference external" href="https://github.com/bentoml/BentoTwilioConversationRelay">Build a phone calling agent</a></div>
+<p class="sd-card-text">Build a phone calling agent with end-to-end streaming capabilities using open-source models and Twilio.</p>
+</div>
+<a class="sd-stretched-link sd-hide-link-text reference external" href="https://github.com/bentoml/BentoTwilioConversationRelay"><span>https://github.com/bentoml/BentoTwilioConversationRelay</span></a></div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-card-hover docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+<a class="reference internal" href="examples/shieldgemma.html"><span class="doc">LLM safety: ShieldGemma</span></a></div>
+<p class="sd-card-text">Protect your LLM API endpoint from harmful input using Google’s safety content moderation model.</p>
+</div>
+<a class="sd-stretched-link sd-hide-link-text reference internal" href="examples/shieldgemma.html"><span class="doc">LLM safety: ShieldGemma</span></a></div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-card-hover docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+<a class="reference internal" href="examples/overview.html"><span class="doc">More examples 👉</span></a></div>
+<p class="sd-card-text">Explore what developers are building with BentoML.</p>
+</div>
+<a class="sd-stretched-link sd-hide-link-text reference internal" href="examples/overview.html"><span class="doc">Overview</span></a></div>
+</div>
+</div>
+</div>
+</section>
+<section id="what-is-bentoml">
+<h2>What is BentoML<a class="headerlink" href="#what-is-bentoml" title="Link to this heading">¶</a></h2>
+<p>BentoML is a <strong>Unified Inference Platform</strong> for deploying and scaling AI models with production-grade reliability, all without the complexity of managing infrastructure. It enables your developers to <strong>build AI systems 10x faster with custom models, scale efficiently in your cloud, and maintain complete control over security and compliance</strong>.</p>
+<img alt="The architecture diagram of the BentoML unified inference platform" src="_images/bentoml-inference-platform.png" />
+<p>To get started with BentoML:</p>
+<ul>
+<li><p>Use <a class="reference external" href="https://pip.pypa.io/en/stable/installation/">pip</a> to install the <a class="reference external" href="https://github.com/bentoml/BentoML">BentoML open-source model serving framework</a>, which is distributed as a Python package on <a class="reference external" href="https://pypi.org/project/bentoml/">PyPI</a>.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Recommend Python 3.9+</span>
+pip<span class="w"> </span>install<span class="w"> </span>bentoml
+</pre></div>
+</div>
+</li>
+<li><p><a class="reference external" href="https://www.bentoml.com/">Sign up for BentoCloud</a> to get a free trial.</p></li>
+</ul>
+</section>
+<section id="how-tos">
+<h2>How-tos<a class="headerlink" href="#how-tos" title="Link to this heading">¶</a></h2>
+<div class="sd-container-fluid sd-sphinx-override sd-m-0 sd-pt-3 sd-pb-4 sd-pl-0 sd-pr-0 docutils">
+<div class="sd-row sd-row-cols-1 sd-row-cols-xs-1 sd-row-cols-sm-2 sd-row-cols-md-2 sd-row-cols-lg-2 sd-g-3 sd-g-xs-3 sd-g-sm-3 sd-g-md-3 sd-g-lg-3 docutils">
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-card-hover docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+<a class="reference internal" href="build-with-bentoml/services.html"><span class="doc">Create online API Services</span></a></div>
+<p class="sd-card-text">Build your custom AI APIs with BentoML.</p>
+</div>
+<a class="sd-stretched-link sd-hide-link-text reference internal" href="build-with-bentoml/services.html"><span class="doc">Create online API Services</span></a></div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-card-hover docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+<a class="reference internal" href="scale-with-bentocloud/deployment/create-deployments.html"><span class="doc">Create Deployments</span></a></div>
+<p class="sd-card-text">Deploy your AI application to production with one command.</p>
+</div>
+<a class="sd-stretched-link sd-hide-link-text reference internal" href="scale-with-bentocloud/deployment/create-deployments.html"><span class="doc">Create Deployments</span></a></div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-card-hover docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+<a class="reference internal" href="scale-with-bentocloud/scaling/autoscaling.html"><span class="doc">Concurrency and autoscaling</span></a></div>
+<p class="sd-card-text">Configure fast autoscaling to achieve optimal performance.</p>
+</div>
+<a class="sd-stretched-link sd-hide-link-text reference internal" href="scale-with-bentocloud/scaling/autoscaling.html"><span class="doc">Concurrency and autoscaling</span></a></div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-card-hover docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+<a class="reference internal" href="build-with-bentoml/gpu-inference.html"><span class="doc">Work with GPUs</span></a></div>
+<p class="sd-card-text">Run model inference on GPUs with BentoML.</p>
+</div>
+<a class="sd-stretched-link sd-hide-link-text reference internal" href="build-with-bentoml/gpu-inference.html"><span class="doc">Work with GPUs</span></a></div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-card-hover docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+<a class="reference internal" href="scale-with-bentocloud/codespaces.html"><span class="doc">Develop with Codespaces</span></a></div>
+<p class="sd-card-text">Develop with powerful cloud GPUs using your favorite IDE.</p>
+</div>
+<a class="sd-stretched-link sd-hide-link-text reference internal" href="scale-with-bentocloud/codespaces.html"><span class="doc">Develop with Codespaces</span></a></div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-card-hover docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+<a class="reference internal" href="build-with-bentoml/model-loading-and-management.html"><span class="doc">Load and manage models</span></a></div>
+<p class="sd-card-text">Load and serve your custom models with BentoML.</p>
+</div>
+<a class="sd-stretched-link sd-hide-link-text reference internal" href="build-with-bentoml/model-loading-and-management.html"><span class="doc">Load and manage models</span></a></div>
+</div>
+</div>
+</div>
+</section>
+<section id="stay-informed">
+<h2>Stay informed<a class="headerlink" href="#stay-informed" title="Link to this heading">¶</a></h2>
+<p>The BentoML team uses the following channels to announce important updates like major product releases and share tutorials, case studies, as well as community news.</p>
+<ul class="simple">
+<li><p><a class="reference external" href="http://bentoml.com/blog">BentoML Blog</a></p></li>
+<li><p><a class="reference external" href="https://x.com/bentomlai">BentoML X account</a></p></li>
+<li><p><a class="reference external" href="https://www.linkedin.com/company/bentoml/">BentoML LinkedIn account</a></p></li>
+<li><p><a class="reference external" href="https://forum.modular.com/c/bento/31">BentoML community forum</a></p></li>
+</ul>
+<p>To receive release notifications, star and watch the <a class="reference external" href="https://github.com/bentoml/bentoml">BentoML project on GitHub</a>.
+For release notes and detailed changelogs, see the <a class="reference external" href="https://github.com/bentoml/BentoML/releases">Releases</a> page.</p>
+<div class="toctree-wrapper compound">
+</div>
+<div class="toctree-wrapper compound">
+</div>
+<div class="toctree-wrapper compound">
+</div>
+<div class="toctree-wrapper compound">
+</div>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="get-started/hello-world.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">Hello world</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2022-2026, bentoml.com
+            </div>
+            Made with 
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            <div class="icons">
+              <a class="muted-link fab fa-github" href="https://github.com/bentoml" aria-label="GitHub">&nbsp;&nbsp;</a>
+              <a class="muted-link fab fa-linkedin" href="https://www.linkedin.com/company/bentoml/" aria-label="LinkedIn">&nbsp;&nbsp;</a>
+              <a class="muted-link fab fa-x-twitter" href="https://twitter.com/bentomlai" aria-label="X">&nbsp;&nbsp;</a>
+              <a class="muted-link fab fa-slack" href="https://l.bentoml.com/join-slack" aria-label="Slack">&nbsp;&nbsp;</a>
+              
+            </div>
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">BentoML Documentation</a><ul>
+<li><a class="reference internal" href="#featured-examples">Featured examples</a></li>
+<li><a class="reference internal" href="#what-is-bentoml">What is BentoML</a></li>
+<li><a class="reference internal" href="#how-tos">How-tos</a></li>
+<li><a class="reference internal" href="#stay-informed">Stay informed</a><ul>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="_static/jquery.js?v=5d32c60e"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+    <script src="_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/scripts/furo.js?v=5fa4622c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f42a5055"></script>
+    <script src="_static/tabs.js?v=3ee01567"></script>
+    <script src="_static/js/hoverxref.js"></script>
+    <script src="_static/js/tooltipster.bundle.min.js"></script>
+    <script src="_static/js/micromodal.min.js"></script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/custom.js?v=456fe7c9"></script>
+    </body>
+</html>

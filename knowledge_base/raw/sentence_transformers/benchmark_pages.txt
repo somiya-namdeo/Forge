@@ -1,0 +1,1336 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pretrained Models &mdash; Sentence Transformers  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/tabs.css?v=4c969af8" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css?v=e9e59a8d" />
+
+  
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://www.sbert.netdocs/sentence_transformer/pretrained_models.html"/>
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../_static/copybutton.js?v=f281be69"></script>
+      <script src="../../_static/tabs.js?v=3ee01567"></script>
+      <script src="../../_static/js/custom.js?v=14afe910"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Training Overview" href="training_overview.html" />
+    <link rel="prev" title="Speeding up Inference" href="usage/efficiency.html" />
+<!-- Privacy-friendly analytics by Plausible -->
+<script async src="https://plausible.io/js/pa-B9Apen_9cO_gfwxvmnY5y.js"></script>
+<script>
+    window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
+    plausible.init()
+</script>
+
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html">
+            
+              <img src="../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../installation.html#install-with-uv">Install with uv</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation.html#install-with-pip">Install with pip</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation.html#install-with-conda">Install with Conda</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation.html#install-from-source">Install from Source</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation.html#editable-install">Editable Install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation.html#install-pytorch-with-cuda-support">Install PyTorch with CUDA support</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart.html">Quickstart</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../quickstart.html#sentence-transformer">Sentence Transformer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../quickstart.html#cross-encoder">Cross Encoder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../quickstart.html#sparse-encoder">Sparse Encoder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../quickstart.html#next-steps">Next Steps</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../migration_guide.html">Migration Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../migration_guide.html#migrating-from-v5-x-to-v5-4">Migrating from v5.x to v5.4+</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../migration_guide.html#updated-import-paths">Updated import paths</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../migration_guide.html#renamed-methods-and-parameters">Renamed methods and parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../migration_guide.html#crossencoder-max-length-property-renamed-to-max-seq-length"><code class="docutils literal notranslate"><span class="pre">CrossEncoder.max_length</span></code> property renamed to <code class="docutils literal notranslate"><span class="pre">max_seq_length</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../migration_guide.html#trainer-tokenizer-parameter-renamed-to-processing-class">Trainer <code class="docutils literal notranslate"><span class="pre">tokenizer</span></code> parameter renamed to <code class="docutils literal notranslate"><span class="pre">processing_class</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../migration_guide.html#tokenizer-kwargs-renamed-to-processor-kwargs"><code class="docutils literal notranslate"><span class="pre">tokenizer_kwargs</span></code> renamed to <code class="docutils literal notranslate"><span class="pre">processor_kwargs</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../migration_guide.html#crossencoder-api-changes">CrossEncoder API changes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../migration_guide.html#removed-tags-parameter-from-push-to-hub">Removed <code class="docutils literal notranslate"><span class="pre">tags</span></code> parameter from <code class="docutils literal notranslate"><span class="pre">push_to_hub</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../migration_guide.html#default-pooling-for-causallm-models">Default pooling for CausalLM models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../migration_guide.html#changes-for-custom-module-and-loss-authors">Changes for custom module and loss authors</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../migration_guide.html#migrating-from-v4-x-to-v5-x">Migrating from v4.x to v5.x</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../migration_guide.html#migration-for-model-encode">Migration for model.encode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../migration_guide.html#migration-for-asym-to-router">Migration for Asym to Router</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../migration_guide.html#migration-of-advanced-usage">Migration of advanced usage</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../migration_guide.html#migrating-from-v3-x-to-v4-x">Migrating from v3.x to v4.x</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../migration_guide.html#migration-for-parameters-on-crossencoder-initialization-and-methods">Migration for parameters on <code class="docutils literal notranslate"><span class="pre">CrossEncoder</span></code> initialization and methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../migration_guide.html#migration-for-specific-parameters-from-crossencoder-fit">Migration for specific parameters from <code class="docutils literal notranslate"><span class="pre">CrossEncoder.fit</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../migration_guide.html#migration-for-crossencoder-evaluators">Migration for CrossEncoder evaluators</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../migration_guide.html#migrating-from-v2-x-to-v3-x">Migrating from v2.x to v3.x</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../migration_guide.html#migration-for-specific-parameters-from-sentencetransformer-fit">Migration for specific parameters from <code class="docutils literal notranslate"><span class="pre">SentenceTransformer.fit</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../migration_guide.html#migration-for-custom-datasets-and-dataloaders-used-in-sentencetransformer-fit">Migration for custom Datasets and DataLoaders used in <code class="docutils literal notranslate"><span class="pre">SentenceTransformer.fit</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Sentence Transformer</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="usage/usage.html">Usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../examples/sentence_transformer/applications/computing-embeddings/README.html">Computing Embeddings</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sentence_transformer/applications/computing-embeddings/README.html#initializing-a-sentence-transformer-model">Initializing a Sentence Transformer Model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sentence_transformer/applications/computing-embeddings/README.html#calculating-embeddings">Calculating Embeddings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sentence_transformer/applications/computing-embeddings/README.html#prompt-templates">Prompt Templates</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sentence_transformer/applications/computing-embeddings/README.html#input-sequence-length">Input Sequence Length</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sentence_transformer/applications/computing-embeddings/README.html#multi-process-multi-gpu-encoding">Multi-Process / Multi-GPU Encoding</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="usage/semantic_textual_similarity.html">Semantic Textual Similarity</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="usage/semantic_textual_similarity.html#similarity-calculation">Similarity Calculation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../examples/sentence_transformer/applications/semantic-search/README.html">Semantic Search</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sentence_transformer/applications/semantic-search/README.html#background">Background</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sentence_transformer/applications/semantic-search/README.html#symmetric-vs-asymmetric-semantic-search">Symmetric vs. Asymmetric Semantic Search</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sentence_transformer/applications/semantic-search/README.html#manual-implementation">Manual Implementation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sentence_transformer/applications/semantic-search/README.html#optimized-implementation">Optimized Implementation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sentence_transformer/applications/semantic-search/README.html#speed-optimization">Speed Optimization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sentence_transformer/applications/semantic-search/README.html#elasticsearch">Elasticsearch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sentence_transformer/applications/semantic-search/README.html#opensearch">OpenSearch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sentence_transformer/applications/semantic-search/README.html#approximate-nearest-neighbor">Approximate Nearest Neighbor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sentence_transformer/applications/semantic-search/README.html#retrieve-re-rank">Retrieve &amp; Re-Rank</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sentence_transformer/applications/semantic-search/README.html#examples">Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../examples/sentence_transformer/applications/retrieve_rerank/README.html">Retrieve &amp; Re-Rank</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sentence_transformer/applications/retrieve_rerank/README.html#retrieve-re-rank-pipeline">Retrieve &amp; Re-Rank Pipeline</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sentence_transformer/applications/retrieve_rerank/README.html#retrieval-bi-encoder">Retrieval: Bi-Encoder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sentence_transformer/applications/retrieve_rerank/README.html#re-ranker-cross-encoder">Re-Ranker: Cross-Encoder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sentence_transformer/applications/retrieve_rerank/README.html#example-scripts">Example Scripts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sentence_transformer/applications/retrieve_rerank/README.html#pre-trained-bi-encoders-retrieval">Pre-trained Bi-Encoders (Retrieval)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sentence_transformer/applications/retrieve_rerank/README.html#pre-trained-cross-encoders-re-ranker">Pre-trained Cross-Encoders (Re-Ranker)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../examples/sentence_transformer/applications/clustering/README.html">Clustering</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sentence_transformer/applications/clustering/README.html#k-means">k-Means</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sentence_transformer/applications/clustering/README.html#agglomerative-clustering">Agglomerative Clustering</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sentence_transformer/applications/clustering/README.html#fast-clustering">Fast Clustering</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sentence_transformer/applications/clustering/README.html#topic-modeling">Topic Modeling</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../examples/sentence_transformer/applications/paraphrase-mining/README.html">Paraphrase Mining</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sentence_transformer/applications/paraphrase-mining/README.html#sentence_transformers.util.paraphrase_mining"><code class="docutils literal notranslate"><span class="pre">paraphrase_mining()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../examples/sentence_transformer/applications/parallel-sentence-mining/README.html">Translated Sentence Mining</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sentence_transformer/applications/parallel-sentence-mining/README.html#margin-based-mining">Margin Based Mining</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sentence_transformer/applications/parallel-sentence-mining/README.html#examples">Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../examples/sentence_transformer/applications/image-search/README.html">Image Search</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sentence_transformer/applications/image-search/README.html#installation">Installation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sentence_transformer/applications/image-search/README.html#usage">Usage</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sentence_transformer/applications/image-search/README.html#examples">Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../examples/sentence_transformer/applications/embedding-quantization/README.html">Embedding Quantization</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sentence_transformer/applications/embedding-quantization/README.html#binary-quantization">Binary Quantization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sentence_transformer/applications/embedding-quantization/README.html#scalar-int8-quantization">Scalar (int8) Quantization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sentence_transformer/applications/embedding-quantization/README.html#additional-extensions">Additional extensions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sentence_transformer/applications/embedding-quantization/README.html#demo">Demo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sentence_transformer/applications/embedding-quantization/README.html#try-it-yourself">Try it yourself</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="usage/custom_models.html">Creating Custom Models</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="usage/custom_models.html#modular-architecture">Modular Architecture</a></li>
+<li class="toctree-l3"><a class="reference internal" href="usage/custom_models.html#sentence-transformer-model-from-a-transformers-model">Sentence Transformer Model from a Transformers Model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="usage/custom_models.html#advanced-custom-modules">Advanced: Custom Modules</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="usage/mteb_evaluation.html">Evaluation with MTEB</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="usage/mteb_evaluation.html#installation">Installation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="usage/mteb_evaluation.html#evaluation">Evaluation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="usage/mteb_evaluation.html#additional-arguments">Additional Arguments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="usage/mteb_evaluation.html#results-handling">Results Handling</a></li>
+<li class="toctree-l3"><a class="reference internal" href="usage/mteb_evaluation.html#leaderboard-submission">Leaderboard Submission</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="usage/efficiency.html">Speeding up Inference</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="usage/efficiency.html#pytorch">PyTorch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="usage/efficiency.html#onnx">ONNX</a></li>
+<li class="toctree-l3"><a class="reference internal" href="usage/efficiency.html#openvino">OpenVINO</a></li>
+<li class="toctree-l3"><a class="reference internal" href="usage/efficiency.html#benchmarks">Benchmarks</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Pretrained Models</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#original-models">Original Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#semantic-search-models">Semantic Search Models</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#multi-qa-models">Multi-QA Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#msmarco-passage-models">MSMARCO Passage Models</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#multilingual-models">Multilingual Models</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#semantic-similarity-models">Semantic Similarity Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bitext-mining">Bitext Mining</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#multimodal-models">Multimodal Models</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#image-text-models">Image &amp; Text Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#audio-video-models">Audio &amp; Video Models</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#instructor-models">INSTRUCTOR models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#scientific-similarity-models">Scientific Similarity Models</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="training_overview.html">Training Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="training_overview.html#why-finetune">Why Finetune?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="training_overview.html#training-components">Training Components</a></li>
+<li class="toctree-l2"><a class="reference internal" href="training_overview.html#model">Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="training_overview.html#dataset">Dataset</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="training_overview.html#dataset-format">Dataset Format</a></li>
+<li class="toctree-l3"><a class="reference internal" href="training_overview.html#multimodal-datasets">Multimodal Datasets</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="training_overview.html#loss-function">Loss Function</a></li>
+<li class="toctree-l2"><a class="reference internal" href="training_overview.html#training-arguments">Training Arguments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="training_overview.html#evaluator">Evaluator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="training_overview.html#trainer">Trainer</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="training_overview.html#callbacks">Callbacks</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="training_overview.html#multi-dataset-training">Multi-Dataset Training</a></li>
+<li class="toctree-l2"><a class="reference internal" href="training_overview.html#deprecated-training">Deprecated Training</a></li>
+<li class="toctree-l2"><a class="reference internal" href="training_overview.html#best-base-embedding-models">Best Base Embedding Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="training_overview.html#comparisons-with-crossencoder-training">Comparisons with CrossEncoder Training</a></li>
+<li class="toctree-l2"><a class="reference internal" href="training_overview.html#end-to-end-example">End-to-End Example</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="dataset_overview.html">Dataset Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="dataset_overview.html#multimodal-datasets">Multimodal Datasets</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="dataset_overview.html#accepted-column-types">Accepted column types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dataset_overview.html#cross-modal-dataset-example">Cross-modal dataset example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dataset_overview.html#automatic-preprocessing">Automatic preprocessing</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="dataset_overview.html#datasets-on-the-hugging-face-hub">Datasets on the Hugging Face Hub</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dataset_overview.html#pre-existing-datasets">Pre-existing Datasets</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="loss_overview.html">Loss Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="loss_overview.html#loss-table">Loss Table</a></li>
+<li class="toctree-l2"><a class="reference internal" href="loss_overview.html#loss-modifiers">Loss modifiers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="loss_overview.html#regularization">Regularization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="loss_overview.html#distillation">Distillation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="loss_overview.html#commonly-used-loss-functions">Commonly used Loss Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="loss_overview.html#custom-loss-functions">Custom Loss Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="training/examples.html">Training Examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../examples/sentence_transformer/training/sts/README.html">Semantic Textual Similarity</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sentence_transformer/training/sts/README.html#training-data">Training data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sentence_transformer/training/sts/README.html#loss-function">Loss Function</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../examples/sentence_transformer/training/nli/README.html">Natural Language Inference</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sentence_transformer/training/nli/README.html#data">Data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sentence_transformer/training/nli/README.html#softmaxloss">SoftmaxLoss</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sentence_transformer/training/nli/README.html#multiplenegativesrankingloss">MultipleNegativesRankingLoss</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../examples/sentence_transformer/training/paraphrases/README.html">Paraphrase Data</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sentence_transformer/training/paraphrases/README.html#pre-trained-models">Pre-Trained Models</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../examples/sentence_transformer/training/quora_duplicate_questions/README.html">Quora Duplicate Questions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sentence_transformer/training/quora_duplicate_questions/README.html#training">Training</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sentence_transformer/training/quora_duplicate_questions/README.html#multiplenegativesrankingloss">MultipleNegativesRankingLoss</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sentence_transformer/training/quora_duplicate_questions/README.html#pretrained-models">Pretrained Models</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../examples/sentence_transformer/training/ms_marco/README.html">MS MARCO</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sentence_transformer/training/ms_marco/README.html#bi-encoder">Bi-Encoder</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../examples/sentence_transformer/training/matryoshka/README.html">Matryoshka Embeddings</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sentence_transformer/training/matryoshka/README.html#use-cases">Use Cases</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sentence_transformer/training/matryoshka/README.html#results">Results</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sentence_transformer/training/matryoshka/README.html#training">Training</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sentence_transformer/training/matryoshka/README.html#inference">Inference</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sentence_transformer/training/matryoshka/README.html#code-examples">Code Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../examples/sentence_transformer/training/adaptive_layer/README.html">Adaptive Layers</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sentence_transformer/training/adaptive_layer/README.html#use-cases">Use Cases</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sentence_transformer/training/adaptive_layer/README.html#results">Results</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sentence_transformer/training/adaptive_layer/README.html#training">Training</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sentence_transformer/training/adaptive_layer/README.html#inference">Inference</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sentence_transformer/training/adaptive_layer/README.html#code-examples">Code Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../examples/sentence_transformer/training/multilingual/README.html">Multilingual Models</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sentence_transformer/training/multilingual/README.html#extend-your-own-models">Extend your own models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sentence_transformer/training/multilingual/README.html#training">Training</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sentence_transformer/training/multilingual/README.html#datasets">Datasets</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sentence_transformer/training/multilingual/README.html#sources-for-training-data">Sources for Training Data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sentence_transformer/training/multilingual/README.html#evaluation">Evaluation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sentence_transformer/training/multilingual/README.html#available-pre-trained-models">Available Pre-trained Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sentence_transformer/training/multilingual/README.html#usage">Usage</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sentence_transformer/training/multilingual/README.html#performance">Performance</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sentence_transformer/training/multilingual/README.html#citation">Citation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../examples/sentence_transformer/training/distillation/README.html">Model Distillation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sentence_transformer/training/distillation/README.html#knowledge-distillation">Knowledge Distillation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sentence_transformer/training/distillation/README.html#speed-performance-trade-off">Speed - Performance Trade-Off</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sentence_transformer/training/distillation/README.html#dimensionality-reduction">Dimensionality Reduction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sentence_transformer/training/distillation/README.html#quantization">Quantization</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../examples/sentence_transformer/training/data_augmentation/README.html">Augmented SBERT</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sentence_transformer/training/data_augmentation/README.html#motivation">Motivation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sentence_transformer/training/data_augmentation/README.html#extend-to-your-own-datasets">Extend to your own datasets</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sentence_transformer/training/data_augmentation/README.html#methodology">Methodology</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sentence_transformer/training/data_augmentation/README.html#scenario-1-limited-or-small-annotated-datasets-few-labeled-sentence-pairs">Scenario 1: Limited or small annotated datasets (few labeled sentence-pairs)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sentence_transformer/training/data_augmentation/README.html#scenario-2-no-annotated-datasets-only-unlabeled-sentence-pairs">Scenario 2: No annotated datasets (Only unlabeled sentence-pairs)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sentence_transformer/training/data_augmentation/README.html#training">Training</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sentence_transformer/training/data_augmentation/README.html#citation">Citation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../examples/sentence_transformer/training/prompts/README.html">Training with Prompts</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sentence_transformer/training/prompts/README.html#what-are-prompts">What are Prompts?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sentence_transformer/training/prompts/README.html#why-would-we-train-with-prompts">Why would we train with Prompts?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sentence_transformer/training/prompts/README.html#how-do-we-train-with-prompts">How do we train with Prompts?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../examples/sentence_transformer/training/peft/README.html">Training with PEFT Adapters</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sentence_transformer/training/peft/README.html#compatibility-methods">Compatibility Methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sentence_transformer/training/peft/README.html#adding-a-new-adapter">Adding a New Adapter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sentence_transformer/training/peft/README.html#loading-a-pretrained-adapter">Loading a Pretrained Adapter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sentence_transformer/training/peft/README.html#training-script">Training Script</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../examples/sentence_transformer/training/unsloth/README.html">Training with Unsloth</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sentence_transformer/training/unsloth/README.html#examples-in-this-repository">Examples in this repository</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sentence_transformer/training/unsloth/README.html#unsloth-colab-notebooks">Unsloth Colab notebooks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sentence_transformer/training/unsloth/README.html#fine-tuning-via-fastsentencetransformer">Fine-tuning via FastSentenceTransformer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sentence_transformer/training/unsloth/README.html#inference-and-deployment">Inference and deployment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sentence_transformer/training/unsloth/README.html#benchmarks">Benchmarks</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../examples/sentence_transformer/training/multimodal/README.html">Multimodal Training</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sentence_transformer/training/multimodal/README.html#supported-input-types">Supported Input Types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sentence_transformer/training/multimodal/README.html#training">Training</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sentence_transformer/training/multimodal/README.html#references">References</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../examples/sentence_transformer/unsupervised_learning/README.html">Unsupervised Learning</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sentence_transformer/unsupervised_learning/README.html#tsdae">TSDAE</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sentence_transformer/unsupervised_learning/README.html#simcse">SimCSE</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sentence_transformer/unsupervised_learning/README.html#ct">CT</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sentence_transformer/unsupervised_learning/README.html#ct-in-batch-negative-sampling">CT (In-Batch Negative Sampling)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sentence_transformer/unsupervised_learning/README.html#masked-language-model-mlm">Masked Language Model (MLM)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sentence_transformer/unsupervised_learning/README.html#genq">GenQ</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sentence_transformer/unsupervised_learning/README.html#gpl">GPL</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sentence_transformer/unsupervised_learning/README.html#performance-comparison">Performance Comparison</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../examples/sentence_transformer/domain_adaptation/README.html">Domain Adaptation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sentence_transformer/domain_adaptation/README.html#domain-adaptation-vs-unsupervised-learning">Domain Adaptation vs. Unsupervised Learning</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sentence_transformer/domain_adaptation/README.html#adaptive-pre-training">Adaptive Pre-Training</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sentence_transformer/domain_adaptation/README.html#gpl-generative-pseudo-labeling">GPL: Generative Pseudo-Labeling</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../examples/sentence_transformer/training/hpo/README.html">Hyperparameter Optimization</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sentence_transformer/training/hpo/README.html#hpo-components">HPO Components</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sentence_transformer/training/hpo/README.html#putting-it-all-together">Putting It All Together</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sentence_transformer/training/hpo/README.html#example-scripts">Example Scripts</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="training/distributed.html">Distributed Training</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="training/distributed.html#comparison">Comparison</a></li>
+<li class="toctree-l3"><a class="reference internal" href="training/distributed.html#fsdp">FSDP</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Cross Encoder</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../cross_encoder/usage/usage.html">Usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../examples/cross_encoder/applications/README.html">Cross-Encoder vs Bi-Encoder</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/cross_encoder/applications/README.html#cross-encoder-vs-bi-encoder">Cross-Encoder vs. Bi-Encoder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/cross_encoder/applications/README.html#when-to-use-cross-bi-encoders">When to use Cross- / Bi-Encoders?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/cross_encoder/applications/README.html#cross-encoders-usage">Cross-Encoders Usage</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/cross_encoder/applications/README.html#combining-bi-and-cross-encoders">Combining Bi- and Cross-Encoders</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/cross_encoder/applications/README.html#training-cross-encoders">Training Cross-Encoders</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../examples/sentence_transformer/applications/retrieve_rerank/README.html">Retrieve &amp; Re-Rank</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sentence_transformer/applications/retrieve_rerank/README.html#retrieve-re-rank-pipeline">Retrieve &amp; Re-Rank Pipeline</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sentence_transformer/applications/retrieve_rerank/README.html#retrieval-bi-encoder">Retrieval: Bi-Encoder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sentence_transformer/applications/retrieve_rerank/README.html#re-ranker-cross-encoder">Re-Ranker: Cross-Encoder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sentence_transformer/applications/retrieve_rerank/README.html#example-scripts">Example Scripts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sentence_transformer/applications/retrieve_rerank/README.html#pre-trained-bi-encoders-retrieval">Pre-trained Bi-Encoders (Retrieval)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sentence_transformer/applications/retrieve_rerank/README.html#pre-trained-cross-encoders-re-ranker">Pre-trained Cross-Encoders (Re-Ranker)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../cross_encoder/usage/custom_models.html">Creating Custom Models</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../cross_encoder/usage/custom_models.html#modular-architecture">Modular Architecture</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cross_encoder/usage/custom_models.html#advanced-custom-modules">Advanced: Custom Modules</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../cross_encoder/usage/efficiency.html">Speeding up Inference</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../cross_encoder/usage/efficiency.html#pytorch">PyTorch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cross_encoder/usage/efficiency.html#onnx">ONNX</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cross_encoder/usage/efficiency.html#openvino">OpenVINO</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cross_encoder/usage/efficiency.html#benchmarks">Benchmarks</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../cross_encoder/pretrained_models.html">Pretrained Models</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../cross_encoder/pretrained_models.html#ms-marco">MS MARCO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cross_encoder/pretrained_models.html#squad-qnli">SQuAD (QNLI)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cross_encoder/pretrained_models.html#stsbenchmark">STSbenchmark</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cross_encoder/pretrained_models.html#quora-duplicate-questions">Quora Duplicate Questions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cross_encoder/pretrained_models.html#nli">NLI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cross_encoder/pretrained_models.html#multimodal-rerankers">Multimodal Rerankers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cross_encoder/pretrained_models.html#community-models">Community Models</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../cross_encoder/training_overview.html">Training Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../cross_encoder/training_overview.html#why-finetune">Why Finetune?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cross_encoder/training_overview.html#training-components">Training Components</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cross_encoder/training_overview.html#model">Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cross_encoder/training_overview.html#dataset">Dataset</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../cross_encoder/training_overview.html#dataset-format">Dataset Format</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cross_encoder/training_overview.html#multimodal-datasets">Multimodal Datasets</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cross_encoder/training_overview.html#hard-negatives-mining">Hard Negatives Mining</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../cross_encoder/training_overview.html#loss-function">Loss Function</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cross_encoder/training_overview.html#training-arguments">Training Arguments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cross_encoder/training_overview.html#evaluator">Evaluator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cross_encoder/training_overview.html#trainer">Trainer</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../cross_encoder/training_overview.html#callbacks">Callbacks</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../cross_encoder/training_overview.html#multi-dataset-training">Multi-Dataset Training</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cross_encoder/training_overview.html#training-tips">Training Tips</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cross_encoder/training_overview.html#deprecated-training">Deprecated Training</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cross_encoder/training_overview.html#comparisons-with-sentencetransformer-training">Comparisons with SentenceTransformer Training</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cross_encoder/training_overview.html#end-to-end-example">End-to-End Example</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="dataset_overview.html">Dataset Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="dataset_overview.html#multimodal-datasets">Multimodal Datasets</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="dataset_overview.html#accepted-column-types">Accepted column types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dataset_overview.html#cross-modal-dataset-example">Cross-modal dataset example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dataset_overview.html#automatic-preprocessing">Automatic preprocessing</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="dataset_overview.html#datasets-on-the-hugging-face-hub">Datasets on the Hugging Face Hub</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dataset_overview.html#pre-existing-datasets">Pre-existing Datasets</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../cross_encoder/loss_overview.html">Loss Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../cross_encoder/loss_overview.html#loss-table">Loss Table</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cross_encoder/loss_overview.html#distillation">Distillation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cross_encoder/loss_overview.html#commonly-used-loss-functions">Commonly used Loss Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cross_encoder/loss_overview.html#custom-loss-functions">Custom Loss Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../cross_encoder/training/examples.html">Training Examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../examples/cross_encoder/training/sts/README.html">Semantic Textual Similarity</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/cross_encoder/training/sts/README.html#training-data">Training data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/cross_encoder/training/sts/README.html#loss-function">Loss Function</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/cross_encoder/training/sts/README.html#inference">Inference</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../examples/cross_encoder/training/nli/README.html">Natural Language Inference</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/cross_encoder/training/nli/README.html#data">Data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/cross_encoder/training/nli/README.html#crossentropyloss">CrossEntropyLoss</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/cross_encoder/training/nli/README.html#inference">Inference</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../examples/cross_encoder/training/quora_duplicate_questions/README.html">Quora Duplicate Questions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/cross_encoder/training/quora_duplicate_questions/README.html#training">Training</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/cross_encoder/training/quora_duplicate_questions/README.html#inference">Inference</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../examples/cross_encoder/training/ms_marco/README.html">MS MARCO</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/cross_encoder/training/ms_marco/README.html#cross-encoder">Cross Encoder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/cross_encoder/training/ms_marco/README.html#training-scripts">Training Scripts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/cross_encoder/training/ms_marco/README.html#inference">Inference</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../examples/cross_encoder/training/rerankers/README.html">Rerankers</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/cross_encoder/training/rerankers/README.html#binarycrossentropyloss">BinaryCrossEntropyLoss</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/cross_encoder/training/rerankers/README.html#cachedmultiplenegativesrankingloss">CachedMultipleNegativesRankingLoss</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/cross_encoder/training/rerankers/README.html#inference">Inference</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../examples/cross_encoder/training/distillation/README.html">Model Distillation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/cross_encoder/training/distillation/README.html#cross-encoder-knowledge-distillation">Cross Encoder Knowledge Distillation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/cross_encoder/training/distillation/README.html#inference">Inference</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../examples/cross_encoder/training/multimodal/README.html">Multimodal Training</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/cross_encoder/training/multimodal/README.html#transformer-any-to-any-logitscore">Transformer (Any-to-Any) + LogitScore</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/cross_encoder/training/multimodal/README.html#transformer-feature-extraction-pooling-dense">Transformer (Feature Extraction) + Pooling + Dense</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/cross_encoder/training/multimodal/README.html#comparing-the-two-approaches">Comparing the Two Approaches</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/cross_encoder/training/multimodal/README.html#other-module-chains">Other Module Chains</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/cross_encoder/training/multimodal/README.html#references">References</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="training/distributed.html">Distributed Training</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="training/distributed.html#comparison">Comparison</a></li>
+<li class="toctree-l3"><a class="reference internal" href="training/distributed.html#fsdp">FSDP</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Sparse Encoder</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../sparse_encoder/usage/usage.html">Usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../sparse_encoder/usage/usage.html#prompts">Prompts</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sparse_encoder/applications/computing_embeddings/README.html">Computing Sparse Embeddings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sparse_encoder/applications/semantic_textual_similarity/README.html">Semantic Textual Similarity</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sparse_encoder/applications/semantic_search/README.html">Semantic Search</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sparse_encoder/applications/retrieve_rerank/README.html">Retrieve &amp; Re-Rank</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sparse_encoder/evaluation/README.html">Sparse Encoder Evaluation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../sparse_encoder/usage/efficiency.html">Speeding up Inference</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../sparse_encoder/pretrained_models.html">Pretrained Models</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../sparse_encoder/pretrained_models.html#core-splade-models">Core SPLADE Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sparse_encoder/pretrained_models.html#inference-free-splade-models">Inference-Free SPLADE Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sparse_encoder/pretrained_models.html#model-collections">Model Collections</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../sparse_encoder/training_overview.html">Training Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../sparse_encoder/training_overview.html#why-finetune">Why Finetune?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sparse_encoder/training_overview.html#training-components">Training Components</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sparse_encoder/training_overview.html#model">Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sparse_encoder/training_overview.html#dataset">Dataset</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../sparse_encoder/training_overview.html#dataset-format">Dataset Format</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../sparse_encoder/training_overview.html#loss-function">Loss Function</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sparse_encoder/training_overview.html#training-arguments">Training Arguments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sparse_encoder/training_overview.html#evaluator">Evaluator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sparse_encoder/training_overview.html#trainer">Trainer</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../sparse_encoder/training_overview.html#callbacks">Callbacks</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../sparse_encoder/training_overview.html#multi-dataset-training">Multi-Dataset Training</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sparse_encoder/training_overview.html#training-tips">Training Tips</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sparse_encoder/training_overview.html#end-to-end-example">End-to-End Example</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="dataset_overview.html">Dataset Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="dataset_overview.html#multimodal-datasets">Multimodal Datasets</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="dataset_overview.html#accepted-column-types">Accepted column types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dataset_overview.html#cross-modal-dataset-example">Cross-modal dataset example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dataset_overview.html#automatic-preprocessing">Automatic preprocessing</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="dataset_overview.html#datasets-on-the-hugging-face-hub">Datasets on the Hugging Face Hub</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dataset_overview.html#pre-existing-datasets">Pre-existing Datasets</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../sparse_encoder/loss_overview.html">Loss Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../sparse_encoder/loss_overview.html#sparse-specific-loss-functions">Sparse specific Loss Functions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../sparse_encoder/loss_overview.html#splade-loss">SPLADE Loss</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../sparse_encoder/loss_overview.html#csr-loss">CSR Loss</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../sparse_encoder/loss_overview.html#loss-table">Loss Table</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sparse_encoder/loss_overview.html#distillation">Distillation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sparse_encoder/loss_overview.html#commonly-used-loss-functions">Commonly used Loss Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sparse_encoder/loss_overview.html#custom-loss-functions">Custom Loss Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../sparse_encoder/training/examples.html">Training Examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../examples/sparse_encoder/training/distillation/README.html">Model Distillation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sparse_encoder/training/distillation/README.html#marginmse">MarginMSE</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../examples/sparse_encoder/training/ms_marco/README.html">MS MARCO</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sparse_encoder/training/ms_marco/README.html#sparsemultiplenegativesrankingloss">SparseMultipleNegativesRankingLoss</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../examples/sparse_encoder/training/sts/README.html">Semantic Textual Similarity</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sparse_encoder/training/sts/README.html#training-data">Training data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sparse_encoder/training/sts/README.html#loss-function">Loss Function</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../examples/sparse_encoder/training/nli/README.html">Natural Language Inference</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sparse_encoder/training/nli/README.html#data">Data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sparse_encoder/training/nli/README.html#spladeloss">SpladeLoss</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../examples/sparse_encoder/training/quora_duplicate_questions/README.html">Quora Duplicate Questions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sparse_encoder/training/quora_duplicate_questions/README.html#training">Training</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../examples/sparse_encoder/training/retrievers/README.html">Information Retrieval</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sparse_encoder/training/retrievers/README.html#sparsemultiplenegativesrankingloss-mnrl">SparseMultipleNegativesRankingLoss (MNRL)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/sparse_encoder/training/retrievers/README.html#inference-evaluation">Inference &amp; Evaluation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="training/distributed.html">Distributed Training</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="training/distributed.html#comparison">Comparison</a></li>
+<li class="toctree-l3"><a class="reference internal" href="training/distributed.html#fsdp">FSDP</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Package Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../package_reference/sentence_transformer/index.html">Sentence Transformer</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../package_reference/sentence_transformer/model.html">SentenceTransformer</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/sentence_transformer/model.html#id1">SentenceTransformer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/sentence_transformer/model.html#sentencetransformermodelcarddata">SentenceTransformerModelCardData</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../package_reference/sentence_transformer/trainer.html">Trainer</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/sentence_transformer/trainer.html#sentencetransformertrainer">SentenceTransformerTrainer</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../package_reference/sentence_transformer/training_args.html">Training Arguments</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/sentence_transformer/training_args.html#sentencetransformertrainingarguments">SentenceTransformerTrainingArguments</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../package_reference/sentence_transformer/losses.html">Losses</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/sentence_transformer/losses.html#batchalltripletloss">BatchAllTripletLoss</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/sentence_transformer/losses.html#batchhardsoftmargintripletloss">BatchHardSoftMarginTripletLoss</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/sentence_transformer/losses.html#batchhardtripletloss">BatchHardTripletLoss</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/sentence_transformer/losses.html#batchsemihardtripletloss">BatchSemiHardTripletLoss</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/sentence_transformer/losses.html#contrastiveloss">ContrastiveLoss</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/sentence_transformer/losses.html#onlinecontrastiveloss">OnlineContrastiveLoss</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/sentence_transformer/losses.html#contrastivetensionloss">ContrastiveTensionLoss</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/sentence_transformer/losses.html#contrastivetensionlossinbatchnegatives">ContrastiveTensionLossInBatchNegatives</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/sentence_transformer/losses.html#cosentloss">CoSENTLoss</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/sentence_transformer/losses.html#angleloss">AnglELoss</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/sentence_transformer/losses.html#cosinesimilarityloss">CosineSimilarityLoss</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/sentence_transformer/losses.html#denoisingautoencoderloss">DenoisingAutoEncoderLoss</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/sentence_transformer/losses.html#gistembedloss">GISTEmbedLoss</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/sentence_transformer/losses.html#cachedgistembedloss">CachedGISTEmbedLoss</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/sentence_transformer/losses.html#globalorthogonalregularizationloss">GlobalOrthogonalRegularizationLoss</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/sentence_transformer/losses.html#embeddistillloss">EmbedDistillLoss</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/sentence_transformer/losses.html#mseloss">MSELoss</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/sentence_transformer/losses.html#marginmseloss">MarginMSELoss</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/sentence_transformer/losses.html#matryoshkaloss">MatryoshkaLoss</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/sentence_transformer/losses.html#matryoshka2dloss">Matryoshka2dLoss</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/sentence_transformer/losses.html#adaptivelayerloss">AdaptiveLayerLoss</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/sentence_transformer/losses.html#megabatchmarginloss">MegaBatchMarginLoss</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/sentence_transformer/losses.html#multiplenegativesrankingloss">MultipleNegativesRankingLoss</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/sentence_transformer/losses.html#cachedmultiplenegativesrankingloss">CachedMultipleNegativesRankingLoss</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/sentence_transformer/losses.html#multiplenegativessymmetricrankingloss">MultipleNegativesSymmetricRankingLoss</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/sentence_transformer/losses.html#cachedmultiplenegativessymmetricrankingloss">CachedMultipleNegativesSymmetricRankingLoss</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/sentence_transformer/losses.html#softmaxloss">SoftmaxLoss</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/sentence_transformer/losses.html#tripletloss">TripletLoss</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/sentence_transformer/losses.html#distillkldivloss">DistillKLDivLoss</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../package_reference/sentence_transformer/evaluation.html">Evaluation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/sentence_transformer/evaluation.html#binaryclassificationevaluator">BinaryClassificationEvaluator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/sentence_transformer/evaluation.html#embeddingsimilarityevaluator">EmbeddingSimilarityEvaluator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/sentence_transformer/evaluation.html#informationretrievalevaluator">InformationRetrievalEvaluator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/sentence_transformer/evaluation.html#nanobeirevaluator">NanoBEIREvaluator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/sentence_transformer/evaluation.html#mseevaluator">MSEEvaluator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/sentence_transformer/evaluation.html#paraphraseminingevaluator">ParaphraseMiningEvaluator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/sentence_transformer/evaluation.html#rerankingevaluator">RerankingEvaluator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/sentence_transformer/evaluation.html#translationevaluator">TranslationEvaluator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/sentence_transformer/evaluation.html#tripletevaluator">TripletEvaluator</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../package_reference/sentence_transformer/datasets.html">Datasets</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/sentence_transformer/datasets.html#parallelsentencesdataset">ParallelSentencesDataset</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/sentence_transformer/datasets.html#sentencelabeldataset">SentenceLabelDataset</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/sentence_transformer/datasets.html#denoisingautoencoderdataset">DenoisingAutoEncoderDataset</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/sentence_transformer/datasets.html#noduplicatesdataloader">NoDuplicatesDataLoader</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../package_reference/sentence_transformer/modules.html">Modules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/sentence_transformer/modules.html#main-modules">Main Modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/sentence_transformer/modules.html#further-modules">Further Modules</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../package_reference/cross_encoder/index.html">Cross Encoder</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../package_reference/cross_encoder/model.html">CrossEncoder</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/cross_encoder/model.html#id1">CrossEncoder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/cross_encoder/model.html#crossencodermodelcarddata">CrossEncoderModelCardData</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../package_reference/cross_encoder/trainer.html">Trainer</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/cross_encoder/trainer.html#crossencodertrainer">CrossEncoderTrainer</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../package_reference/cross_encoder/training_args.html">Training Arguments</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/cross_encoder/training_args.html#crossencodertrainingarguments">CrossEncoderTrainingArguments</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../package_reference/cross_encoder/losses.html">Losses</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/cross_encoder/losses.html#adrmseloss">ADRMSELoss</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/cross_encoder/losses.html#binarycrossentropyloss">BinaryCrossEntropyLoss</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/cross_encoder/losses.html#crossentropyloss">CrossEntropyLoss</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/cross_encoder/losses.html#lambdaloss">LambdaLoss</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/cross_encoder/losses.html#listmleloss">ListMLELoss</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/cross_encoder/losses.html#plistmleloss">PListMLELoss</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/cross_encoder/losses.html#listnetloss">ListNetLoss</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/cross_encoder/losses.html#multiplenegativesrankingloss">MultipleNegativesRankingLoss</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/cross_encoder/losses.html#cachedmultiplenegativesrankingloss">CachedMultipleNegativesRankingLoss</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/cross_encoder/losses.html#mseloss">MSELoss</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/cross_encoder/losses.html#marginmseloss">MarginMSELoss</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/cross_encoder/losses.html#ranknetloss">RankNetLoss</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../package_reference/cross_encoder/evaluation.html">Evaluation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/cross_encoder/evaluation.html#crossencoderrerankingevaluator">CrossEncoderRerankingEvaluator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/cross_encoder/evaluation.html#crossencodernanobeirevaluator">CrossEncoderNanoBEIREvaluator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/cross_encoder/evaluation.html#crossencoderclassificationevaluator">CrossEncoderClassificationEvaluator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/cross_encoder/evaluation.html#crossencodercorrelationevaluator">CrossEncoderCorrelationEvaluator</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../package_reference/cross_encoder/modules.html">Modules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/cross_encoder/modules.html#logitscore">LogitScore</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../package_reference/sparse_encoder/index.html">Sparse Encoder</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../package_reference/sparse_encoder/model.html">SparseEncoder</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/sparse_encoder/model.html#id1">SparseEncoder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/sparse_encoder/model.html#sparseencodermodelcarddata">SparseEncoderModelCardData</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../package_reference/sparse_encoder/trainer.html">Trainer</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/sparse_encoder/trainer.html#sparseencodertrainer">SparseEncoderTrainer</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../package_reference/sparse_encoder/training_args.html">Training Arguments</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/sparse_encoder/training_args.html#sparseencodertrainingarguments">SparseEncoderTrainingArguments</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../package_reference/sparse_encoder/losses.html">Losses</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/sparse_encoder/losses.html#spladeloss">SpladeLoss</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/sparse_encoder/losses.html#cachedspladeloss">CachedSpladeLoss</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/sparse_encoder/losses.html#flopsloss">FlopsLoss</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/sparse_encoder/losses.html#csrloss">CSRLoss</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/sparse_encoder/losses.html#csrreconstructionloss">CSRReconstructionLoss</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/sparse_encoder/losses.html#sparsemultiplenegativesrankingloss">SparseMultipleNegativesRankingLoss</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/sparse_encoder/losses.html#sparsemarginmseloss">SparseMarginMSELoss</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/sparse_encoder/losses.html#sparsedistillkldivloss">SparseDistillKLDivLoss</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/sparse_encoder/losses.html#sparsetripletloss">SparseTripletLoss</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/sparse_encoder/losses.html#sparsecosinesimilarityloss">SparseCosineSimilarityLoss</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/sparse_encoder/losses.html#sparsecosentloss">SparseCoSENTLoss</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/sparse_encoder/losses.html#sparseangleloss">SparseAnglELoss</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/sparse_encoder/losses.html#sparsemseloss">SparseMSELoss</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../package_reference/base/sampler.html">Samplers</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/base/sampler.html#batchsamplers">BatchSamplers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/base/sampler.html#multidatasetbatchsamplers">MultiDatasetBatchSamplers</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../package_reference/sparse_encoder/evaluation.html">Evaluation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/sparse_encoder/evaluation.html#sparseinformationretrievalevaluator">SparseInformationRetrievalEvaluator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/sparse_encoder/evaluation.html#sparsenanobeirevaluator">SparseNanoBEIREvaluator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/sparse_encoder/evaluation.html#sparseembeddingsimilarityevaluator">SparseEmbeddingSimilarityEvaluator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/sparse_encoder/evaluation.html#sparsebinaryclassificationevaluator">SparseBinaryClassificationEvaluator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/sparse_encoder/evaluation.html#sparsetripletevaluator">SparseTripletEvaluator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/sparse_encoder/evaluation.html#sparsererankingevaluator">SparseRerankingEvaluator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/sparse_encoder/evaluation.html#sparsetranslationevaluator">SparseTranslationEvaluator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/sparse_encoder/evaluation.html#sparsemseevaluator">SparseMSEEvaluator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/sparse_encoder/evaluation.html#reciprocalrankfusionevaluator">ReciprocalRankFusionEvaluator</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../package_reference/sparse_encoder/modules.html">Modules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/sparse_encoder/modules.html#splade-pooling">SPLADE Pooling</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/sparse_encoder/modules.html#sparseautoencoder">SparseAutoEncoder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/sparse_encoder/modules.html#sparsestaticembedding">SparseStaticEmbedding</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../package_reference/sparse_encoder/callbacks.html">Callbacks</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/sparse_encoder/callbacks.html#spladeregularizerweightschedulercallback">SpladeRegularizerWeightSchedulerCallback</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../package_reference/sparse_encoder/search_engines.html">Search Engines</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/sparse_encoder/search_engines.html#sentence_transformers.sparse_encoder.search_engines.semantic_search_elasticsearch"><code class="docutils literal notranslate"><span class="pre">semantic_search_elasticsearch()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/sparse_encoder/search_engines.html#sentence_transformers.sparse_encoder.search_engines.semantic_search_opensearch"><code class="docutils literal notranslate"><span class="pre">semantic_search_opensearch()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/sparse_encoder/search_engines.html#sentence_transformers.sparse_encoder.search_engines.semantic_search_qdrant"><code class="docutils literal notranslate"><span class="pre">semantic_search_qdrant()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/sparse_encoder/search_engines.html#sentence_transformers.sparse_encoder.search_engines.semantic_search_seismic"><code class="docutils literal notranslate"><span class="pre">semantic_search_seismic()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../package_reference/base/index.html">Base</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../package_reference/base/model.html">Model</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/base/model.html#basemodel">BaseModel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/base/model.html#basemodelcarddata">BaseModelCardData</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../package_reference/base/trainer.html">Trainer</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/base/trainer.html#basetrainer">BaseTrainer</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../package_reference/base/training_args.html">Training Arguments</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/base/training_args.html#basetrainingarguments">BaseTrainingArguments</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../package_reference/base/sampler.html">Samplers</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/base/sampler.html#batchsamplers">BatchSamplers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/base/sampler.html#multidatasetbatchsamplers">MultiDatasetBatchSamplers</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../package_reference/base/modules.html">Modules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/base/modules.html#common-modules">Common Modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/base/modules.html#base-modules">Base Modules</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../package_reference/base/evaluation.html">Evaluation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/base/evaluation.html#sentence_transformers.base.evaluation.BaseEvaluator"><code class="docutils literal notranslate"><span class="pre">BaseEvaluator</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/base/evaluation.html#sentence_transformers.base.evaluation.SequentialEvaluator"><code class="docutils literal notranslate"><span class="pre">SequentialEvaluator</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../package_reference/util/index.html">Utility Functions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../package_reference/util/distributed.html">distributed</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/util/distributed.html#sentence_transformers.util.distributed.all_gather"><code class="docutils literal notranslate"><span class="pre">all_gather()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/util/distributed.html#sentence_transformers.util.distributed.all_gather_padded"><code class="docutils literal notranslate"><span class="pre">all_gather_padded()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/util/distributed.html#sentence_transformers.util.distributed.all_gather_with_grad"><code class="docutils literal notranslate"><span class="pre">all_gather_with_grad()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/util/distributed.html#sentence_transformers.util.distributed.get_rank"><code class="docutils literal notranslate"><span class="pre">get_rank()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/util/distributed.html#sentence_transformers.util.distributed.get_world_size"><code class="docutils literal notranslate"><span class="pre">get_world_size()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../package_reference/util/environment.html">environment</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/util/environment.html#sentence_transformers.util.environment.check_package_availability"><code class="docutils literal notranslate"><span class="pre">check_package_availability()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/util/environment.html#sentence_transformers.util.environment.get_device_name"><code class="docutils literal notranslate"><span class="pre">get_device_name()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/util/environment.html#sentence_transformers.util.environment.is_accelerate_available"><code class="docutils literal notranslate"><span class="pre">is_accelerate_available()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/util/environment.html#sentence_transformers.util.environment.is_datasets_available"><code class="docutils literal notranslate"><span class="pre">is_datasets_available()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/util/environment.html#sentence_transformers.util.environment.is_dist_initialized"><code class="docutils literal notranslate"><span class="pre">is_dist_initialized()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/util/environment.html#sentence_transformers.util.environment.is_training_available"><code class="docutils literal notranslate"><span class="pre">is_training_available()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/util/environment.html#sentence_transformers.util.environment.suggest_extra_on_exception"><code class="docutils literal notranslate"><span class="pre">suggest_extra_on_exception()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../package_reference/util/file_io.html">file_io</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/util/file_io.html#sentence_transformers.util.file_io.disabled_tqdm"><code class="docutils literal notranslate"><span class="pre">disabled_tqdm</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/util/file_io.html#sentence_transformers.util.file_io.http_get"><code class="docutils literal notranslate"><span class="pre">http_get()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/util/file_io.html#sentence_transformers.util.file_io.is_sentence_transformer_model"><code class="docutils literal notranslate"><span class="pre">is_sentence_transformer_model()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/util/file_io.html#sentence_transformers.util.file_io.load_dir_path"><code class="docutils literal notranslate"><span class="pre">load_dir_path()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/util/file_io.html#sentence_transformers.util.file_io.load_file_path"><code class="docutils literal notranslate"><span class="pre">load_file_path()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../package_reference/util/hard_negatives.html">hard_negatives</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/util/hard_negatives.html#sentence_transformers.util.hard_negatives.mine_hard_negatives"><code class="docutils literal notranslate"><span class="pre">mine_hard_negatives()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../package_reference/util/misc.html">misc</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/util/misc.html#sentence_transformers.util.misc.disable_datasets_caching"><code class="docutils literal notranslate"><span class="pre">disable_datasets_caching()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/util/misc.html#sentence_transformers.util.misc.disable_logging"><code class="docutils literal notranslate"><span class="pre">disable_logging()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/util/misc.html#sentence_transformers.util.misc.fullname"><code class="docutils literal notranslate"><span class="pre">fullname()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/util/misc.html#sentence_transformers.util.misc.import_from_string"><code class="docutils literal notranslate"><span class="pre">import_from_string()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/util/misc.html#sentence_transformers.util.misc.import_module_class"><code class="docutils literal notranslate"><span class="pre">import_module_class()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../package_reference/util/quantization.html">quantization</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/util/quantization.html#sentence_transformers.util.quantization.quantize_embeddings"><code class="docutils literal notranslate"><span class="pre">quantize_embeddings()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/util/quantization.html#sentence_transformers.util.quantization.semantic_search_faiss"><code class="docutils literal notranslate"><span class="pre">semantic_search_faiss()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/util/quantization.html#sentence_transformers.util.quantization.semantic_search_usearch"><code class="docutils literal notranslate"><span class="pre">semantic_search_usearch()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../package_reference/util/retrieval.html">retrieval</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/util/retrieval.html#sentence_transformers.util.retrieval.community_detection"><code class="docutils literal notranslate"><span class="pre">community_detection()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/util/retrieval.html#sentence_transformers.util.retrieval.information_retrieval"><code class="docutils literal notranslate"><span class="pre">information_retrieval()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/util/retrieval.html#sentence_transformers.util.retrieval.paraphrase_mining"><code class="docutils literal notranslate"><span class="pre">paraphrase_mining()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/util/retrieval.html#sentence_transformers.util.retrieval.paraphrase_mining_embeddings"><code class="docutils literal notranslate"><span class="pre">paraphrase_mining_embeddings()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/util/retrieval.html#sentence_transformers.util.retrieval.semantic_search"><code class="docutils literal notranslate"><span class="pre">semantic_search()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../package_reference/util/similarity.html">similarity</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/util/similarity.html#sentence_transformers.util.similarity.SimilarityFunction"><code class="docutils literal notranslate"><span class="pre">SimilarityFunction</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/util/similarity.html#sentence_transformers.util.similarity.cos_sim"><code class="docutils literal notranslate"><span class="pre">cos_sim()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/util/similarity.html#sentence_transformers.util.similarity.dot_score"><code class="docutils literal notranslate"><span class="pre">dot_score()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/util/similarity.html#sentence_transformers.util.similarity.euclidean_sim"><code class="docutils literal notranslate"><span class="pre">euclidean_sim()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/util/similarity.html#sentence_transformers.util.similarity.manhattan_sim"><code class="docutils literal notranslate"><span class="pre">manhattan_sim()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/util/similarity.html#sentence_transformers.util.similarity.maxsim"><code class="docutils literal notranslate"><span class="pre">maxsim()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/util/similarity.html#sentence_transformers.util.similarity.maxsim_pairwise"><code class="docutils literal notranslate"><span class="pre">maxsim_pairwise()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/util/similarity.html#sentence_transformers.util.similarity.pairwise_angle_sim"><code class="docutils literal notranslate"><span class="pre">pairwise_angle_sim()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/util/similarity.html#sentence_transformers.util.similarity.pairwise_cos_sim"><code class="docutils literal notranslate"><span class="pre">pairwise_cos_sim()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/util/similarity.html#sentence_transformers.util.similarity.pairwise_dot_score"><code class="docutils literal notranslate"><span class="pre">pairwise_dot_score()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/util/similarity.html#sentence_transformers.util.similarity.pairwise_euclidean_sim"><code class="docutils literal notranslate"><span class="pre">pairwise_euclidean_sim()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/util/similarity.html#sentence_transformers.util.similarity.pairwise_manhattan_sim"><code class="docutils literal notranslate"><span class="pre">pairwise_manhattan_sim()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/util/similarity.html#sentence_transformers.util.similarity.pytorch_cos_sim"><code class="docutils literal notranslate"><span class="pre">pytorch_cos_sim()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../package_reference/util/tensor.html">tensor</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/util/tensor.html#sentence_transformers.util.tensor.batch_to_device"><code class="docutils literal notranslate"><span class="pre">batch_to_device()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/util/tensor.html#sentence_transformers.util.tensor.cat_padded_token_embeddings"><code class="docutils literal notranslate"><span class="pre">cat_padded_token_embeddings()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/util/tensor.html#sentence_transformers.util.tensor.compute_count_vector"><code class="docutils literal notranslate"><span class="pre">compute_count_vector()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/util/tensor.html#sentence_transformers.util.tensor.normalize_embeddings"><code class="docutils literal notranslate"><span class="pre">normalize_embeddings()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/util/tensor.html#sentence_transformers.util.tensor.repad_flattened_features"><code class="docutils literal notranslate"><span class="pre">repad_flattened_features()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/util/tensor.html#sentence_transformers.util.tensor.select_max_active_dims"><code class="docutils literal notranslate"><span class="pre">select_max_active_dims()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/util/tensor.html#sentence_transformers.util.tensor.stack_padded_token_embeddings"><code class="docutils literal notranslate"><span class="pre">stack_padded_token_embeddings()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../package_reference/util/tensor.html#sentence_transformers.util.tensor.truncate_embeddings"><code class="docutils literal notranslate"><span class="pre">truncate_embeddings()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Sentence Transformers</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Pretrained Models</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/huggingface/sentence-transformers/blob/main/docs/sentence_transformer/pretrained_models.md" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="pretrained-models">
+<h1>Pretrained Models<a class="headerlink" href="#pretrained-models" title="Link to this heading"></a></h1>
+<p>We provide various pre-trained Sentence Transformers models via our Sentence Transformers Hugging Face organization. Additionally, over 6,000 community Sentence Transformers models have been publicly released on the Hugging Face Hub. All models can be found here:</p>
+<ul class="simple">
+<li><p><strong>Original models</strong>: <a class="reference external" href="https://huggingface.co/models?library=sentence-transformers&amp;author=sentence-transformers">Sentence Transformers Hugging Face organization</a>.</p></li>
+<li><p><strong>Community models</strong>: <a class="reference external" href="https://huggingface.co/models?library=sentence-transformers">All Sentence Transformer models on Hugging Face</a>.</p></li>
+</ul>
+<p>Each of these models can be easily downloaded and used like so:</p>
+<aside class="sidebar">
+<p class="sidebar-title">Original Models</p>
+<p>For the original models from the <a class="reference external" href="https://huggingface.co/models?library=sentence-transformers&amp;author=sentence-transformers">Sentence Transformers Hugging Face organization</a>, it is not necessary to include the model author or organization prefix. For example, this snippet loads <a class="reference external" href="https://huggingface.co/sentence-transformers/all-mpnet-base-v2">sentence-transformers/all-mpnet-base-v2</a>.</p>
+</aside>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sentence_transformers</span> <span class="kn">import</span> <span class="n">SentenceTransformer</span>
+
+<span class="c1"># Load https://huggingface.co/sentence-transformers/all-mpnet-base-v2</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">SentenceTransformer</span><span class="p">(</span><span class="s2">&quot;sentence-transformers/all-mpnet-base-v2&quot;</span><span class="p">)</span>
+<span class="n">embeddings</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">encode</span><span class="p">([</span>
+    <span class="s2">&quot;The weather is lovely today.&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;It&#39;s so sunny outside!&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;He drove to the stadium.&quot;</span><span class="p">,</span>
+<span class="p">])</span>
+<span class="n">similarities</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">similarity</span><span class="p">(</span><span class="n">embeddings</span><span class="p">,</span> <span class="n">embeddings</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Consider using the <a class="reference external" href="https://huggingface.co/spaces/mteb/leaderboard">Massive Textual Embedding Benchmark leaderboard</a> as an inspiration of strong Sentence Transformer models. Be wary:</p>
+<ul class="simple">
+<li><p><strong>Model sizes</strong>: it is recommended to filter away the large models that might not be feasible without excessive hardware.</p></li>
+<li><p><strong>Experimentation is key</strong>: models that perform well on the leaderboard do not necessarily do well on your tasks, it is <strong>crucial</strong> to experiment with various promising models.</p></li>
+</ul>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Read <a class="reference external" href="./usage/efficiency.html">Sentence Transformer &gt; Usage &gt; Speeding up Inference</a> for tips on how to speed up inference of models by up to 2x-3x.</p>
+</div>
+<section id="original-models">
+<h2>Original Models<a class="headerlink" href="#original-models" title="Link to this heading"></a></h2>
+<p>The following table provides an overview of a selection of our models. They have been extensively evaluated for their quality to embedded sentences (Performance Sentence Embeddings) and to embedded search queries &amp; paragraphs (Performance Semantic Search).</p>
+<p>The <strong>all-</strong>* models were trained on all available training data (more than 1 billion training pairs) and are designed as <strong>general purpose</strong> models. The <a class="reference external" href="https://huggingface.co/sentence-transformers/all-mpnet-base-v2"><strong>sentence-transformers/all-mpnet-base-v2</strong></a> model provides the best quality, while <a class="reference external" href="https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2"><strong>sentence-transformers/all-MiniLM-L6-v2</strong></a> is 5 times faster and still offers good quality. Toggle <em>All models</em> to see all evaluated original models.</p>
+<iframe src="../../../_static/html/models_en_sentence_embeddings.html" height="600" style="width:100%; border:none;" title="Iframe Example"></iframe>
+</section>
+<hr class="docutils" />
+<section id="semantic-search-models">
+<h2>Semantic Search Models<a class="headerlink" href="#semantic-search-models" title="Link to this heading"></a></h2>
+<p>The following models have been specifically trained for <strong>Semantic Search</strong>: Given a question / search query, these models are able to find relevant text passages. For more details, see <a class="reference internal" href="../../examples/sentence_transformer/applications/semantic-search/README.html"><span class="std std-doc">Usage &gt; Semantic Search</span></a>.</p>
+<aside class="sidebar">
+<p class="sidebar-title">Documentation</p>
+<ol class="arabic simple">
+<li><p><a class="reference external" href="https://huggingface.co/sentence-transformers/multi-qa-mpnet-base-cos-v1">sentence-transformers/multi-qa-mpnet-base-cos-v1</a></p></li>
+<li><p><a class="reference internal" href="../package_reference/sentence_transformer/model.html#sentence_transformers.sentence_transformer.model.SentenceTransformer" title="sentence_transformers.sentence_transformer.model.SentenceTransformer"><code class="xref py py-class docutils literal notranslate"><span class="pre">SentenceTransformer</span></code></a></p></li>
+<li><p><a class="reference internal" href="../package_reference/sentence_transformer/model.html#sentence_transformers.sentence_transformer.model.SentenceTransformer.encode" title="sentence_transformers.sentence_transformer.model.SentenceTransformer.encode"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SentenceTransformer.encode</span></code></a></p></li>
+<li><p><a class="reference internal" href="../package_reference/sentence_transformer/model.html#sentence_transformers.sentence_transformer.model.SentenceTransformer.similarity" title="sentence_transformers.sentence_transformer.model.SentenceTransformer.similarity"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SentenceTransformer.similarity</span></code></a></p></li>
+</ol>
+</aside>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sentence_transformers</span> <span class="kn">import</span> <span class="n">SentenceTransformer</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">SentenceTransformer</span><span class="p">(</span><span class="s2">&quot;sentence-transformers/multi-qa-mpnet-base-cos-v1&quot;</span><span class="p">)</span>
+
+<span class="n">query_embedding</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;How big is London&quot;</span><span class="p">)</span>
+<span class="n">passage_embeddings</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">encode</span><span class="p">([</span>
+    <span class="s2">&quot;London is known for its financial district&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;London has 9,787,426 inhabitants at the 2011 census&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;The United Kingdom is the fourth largest exporter of goods in the world&quot;</span><span class="p">,</span>
+<span class="p">])</span>
+
+<span class="n">similarity</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">similarity</span><span class="p">(</span><span class="n">query_embedding</span><span class="p">,</span> <span class="n">passage_embeddings</span><span class="p">)</span>
+<span class="c1"># =&gt; tensor([[0.4659, 0.6142, 0.2697]])</span>
+</pre></div>
+</div>
+<section id="multi-qa-models">
+<h3>Multi-QA Models<a class="headerlink" href="#multi-qa-models" title="Link to this heading"></a></h3>
+<p>The following models have been trained on <a class="reference external" href="https://huggingface.co/sentence-transformers/multi-qa-MiniLM-L6-dot-v1#training">215M question-answer pairs</a> from various sources and domains, including StackExchange, Yahoo Answers, Google &amp; Bing search queries and many more. These model perform well across many search tasks and domains.</p>
+<p>These models were tuned to be used with the dot-product similarity score:</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Model</th>
+<th style="text-align: center;">Performance Semantic Search (6 Datasets)</th>
+<th style="text-align: center;">Queries (GPU / CPU) per sec.</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://huggingface.co/sentence-transformers/multi-qa-mpnet-base-dot-v1">sentence-transformers/multi-qa-mpnet-base-dot-v1</a></td>
+<td style="text-align: center;">57.60</td>
+<td style="text-align: center;">4,000 / 170</td>
+</tr>
+<tr>
+<td><a href="https://huggingface.co/sentence-transformers/multi-qa-distilbert-dot-v1">sentence-transformers/multi-qa-distilbert-dot-v1</a></td>
+<td style="text-align: center;">52.51</td>
+<td style="text-align: center;">7,000 / 350</td>
+</tr>
+<tr>
+<td><a href="https://huggingface.co/sentence-transformers/multi-qa-MiniLM-L6-dot-v1">sentence-transformers/multi-qa-MiniLM-L6-dot-v1</a></td>
+<td style="text-align: center;">49.19</td>
+<td style="text-align: center;">18,000 / 750</td>
+</tr>
+</tbody>
+</table>
+<p>These models produce normalized vectors of length 1, which can be used with dot-product, cosine-similarity and Euclidean distance as the similarity functions:</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Model</th>
+<th style="text-align: center;">Performance Semantic Search (6 Datasets)</th>
+<th style="text-align: center;">Queries (GPU / CPU) per sec.</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://huggingface.co/sentence-transformers/multi-qa-mpnet-base-cos-v1">sentence-transformers/multi-qa-mpnet-base-cos-v1</a></td>
+<td style="text-align: center;">57.46</td>
+<td style="text-align: center;">4,000 / 170</td>
+</tr>
+<tr>
+<td><a href="https://huggingface.co/sentence-transformers/multi-qa-distilbert-cos-v1">sentence-transformers/multi-qa-distilbert-cos-v1</a></td>
+<td style="text-align: center;">52.83</td>
+<td style="text-align: center;">7,000 / 350</td>
+</tr>
+<tr>
+<td><a href="https://huggingface.co/sentence-transformers/multi-qa-MiniLM-L6-cos-v1">sentence-transformers/multi-qa-MiniLM-L6-cos-v1</a></td>
+<td style="text-align: center;">51.83</td>
+<td style="text-align: center;">18,000 / 750</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="msmarco-passage-models">
+<h3>MSMARCO Passage Models<a class="headerlink" href="#msmarco-passage-models" title="Link to this heading"></a></h3>
+<p>The following models have been trained on the <a class="reference external" href="https://github.com/microsoft/MSMARCO-Passage-Ranking">MSMARCO Passage Ranking Dataset</a>, which contains 500k real queries from Bing search together with the relevant passages from various web sources. Given the diversity of the MSMARCO dataset, models also perform well on other domains.</p>
+<p>These models were tuned to be used with the dot-product similarity score:</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Model</th>
+<th style="text-align: center;">MSMARCO MRR@10 dev set</th>
+<th style="text-align: center;">Performance Semantic Search (6 Datasets)</th>
+<th style="text-align: center;">Queries (GPU / CPU) per sec.</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://huggingface.co/sentence-transformers/msmarco-bert-base-dot-v5">sentence-transformers/msmarco-bert-base-dot-v5</a></td>
+<td style="text-align: center;">38.08</td>
+<td style="text-align: center;">52.11</td>
+<td style="text-align: center;">4,000 / 170</td>
+</tr>
+<tr>
+<td><a href="https://huggingface.co/sentence-transformers/msmarco-distilbert-dot-v5">sentence-transformers/msmarco-distilbert-dot-v5</a></td>
+<td style="text-align: center;">37.25</td>
+<td style="text-align: center;">49.47</td>
+<td style="text-align: center;">7,000 / 350</td>
+</tr>
+<tr>
+<td><a href="https://huggingface.co/sentence-transformers/msmarco-distilbert-base-tas-b">sentence-transformers/msmarco-distilbert-base-tas-b</a></td>
+<td style="text-align: center;">34.43</td>
+<td style="text-align: center;">49.25</td>
+<td style="text-align: center;">7,000 / 350</td>
+</tr>
+</tbody>
+</table>
+<p>These models produce normalized vectors of length 1, which can be used with dot-product, cosine-similarity and Euclidean distance as the similarity functions:</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Model</th>
+<th style="text-align: center;">MSMARCO MRR@10 dev set</th>
+<th style="text-align: center;">Performance Semantic Search (6 Datasets)</th>
+<th style="text-align: center;">Queries (GPU / CPU) per sec.</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://huggingface.co/sentence-transformers/msmarco-distilbert-cos-v5">sentence-transformers/msmarco-distilbert-cos-v5</a></td>
+<td style="text-align: center;">33.79</td>
+<td style="text-align: center;">44.98</td>
+<td style="text-align: center;">7,000 / 350</td>
+</tr>
+<tr>
+<td><a href="https://huggingface.co/sentence-transformers/msmarco-MiniLM-L12-cos-v5">sentence-transformers/msmarco-MiniLM-L12-cos-v5</a></td>
+<td style="text-align: center;">32.75</td>
+<td style="text-align: center;">43.89</td>
+<td style="text-align: center;">11,000 / 400</td>
+</tr>
+<tr>
+<td><a href="https://huggingface.co/sentence-transformers/msmarco-MiniLM-L6-cos-v5">sentence-transformers/msmarco-MiniLM-L6-cos-v5</a></td>
+<td style="text-align: center;">32.27</td>
+<td style="text-align: center;">42.16</td>
+<td style="text-align: center;">18,000 / 750</td>
+</tr>
+</tbody>
+</table>
+<p><a class="reference internal" href="../pretrained-models/msmarco-v5.html"><span class="std std-doc">MSMARCO Models - More details</span></a></p>
+</section>
+</section>
+<hr class="docutils" />
+<section id="multilingual-models">
+<h2>Multilingual Models<a class="headerlink" href="#multilingual-models" title="Link to this heading"></a></h2>
+<p>The following models similar embeddings for the same texts in different languages. You do not need to specify the input language. Details are in our publication <a class="reference external" href="https://huggingface.co/papers/2004.09813">Making Monolingual Sentence Embeddings Multilingual using Knowledge Distillation</a>. We used the following 50+ languages: ar, bg, ca, cs, da, de, el, en, es, et, fa, fi, fr, fr-ca, gl, gu, he, hi, hr, hu, hy, id, it, ja, ka, ko, ku, lt, lv, mk, mn, mr, ms, my, nb, nl, pl, pt, pt-br, ro, ru, sk, sl, sq, sr, sv, th, tr, uk, ur, vi, zh-cn, zh-tw.</p>
+<section id="semantic-similarity-models">
+<h3>Semantic Similarity Models<a class="headerlink" href="#semantic-similarity-models" title="Link to this heading"></a></h3>
+<p>These models find semantically similar sentences within one language or across languages:</p>
+<ul class="simple">
+<li><p><strong><a class="reference external" href="https://huggingface.co/sentence-transformers/distiluse-base-multilingual-cased-v1">sentence-transformers/distiluse-base-multilingual-cased-v1</a></strong>: Multilingual knowledge distilled version of <a class="reference external" href="https://huggingface.co/papers/1907.04307">multilingual Universal Sentence Encoder</a>. Supports 15 languages:  Arabic, Chinese, Dutch, English, French, German, Italian, Korean, Polish, Portuguese, Russian, Spanish, Turkish.</p></li>
+<li><p><strong><a class="reference external" href="https://huggingface.co/sentence-transformers/distiluse-base-multilingual-cased-v2">sentence-transformers/distiluse-base-multilingual-cased-v2</a></strong>: Multilingual knowledge distilled version of <a class="reference external" href="https://huggingface.co/papers/1907.04307">multilingual Universal Sentence Encoder</a>. This version supports 50+ languages, but performs a bit weaker than the v1 model.</p></li>
+<li><p><strong><a class="reference external" href="https://huggingface.co/sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2">sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2</a></strong> - Multilingual version of <a class="reference external" href="https://huggingface.co/sentence-transformers/paraphrase-MiniLM-L12-v2">sentence-transformers/paraphrase-MiniLM-L12-v2</a>, trained on parallel data for 50+ languages.</p></li>
+<li><p><strong><a class="reference external" href="https://huggingface.co/sentence-transformers/paraphrase-multilingual-mpnet-base-v2">sentence-transformers/paraphrase-multilingual-mpnet-base-v2</a></strong> - Multilingual version of <a class="reference external" href="https://huggingface.co/sentence-transformers/paraphrase-mpnet-base-v2">sentence-transformers/paraphrase-mpnet-base-v2</a>, trained on parallel data for 50+ languages.</p></li>
+</ul>
+</section>
+<section id="bitext-mining">
+<h3>Bitext Mining<a class="headerlink" href="#bitext-mining" title="Link to this heading"></a></h3>
+<p>Bitext mining describes the process of finding translated sentence pairs in two languages. If this is your use-case, the following model gives the best performance:</p>
+<ul class="simple">
+<li><p><strong><a class="reference external" href="https://huggingface.co/sentence-transformers/LaBSE">sentence-transformers/LaBSE</a></strong> - <a class="reference external" href="https://huggingface.co/papers/2007.01852">LaBSE</a> Model. Supports 109 languages. Works well for finding translation pairs in multiple languages. As detailed  <a class="reference external" href="https://huggingface.co/papers/2004.09813">here</a>, LaBSE works less well for assessing the similarity of sentence pairs that are not translations of each other.</p></li>
+</ul>
+<p>Extending a model to new languages is easy by following <a class="reference internal" href="../../examples/sentence_transformer/training/multilingual/README.html"><span class="std std-doc">Training Examples &gt; Multilingual Models</span></a>.</p>
+</section>
+</section>
+<section id="multimodal-models">
+<h2>Multimodal Models<a class="headerlink" href="#multimodal-models" title="Link to this heading"></a></h2>
+<p>Sentence Transformers supports multimodal models that can embed text alongside images, audio, or video into a joint vector space. This enables cross-modal tasks like text-to-image search, image-to-image search, image clustering, and zero-shot classification.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>See the <a class="reference external" href="https://huggingface.co/blog/multimodal-sentence-transformers">Multimodal Embedding &amp; Reranker Models</a> blogpost for an inference walkthrough and an overview of the multimodal models supported at the time of writing.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Multimodal models require additional dependencies. Install them with e.g. <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">-U</span> <span class="pre">&quot;sentence-transformers[image]&quot;</span></code> for image support. See <a class="reference external" href="../installation.html">Installation</a> for all options.</p>
+</div>
+<p>You can check which modalities a model supports using the <a class="reference internal" href="../package_reference/sentence_transformer/model.html#sentence_transformers.sentence_transformer.model.SentenceTransformer.modalities" title="sentence_transformers.sentence_transformer.model.SentenceTransformer.modalities"><code class="xref py py-attr docutils literal notranslate"><span class="pre">modalities</span></code></a> property and <a class="reference internal" href="../package_reference/sentence_transformer/model.html#sentence_transformers.sentence_transformer.model.SentenceTransformer.supports" title="sentence_transformers.sentence_transformer.model.SentenceTransformer.supports"><code class="xref py py-meth docutils literal notranslate"><span class="pre">supports()</span></code></a> method:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sentence_transformers</span> <span class="kn">import</span> <span class="n">SentenceTransformer</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">SentenceTransformer</span><span class="p">(</span><span class="s2">&quot;Qwen/Qwen3-VL-Embedding-2B&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">modalities</span><span class="p">)</span>
+<span class="c1"># =&gt; [&#39;text&#39;, &#39;image&#39;, &#39;video&#39;, &#39;message&#39;]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">supports</span><span class="p">(</span><span class="s2">&quot;image&quot;</span><span class="p">))</span>
+<span class="c1"># =&gt; True</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">supports</span><span class="p">(</span><span class="s2">&quot;audio&quot;</span><span class="p">))</span>
+<span class="c1"># =&gt; False</span>
+</pre></div>
+</div>
+<section id="image-text-models">
+<h3>Image &amp; Text Models<a class="headerlink" href="#image-text-models" title="Link to this heading"></a></h3>
+<p>Image-text models embed both images and text into the same vector space.</p>
+<p>The original Sentence Transformers image-text models are based on CLIP. See <a class="reference internal" href="../../examples/sentence_transformer/applications/image-search/README.html"><span class="std std-doc">Usage &gt; Image Search</span></a> for details on text-to-image search, image-to-image search, image clustering, and zero-shot image classification.</p>
+<p>The following CLIP models are available with their respective Top 1 accuracy on zero-shot ImageNet validation dataset:</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Model</th>
+<th style="text-align: center;">Top 1 Performance</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://huggingface.co/sentence-transformers/clip-ViT-L-14">sentence-transformers/clip-ViT-L-14</a></td>
+<td style="text-align: center;">75.4</td>
+</tr>
+<tr>
+<td><a href="https://huggingface.co/sentence-transformers/clip-ViT-B-16">sentence-transformers/clip-ViT-B-16</a></td>
+<td style="text-align: center;">68.1</td>
+</tr>
+<tr>
+<td><a href="https://huggingface.co/sentence-transformers/clip-ViT-B-32">sentence-transformers/clip-ViT-B-32</a></td>
+<td style="text-align: center;">63.3</td>
+</tr>
+</tbody>
+</table>
+<p>We further provide this multilingual text-image model:</p>
+<ul class="simple">
+<li><p><strong><a class="reference external" href="https://huggingface.co/sentence-transformers/clip-ViT-B-32-multilingual-v1">sentence-transformers/clip-ViT-B-32-multilingual-v1</a></strong> - Multilingual text encoder for the <a class="reference external" href="https://huggingface.co/sentence-transformers/clip-ViT-B-32">sentence-transformers/clip-ViT-B-32</a> model using <a class="reference external" href="https://huggingface.co/papers/2004.09813">Multilingual Knowledge Distillation</a>. This model can encode text in 50+ languages to match the image vectors from the <a class="reference external" href="https://huggingface.co/sentence-transformers/clip-ViT-B-32">sentence-transformers/clip-ViT-B-32</a> model.</p></li>
+</ul>
+<p>Newer multimodal models use the unified <a class="reference internal" href="../package_reference/base/modules.html#sentence_transformers.base.modules.Transformer" title="sentence_transformers.base.modules.Transformer"><code class="xref py py-class docutils literal notranslate"><span class="pre">Transformer</span></code></a> module, which automatically detects supported modalities from the underlying model and processor. These models typically support richer input formats, including interleaved image-text inputs via chat messages. Notable examples include:</p>
+<ul class="simple">
+<li><p><strong><a class="reference external" href="https://huggingface.co/Qwen/Qwen3-VL-Embedding-2B">Qwen/Qwen3-VL-Embedding-2B</a></strong> - A Qwen3-VL-based embedding model that supports text, image, and interleaved image-text inputs via message format. Useful for document screenshot embedding and cross-modal retrieval. See <a class="reference internal" href="../../examples/sentence_transformer/training/multimodal/README.html"><span class="std std-doc">Training Examples &gt; Multimodal</span></a> for a finetuning example.</p></li>
+</ul>
+<p>VLM-based models support additional modalities and input formats compared to CLIP models. You can verify this with <a class="reference internal" href="../package_reference/sentence_transformer/model.html#sentence_transformers.sentence_transformer.model.SentenceTransformer.modalities" title="sentence_transformers.sentence_transformer.model.SentenceTransformer.modalities"><code class="xref py py-attr docutils literal notranslate"><span class="pre">modalities</span></code></a>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sentence_transformers</span> <span class="kn">import</span> <span class="n">SentenceTransformer</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">SentenceTransformer</span><span class="p">(</span><span class="s2">&quot;Qwen/Qwen3-VL-Embedding-2B&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">modalities</span><span class="p">)</span>
+<span class="c1"># =&gt; [&#39;text&#39;, &#39;image&#39;, &#39;video&#39;, &#39;message&#39;]</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">&quot;message&quot;</span></code> modality means the model accepts chat-style message inputs, allowing you to combine text and images in a single input. This is how VLM-based models handle interleaved multimodal content.</p>
+</section>
+<section id="audio-video-models">
+<h3>Audio &amp; Video Models<a class="headerlink" href="#audio-video-models" title="Link to this heading"></a></h3>
+<p>The <a class="reference internal" href="../package_reference/base/modules.html#sentence_transformers.base.modules.Transformer" title="sentence_transformers.base.modules.Transformer"><code class="xref py py-class docutils literal notranslate"><span class="pre">Transformer</span></code></a> module also supports audio and video modalities when the underlying model and processor provide them. Audio models accept file paths, numpy/torch arrays, dicts with <code class="docutils literal notranslate"><span class="pre">&quot;array&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;sampling_rate&quot;</span></code> keys, or <code class="docutils literal notranslate"><span class="pre">torchcodec.AudioDecoder</span></code> instances, while video models accept file paths, numpy/torch arrays, dicts with <code class="docutils literal notranslate"><span class="pre">&quot;array&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;video_metadata&quot;</span></code> keys, or <code class="docutils literal notranslate"><span class="pre">torchcodec.VideoDecoder</span></code> instances. As pretrained audio and video embedding models become available on the Hugging Face Hub, they can be loaded with <a class="reference internal" href="../package_reference/sentence_transformer/model.html#sentence_transformers.sentence_transformer.model.SentenceTransformer" title="sentence_transformers.sentence_transformer.model.SentenceTransformer"><code class="xref py py-class docutils literal notranslate"><span class="pre">SentenceTransformer</span></code></a> just like any other model.</p>
+</section>
+</section>
+<section id="instructor-models">
+<h2>INSTRUCTOR models<a class="headerlink" href="#instructor-models" title="Link to this heading"></a></h2>
+<p>Some INSTRUCTOR models, such as <a class="reference external" href="https://huggingface.co/hkunlp/instructor-large">hkunlp/instructor-large</a>, are natively supported in Sentence Transformers. These models are special, as they are trained with instructions in mind. Notably, the primary difference between normal Sentence Transformer models and Instructor models is that the latter do not include the instructions themselves in the pooling step.</p>
+<p>The following models work out of the box:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://huggingface.co/hkunlp/instructor-base">hkunlp/instructor-base</a></p></li>
+<li><p><a class="reference external" href="https://huggingface.co/hkunlp/instructor-large">hkunlp/instructor-large</a></p></li>
+<li><p><a class="reference external" href="https://huggingface.co/hkunlp/instructor-xl">hkunlp/instructor-xl</a></p></li>
+</ul>
+<p>You can use these models like so:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sentence_transformers</span> <span class="kn">import</span> <span class="n">SentenceTransformer</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">SentenceTransformer</span><span class="p">(</span><span class="s2">&quot;hkunlp/instructor-large&quot;</span><span class="p">)</span>
+<span class="n">embeddings</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+    <span class="p">[</span>
+        <span class="s2">&quot;Dynamical Scalar Degree of Freedom in Horava-Lifshitz Gravity&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Comparison of Atmospheric Neutrino Flux Calculations at Low Energies&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Fermion Bags in the Massive Gross-Neveu Model&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;QCD corrections to Associated t-tbar-H production at the Tevatron&quot;</span><span class="p">,</span>
+    <span class="p">],</span>
+    <span class="n">prompt</span><span class="o">=</span><span class="s2">&quot;Represent the Medicine sentence for clustering: &quot;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">embeddings</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="c1"># =&gt; (4, 768)</span>
+</pre></div>
+</div>
+<p>For example, for information retrieval:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sentence_transformers</span> <span class="kn">import</span> <span class="n">SentenceTransformer</span>
+<span class="kn">from</span> <span class="nn">sentence_transformers.util</span> <span class="kn">import</span> <span class="n">cos_sim</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">SentenceTransformer</span><span class="p">(</span><span class="s2">&quot;hkunlp/instructor-large&quot;</span><span class="p">)</span>
+<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;where is the food stored in a yam plant&quot;</span>
+<span class="n">query_instruction</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="s2">&quot;Represent the Wikipedia question for retrieving supporting documents: &quot;</span>
+<span class="p">)</span>
+<span class="n">corpus</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;Yams are perennial herbaceous vines native to Africa, Asia, and the Americas and cultivated for the consumption of their starchy tubers in many temperate and tropical regions. The tubers themselves, also called &quot;yams&quot;, come in a variety of forms owing to numerous cultivars and related species.&#39;</span><span class="p">,</span>
+    <span class="s2">&quot;The disparate impact theory is especially controversial under the Fair Housing Act because the Act regulates many activities relating to housing, insurance, and mortgage loansâ€”and some scholars have argued that the theory&#39;s use under the Fair Housing Act, combined with extensions of the Community Reinvestment Act, contributed to rise of sub-prime lending and the crash of the U.S. housing market and ensuing global economic recession&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Disparate impact in United States labor law refers to practices in employment, housing, and other areas that adversely affect one group of people of a protected characteristic more than another, even though rules applied by employers or landlords are formally neutral. Although the protected classes vary by statute, most federal civil rights laws protect based on race, color, religion, national origin, and sex as protected traits, and some laws include disability status and other traits as well.&quot;</span><span class="p">,</span>
+<span class="p">]</span>
+<span class="n">corpus_instruction</span> <span class="o">=</span> <span class="s2">&quot;Represent the Wikipedia document for retrieval: &quot;</span>
+
+<span class="n">query_embedding</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">prompt</span><span class="o">=</span><span class="n">query_instruction</span><span class="p">)</span>
+<span class="n">corpus_embeddings</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">corpus</span><span class="p">,</span> <span class="n">prompt</span><span class="o">=</span><span class="n">corpus_instruction</span><span class="p">)</span>
+<span class="n">similarities</span> <span class="o">=</span> <span class="n">cos_sim</span><span class="p">(</span><span class="n">query_embedding</span><span class="p">,</span> <span class="n">corpus_embeddings</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">similarities</span><span class="p">)</span>
+<span class="c1"># =&gt; tensor([[0.8835, 0.7037, 0.6970]])</span>
+</pre></div>
+</div>
+<p>All other Instructor models either 1) will not load as they refer to <code class="docutils literal notranslate"><span class="pre">InstructorEmbedding</span></code> in their <code class="docutils literal notranslate"><span class="pre">modules.json</span></code> or 2) require calling <code class="docutils literal notranslate"><span class="pre">model.set_pooling_include_prompt(include_prompt=False)</span></code> after loading.</p>
+</section>
+<section id="scientific-similarity-models">
+<h2>Scientific Similarity Models<a class="headerlink" href="#scientific-similarity-models" title="Link to this heading"></a></h2>
+<p><a class="reference external" href="https://huggingface.co/papers/2004.07180">SPECTER</a> is a model trained on scientific citations and can be used to estimate the similarity of two publications. We can use it to find similar papers.</p>
+<ul class="simple">
+<li><p><strong><a class="reference external" href="https://huggingface.co/sentence-transformers/allenai-specter">allenai-specter</a></strong> - <a class="reference download external" download="" href="https://github.com/huggingface/sentence-transformers/tree/main/docs/sentence_transformer/../../examples/sentence_transformer/applications/semantic-search/semantic_search_publications.py"><span class="xref download myst">Semantic Search Python Example</span></a> / <a class="reference external" href="https://colab.research.google.com/drive/12hfBveGHRsxhPIUMmJYrll2lFU4fOX06">Semantic Search Colab Example</a></p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="usage/efficiency.html" class="btn btn-neutral float-left" title="Speeding up Inference" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="training_overview.html" class="btn btn-neutral float-right" title="Training Overview" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,910 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>NVIDIA Triton Inference Server &#8212; NVIDIA Triton Inference Server</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/nvidia-sphinx-theme.css?v=933278ad" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=87e54e7c" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+
+
+    <script src="_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="https://js.hcaptcha.com/1/api.js"></script>
+    <script src="//assets.adobedtm.com/5d4962a43b79/c1061d2c5e7b/launch-191c2462b890.min.js"></script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'index';</script>
+    <script>
+        DOCUMENTATION_OPTIONS.theme_version = '0.15.4';
+        DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://docs.nvidia.com/deeplearning/triton-inference-server/user-guide/docs/_static/switcher.json';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '2.70.0';
+        DOCUMENTATION_OPTIONS.show_version_warning_banner = false;
+        </script>
+
+    <link rel="canonical" href="https://docs.nvidia.com/deeplearning/triton-inference-server/user-guide/docs/index.html" />
+    <link rel="icon" href="_static/favicon.png"/>
+
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+
+
+
+
+
+  </head>
+
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="contents.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/nvidia-logo-horiz-rgb-blk-for-screen.svg" class="logo__image only-light" alt="NVIDIA Triton Inference Server - Home"/>
+    <script>document.write(`<img src="_static/nvidia-logo-horiz-rgb-wht-for-screen.svg" class="logo__image only-dark" alt="NVIDIA Triton Inference Server - Home"/>`);</script>
+  
+  
+    <p class="title logo__title">NVIDIA Triton Inference Server</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+
+
+<script>
+document.write(`
+  <div class="version-switcher__container dropdown">
+    <button id="pst-version-switcher-button-2"
+      type="button"
+      class="version-switcher__button btn btn-sm dropdown-toggle"
+      data-bs-toggle="dropdown"
+      aria-haspopup="listbox"
+      aria-controls="pst-version-switcher-list-2"
+      aria-label="Version switcher list"
+    >
+      Choose version  <!-- this text may get changed later by javascript -->
+      <span class="caret"></span>
+    </button>
+    <div id="pst-version-switcher-list-2"
+      class="version-switcher__menu dropdown-menu list-group-flush py-0"
+      role="listbox" aria-labelledby="pst-version-switcher-button-2">
+      <!-- dropdown will be populated by javascript on page load -->
+    </div>
+  </div>
+`);
+</script></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/triton-inference-server/server" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="contents.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/nvidia-logo-horiz-rgb-blk-for-screen.svg" class="logo__image only-light" alt="NVIDIA Triton Inference Server - Home"/>
+    <script>document.write(`<img src="_static/nvidia-logo-horiz-rgb-wht-for-screen.svg" class="logo__image only-dark" alt="NVIDIA Triton Inference Server - Home"/>`);</script>
+  
+  
+    <p class="title logo__title">NVIDIA Triton Inference Server</p>
+  
+</a>
+
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+
+
+<script>
+document.write(`
+  <div class="version-switcher__container dropdown">
+    <button id="pst-version-switcher-button-3"
+      type="button"
+      class="version-switcher__button btn btn-sm dropdown-toggle"
+      data-bs-toggle="dropdown"
+      aria-haspopup="listbox"
+      aria-controls="pst-version-switcher-list-3"
+      aria-label="Version switcher list"
+    >
+      Choose version  <!-- this text may get changed later by javascript -->
+      <span class="caret"></span>
+    </button>
+    <div id="pst-version-switcher-list-3"
+      class="version-switcher__menu dropdown-menu list-group-flush py-0"
+      role="listbox" aria-labelledby="pst-version-switcher-button-3">
+      <!-- dropdown will be populated by javascript on page load -->
+    </div>
+  </div>
+`);
+</script></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/triton-inference-server/server" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+
+
+<nav class="bd-docs-nav bd-links"
+     aria-label="Table of Contents">
+  <p class="bd-links__title" role="heading" aria-level="1">Table of Contents</p>
+  <div class="bd-toc-item navbar-nav"><ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="introduction/index.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="introduction/release_notes.html">Release notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="introduction/compatibility.html">Compatibility matrix</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="getting_started/quick_deployment.html">Quick Deployment Guide by backend</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="getting_started/quickstart.html">Quickstart</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getting_started/llm.html">TRT-LLM</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/Popular_Models_Guide/Llama2/vllm_guide.html">vLLM</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/Quick_Deploy/HuggingFaceTransformers/README.html">Python with HuggingFace</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/Quick_Deploy/PyTorch/README.html">PyTorch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/Quick_Deploy/ONNX/README.html">ONNX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/Quick_Deploy/OpenVINO/README.html">Openvino</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started/trtllm_user_guide.html">LLM With TensorRT-LLM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/Popular_Models_Guide/Llava1.5/llava_trtllm_guide.html">Multimodal model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/Popular_Models_Guide/StableDiffusion/README.html">Stable diffusion</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Scaling guide</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="tutorials/Deployment/Kubernetes/EKS_Multinode_Triton_TRTLLM/README.html">Multi-Node (AWS)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/Deployment/Kubernetes/TensorRT-LLM_Autoscaling_and_Load_Balancing/README.html">Multi-Instance</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">LLM Features</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="tutorials/Feature_Guide/Constrained_Decoding/README.html">Constrained Decoding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/Feature_Guide/Function_Calling/README.html">Function Calling</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="llm_features/speculative_decoding.html">Speculative Decoding</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/Feature_Guide/Speculative_Decoding/README.html">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/Feature_Guide/Speculative_Decoding/TRT-LLM/README.html">TRT-LLM</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/Feature_Guide/Speculative_Decoding/vLLM/README.html">vLLM</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Client</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="client_guide/api_reference.html">API Reference</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="client_guide/openai_readme.html">OpenAI API</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="client_guide/kserve.html">KServe API</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="customization_guide/inference_protocols.html">HTTP/REST and GRPC Protocol</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="client_guide/kserve_extension.html">Extensions</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l4"><a class="reference internal" href="protocol/extension_binary_data.html">Binary tensor data extension</a></li>
+<li class="toctree-l4"><a class="reference internal" href="protocol/extension_classification.html">Classification extension</a></li>
+<li class="toctree-l4"><a class="reference internal" href="protocol/extension_schedule_policy.html">Schedule policy extension</a></li>
+<li class="toctree-l4"><a class="reference internal" href="protocol/extension_sequence.html">Sequence extension</a></li>
+<li class="toctree-l4"><a class="reference internal" href="protocol/extension_shared_memory.html">Shared-memory extension</a></li>
+<li class="toctree-l4"><a class="reference internal" href="protocol/extension_model_configuration.html">Model configuration extension</a></li>
+<li class="toctree-l4"><a class="reference internal" href="protocol/extension_model_repository.html">Model repository extension</a></li>
+<li class="toctree-l4"><a class="reference internal" href="protocol/extension_statistics.html">Statistics extension</a></li>
+<li class="toctree-l4"><a class="reference internal" href="protocol/extension_trace.html">Trace extension</a></li>
+<li class="toctree-l4"><a class="reference internal" href="protocol/extension_logging.html">Logging extension</a></li>
+<li class="toctree-l4"><a class="reference internal" href="protocol/extension_parameters.html">Parameters extension</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="client_guide/in_process.html">In-Process Triton Server API</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="customization_guide/inprocess_c_api.html">C/C++</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="client_guide/python.html">Python</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="tutorials/Triton_Inference_Server_Python_API/README.html">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorials/Triton_Inference_Server_Python_API/examples/kafka-io/README.html">Kafka I/O</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorials/Triton_Inference_Server_Python_API/examples/rayserve/README.html">Rayserve</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="customization_guide/inprocess_java_api.html">Java</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="client/README.html">Client Libraries</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="_reference/tritonclient_api.html">Python tritonclient Package API</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="_reference/tritonclient/tritonclient.html">tritonclient</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="_reference/tritonclient/tritonclient.grpc.html">tritonclient.grpc</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l4"><a class="reference internal" href="_reference/tritonclient/tritonclient.grpc.aio.html">tritonclient.grpc.aio</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_reference/tritonclient/tritonclient.grpc.auth.html">tritonclient.grpc.auth</a></li>
+</ul>
+</details></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="_reference/tritonclient/tritonclient.http.html">tritonclient.http</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l4"><a class="reference internal" href="_reference/tritonclient/tritonclient.http.aio.html">tritonclient.http.aio</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_reference/tritonclient/tritonclient.http.auth.html">tritonclient.http.auth</a></li>
+</ul>
+</details></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="_reference/tritonclient/tritonclient.utils.html">tritonclient.utils</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l4"><a class="reference internal" href="_reference/tritonclient/tritonclient.utils.cuda_shared_memory.html">tritonclient.utils.cuda_shared_memory</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_reference/tritonclient/tritonclient.utils.shared_memory.html">tritonclient.utils.shared_memory</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Server</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="user_guide/model_execution.html">Concurrent Model Execution</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="user_guide/scheduler.html">Scheduler</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user_guide/batcher.html">Batcher</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="server_guide/model_pipelines.html">Model Pipelines</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="user_guide/ensemble_models.html">Ensemble</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user_guide/bls.html">Business Logic Scripting</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="server_guide/state_management.html">State Management</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="user_guide/implicit_state_management.html">Implicit State Management</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="user_guide/request_cancellation.html">Request Cancellation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user_guide/rate_limiter.html">Rate Limiter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user_guide/response_cache.html">Caching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user_guide/metrics.html">Metrics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user_guide/trace.html">Tracing</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Model Management</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="user_guide/model_repository.html">Repository</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user_guide/model_configuration.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user_guide/optimization.html">Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user_guide/model_management.html">Controls</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user_guide/decoupled_models.html">Decoupled models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user_guide/custom_operations.html">Custom operators</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Backends</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="tensorrtllm_backend/README.html">TensorRT-LLM</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="backend_guide/vllm.html">vLLM</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="vllm_backend/README.html">vLLM Backend</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vllm_backend/docs/llama_multi_lora_tutorial.html">Multi-LoRA</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="python_backend/README.html">Python Backend</a></li>
+
+
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="pytorch_backend/README.html">PyTorch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="onnxruntime_backend/README.html">ONNX Runtime</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tensorrt_backend/README.html">TensorRT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fil_backend/README.html">FIL</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dali_backend/README.html">DALI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="backend/README.html">Custom</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Performance benchmarking and tuning</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="perf_benchmark/genai_perf.html">GenAI Perf Analyzer</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="perf_analyzer/genai-perf/README.html">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="perf_analyzer/genai-perf/docs/tutorial.html">Large language models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="perf_analyzer/genai-perf/docs/multi_modal.html">Visual language models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="perf_analyzer/genai-perf/docs/embeddings.html">Embedding models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="perf_analyzer/genai-perf/docs/rankings.html">Ranking models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="perf_analyzer/genai-perf/docs/lora.html">Multiple LoRA adapters</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="perf_benchmark/perf_analyzer.html">Performance Analyzer</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="perf_analyzer/README.html">Triton Performance Analyzer</a></li>
+
+
+
+
+
+<li class="toctree-l2"><a class="reference internal" href="perf_analyzer/docs/README.html">Documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="perf_analyzer/docs/quick_start.html">Quick Start</a></li>
+<li class="toctree-l2"><a class="reference internal" href="perf_analyzer/docs/install.html">Recommended Installation Method</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="perf_analyzer/docs/cli.html">CLI Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="perf_analyzer/docs/inference_load_modes.html">Inference Load Modes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="perf_analyzer/docs/input_data.html">Input Data</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="perf_analyzer/docs/measurements_metrics.html">Measurement Modes</a></li>
+
+
+<li class="toctree-l2"><a class="reference internal" href="perf_analyzer/docs/benchmarking.html">Benchmarking Triton via HTTP or gRPC endpoint</a></li>
+
+
+
+
+
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="perf_benchmark/model_analyzer.html">Model Analyzer</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="model_analyzer/README.html">Triton Model Analyzer</a></li>
+
+
+
+
+
+<li class="toctree-l2"><a class="reference internal" href="model_analyzer/docs/README.html">Documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="model_analyzer/docs/quick_start.html">Quick Start</a></li>
+<li class="toctree-l2"><a class="reference internal" href="model_analyzer/docs/install.html">Recommended Installation Method</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="model_analyzer/docs/cli.html">CLI Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="model_analyzer/docs/launch_modes.html">Launch Modes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="model_analyzer/docs/config.html">Table of Contents</a></li>
+
+
+
+
+<li class="toctree-l2"><a class="reference internal" href="model_analyzer/docs/config_search.html">Table of Contents</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="model_analyzer/docs/metrics.html">Metrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="model_analyzer/docs/checkpoints.html">Checkpointing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="model_analyzer/docs/report.html">Reports</a></li>
+<li class="toctree-l2"><a class="reference internal" href="model_analyzer/docs/kubernetes_deploy.html">Kubernetes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="model_analyzer/docs/model_types.html">Model Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="model_analyzer/docs/ensemble_quick_start.html">Ensemble Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="model_analyzer/docs/bls_quick_start.html">BLS Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="model_analyzer/docs/mm_quick_start.html">Multi-Model</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="model_navigator/README.html">Model Navigator</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Debugging</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="user_guide/debugging_guide.html">Guide</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="contents.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">NVIDIA...</li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+<!--
+# Copyright 2023-2026, NVIDIA CORPORATION & AFFILIATES. All rights reserved.
+#
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions
+# are met:
+#  * Redistributions of source code must retain the above copyright
+#    notice, this list of conditions and the following disclaimer.
+#  * Redistributions in binary form must reproduce the above copyright
+#    notice, this list of conditions and the following disclaimer in the
+#    documentation and/or other materials provided with the distribution.
+#  * Neither the name of NVIDIA CORPORATION nor the names of its
+#    contributors may be used to endorse or promote products derived
+#    from this software without specific prior written permission.
+#
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS ``AS IS'' AND ANY
+# EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+# IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+# PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+# CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+# EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+# PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+# PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY
+# OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+-->
+<section class="tex2jax_ignore mathjax_ignore" id="nvidia-triton-inference-server">
+<h1>NVIDIA Triton Inference Server<a class="headerlink" href="#nvidia-triton-inference-server" title="Link to this heading">#</a></h1>
+<p>Triton Inference Server is an open source inference serving software that streamlines
+AI inferencing. Triton Inference Server enables teams to deploy any AI model from multiple deep
+learning and machine learning frameworks, including TensorRT, PyTorch,
+ONNX, OpenVINO, Python, RAPIDS FIL, and more. Triton supports inference
+across cloud, data center, edge and embedded devices on NVIDIA GPUs, x86 and ARM
+CPU, or AWS Inferentia. Triton Inference Server delivers optimized performance
+for many query types, including real time, batched, ensembles and audio/video
+streaming. Triton inference Server is part of
+<a class="reference external" href="https://www.nvidia.com/en-us/data-center/products/ai-enterprise/">NVIDIA AI Enterprise</a>,
+a software platform that accelerates the data science pipeline and streamlines
+the development and deployment of production AI.</p>
+  <!-- :::
+  :align: center
+  [![Getting Started Video](https://img.youtube.com/vi/NQDtfSi5QF4/1.jpg)](https://www.youtube.com/watch?v=NQDtfSi5QF4)
+  ::: -->
+<div>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/NQDtfSi5QF4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+<section id="triton-architecture">
+<h2>Triton Architecture<a class="headerlink" href="#triton-architecture" title="Link to this heading">#</a></h2>
+<p>The following figure shows the Triton Inference Server high-level
+architecture. The <a class="reference internal" href="user_guide/model_repository.html"><span class="std std-doc">model repository</span></a> is a
+file-system based repository of the models that Triton will make
+available for inferencing. Inference requests arrive at the server via
+either <a class="reference internal" href="customization_guide/inference_protocols.html"><span class="std std-doc">HTTP/REST or GRPC</span></a> or by the <a class="reference internal" href="customization_guide/inprocess_c_api.html"><span class="std std-doc">C
+API</span></a> and are then routed to the appropriate per-model
+scheduler. Triton implements <a class="reference internal" href="user_guide/architecture.html#models-and-schedulers"><span class="std std-ref">multiple scheduling and batching
+algorithms</span></a> that can be configured on a
+model-by-model basis. Each model’s scheduler optionally performs
+batching of inference requests and then passes the requests to the
+<a class="reference internal" href="backend/README.html"><span class="std std-doc">backend</span></a>
+corresponding to the model type. The backend performs inferencing
+using the inputs provided in the batched requests to produce the
+requested outputs. The outputs are then returned.</p>
+<p>Triton supports a <a class="reference internal" href="backend/README.html#triton-backend-api"><span class="std std-ref">backend C
+API</span></a>
+that allows Triton to be extended with new functionality such as
+custom pre- and post-processing operations or even a new deep-learning
+framework.</p>
+<p>The models being served by Triton can be queried and controlled by a
+dedicated <a class="reference internal" href="user_guide/model_management.html"><span class="std std-doc">model management API</span></a> that is
+available by HTTP/REST or GRPC protocol, or by the C API.</p>
+<p>Readiness and liveness health endpoints and utilization, throughput
+and latency metrics ease the integration of Triton into deployment
+framework such as Kubernetes.</p>
+<p><img alt="Triton Architecture Diagram" src="_images/arch.jpg" /></p>
+</section>
+<section id="triton-major-features">
+<h2>Triton major features<a class="headerlink" href="#triton-major-features" title="Link to this heading">#</a></h2>
+<p>Major features include:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="backend/README.html#where-can-i-find-all-the-backends-that-are-available-for-triton"><span class="std std-ref">Supports multiple deep learning
+frameworks</span></a></p></li>
+<li><p><a class="reference external" href="https://github.com/triton-inference-server/fil_backend">Supports multiple machine learning
+frameworks</a></p></li>
+<li><p><a class="reference internal" href="user_guide/model_execution.html#concurrent-model-execution"><span class="std std-ref">Concurrent model
+execution</span></a></p></li>
+<li><p><a class="reference internal" href="user_guide/batcher.html#dynamic-batcher"><span class="std std-ref">Dynamic batching</span></a></p></li>
+<li><p><a class="reference internal" href="user_guide/batcher.html#sequence-batcher"><span class="std std-ref">Sequence batching</span></a> and
+<a class="reference internal" href="user_guide/implicit_state_management.html#implicit-state-management"><span class="std std-ref">implicit state management</span></a>
+for stateful models</p></li>
+<li><p>Provides <a class="reference external" href="https://github.com/triton-inference-server/backend">Backend API</a> that
+allows adding custom backends and pre/post processing operations</p></li>
+<li><p>Model pipelines using
+<a class="reference internal" href="user_guide/ensemble_models.html#ensemble-models"><span class="std std-ref">Ensembling</span></a> or <a class="reference internal" href="user_guide/bls.html#business-logic-scripting"><span class="std std-ref">Business
+Logic Scripting
+(BLS)</span></a></p></li>
+<li><p><a class="reference internal" href="customization_guide/inference_protocols.html"><span class="std std-doc">HTTP/REST and GRPC inference
+protocols</span></a> based on the community
+developed <a class="reference external" href="https://github.com/kserve/kserve/tree/master/docs/predict-api/v2">KServe
+protocol</a></p></li>
+<li><p>A <a class="reference internal" href="customization_guide/inprocess_c_api.html"><span class="std std-doc">C API</span></a> and
+<a class="reference internal" href="customization_guide/inprocess_java_api.html"><span class="std std-doc">Java API</span></a>
+allow Triton to link directly into your application for edge and other in-process use cases</p></li>
+<li><p><a class="reference internal" href="user_guide/metrics.html"><span class="std std-doc">Metrics</span></a> indicating GPU utilization, server
+throughput, server latency, and more</p></li>
+</ul>
+<p>Join the <a class="reference external" href="https://www.nvidia.com/en-us/deep-learning-ai/triton-tensorrt-newsletter/">Triton and TensorRT community</a> and stay current on the latest product updates, bug fixes, content, best
+practices, and more. Need enterprise support? NVIDIA global support is available
+for Triton Inference Server with the <a class="reference external" href="https://www.nvidia.com/en-us/data-center/products/ai-enterprise/">NVIDIA AI Enterprise software suite</a>.</p>
+<p>See the <a class="reference external" href="https://docs.nvidia.com/deeplearning/triton-inference-server/release-notes/">Latest Release Notes</a> for updates on the newest features and bug fixes.</p>
+</section>
+</section>
+
+<div class="section ablog__blog_comments">
+  
+  
+</div>
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+
+
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#triton-architecture">Triton Architecture</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#triton-major-features">Triton major features</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+<a class="footer-brand logo" href="https://www.nvidia.com">
+  <img src="_static/nvidia-logo-horiz-rgb-1c-blk-for-screen.svg" class="logo__image only-light" alt="NVIDIA"/>
+  <img src="_static/nvidia-logo-horiz-rgb-1c-wht-for-screen.svg" class="logo__image only-dark" alt="NVIDIA"/>
+</a></div>
+      
+        <div class="footer-item">
+
+<div class="footer-links">
+  
+  
+  <a class="external" href="https://www.nvidia.com/en-us/about-nvidia/privacy-policy/">Privacy Policy</a>
+   | 
+  
+  
+  
+  <a class="external" href="https://www.nvidia.com/en-us/about-nvidia/privacy-center/">Your Privacy Choices</a>
+   | 
+  
+  
+  
+  <a class="external" href="https://www.nvidia.com/en-us/about-nvidia/terms-of-service/">Terms of Service</a>
+   | 
+  
+  
+  
+  <a class="external" href="https://www.nvidia.com/en-us/about-nvidia/accessibility/">Accessibility</a>
+   | 
+  
+  
+  
+  <a class="external" href="https://www.nvidia.com/en-us/about-nvidia/company-policies/">Corporate Policies</a>
+   | 
+  
+  
+  
+  <a class="external" href="https://www.nvidia.com/en-us/product-security/">Product Security</a>
+   | 
+  
+  
+  
+  <a class="external" href="https://www.nvidia.com/en-us/contact/">Contact</a>
+  
+  
+  
+</div>
+</div>
+      
+        <div class="footer-item">
+
+
+
+
+  <p class="copyright">
+    
+      Copyright © 2018-2026, NVIDIA Corporation.
+      <br/>
+    
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+  </body>
+</html>
