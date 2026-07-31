@@ -1,55 +1,101 @@
-# Virtual environments
-.venv/
-venv/
-env/
-
-# Python cache
+# Python
 __pycache__/
 *.py[cod]
 *$py.class
-
-# Build and distribution
+*.so
+.Python
 build/
 dist/
 *.egg-info/
 .eggs/
+pip-wheel-metadata/
 
-# Environment files
+# Virtual Environments
+.venv/
+venv/
+env/
+ENV/
+
+# Environment Variables
 .env
 .env.*
 !.env.example
 
+# Testing
+.pytest_cache/
+.coverage
+coverage/
+htmlcov/
+.tox/
+.nox/
+
+# Type Checking & Linters
+.mypy_cache/
+.ruff_cache/
+.pyre/
+.dmypy.json
+
 # Jupyter
 .ipynb_checkpoints/
 
-# VS Code
+# IDEs & Editors
 .vscode/
+.idea/
+*.swp
+*.swo
 
-# Pytest
-.pytest_cache/
-
-# Type checking
-.mypy_cache/
-.ruff_cache/
-
-# Coverage
-.coverage
-htmlcov/
-
-# OS files
+# OS Files
 .DS_Store
 Thumbs.db
 
 # Logs
 *.log
+logs/
 
-# Local databases
+# Databases
 *.db
+*.sqlite
 *.sqlite3
 
-# Temporary files
+# AI & Vector Databases
+vector_store/
+qdrant_storage/
+chroma/
+chroma_db/
+*.faiss
+*.index
+*.lock
+
+# ML Models & Weights
+models/
+checkpoints/
+weights/
+*.ckpt
+*.pt
+*.pth
+*.onnx
+*.bin
+*.safetensors
+
+# Node / Frontend
+node_modules/
+frontend/node_modules/
+.next/
+frontend/dist/
+
+# Cache & Temporary Directories
+.cache/
+.cache-loader/
+tmp/
+temp/
 *.tmp
 *.bak
 
-# IDE folders
-.idea/
+# Secrets & Certificates
+*.pem
+*.key
+*.crt
+*.p12
+
+# Git
+.git-credentials
