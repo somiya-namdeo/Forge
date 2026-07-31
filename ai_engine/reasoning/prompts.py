@@ -86,3 +86,82 @@ Generate the response using the following format:
 
 ### Reasoning
 """
+def recommendation_prompt(
+    requirements: str,
+    architecture: str,
+    tradeoffs: str
+) -> str:
+    return f"""
+You are Forge, an AI Engineering Decision Support System.
+
+Your task is to produce a final recommendation based on the generated architecture and trade-off analysis.
+
+User Requirements:
+{requirements}
+
+Generated Architecture:
+{architecture}
+
+Trade-off Analysis:
+{tradeoffs}
+
+Generate the response using the following format:
+
+## Executive Summary
+
+## Recommended Architecture
+
+## Key Trade-offs
+
+## Final Recommendation
+
+## Implementation Notes
+"""
+def decision_prompt(
+    requirements: str,
+    context: str,
+) -> str:
+    return f"""
+You are Forge, an AI Engineering Decision Support System.
+
+Use ONLY the retrieved knowledge below.
+
+Retrieved Knowledge:
+{context}
+
+User Requirements:
+{requirements}
+
+Your task is to recommend the best AI system architecture.
+
+Generate the response using exactly the following sections:
+
+## Executive Summary
+
+Provide a concise overview of the recommended solution.
+
+## Recommended Architecture
+
+Recommend:
+- LLM
+- Embedding Model
+- Vector Database
+- Chunking Strategy
+- Retrieval Strategy
+- Framework
+- Deployment
+
+Explain why each component was chosen.
+
+## Trade-offs
+
+Discuss important trade-offs between possible technologies and justify the selected approach.
+
+## Final Recommendation
+
+Summarize the best architecture and explain why it fits the user's requirements.
+
+## Implementation Notes
+
+Provide practical implementation guidance.
+"""
