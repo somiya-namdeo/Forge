@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 
+from app.api.routes.benchmark import router as benchmark_router
 from app.api.routes.decision import router as decision_router
 from backend.app.routes.evaluation import router as evaluation_router
 
@@ -15,10 +16,13 @@ app = FastAPI(
 app.include_router(
     decision_router,
     prefix="/api/v1",
-    tags=["Decision"],
 )
 app.include_router(
     evaluation_router,
+    prefix="/api/v1",
+)
+app.include_router(
+    benchmark_router,
     prefix="/api/v1",
 )
 

@@ -1,134 +1,54 @@
-"""
-Benchmark Loader Module.
+"""Dataset loader module for Forge benchmark evaluation samples."""
 
-Provides abstract and concrete loaders for importing golden datasets from local files
-(JSON, CSV) or remote benchmark sources (HuggingFace, custom endpoints).
-"""
+import json
+from pathlib import Path
 
-from abc import ABC, abstractmethod
-from typing import Any, Dict, List, Optional
+from pydantic import ValidationError
 
-from backend.app.datasets.golden_dataset import GoldenDataset, GoldenSample
+from app.benchmark.benchmark_models import BenchmarkSample
 
-
-class BenchmarkLoader(ABC):
-    """Abstract interface for dataset loading implementations."""
-
-    @abstractmethod
-    def load(self, source_path_or_name: str) -> GoldenDataset:
-        """Load benchmark dataset from target source.
-
-        Args:
-            source_path_or_name (str): File path, URI, or dataset identifier.
-
-        Returns:
-            GoldenDataset: Loaded golden dataset container.
-        """
-        pass
-
-    @abstractmethod
-    def save(self, dataset: GoldenDataset, destination_path: str) -> bool:
-        """Save golden dataset to target file path.
-
-        Args:
-            dataset (GoldenDataset): Dataset instance.
-            destination_path (str): File export path.
-
-        Returns:
-            bool: True if successfully saved, False otherwise.
-        """
-        pass
+_DEFAULT_DATASET_PATH = Path(__file__).resolve().parent / "forge_benchmark.json"
 
 
-class LocalBenchmarkLoader(BenchmarkLoader):
-    """Loader for local filesystem datasets formatted in JSON or CSV."""
+class BenchmarkLoader:
+    """Loader responsible for reading and validating benchmark dataset files."""
 
-    def load_from_json(self, json_file_path: str) -> GoldenDataset:
-        """Load golden dataset from a JSON file.
+    @staticmethod
+    def load(path: str | Path) -> list[BenchmarkSample]:
+        """Load and validate benchmark samples from a JSON dataset file."""
+        file_path = Path(path).resolve()
 
-        Args:
-            json_file_path (str): Absolute or relative JSON file path.
+        if not file_path.exists() or not file_path.is_file():
+            raise FileNotFoundError(
+                f"Benchmark dataset file not found or is not a file: '{file_path}'"
+            )
 
-        Returns:
-            GoldenDataset: Parsed golden dataset.
-        """
-        # Placeholder - file reading implemented in phase 2
-        return GoldenDataset(
-            dataset_id="local_json_dataset",
-            name="Local JSON Benchmark",
-            description="Loaded from local JSON file.",
-        )
+        try:
+            with file_path.open("r", encoding="utf-8") as f:
+                data = json.load(f)
+        except json.JSONDecodeError as exc:
+            raise ValueError(f"Malformed JSON in benchmark file '{file_path}': {exc}") from exc
+        except OSError as exc:
+            raise ValueError(f"Failed to read benchmark file '{file_path}': {exc}") from exc
 
-    def load_from_csv(self, csv_file_path: str) -> GoldenDataset:
-        """Load golden dataset from a CSV file.
+        if not isinstance(data, list):
+            raise ValueError(
+                f"Invalid dataset structure in '{file_path}'. Expected a JSON array of samples."
+            )
 
-        Args:
-            csv_file_path (str): CSV file path.
+        samples: list[BenchmarkSample] = []
+        for idx, entry in enumerate(data):
+            try:
+                sample = BenchmarkSample.model_validate(entry)
+                samples.append(sample)
+            except ValidationError as exc:
+                raise ValueError(
+                    f"Validation failed for benchmark sample at index {idx} in '{file_path}': {exc}"
+                ) from exc
 
-        Returns:
-            GoldenDataset: Parsed golden dataset.
-        """
-        # Placeholder - CSV parsing implemented in phase 2
-        return GoldenDataset(
-            dataset_id="local_csv_dataset",
-            name="Local CSV Benchmark",
-            description="Loaded from local CSV file.",
-        )
+        return samples
 
-    def load(self, source_path_or_name: str) -> GoldenDataset:
-        """Load benchmark dataset auto-detecting format.
-
-        Args:
-            source_path_or_name (str): Path to JSON or CSV dataset file.
-
-        Returns:
-            GoldenDataset: Loaded dataset instance.
-        """
-        if source_path_or_name.endswith(".csv"):
-            return self.load_from_csv(source_path_or_name)
-        return self.load_from_json(source_path_or_name)
-
-    def save(self, dataset: GoldenDataset, destination_path: str) -> bool:
-        """Save dataset to local JSON or CSV file.
-
-        Args:
-            dataset (GoldenDataset): Dataset instance.
-            destination_path (str): Export path.
-
-        Returns:
-            bool: True if saved successfully.
-        """
-        # Placeholder save logic
-        return True
-
-
-class RemoteBenchmarkLoader(BenchmarkLoader):
-    """Loader for remote datasets (e.g. HuggingFace benchmarks, SQuAD, HotpotQA)."""
-
-    def load(self, source_path_or_name: str) -> GoldenDataset:
-        """Load dataset from remote HuggingFace repository or API endpoint.
-
-        Args:
-            source_path_or_name (str): Dataset repository name or URL.
-
-        Returns:
-            GoldenDataset: Remote benchmark dataset.
-        """
-        # Placeholder remote fetch logic
-        return GoldenDataset(
-            dataset_id=source_path_or_name,
-            name=f"Remote Benchmark: {source_path_or_name}",
-            description="Loaded from remote benchmark repository.",
-        )
-
-    def save(self, dataset: GoldenDataset, destination_path: str) -> bool:
-        """Save dataset to remote API endpoint.
-
-        Args:
-            dataset (GoldenDataset): Dataset instance.
-            destination_path (str): Remote destination endpoint.
-
-        Returns:
-            bool: True if saved.
-        """
-        return True
+    @classmethod
+    def load_default(cls) -> list[BenchmarkSample]:
+        """Load default Forge benchmark dataset from disk."""
+        return cls.load(_DEFAULT_DATASET_PATH)

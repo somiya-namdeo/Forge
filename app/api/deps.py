@@ -4,8 +4,19 @@ from functools import lru_cache
 
 from fastapi import Depends
 
+from app.benchmark.benchmark_report import BenchmarkReportBuilder
+from app.benchmark.benchmark_runner import BenchmarkRunner
+from app.benchmark.benchmark_statistics import BenchmarkStatisticsEngine
+from app.datasets.benchmark_loader import BenchmarkLoader
+from app.decision.constraint_matcher import ConstraintMatcher
+from app.decision.explanation_engine import ExplanationEngine
+from app.decision.recommendation_engine import RecommendationEngine
+from app.decision.retriever import KnowledgeRetriever
+from app.decision.scoring_engine import ScoringEngine
 from app.metrics.ragas_metrics import RagasEvaluator
 from app.metrics.registry import MetricRegistry
+from app.services.benchmark_service import BenchmarkService
+from app.services.decision_service import DecisionService
 from app.services.evaluation_service import EvaluationService
 from app.thresholds.threshold_manager import ThresholdManager
 from app.utils.weighting import WeightingEngine
@@ -48,4 +59,122 @@ def get_evaluation_service(
         registry=registry,
         weighting_engine=weighting_engine,
         threshold_manager=threshold_manager,
+    )
+
+
+@lru_cache
+def get_benchmark_loader() -> BenchmarkLoader:
+    """Provide a singleton BenchmarkLoader instance."""
+    return BenchmarkLoader()
+
+
+@lru_cache
+def get_benchmark_statistics_engine() -> BenchmarkStatisticsEngine:
+    """Provide a singleton BenchmarkStatisticsEngine instance."""
+    return BenchmarkStatisticsEngine()
+
+
+def get_benchmark_report_builder(
+    statistics_engine: BenchmarkStatisticsEngine | None = Depends(get_benchmark_statistics_engine),
+) -> BenchmarkReportBuilder:
+    """Inject dependencies into BenchmarkReportBuilder for route handlers."""
+    if hasattr(statistics_engine, "dependency") or statistics_engine is None:
+        statistics_engine = get_benchmark_statistics_engine()
+    return BenchmarkReportBuilder(statistics_engine=statistics_engine)
+
+
+def get_benchmark_runner(
+    evaluation_service: EvaluationService | None = Depends(get_evaluation_service),
+    loader: BenchmarkLoader | None = Depends(get_benchmark_loader),
+) -> BenchmarkRunner:
+    """Inject dependencies into BenchmarkRunner for route handlers."""
+    if hasattr(evaluation_service, "dependency") or evaluation_service is None:
+        evaluation_service = get_evaluation_service()
+    if hasattr(loader, "dependency") or loader is None:
+        loader = get_benchmark_loader()
+    return BenchmarkRunner(
+        evaluation_service=evaluation_service,
+        loader=loader,
+    )
+
+
+def get_benchmark_service(
+    evaluation_service: EvaluationService | None = Depends(get_evaluation_service),
+    loader: BenchmarkLoader | None = Depends(get_benchmark_loader),
+    runner: BenchmarkRunner | None = Depends(get_benchmark_runner),
+    report_builder: BenchmarkReportBuilder | None = Depends(get_benchmark_report_builder),
+) -> BenchmarkService:
+    """Inject dependencies into BenchmarkService for route handlers."""
+    if hasattr(evaluation_service, "dependency") or evaluation_service is None:
+        evaluation_service = get_evaluation_service()
+    if hasattr(loader, "dependency") or loader is None:
+        loader = get_benchmark_loader()
+    if hasattr(runner, "dependency") or runner is None:
+        runner = get_benchmark_runner()
+    if hasattr(report_builder, "dependency") or report_builder is None:
+        report_builder = get_benchmark_report_builder()
+
+    return BenchmarkService(
+        evaluation_service=evaluation_service,
+        loader=loader,
+        runner=runner,
+        report_builder=report_builder,
+    )
+
+
+@lru_cache
+def get_knowledge_retriever() -> KnowledgeRetriever:
+    """Provide a singleton KnowledgeRetriever instance."""
+    return KnowledgeRetriever()
+
+
+@lru_cache
+def get_constraint_matcher() -> ConstraintMatcher:
+    """Provide a singleton ConstraintMatcher instance."""
+    return ConstraintMatcher()
+
+
+@lru_cache
+def get_scoring_engine() -> ScoringEngine:
+    """Provide a singleton ScoringEngine instance."""
+    return ScoringEngine()
+
+
+@lru_cache
+def get_recommendation_engine() -> RecommendationEngine:
+    """Provide a singleton RecommendationEngine instance."""
+    return RecommendationEngine()
+
+
+@lru_cache
+def get_explanation_engine() -> ExplanationEngine:
+    """Provide a singleton ExplanationEngine instance."""
+    return ExplanationEngine()
+
+
+def get_decision_service(
+    retriever: KnowledgeRetriever | None = Depends(get_knowledge_retriever),
+    constraint_matcher: ConstraintMatcher | None = Depends(get_constraint_matcher),
+    scoring_engine: ScoringEngine | None = Depends(get_scoring_engine),
+    recommendation_engine: RecommendationEngine | None = Depends(get_recommendation_engine),
+    explanation_engine: ExplanationEngine | None = Depends(get_explanation_engine),
+) -> DecisionService:
+    """Inject dependencies into DecisionService for route handlers or direct calls."""
+    if hasattr(retriever, "dependency") or retriever is None:
+        retriever = get_knowledge_retriever()
+    if hasattr(constraint_matcher, "dependency") or constraint_matcher is None:
+        constraint_matcher = get_constraint_matcher()
+    if hasattr(scoring_engine, "dependency") or scoring_engine is None:
+        scoring_engine = get_scoring_engine()
+    if hasattr(recommendation_engine, "dependency") or recommendation_engine is None:
+        recommendation_engine = get_recommendation_engine()
+    if hasattr(explanation_engine, "dependency") or explanation_engine is None:
+        explanation_engine = get_explanation_engine()
+
+    return DecisionService(
+        retriever=retriever,
+        constraint_matcher=constraint_matcher,
+        scoring_engine=scoring_engine,
+        recommendation_engine=recommendation_engine,
+        explanation_engine=explanation_engine,
     )
