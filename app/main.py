@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 
 from app.api.routes.decision import router as decision_router
+from backend.app.routes.evaluation import router as evaluation_router
 
 app = FastAPI(
     title="Forge AI Engineering Decision Platform",
@@ -15,6 +16,10 @@ app.include_router(
     decision_router,
     prefix="/api/v1",
     tags=["Decision"],
+)
+app.include_router(
+    evaluation_router,
+    prefix="/api/v1",
 )
 
 
