@@ -1,0 +1,56 @@
+{
+  "technology": "MLServer",
+  "category": "deployment",
+  "description": "An open source inference server for your machine learning models.\nMLServer aims to provide an easy way to start serving your machine learning models through a REST and gRPC interface, fully compliant with KFServing's V2 Dataplane spec. Watch a quick video introducing the project here.\n- Multi-model serving, letting users run multiple models within the same process.\n- Ability to run inference in parallel for vertical scaling across multiple models through a pool of inference workers.\n- Support fo",
+  "aliases": [],
+  "tags": [
+    "mlserver",
+    "inference",
+    "runtimes",
+    "models",
+    "version",
+    "serving",
+    "machine",
+    "learning",
+    "frameworks",
+    "install",
+    "support",
+    "model",
+    "package",
+    "rest",
+    "both"
+  ],
+  "performance": {
+    "quality_score": null,
+    "benchmark_score": null,
+    "latency_ms": null,
+    "throughput": null
+  },
+  "pricing": {
+    "open_source": null,
+    "free_tier": null,
+    "monthly_cost": null,
+    "license": "Apache-2.0"
+  },
+  "adoption": {
+    "github_stars": null,
+    "monthly_downloads": null,
+    "active_users": null,
+    "enterprise_users": null,
+    "community_score": null
+  },
+  "capabilities": {
+    "supported_deployments": [],
+    "supported_languages": [],
+    "features": [
+      "kubernetes",
+      "python",
+      "rag"
+    ]
+  },
+  "recommendation": {
+    "score": null,
+    "confidence": null,
+    "reason": null
+  }
+}

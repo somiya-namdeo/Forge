@@ -1,0 +1,59 @@
+{
+  "technology": "FlashRank",
+  "category": "rerankers",
+  "description": "Ultra-lite & Super-fast Python library to add re-ranking to your existing search & retrieval pipelines. It is based on SoTA LLMs and cross-encoders, with gratitude to all the model owners.\nSupports:\n- Pairwise / Pointwise rerankers. (Cross encoder based, i.e. Max tokens = 512 )\n- Listwise LLM based rerankers. (LLM based, i.e. Max tokens = 8192 )\n- See below for full list of supported models.\n-\n⚡ Ultra-lite:\n- No Torch or Transformers needed. Runs on CPU.\n- Boasts the tiniest reranking model in t",
+  "aliases": [],
+  "tags": [
+    "model",
+    "ranker",
+    "meta",
+    "additional",
+    "inference",
+    "text",
+    "decoding",
+    "search",
+    "tokens",
+    "models",
+    "card",
+    "performance",
+    "name",
+    "score",
+    "memory"
+  ],
+  "performance": {
+    "quality_score": null,
+    "benchmark_score": null,
+    "latency_ms": null,
+    "throughput": null
+  },
+  "pricing": {
+    "open_source": null,
+    "free_tier": null,
+    "monthly_cost": null,
+    "license": "Apache-2.0"
+  },
+  "adoption": {
+    "github_stars": null,
+    "monthly_downloads": null,
+    "active_users": null,
+    "enterprise_users": null,
+    "community_score": null
+  },
+  "capabilities": {
+    "supported_deployments": [],
+    "supported_languages": [],
+    "features": [
+      "cpu",
+      "docker",
+      "python",
+      "quantization",
+      "rag",
+      "reranking"
+    ]
+  },
+  "recommendation": {
+    "score": null,
+    "confidence": null,
+    "reason": null
+  }
+}

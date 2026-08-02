@@ -1,0 +1,54 @@
+{
+  "technology": "Hugging Face Inference Endpoints",
+  "category": "deployment",
+  "description": "Inference Endpoints (dedicated) documentation\nInference Endpoints\nInference Endpoints\nInference Endpoints is a managed service to deploy your AI model to production. Here you’ll find quickstarts, guides, tutorials, use cases and a lot more.\n🔥 Quickstart\nDeploy a production ready AI model in minutes.\n🔍 How Inference Endpoints Works\nUnderstand the main components and benefits of Inference Endpoints.\n📖 Guides\nExplore our guides to learn how to configure or enable specific features on the platform.\n",
+  "aliases": [],
+  "tags": [
+    "inference",
+    "endpoints",
+    "model",
+    "production",
+    "infrastructure",
+    "managing",
+    "deploy",
+    "guides",
+    "models",
+    "focus",
+    "need",
+    "features",
+    "what",
+    "whether",
+    "performance"
+  ],
+  "performance": {
+    "quality_score": null,
+    "benchmark_score": null,
+    "latency_ms": null,
+    "throughput": null
+  },
+  "pricing": {
+    "open_source": null,
+    "free_tier": null,
+    "monthly_cost": null,
+    "license": null
+  },
+  "adoption": {
+    "github_stars": null,
+    "monthly_downloads": null,
+    "active_users": null,
+    "enterprise_users": null,
+    "community_score": null
+  },
+  "capabilities": {
+    "supported_deployments": [],
+    "supported_languages": [],
+    "features": [
+      "kubernetes"
+    ]
+  },
+  "recommendation": {
+    "score": null,
+    "confidence": null,
+    "reason": null
+  }
+}

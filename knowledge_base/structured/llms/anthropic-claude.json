@@ -1,0 +1,59 @@
+{
+  "technology": "Anthropic Claude",
+  "category": "llms",
+  "description": "The Claude API is a RESTful API at https://api.anthropic.com that provides programmatic access to Claude models and Claude Managed Agents.\nNew to Claude? For direct model access, start with Get started and Working with Messages. For managed agent infrastructure, see the Claude Managed Agents quickstart.\nTo use the Claude API, you'll need:\nFor step-by-step setup instructions, see Get started.\nThe Claude API includes the following APIs:\nGeneral Availability:\nPOST /v1/messages)POST /v1/messages/bat",
+  "aliases": [],
+  "tags": [
+    "claude",
+    "beta",
+    "opus",
+    "tool",
+    "model",
+    "sonnet",
+    "header",
+    "launched",
+    "available",
+    "models",
+    "page",
+    "thinking",
+    "agents",
+    "messages",
+    "token"
+  ],
+  "performance": {
+    "quality_score": null,
+    "benchmark_score": null,
+    "latency_ms": null,
+    "throughput": null
+  },
+  "pricing": {
+    "open_source": null,
+    "free_tier": null,
+    "monthly_cost": null,
+    "license": "Proprietary"
+  },
+  "adoption": {
+    "github_stars": null,
+    "monthly_downloads": null,
+    "active_users": null,
+    "enterprise_users": null,
+    "community_score": null
+  },
+  "capabilities": {
+    "supported_deployments": [],
+    "supported_languages": [],
+    "features": [
+      "agents",
+      "kubernetes",
+      "python",
+      "rag",
+      "streaming",
+      "tool calling"
+    ]
+  },
+  "recommendation": {
+    "score": null,
+    "confidence": null,
+    "reason": null
+  }
+}

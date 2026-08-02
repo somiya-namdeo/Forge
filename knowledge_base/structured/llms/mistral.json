@@ -1,0 +1,61 @@
+{
+  "technology": "Mistral",
+  "category": "llms",
+  "description": "The frequency_penalty penalizes the repetition of words based on their frequency in the generated text. A higher frequency penalty discourages the model from repeating words that have already appeared frequently in the output, promoting diversity and reducing repetition.\nChat Endpoints\nChat Completion API.\nExamples\nReal world code examples\nChat Completion\nPOST /v1/chat/completions#\nChat Completion\nfrequency_penalty#\nguardrails#\nmax_tokens#\nThe maximum number of tokens to generate in the completi",
+  "aliases": [],
+  "tags": [
+    "mistral",
+    "model",
+    "tokens",
+    "instruct",
+    "tokenizer",
+    "models",
+    "https",
+    "prompt",
+    "chat",
+    "generate",
+    "import",
+    "mistralai",
+    "completion",
+    "json",
+    "what"
+  ],
+  "performance": {
+    "quality_score": null,
+    "benchmark_score": null,
+    "latency_ms": null,
+    "throughput": null
+  },
+  "pricing": {
+    "open_source": null,
+    "free_tier": null,
+    "monthly_cost": null,
+    "license": "Apache 2.0"
+  },
+  "adoption": {
+    "github_stars": null,
+    "monthly_downloads": null,
+    "active_users": null,
+    "enterprise_users": null,
+    "community_score": null
+  },
+  "capabilities": {
+    "supported_deployments": [],
+    "supported_languages": [],
+    "features": [
+      "agents",
+      "docker",
+      "function calling",
+      "gpu",
+      "multimodal",
+      "python",
+      "rag",
+      "tool calling"
+    ]
+  },
+  "recommendation": {
+    "score": null,
+    "confidence": null,
+    "reason": null
+  }
+}

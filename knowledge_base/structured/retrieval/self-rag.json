@@ -1,0 +1,57 @@
+{
+  "technology": "SELF-RAG",
+  "category": "retrieval",
+  "description": "This includes the original implementation of SELF-RAG: Learning to Retrieve, Generate and Critique through self-reflection (ICLR 2024, Oral top 1%) by Akari Asai, Zeqiu Wu, Yizhong Wang, Avirup Sil, and Hannaneh Hajishirzi.\nWebsite | 7B Model | 13B Model | Paper | Training data | Twitter summary | Updates\nSelf-RAG (Figure right) is a new framework to train an arbitrary LM to learn to retrieve, generate, and critique to enhance the factuality and quality of generations, without hurting the versat",
+  "aliases": [],
+  "tags": [
+    "data",
+    "file",
+    "model",
+    "retrieval",
+    "training",
+    "name",
+    "tokens",
+    "input",
+    "output",
+    "self-rag",
+    "download",
+    "prompt",
+    "task",
+    "python",
+    "query"
+  ],
+  "performance": {
+    "quality_score": null,
+    "benchmark_score": null,
+    "latency_ms": null,
+    "throughput": null
+  },
+  "pricing": {
+    "open_source": null,
+    "free_tier": null,
+    "monthly_cost": null,
+    "license": "MIT"
+  },
+  "adoption": {
+    "github_stars": null,
+    "monthly_downloads": null,
+    "active_users": null,
+    "enterprise_users": null,
+    "community_score": null
+  },
+  "capabilities": {
+    "supported_deployments": [],
+    "supported_languages": [],
+    "features": [
+      "embeddings",
+      "gpu",
+      "python",
+      "rag"
+    ]
+  },
+  "recommendation": {
+    "score": null,
+    "confidence": null,
+    "reason": null
+  }
+}

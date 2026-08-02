@@ -1,0 +1,56 @@
+{
+  "technology": "Promptfoo",
+  "category": "evaluation",
+  "description": "promptfoo is a CLI and library for evaluating and red-teaming LLM apps. Stop the trial-and-error approach - start shipping secure, reliable AI apps.\nWebsite · Getting Started · Red Teaming · Documentation · Discord\nPromptfoo is now part of OpenAI. Promptfoo remains open source and MIT licensed. Read the company update.\nRequires Node.js >=22.22.0 for npm and npx usage. Node.js 24 LTS\nis recommended; see the runtime support guide.\nnpm install -g promptfoo\npromptfoo init --example getting-started\nA",
+  "aliases": [],
+  "tags": [
+    "promptfoo",
+    "prompts",
+    "apps",
+    "evals",
+    "test",
+    "teaming",
+    "results",
+    "open-source",
+    "cases",
+    "evaluation",
+    "library",
+    "example",
+    "vulnerability",
+    "models",
+    "works"
+  ],
+  "performance": {
+    "quality_score": null,
+    "benchmark_score": null,
+    "latency_ms": null,
+    "throughput": null
+  },
+  "pricing": {
+    "open_source": null,
+    "free_tier": null,
+    "monthly_cost": null,
+    "license": "MIT"
+  },
+  "adoption": {
+    "github_stars": null,
+    "monthly_downloads": null,
+    "active_users": null,
+    "enterprise_users": null,
+    "community_score": null
+  },
+  "capabilities": {
+    "supported_deployments": [],
+    "supported_languages": [],
+    "features": [
+      "javascript",
+      "python",
+      "rag"
+    ]
+  },
+  "recommendation": {
+    "score": null,
+    "confidence": null,
+    "reason": null
+  }
+}

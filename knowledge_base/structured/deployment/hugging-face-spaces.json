@@ -1,0 +1,57 @@
+{
+  "technology": "Hugging Face Spaces",
+  "category": "deployment",
+  "description": "Spaces\nHugging Face Spaces offer a simple way to host ML demo apps directly on your profile or your organization’s profile. This allows you to create your ML portfolio, showcase your projects at conferences or to stakeholders, and work collaboratively with other people in the ML ecosystem.\nWe have built-in support for an awesome SDK that let you build cool apps in Python in a matter of minutes: Gradio, but you can also unlock the whole power of Docker and host an arbitrary Dockerfile. Finally, y",
+  "aliases": [],
+  "tags": [
+    "spaces",
+    "other",
+    "host",
+    "apps",
+    "profile",
+    "create",
+    "space",
+    "interested",
+    "infra",
+    "challenges",
+    "custom",
+    "demos",
+    "advanced",
+    "gpus",
+    "something"
+  ],
+  "performance": {
+    "quality_score": null,
+    "benchmark_score": null,
+    "latency_ms": null,
+    "throughput": null
+  },
+  "pricing": {
+    "open_source": null,
+    "free_tier": null,
+    "monthly_cost": null,
+    "license": null
+  },
+  "adoption": {
+    "github_stars": null,
+    "monthly_downloads": null,
+    "active_users": null,
+    "enterprise_users": null,
+    "community_score": null
+  },
+  "capabilities": {
+    "supported_deployments": [],
+    "supported_languages": [],
+    "features": [
+      "docker",
+      "gpu",
+      "javascript",
+      "python"
+    ]
+  },
+  "recommendation": {
+    "score": null,
+    "confidence": null,
+    "reason": null
+  }
+}

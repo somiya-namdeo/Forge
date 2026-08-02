@@ -1,0 +1,54 @@
+{
+  "technology": "Replicate",
+  "category": "deployment",
+  "description": "Documentation\nReplicate lets you run AI models with a cloud API, without having to understand machine learning or manage your own infrastructure.\nYou can run models that other people have published, bring your own training data to create fine-tuned models , or deploy custom models.\nTopics\nLearn about how Replicate works.\nGuides\nReady to build something? Check out our guides.\nVideos\nPrefer to learn by watching videos? Check out some recent demos from our YouTube channel.\nRun Replicate models usin",
+  "aliases": [],
+  "tags": [
+    "models",
+    "minutes",
+    "flux",
+    "replicate",
+    "learn",
+    "schnell",
+    "image",
+    "create",
+    "videos",
+    "training",
+    "data",
+    "deploy",
+    "guides",
+    "check",
+    "pre-trained"
+  ],
+  "performance": {
+    "quality_score": null,
+    "benchmark_score": null,
+    "latency_ms": null,
+    "throughput": null
+  },
+  "pricing": {
+    "open_source": null,
+    "free_tier": null,
+    "monthly_cost": null,
+    "license": null
+  },
+  "adoption": {
+    "github_stars": null,
+    "monthly_downloads": null,
+    "active_users": null,
+    "enterprise_users": null,
+    "community_score": null
+  },
+  "capabilities": {
+    "supported_deployments": [],
+    "supported_languages": [],
+    "features": [
+      "python"
+    ]
+  },
+  "recommendation": {
+    "score": null,
+    "confidence": null,
+    "reason": null
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "technology": "Qwen",
+  "category": "llms",
+  "description": "💜 Qwen Chat   |   🤗 Hugging Face   |   🤖 ModelScope   |    📑 Paper    |    📑 Blog    ｜   📖 Documentation\n🖥️ Demo   |   💬 WeChat (微信)   |   🫨 Discord  \nVisit our Hugging Face or ModelScope organization (click links above), search checkpoints with names starting with Qwen3- or visit the Qwen3 collection, and you will find all you need! Enjoy!\nTo learn more about Qwen3, feel free to read our documentation [EN|ZH]. Our documentation consists of the following sections:\n- Quickstart: the basic usages ",
+  "aliases": [],
+  "tags": [
+    "model",
+    "qwen3",
+    "models",
+    "thinking",
+    "content",
+    "qwen",
+    "following",
+    "yang",
+    "ollama",
+    "reasoning",
+    "qwen2",
+    "zhang",
+    "capabilities",
+    "what",
+    "vllm"
+  ],
+  "performance": {
+    "quality_score": null,
+    "benchmark_score": null,
+    "latency_ms": null,
+    "throughput": null
+  },
+  "pricing": {
+    "open_source": null,
+    "free_tier": null,
+    "monthly_cost": null,
+    "license": "Apache 2.0"
+  },
+  "adoption": {
+    "github_stars": null,
+    "monthly_downloads": null,
+    "active_users": null,
+    "enterprise_users": null,
+    "community_score": null
+  },
+  "capabilities": {
+    "supported_deployments": [],
+    "supported_languages": [],
+    "features": [
+      "cpu",
+      "function calling",
+      "gpu",
+      "multimodal",
+      "python",
+      "quantization",
+      "rag",
+      "streaming"
+    ]
+  },
+  "recommendation": {
+    "score": null,
+    "confidence": null,
+    "reason": null
+  }
+}

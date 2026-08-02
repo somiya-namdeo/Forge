@@ -1,0 +1,58 @@
+{
+  "technology": "ColBERT",
+  "category": "rerankers",
+  "description": "ColBERT is a fast and accurate retrieval model, enabling scalable BERT-based search over large text collections in tens of milliseconds.\nFigure 1: ColBERT's late interaction, efficiently scoring the fine-grained similarity between a queries and a passage.\nAs Figure 1 illustrates, ColBERT relies on fine-grained contextual late interaction: it encodes each passage into a matrix of token-level embeddings (shown above in blue). Then at search time, it embeds every query into another matrix (shown in",
+  "aliases": [],
+  "tags": [
+    "colbert",
+    "collection",
+    "queries",
+    "msmarco",
+    "path",
+    "config",
+    "search",
+    "train",
+    "checkpoint",
+    "ranking",
+    "retrieval",
+    "passage",
+    "passages",
+    "index",
+    "conda"
+  ],
+  "performance": {
+    "quality_score": null,
+    "benchmark_score": null,
+    "latency_ms": null,
+    "throughput": null
+  },
+  "pricing": {
+    "open_source": null,
+    "free_tier": null,
+    "monthly_cost": null,
+    "license": "MIT"
+  },
+  "adoption": {
+    "github_stars": null,
+    "monthly_downloads": null,
+    "active_users": null,
+    "enterprise_users": null,
+    "community_score": null
+  },
+  "capabilities": {
+    "supported_deployments": [],
+    "supported_languages": [],
+    "features": [
+      "cpu",
+      "embeddings",
+      "gpu",
+      "python",
+      "rag"
+    ]
+  },
+  "recommendation": {
+    "score": null,
+    "confidence": null,
+    "reason": null
+  }
+}

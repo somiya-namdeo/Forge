@@ -1,0 +1,54 @@
+{
+  "technology": "HyDE",
+  "category": "retrieval",
+  "description": "This is code repository for the paper: HyDE: Precise Zero-Shot Dense Retrieval without Relevance Labels.\nHyDE zero-shot instructs GPT3 to generate a fictional document and re-encodes it with unsupervised retriever Contriever to search in its embedding space. HyDE significantly outperforms Contriever across tasks and languages and it does not require any human labeled relevance judgement.\n-\nInstall pyserini by following the guide. We use pyserini to conduct dense retrieval and evaluation.\n-\nDownl",
+  "aliases": [],
+  "tags": [
+    "what",
+    "hyde",
+    "dense",
+    "zero-shot",
+    "retrieval",
+    "relevance",
+    "contriever",
+    "document",
+    "precise",
+    "without",
+    "labels",
+    "arxiv",
+    "embedding",
+    "index",
+    "vector"
+  ],
+  "performance": {
+    "quality_score": null,
+    "benchmark_score": null,
+    "latency_ms": null,
+    "throughput": null
+  },
+  "pricing": {
+    "open_source": null,
+    "free_tier": null,
+    "monthly_cost": null,
+    "license": "MIT"
+  },
+  "adoption": {
+    "github_stars": null,
+    "monthly_downloads": null,
+    "active_users": null,
+    "enterprise_users": null,
+    "community_score": null
+  },
+  "capabilities": {
+    "supported_deployments": [],
+    "supported_languages": [],
+    "features": [
+      "embeddings"
+    ]
+  },
+  "recommendation": {
+    "score": null,
+    "confidence": null,
+    "reason": null
+  }
+}

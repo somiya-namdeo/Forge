@@ -1,6 +1,6 @@
 {
   "id": "source-chroma",
-  "category": "vectordb",
+  "category": "vectordbs",
   "name": "Chroma",
   "organization": "Chroma",
   "official_documentation": [

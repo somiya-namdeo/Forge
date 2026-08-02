@@ -1,0 +1,59 @@
+{
+  "technology": "Meta Llama",
+  "category": "llms",
+  "description": "The Meta Llama 3.1 collection of multilingual large language models (LLMs) is a collection of pretrained and instruction tuned generative models in 8B, 70B and 405B sizes (text in/text out). The Llama 3.1 instruction tuned text only models (8B, 70B, 405B) are optimized for multilingual dialogue use cases and outperform many of the available open source and closed chat models on common industry benchmarks.\nModel developer: Meta\nModel Architecture: Llama 3.1 is an auto-regressive language model th",
+  "aliases": [],
+  "tags": [
+    "llama",
+    "model",
+    "models",
+    "safety",
+    "license",
+    "community",
+    "data",
+    "developers",
+    "training",
+    "including",
+    "what",
+    "multilingual",
+    "text",
+    "available",
+    "meta"
+  ],
+  "performance": {
+    "quality_score": null,
+    "benchmark_score": null,
+    "latency_ms": null,
+    "throughput": null
+  },
+  "pricing": {
+    "open_source": null,
+    "free_tier": null,
+    "monthly_cost": null,
+    "license": "Llama 3 Community License"
+  },
+  "adoption": {
+    "github_stars": null,
+    "monthly_downloads": null,
+    "active_users": null,
+    "enterprise_users": null,
+    "community_score": null
+  },
+  "capabilities": {
+    "supported_deployments": [],
+    "supported_languages": [],
+    "features": [
+      "agents",
+      "fine tuning",
+      "gpu",
+      "python",
+      "quantization",
+      "rag"
+    ]
+  },
+  "recommendation": {
+    "score": null,
+    "confidence": null,
+    "reason": null
+  }
+}

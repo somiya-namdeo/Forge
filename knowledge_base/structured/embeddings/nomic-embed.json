@@ -1,0 +1,57 @@
+{
+  "technology": "Nomic Embed",
+  "category": "embeddings",
+  "description": "contrastors is contrastive learning toolkit that enables researchers and engineers to train and evaluate contrastive models efficiently.\n- Built on top of Flash Attention for fast and efficient training\n- Support for training on multiple GPUs\n- GradCache support for training with large batch sizes in constrained memory environments\n- Huggingface Support for easy loading of common models (Pythia/GPTNeoX, BERT, etc.)\n- Masked Language Modeling (MLM) Pretraining\n- Matryoshka Representation Learning",
+  "aliases": [],
+  "tags": [
+    "nomic",
+    "what",
+    "install",
+    "data",
+    "training",
+    "train",
+    "models",
+    "https",
+    "model",
+    "text",
+    "embed",
+    "access",
+    "file",
+    "config",
+    "arxiv"
+  ],
+  "performance": {
+    "quality_score": null,
+    "benchmark_score": null,
+    "latency_ms": null,
+    "throughput": null
+  },
+  "pricing": {
+    "open_source": null,
+    "free_tier": null,
+    "monthly_cost": null,
+    "license": "Apache 2.0"
+  },
+  "adoption": {
+    "github_stars": null,
+    "monthly_downloads": null,
+    "active_users": null,
+    "enterprise_users": null,
+    "community_score": null
+  },
+  "capabilities": {
+    "supported_deployments": [],
+    "supported_languages": [],
+    "features": [
+      "gpu",
+      "python",
+      "rag",
+      "streaming"
+    ]
+  },
+  "recommendation": {
+    "score": null,
+    "confidence": null,
+    "reason": null
+  }
+}

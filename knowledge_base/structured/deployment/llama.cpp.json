@@ -1,0 +1,60 @@
+{
+  "technology": "llama.cpp",
+  "category": "deployment",
+  "description": "LLM inference in C/C++\nmanifesto / ggml / ops / maintainer PRs / dev branches / compile times / lib llama API / llama-server REST API\nA few options to get llama.cpp installed on your machine:\n- Visit https://llama.app and follow the instructions\n- Run with Docker - see our Docker documentation\n- Download pre-built binaries from the releases page\n- Build from source by cloning this repository - check out our build guide\nOnce installed:\n# Download and run a model directly from Hugging Face\nllama c",
+  "aliases": [],
+  "tags": [
+    "llama",
+    "single-header",
+    "inference",
+    "support",
+    "gpus",
+    "public",
+    "domain",
+    "json",
+    "build",
+    "cuda",
+    "nvidia",
+    "moore",
+    "threads",
+    "musa",
+    "library"
+  ],
+  "performance": {
+    "quality_score": null,
+    "benchmark_score": null,
+    "latency_ms": null,
+    "throughput": null
+  },
+  "pricing": {
+    "open_source": null,
+    "free_tier": null,
+    "monthly_cost": null,
+    "license": "MIT"
+  },
+  "adoption": {
+    "github_stars": null,
+    "monthly_downloads": null,
+    "active_users": null,
+    "enterprise_users": null,
+    "community_score": null
+  },
+  "capabilities": {
+    "supported_deployments": [],
+    "supported_languages": [],
+    "features": [
+      "cpu",
+      "docker",
+      "gpu",
+      "multimodal",
+      "quantization",
+      "rag",
+      "rest api"
+    ]
+  },
+  "recommendation": {
+    "score": null,
+    "confidence": null,
+    "reason": null
+  }
+}

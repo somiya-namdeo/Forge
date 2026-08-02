@@ -1,0 +1,55 @@
+{
+  "technology": "OpenAI Evals",
+  "category": "evaluation",
+  "description": "You can now configure and run Evals directly in the OpenAI Dashboard. Get started →\nEvals provide a framework for evaluating large language models (LLMs) or systems built using LLMs. We offer an existing registry of evals to test different dimensions of OpenAI models and the ability to write your own custom evals for use cases you care about. You can also use your data to build private evals which represent the common LLMs patterns in your workflow without exposing any of that data publicly.\nIf ",
+  "aliases": [],
+  "tags": [
+    "evals",
+    "eval",
+    "openai",
+    "install",
+    "data",
+    "want",
+    "pre-commit",
+    "code",
+    "examples",
+    "registry",
+    "snowflake",
+    "these",
+    "started",
+    "llms",
+    "existing"
+  ],
+  "performance": {
+    "quality_score": null,
+    "benchmark_score": null,
+    "latency_ms": null,
+    "throughput": null
+  },
+  "pricing": {
+    "open_source": null,
+    "free_tier": null,
+    "monthly_cost": null,
+    "license": "MIT"
+  },
+  "adoption": {
+    "github_stars": null,
+    "monthly_downloads": null,
+    "active_users": null,
+    "enterprise_users": null,
+    "community_score": null
+  },
+  "capabilities": {
+    "supported_deployments": [],
+    "supported_languages": [],
+    "features": [
+      "agents",
+      "python"
+    ]
+  },
+  "recommendation": {
+    "score": null,
+    "confidence": null,
+    "reason": null
+  }
+}

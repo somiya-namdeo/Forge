@@ -1,0 +1,64 @@
+{
+  "technology": "Chroma",
+  "category": "vectordbs",
+  "description": "How Chroma Sync Works\nSync runs the same pipeline regardless of source:\n- Managed ingestion. Connect a source once; every invocation runs through Chroma’s queue-based pipeline with automatic retries, rate-limit awareness, and error recovery. Monitor invocations in the dashboard or through the Sync API.\n- High throughput. The pipeline is designed to maximize throughput without dropping work, whether you’re syncing a handful of files or millions of documents.\n- Parse. Best-in-class PDF and documen",
+  "aliases": [],
+  "tags": [
+    "rescrv",
+    "collection",
+    "chroma",
+    "search",
+    "tanujnay112",
+    "sanketkedia",
+    "chore",
+    "client",
+    "itaismith",
+    "source",
+    "sicheng-pan",
+    "mcmr",
+    "database",
+    "query",
+    "sparse"
+  ],
+  "performance": {
+    "quality_score": null,
+    "benchmark_score": null,
+    "latency_ms": null,
+    "throughput": null
+  },
+  "pricing": {
+    "open_source": null,
+    "free_tier": null,
+    "monthly_cost": null,
+    "license": "Apache 2.0"
+  },
+  "adoption": {
+    "github_stars": null,
+    "monthly_downloads": null,
+    "active_users": null,
+    "enterprise_users": null,
+    "community_score": null
+  },
+  "capabilities": {
+    "supported_deployments": [],
+    "supported_languages": [],
+    "features": [
+      "agents",
+      "cpu",
+      "docker",
+      "embeddings",
+      "javascript",
+      "multimodal",
+      "python",
+      "quantization",
+      "rag",
+      "streaming",
+      "vector search"
+    ]
+  },
+  "recommendation": {
+    "score": null,
+    "confidence": null,
+    "reason": null
+  }
+}

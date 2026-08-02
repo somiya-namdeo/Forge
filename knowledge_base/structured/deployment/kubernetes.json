@@ -1,0 +1,55 @@
+{
+  "technology": "Kubernetes",
+  "category": "deployment",
+  "description": "Kubernetes, also known as K8s, is an open source system for managing containerized applications across multiple hosts. It provides basic mechanisms for the deployment, maintenance, and scaling of applications.\nKubernetes builds upon a decade and a half of experience at Google running production workloads at scale using a system called Borg, combined with best-of-breed ideas and practices from the community.\nKubernetes is hosted by the Cloud Native Computing Foundation (CNCF). If your company wan",
+  "aliases": [],
+  "tags": [
+    "kubernetes",
+    "documentation",
+    "applications",
+    "community",
+    "source",
+    "cncf",
+    "make",
+    "open",
+    "cloud",
+    "native",
+    "help",
+    "code",
+    "list",
+    "project",
+    "system"
+  ],
+  "performance": {
+    "quality_score": null,
+    "benchmark_score": null,
+    "latency_ms": null,
+    "throughput": null
+  },
+  "pricing": {
+    "open_source": null,
+    "free_tier": null,
+    "monthly_cost": null,
+    "license": "Apache-2.0"
+  },
+  "adoption": {
+    "github_stars": null,
+    "monthly_downloads": null,
+    "active_users": null,
+    "enterprise_users": null,
+    "community_score": null
+  },
+  "capabilities": {
+    "supported_deployments": [],
+    "supported_languages": [],
+    "features": [
+      "docker",
+      "kubernetes"
+    ]
+  },
+  "recommendation": {
+    "score": null,
+    "confidence": null,
+    "reason": null
+  }
+}

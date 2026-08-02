@@ -1,0 +1,65 @@
+{
+  "technology": "Jina Embeddings",
+  "category": "embeddings",
+  "description": "Jina-serve is a framework for building and deploying AI services that communicate via gRPC, HTTP and WebSockets. Scale your services from local development to production while focusing on your core logic.\n- Native support for all major ML frameworks and data types\n- High-performance service design with scaling, streaming, and dynamic batching\n- LLM serving with streaming output\n- Built-in Docker integration and Executor Hub\n- One-click deployment to Jina AI Cloud\n- Enterprise-ready with Kubernet",
+  "aliases": [],
+  "tags": [
+    "jina",
+    "arrow",
+    "embeddings",
+    "down",
+    "keyboard",
+    "release",
+    "what",
+    "embedding",
+    "text",
+    "models",
+    "input",
+    "tokens",
+    "model",
+    "code",
+    "multilingual"
+  ],
+  "performance": {
+    "quality_score": null,
+    "benchmark_score": null,
+    "latency_ms": null,
+    "throughput": null
+  },
+  "pricing": {
+    "open_source": null,
+    "free_tier": null,
+    "monthly_cost": null,
+    "license": "Apache 2.0"
+  },
+  "adoption": {
+    "github_stars": null,
+    "monthly_downloads": null,
+    "active_users": null,
+    "enterprise_users": null,
+    "community_score": null
+  },
+  "capabilities": {
+    "supported_deployments": [],
+    "supported_languages": [],
+    "features": [
+      "agents",
+      "docker",
+      "embeddings",
+      "gpu",
+      "kubernetes",
+      "multimodal",
+      "python",
+      "quantization",
+      "rag",
+      "reranking",
+      "streaming",
+      "vector search"
+    ]
+  },
+  "recommendation": {
+    "score": null,
+    "confidence": null,
+    "reason": null
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "technology": "LM Studio",
+  "category": "deployment",
+  "description": "Welcome to LM Studio Docs!\nLearn how to run Llama, DeepSeek, Qwen, Phi, and other LLMs locally with LM Studio.\nExplore the docs\nTo get LM Studio, head over to the Downloads page and download an installer for your operating system.\nLM Studio is available for macOS, Windows, and Linux.\nWhat can I do with LM Studio?\n- Download and run local LLMs like gpt-oss or Llama, Qwen\n- Use a simple and flexible chat interface\n- Connect MCP servers and use them with local models\n- Search & download functionali",
+  "aliases": [],
+  "tags": [
+    "studio",
+    "llama",
+    "models",
+    "local",
+    "chat",
+    "llms",
+    "download",
+    "windows",
+    "linux",
+    "documents",
+    "system",
+    "supports",
+    "computer",
+    "entirely",
+    "offline"
+  ],
+  "performance": {
+    "quality_score": null,
+    "benchmark_score": null,
+    "latency_ms": null,
+    "throughput": null
+  },
+  "pricing": {
+    "open_source": null,
+    "free_tier": null,
+    "monthly_cost": null,
+    "license": null
+  },
+  "adoption": {
+    "github_stars": null,
+    "monthly_downloads": null,
+    "active_users": null,
+    "enterprise_users": null,
+    "community_score": null
+  },
+  "capabilities": {
+    "supported_deployments": [],
+    "supported_languages": [],
+    "features": [
+      "rag",
+      "rest api"
+    ]
+  },
+  "recommendation": {
+    "score": null,
+    "confidence": null,
+    "reason": null
+  }
+}

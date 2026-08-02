@@ -1,0 +1,59 @@
+{
+  "technology": "LitGPT",
+  "category": "fine_tuning",
+  "description": "20+ high-performance LLMs with recipes to pretrain, finetune, and deploy at scale.\n✅ From scratch implementations ✅ No abstractions ✅ Beginner friendly\n✅ Flash attention ✅ FSDP ✅ LoRA, QLoRA, Adapter\n✅ Reduce GPU memory (fp4/8/16/32) ✅ 1-1000+ GPUs/TPUs ✅ 20+ LLMs\nQuick start • Models • Finetune • Deploy • All workflows • Features • Recipes (YAML) • Lightning AI • Tutorials\nOver 340,000 developers use Lightning Cloud - purpose-built for PyTorch and PyTorch Lightning.\n- GPUs from $0.19.\n- Cluster",
+  "aliases": [],
+  "tags": [
+    "litgpt",
+    "default",
+    "type",
+    "model",
+    "lora",
+    "microsoft",
+    "data",
+    "google",
+    "team",
+    "models",
+    "finetuning",
+    "research",
+    "finetune",
+    "deploy",
+    "path"
+  ],
+  "performance": {
+    "quality_score": null,
+    "benchmark_score": null,
+    "latency_ms": null,
+    "throughput": null
+  },
+  "pricing": {
+    "open_source": null,
+    "free_tier": null,
+    "monthly_cost": null,
+    "license": "Apache-2.0"
+  },
+  "adoption": {
+    "github_stars": null,
+    "monthly_downloads": null,
+    "active_users": null,
+    "enterprise_users": null,
+    "community_score": null
+  },
+  "capabilities": {
+    "supported_deployments": [],
+    "supported_languages": [],
+    "features": [
+      "cpu",
+      "embeddings",
+      "function calling",
+      "gpu",
+      "python",
+      "quantization"
+    ]
+  },
+  "recommendation": {
+    "score": null,
+    "confidence": null,
+    "reason": null
+  }
+}

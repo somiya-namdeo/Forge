@@ -1,0 +1,61 @@
+{
+  "technology": "BAAI BGE Embeddings",
+  "category": "embeddings",
+  "description": "Spaces\nmteb\n/\nleaderboard\nlike\n7.6k\nRunning\non\nCPU Upgrade\nApp\nFiles\nFiles\nCommunity\n190\nFetching metadata from the HF Docker repository...\nRefreshing\nNews | Installation | Quick Start | Community | Projects | Model List | Contributor | Citation | License\n-\n3/6/2025: 🔥🔥 Introduce BGE-VL (HF repo), State-Of-The-Art multimodal embedding models to support Any visual search applications (everything, including text-to-image, image-to-text, image&prompt-to-image, text-to-image&text, and more)! They ar",
+  "aliases": [],
+  "tags": [
+    "model",
+    "hanhainebula",
+    "baai",
+    "update",
+    "models",
+    "release",
+    "embedding",
+    "code",
+    "first",
+    "chinese",
+    "finetune",
+    "evaluation",
+    "made",
+    "english",
+    "what"
+  ],
+  "performance": {
+    "quality_score": null,
+    "benchmark_score": null,
+    "latency_ms": null,
+    "throughput": null
+  },
+  "pricing": {
+    "open_source": null,
+    "free_tier": null,
+    "monthly_cost": null,
+    "license": "MIT"
+  },
+  "adoption": {
+    "github_stars": null,
+    "monthly_downloads": null,
+    "active_users": null,
+    "enterprise_users": null,
+    "community_score": null
+  },
+  "capabilities": {
+    "supported_deployments": [],
+    "supported_languages": [],
+    "features": [
+      "agents",
+      "cpu",
+      "docker",
+      "embeddings",
+      "gpu",
+      "multimodal",
+      "rag",
+      "reranking"
+    ]
+  },
+  "recommendation": {
+    "score": null,
+    "confidence": null,
+    "reason": null
+  }
+}

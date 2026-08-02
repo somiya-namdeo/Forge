@@ -1,0 +1,52 @@
+{
+  "technology": "Tree of Thoughts (ToT)",
+  "category": "prompting",
+  "description": "Official implementation for paper Tree of Thoughts: Deliberate Problem Solving with Large Language Models with code, prompts, model outputs. Also check its tweet thread in 1min.\n-\nSet up OpenAI API key and store in environment variable OPENAI_API_KEY (see here).\n-\nInstall tot package in two ways:\n- Option 1: Install from PyPI\npip install tree-of-thoughts-llm\n- Option 2: Install from source\ngit clone https://github.com/princeton-nlp/tree-of-thought-llm\ncd tree-of-thought-llm\npip install -r requir",
+  "aliases": [],
+  "tags": [
+    "what",
+    "sample",
+    "tasks",
+    "task",
+    "paper",
+    "language",
+    "game24",
+    "thoughts",
+    "install",
+    "sampling",
+    "choices",
+    "models",
+    "prompts",
+    "import",
+    "prompt"
+  ],
+  "performance": {
+    "quality_score": null,
+    "benchmark_score": null,
+    "latency_ms": null,
+    "throughput": null
+  },
+  "pricing": {
+    "open_source": null,
+    "free_tier": null,
+    "monthly_cost": null,
+    "license": "MIT"
+  },
+  "adoption": {
+    "github_stars": null,
+    "monthly_downloads": null,
+    "active_users": null,
+    "enterprise_users": null,
+    "community_score": null
+  },
+  "capabilities": {
+    "supported_deployments": [],
+    "supported_languages": [],
+    "features": []
+  },
+  "recommendation": {
+    "score": null,
+    "confidence": null,
+    "reason": null
+  }
+}

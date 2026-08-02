@@ -1,0 +1,56 @@
+{
+  "technology": "K3s",
+  "category": "deployment",
+  "description": "Lightweight Kubernetes. Production ready, easy to install, half the memory, all in a binary less than 100 MB.\nGreat for:\n- Edge\n- IoT\n- CI\n- Development\n- ARM\n- Embedding k8s\n- Situations where a PhD in k8s clusterology is infeasible\nK3s is a fully conformant production-ready Kubernetes distribution with the following changes:\n- It is packaged as a single binary.\n- It adds support for sqlite3 as the default storage backend. Etcd3, MariaDB, MySQL, and Postgres are also supported.\n- It wraps Kuber",
+  "aliases": [],
+  "tags": [
+    "kubernetes",
+    "server",
+    "binary",
+    "single",
+    "components",
+    "token",
+    "install",
+    "cluster",
+    "upstream",
+    "https",
+    "release",
+    "half",
+    "storage",
+    "nodes",
+    "technologies"
+  ],
+  "performance": {
+    "quality_score": null,
+    "benchmark_score": null,
+    "latency_ms": null,
+    "throughput": null
+  },
+  "pricing": {
+    "open_source": null,
+    "free_tier": null,
+    "monthly_cost": null,
+    "license": "Apache-2.0"
+  },
+  "adoption": {
+    "github_stars": null,
+    "monthly_downloads": null,
+    "active_users": null,
+    "enterprise_users": null,
+    "community_score": null
+  },
+  "capabilities": {
+    "supported_deployments": [],
+    "supported_languages": [],
+    "features": [
+      "docker",
+      "kubernetes",
+      "rag"
+    ]
+  },
+  "recommendation": {
+    "score": null,
+    "confidence": null,
+    "reason": null
+  }
+}

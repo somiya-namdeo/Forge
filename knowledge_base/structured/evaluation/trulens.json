@@ -1,0 +1,54 @@
+{
+  "technology": "TruLens",
+  "category": "evaluation",
+  "description": "TruLens finds where your agent fails and where you can cut cost without losing quality. Open source, OpenTelemetry-native.\nInstrument any app with a decorator, score every step with LLM judges that explain themselves, then compare versions and ship the one that earns it. Tracing is OpenTelemetry-native, so a trace is portable to any OTLP backend, and evaluations run either as traces land or over a dataset after the fact.\nRead more about the core concepts behind TruLens including Metrics, the RAG",
+  "aliases": [],
+  "tags": [
+    "trulens",
+    "install",
+    "context",
+    "relevance",
+    "tool",
+    "query",
+    "instrument",
+    "metric",
+    "spanattributes",
+    "retrieval",
+    "span",
+    "name",
+    "selector",
+    "core",
+    "import"
+  ],
+  "performance": {
+    "quality_score": null,
+    "benchmark_score": null,
+    "latency_ms": null,
+    "throughput": null
+  },
+  "pricing": {
+    "open_source": null,
+    "free_tier": null,
+    "monthly_cost": null,
+    "license": "MIT"
+  },
+  "adoption": {
+    "github_stars": null,
+    "monthly_downloads": null,
+    "active_users": null,
+    "enterprise_users": null,
+    "community_score": null
+  },
+  "capabilities": {
+    "supported_deployments": [],
+    "supported_languages": [],
+    "features": [
+      "rag"
+    ]
+  },
+  "recommendation": {
+    "score": null,
+    "confidence": null,
+    "reason": null
+  }
+}

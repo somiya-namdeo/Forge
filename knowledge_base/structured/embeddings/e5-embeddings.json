@@ -1,0 +1,58 @@
+{
+  "technology": "E5 Embeddings",
+  "category": "embeddings",
+  "description": "Spaces\nmteb\n/\nleaderboard\nlike\n7.6k\nRunning\non\nCPU Upgrade\nApp\nFiles\nFiles\nCommunity\n190\nFetching metadata from the HF Docker repository...\nRefreshing\nMultilingual E5 Text Embeddings: A Technical Report. Liang Wang, Nan Yang, Xiaolong Huang, Linjun Yang, Rangan Majumder, Furu Wei, arXiv 2024\nImproving Text Embeddings with Large Language Models. Liang Wang, Nan Yang, Xiaolong Huang, Linjun Yang, Rangan Majumder, Furu Wei, arXiv 2024\nText Embeddings by Weakly-Supervised Contrastive Pre-training. L",
+  "aliases": [],
+  "tags": [
+    "intfloat",
+    "what",
+    "yang",
+    "arxiv",
+    "multilingual",
+    "text",
+    "models",
+    "liang",
+    "wang",
+    "embeddings",
+    "xiaolong",
+    "huang",
+    "linjun",
+    "rangan",
+    "majumder"
+  ],
+  "performance": {
+    "quality_score": null,
+    "benchmark_score": null,
+    "latency_ms": null,
+    "throughput": null
+  },
+  "pricing": {
+    "open_source": null,
+    "free_tier": null,
+    "monthly_cost": null,
+    "license": "MIT"
+  },
+  "adoption": {
+    "github_stars": null,
+    "monthly_downloads": null,
+    "active_users": null,
+    "enterprise_users": null,
+    "community_score": null
+  },
+  "capabilities": {
+    "supported_deployments": [],
+    "supported_languages": [],
+    "features": [
+      "cpu",
+      "docker",
+      "embeddings",
+      "gpu",
+      "python"
+    ]
+  },
+  "recommendation": {
+    "score": null,
+    "confidence": null,
+    "reason": null
+  }
+}

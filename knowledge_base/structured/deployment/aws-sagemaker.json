@@ -1,0 +1,55 @@
+{
+  "technology": "AWS SageMaker",
+  "category": "deployment",
+  "description": "Use Machine Learning Environments Learn about machine learning environments that Amazon SageMaker AI offers.\nLabel Data with a Human-in-the-loop Learn how to use a human-in-the-loop to help label data more accurately.\nCreate, Store, and Share Features Learn how to create, store, and share extracted data signals (features) for machine learning.\nUse Docker Containers to Build Models Learn how to use Docker containers to build your machine learning models.\nDetect Bias and Understand Explanations Le",
+  "aliases": [],
+  "tags": [
+    "learning",
+    "machine",
+    "learn",
+    "models",
+    "data",
+    "build",
+    "python",
+    "amazon",
+    "sagemaker",
+    "environments",
+    "label",
+    "human-in-the-loop",
+    "create",
+    "store",
+    "share"
+  ],
+  "performance": {
+    "quality_score": null,
+    "benchmark_score": null,
+    "latency_ms": null,
+    "throughput": null
+  },
+  "pricing": {
+    "open_source": null,
+    "free_tier": null,
+    "monthly_cost": null,
+    "license": null
+  },
+  "adoption": {
+    "github_stars": null,
+    "monthly_downloads": null,
+    "active_users": null,
+    "enterprise_users": null,
+    "community_score": null
+  },
+  "capabilities": {
+    "supported_deployments": [],
+    "supported_languages": [],
+    "features": [
+      "docker",
+      "python"
+    ]
+  },
+  "recommendation": {
+    "score": null,
+    "confidence": null,
+    "reason": null
+  }
+}

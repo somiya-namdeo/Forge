@@ -1,6 +1,6 @@
 {
   "id": "source-qdrant",
-  "category": "vectordb",
+  "category": "vectordbs",
   "name": "Qdrant",
   "organization": "Qdrant Solutions",
   "official_documentation": [

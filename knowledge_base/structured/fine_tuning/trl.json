@@ -1,0 +1,56 @@
+{
+  "technology": "TRL",
+  "category": "fine_tuning",
+  "description": "🌍 Multi-environment agentic RL: GRPOTrainer now supports per-example environment selection and environment-owned rewards — mix multiple sandboxed task suites in one run and let each environment define its own scoring, with Harbor and OpenEnv.\n🎯 KTO is now stable: KTOTrainer graduates to the stable API after a full alignment pass with DPOTrainer.\nTRL is a cutting-edge library designed for post-training foundation models using advanced techniques like Supervised Fine-Tuning (SFT), Group Relative P",
+  "aliases": [],
+  "tags": [
+    "dataset",
+    "train",
+    "trainer",
+    "import",
+    "load",
+    "model",
+    "grpotrainer",
+    "dpotrainer",
+    "qwen",
+    "qwen2",
+    "models",
+    "trl-lib",
+    "ktotrainer",
+    "optimization",
+    "methods"
+  ],
+  "performance": {
+    "quality_score": null,
+    "benchmark_score": null,
+    "latency_ms": null,
+    "throughput": null
+  },
+  "pricing": {
+    "open_source": null,
+    "free_tier": null,
+    "monthly_cost": null,
+    "license": "Apache-2.0"
+  },
+  "adoption": {
+    "github_stars": null,
+    "monthly_downloads": null,
+    "active_users": null,
+    "enterprise_users": null,
+    "community_score": null
+  },
+  "capabilities": {
+    "supported_deployments": [],
+    "supported_languages": [],
+    "features": [
+      "gpu",
+      "quantization",
+      "rag"
+    ]
+  },
+  "recommendation": {
+    "score": null,
+    "confidence": null,
+    "reason": null
+  }
+}

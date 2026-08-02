@@ -1,125 +1,15 @@
 """Candidate scoring engine for AI Architecture Recommendation Engine."""
 
-from typing import Any
-
-from app.schemas.decision import DecisionRequest, Priority
+from typing import Any, Dict, List, Optional, Union
+from app.decision.domain_detector import Domain
+from app.decision.requirement_analyzer import BudgetTier, DocScaleTier, ProjectProfile, RequirementAnalyzer, ScaleTier
+from app.schemas.decision import DecisionRequest, DeploymentTarget, Priority
 
 _DEFAULT_NEUTRAL_SCORE = 0.70
-_LATENCY_SCALE_MS = 500.0
-_COST_SCALE_USD = 100.0
-_STARS_SCALE = 5000.0
-_DOWNLOADS_SCALE = 100000.0
-_USERS_SCALE = 50000.0
-_ORGS_SCALE = 1000.0
-
-# Quality field paths (flat + nested)
-_QUALITY_PATHS = (
-    "quality_score",
-    "performance_score",
-    "quality",
-    "accuracy",
-    "benchmark_score",
-    "performance.quality_score",
-    "performance.score",
-    "performance.accuracy",
-    "performance.benchmark_score",
-    "benchmark.score",
-    "benchmark.accuracy",
-    "benchmark.quality",
-    "recommendation.score",
-    "recommendation.quality_score",
-    "recommendation.confidence",
-)
-
-# Latency field paths (flat + nested)
-_LATENCY_PATHS = (
-    "latency_ms",
-    "latency",
-    "p99_latency_ms",
-    "performance.latency_ms",
-    "performance.inference_latency_ms",
-    "performance.p99_latency_ms",
-    "performance.latency",
-    "benchmark.latency_ms",
-    "capabilities.latency_ms",
-)
-
-# Cost field paths (flat + nested)
-_COST_PATHS = (
-    "min_monthly_cost_usd",
-    "cost_score",
-    "min_cost",
-    "monthly_cost",
-    "pricing.monthly_cost",
-    "pricing.min_monthly_cost_usd",
-    "pricing.cost_score",
-    "pricing.cost",
-    "cost.monthly_cost",
-    "cost.min_monthly_cost_usd",
-    "cost.score",
-    "recommendation.cost_score",
-)
-
-_OPEN_SOURCE_PATHS = (
-    "open_source",
-    "is_open_source",
-    "pricing.open_source",
-    "pricing.is_open_source",
-    "cost.open_source",
-)
-
-_FREE_TIER_PATHS = (
-    "free_tier",
-    "has_free_tier",
-    "pricing.free_tier",
-    "pricing.has_free_tier",
-    "cost.free_tier",
-)
-
-# Popularity / Adoption field paths
-_POPULARITY_PATHS = (
-    "community_score",
-    "popularity",
-    "adoption.community_score",
-    "adoption.popularity",
-)
-
-_STARS_PATHS = (
-    "stars",
-    "github_stars",
-    "adoption.stars",
-    "adoption.github_stars",
-)
-
-_DOWNLOADS_PATHS = (
-    "downloads",
-    "monthly_downloads",
-    "adoption.downloads",
-    "adoption.monthly_downloads",
-)
-
-_USERS_PATHS = (
-    "active_users",
-    "adoption.active_users",
-)
-
-_ORGS_PATHS = (
-    "organizations",
-    "enterprise_users",
-    "adoption.organizations",
-    "adoption.enterprise_users",
-)
-
-_PRIORITY_WEIGHTS: dict[Priority, dict[str, float]] = {
-    Priority.COST: {"cost": 0.50, "quality": 0.20, "latency": 0.15, "popularity": 0.15},
-    Priority.LATENCY: {"latency": 0.50, "quality": 0.25, "cost": 0.15, "popularity": 0.10},
-    Priority.QUALITY: {"quality": 0.50, "latency": 0.20, "cost": 0.15, "popularity": 0.15},
-    Priority.BALANCED: {"quality": 0.25, "latency": 0.25, "cost": 0.25, "popularity": 0.25},
-}
 
 
 class ScoringEngine:
-    """Engine responsible for computing deterministic suitability scores for technology candidates."""
+    """Engine responsible for computing multi-factor suitability scores for technology candidates."""
 
     @staticmethod
     def _get_nested_value(entry: dict[str, Any], path: str) -> Any:
@@ -137,136 +27,331 @@ class ScoringEngine:
 
     @classmethod
     def _extract_first_value(cls, entry: dict[str, Any], paths: tuple[str, ...]) -> Any:
-        """Retrieve the first non-None value from entry matching flat or nested paths."""
+        """Retrieve the first non-None value matching any flat or dot-separated path."""
         for path in paths:
             val = cls._get_nested_value(entry, path)
             if val is not None:
                 return val
         return None
 
-    @staticmethod
-    def _normalize_score(value: Any) -> float | None:
-        """Normalize numeric score to [0.0, 1.0], converting percentages (1..100) if needed."""
-        if isinstance(value, (int, float)):
-            val = float(value)
-            if 0.0 <= val <= 1.0:
-                return val
-            if 1.0 < val <= 100.0:
-                return val / 100.0
-            if val < 0.0:
-                return 0.0
-            if val > 100.0:
-                return 1.0
-        return None
-
+    # --- 1. Semantic Similarity ---
     @classmethod
-    def _extract_quality_subscore(cls, entry: dict[str, Any]) -> float | None:
-        """Extract quality/performance sub-score normalized to [0.0, 1.0]."""
-        quality_val = cls._extract_first_value(entry, _QUALITY_PATHS)
-        return cls._normalize_score(quality_val)
+    def _calc_semantic_similarity(cls, entry: dict[str, Any], profile: ProjectProfile) -> float:
+        """Compute keyword and semantic overlap score between candidate metadata and project description."""
+        query_words = set(profile.project_description.lower().split())
+        if not query_words:
+            return 0.5
 
+        text_content = str(
+            entry.get("text")
+            or entry.get("description")
+            or entry.get("name")
+            or entry.get("technology")
+            or ""
+        ).lower()
+
+        matches = sum(1 for w in query_words if len(w) > 3 and w in text_content)
+        overlap_ratio = matches / max(1, len(query_words))
+        return min(1.0, max(0.2, round(0.4 + overlap_ratio * 1.5, 4)))
+
+    # --- 2. Domain Match ---
     @classmethod
-    def _extract_latency_subscore(cls, entry: dict[str, Any]) -> float | None:
-        """Extract latency sub-score (lower latency yields higher score)."""
-        latency_val = cls._extract_first_value(entry, _LATENCY_PATHS)
-        if isinstance(latency_val, (int, float)):
-            lat = float(latency_val)
-            if lat <= 0:
-                return 1.0
-            return max(0.0, min(1.0, 1.0 / (1.0 + (lat / _LATENCY_SCALE_MS))))
-        return None
+    def _calc_domain_match(cls, entry: dict[str, Any], profile: ProjectProfile) -> float:
+        """Calculate domain suitability based on project domain classification."""
+        domain = profile.domain
+        tech_name = str(entry.get("technology") or entry.get("name") or "").lower()
+        entry_text = str(entry.get("text") or "").lower()
 
-    @classmethod
-    def _extract_cost_subscore(cls, entry: dict[str, Any]) -> float | None:
-        """Extract cost efficiency sub-score (open-source & free-tier yield higher scores)."""
-        is_open_source = cls._extract_first_value(entry, _OPEN_SOURCE_PATHS)
-        has_free_tier = cls._extract_first_value(entry, _FREE_TIER_PATHS)
-        cost_val = cls._extract_first_value(entry, _COST_PATHS)
-
-        subscores: list[float] = []
-        if is_open_source is True:
-            subscores.append(1.0)
-        elif is_open_source is False:
-            subscores.append(0.5)
-
-        if has_free_tier is True:
-            subscores.append(0.9)
-
-        if isinstance(cost_val, (int, float)):
-            cost = float(cost_val)
-            if cost <= 0:
-                subscores.append(1.0)
-            else:
-                subscores.append(
-                    max(0.0, min(1.0, _COST_SCALE_USD / (_COST_SCALE_USD + cost)))
-                )
-
-        if subscores:
-            return sum(subscores) / len(subscores)
-        return None
-
-    @classmethod
-    def _extract_popularity_subscore(cls, entry: dict[str, Any]) -> float | None:
-        """Extract community adoption sub-score normalized to [0.0, 1.0]."""
-        community_val = cls._extract_first_value(entry, _POPULARITY_PATHS)
-        normalized_community = cls._normalize_score(community_val)
-        if normalized_community is not None:
-            return normalized_community
-
-        stars = cls._extract_first_value(entry, _STARS_PATHS)
-        if isinstance(stars, (int, float)):
-            return max(0.0, min(1.0, float(stars) / (float(stars) + _STARS_SCALE)))
-
-        downloads = cls._extract_first_value(entry, _DOWNLOADS_PATHS)
-        if isinstance(downloads, (int, float)):
-            return max(
-                0.0, min(1.0, float(downloads) / (float(downloads) + _DOWNLOADS_SCALE))
-            )
-
-        users = cls._extract_first_value(entry, _USERS_PATHS)
-        if isinstance(users, (int, float)):
-            return max(0.0, min(1.0, float(users) / (float(users) + _USERS_SCALE)))
-
-        orgs = cls._extract_first_value(entry, _ORGS_PATHS)
-        if isinstance(orgs, (int, float)):
-            return max(0.0, min(1.0, float(orgs) / (float(orgs) + _ORGS_SCALE)))
-
-        return None
-
-    @classmethod
-    def calculate_score(cls, entry: dict[str, Any], priority: Priority) -> float:
-        """Compute a normalized score [0.0, 1.0] for a single candidate entity."""
-        weights = _PRIORITY_WEIGHTS.get(priority, _PRIORITY_WEIGHTS[Priority.BALANCED])
-
-        subscores: dict[str, float | None] = {
-            "quality": cls._extract_quality_subscore(entry),
-            "latency": cls._extract_latency_subscore(entry),
-            "cost": cls._extract_cost_subscore(entry),
-            "popularity": cls._extract_popularity_subscore(entry),
+        domain_affinities = {
+            Domain.RESEARCH: {"qdrant", "ragas", "llamaindex", "gpt", "bge", "sentence_transformers"},
+            Domain.ENTERPRISE: {"pinecone", "claude", "kubernetes", "aws", "azure", "milvus"},
+            Domain.STARTUP: {"chroma", "deepseek", "ollama", "docker", "faiss", "fastapi"},
+            Domain.HEALTHCARE: {"on_prem", "privacy", "hipaa", "claude", "qdrant"},
+            Domain.LEGAL: {"claude", "gpt", "ragas", "qdrant", "reranker"},
+            Domain.FINANCE: {"pinecone", "milvus", "claude", "aws", "soc2"},
+            Domain.DEVELOPER_TOOLS: {"ollama", "vllm", "tgi", "qwen", "fastapi", "docker"},
+            Domain.EDUCATION: {"chroma", "faiss", "ollama", "gpt"},
+            Domain.CUSTOMER_SUPPORT: {"milvus", "qdrant", "fastapi", "claude", "gpt"},
         }
 
-        weighted_sum = 0.0
-        weight_sum = 0.0
+        affinities = domain_affinities.get(domain, set())
+        if any(a in tech_name or a in entry_text for a in affinities):
+            return 1.0
+        return 0.65
 
-        for factor, score in subscores.items():
-            if score is not None:
-                w = weights[factor]
-                weighted_sum += score * w
-                weight_sum += w
+    # --- 3. Deployment Match ---
+    @classmethod
+    def _calc_deployment_match(cls, entry: dict[str, Any], profile: ProjectProfile) -> float:
+        """Score candidate compatibility with target deployment environment."""
+        target = profile.deployment.value.lower()
+        tech_name = str(entry.get("technology") or entry.get("name") or "").lower()
+        entry_text = (str(entry.get("text") or "") + " " + str(entry.get("path") or "")).lower()
 
-        if weight_sum > 0:
-            final_score = weighted_sum / weight_sum
+        full_text = tech_name + " " + entry_text
+
+        # 1. AWS Target
+        if target == "aws":
+            if any(k in full_text for k in ("aws", "sagemaker", "eks", "bedrock")):
+                return 1.0
+            if any(k in full_text for k in ("azure", "azure_ai_foundry", "azure_ml", "gcp", "vertex_ai")):
+                return 0.05  # Severe penalty for competing cloud platforms
+            if any(k in full_text for k in ("kubernetes", "docker", "triton", "tgi", "vllm", "fastapi")):
+                return 0.80
+            return 0.50
+
+        # 2. Azure Target
+        if target == "azure":
+            if any(k in full_text for k in ("azure", "azure_ai_foundry", "azure_ml", "aks")):
+                return 1.0
+            if any(k in full_text for k in ("aws", "sagemaker", "eks", "bedrock", "gcp", "vertex_ai")):
+                return 0.05  # Severe penalty for competing cloud platforms
+            if any(k in full_text for k in ("kubernetes", "docker", "triton", "tgi", "vllm", "fastapi")):
+                return 0.80
+            return 0.50
+
+        # 3. GCP Target
+        if target == "gcp":
+            if any(k in full_text for k in ("gcp", "vertex_ai", "gke", "cloud_run", "google_cloud")):
+                return 1.0
+            if any(k in full_text for k in ("aws", "sagemaker", "azure", "azure_ai_foundry")):
+                return 0.05  # Severe penalty for competing cloud platforms
+            if any(k in full_text for k in ("kubernetes", "docker", "triton", "tgi", "vllm", "fastapi")):
+                return 0.80
+            return 0.50
+
+        # 4. Local / On-Prem Target
+        if target in ("local", "on_prem"):
+            if any(k in full_text for k in ("docker", "bentoml", "ollama", "compose", "llama_cpp", "local", "on_prem")):
+                return 1.0
+            if any(k in full_text for k in ("sagemaker", "azure_ai_foundry", "vertex_ai", "fly_io")):
+                return 0.05  # Severe penalty for managed cloud platforms
+            if any(k in full_text for k in ("kubernetes", "triton", "fastapi", "chroma", "faiss")):
+                return 0.85
+            return 0.40
+
+        return 0.70
+
+    # --- 4. Budget Match ---
+    @classmethod
+    def _calc_budget_match(cls, entry: dict[str, Any], profile: ProjectProfile) -> float:
+        """Evaluate candidate pricing efficiency against project budget tier."""
+        is_open_source = entry.get("open_source") is True or "open_source" in str(entry.get("path") or "").lower()
+        has_free_tier = entry.get("free_tier") or entry.get("has_free_tier")
+        cost_val = entry.get("min_monthly_cost_usd") or entry.get("monthly_cost")
+
+        if profile.budget_tier == BudgetTier.FREE_LOW:
+            if is_open_source:
+                return 1.0
+            if has_free_tier:
+                return 0.80
+            return 0.2
+
+        if profile.budget_tier == BudgetTier.HIGH_UNLIMITED:
+            return 0.95
+
+        if isinstance(cost_val, (int, float)) and profile.budget_usd:
+            if cost_val <= profile.budget_usd:
+                return 0.90
+            overrun = cost_val / profile.budget_usd
+            return max(0.1, round(1.0 / (1.0 + overrun), 4))
+
+        return 0.75
+
+    # --- 5. Scale Match ---
+    @classmethod
+    def _calc_scale_match(cls, entry: dict[str, Any], profile: ProjectProfile) -> float:
+        """Assess candidate scalability for expected user volume and document counts."""
+        tech_name = str(entry.get("technology") or entry.get("name") or "").lower()
+        entry_text = str(entry.get("text") or "").lower()
+
+        high_scale_techs = {"milvus", "qdrant", "pinecone", "vllm", "tgi", "sglang", "triton", "kubernetes"}
+
+        if profile.project_scale in (ScaleTier.LARGE, ScaleTier.ENTERPRISE) or profile.document_scale == DocScaleTier.MASSIVE:
+            if any(t in tech_name for t in high_scale_techs) or "scale" in entry_text or "distributed" in entry_text:
+                return 1.0
+            return 0.35
+
+        if profile.project_scale == ScaleTier.MEDIUM:
+            return 0.85
+
+        if any(t in tech_name for t in ("chroma", "faiss", "ollama", "llama_cpp")):
+            return 1.0
+        return 0.80
+
+    # --- 6. Priority Match ---
+    @classmethod
+    def _calc_priority_match(cls, entry: dict[str, Any], profile: ProjectProfile) -> float:
+        """Align candidate features with primary optimization goal (cost, latency, quality, balanced)."""
+        p = profile.priority
+        text = str(entry.get("text") or "").lower()
+        is_open_source = entry.get("open_source") is True or "open_source" in text
+
+        if p == Priority.COST:
+            return 1.0 if is_open_source else 0.4
+
+        if p == Priority.LATENCY:
+            latency = entry.get("latency_ms") or entry.get("latency")
+            if isinstance(latency, (int, float)) and latency < 100:
+                return 1.0
+            if any(k in text for k in ("fast", "latency", "c++", "rust", "deepseek", "bge")):
+                return 0.9
+            return 0.5
+
+        if p == Priority.QUALITY:
+            quality = entry.get("quality_score") or entry.get("benchmark_score")
+            if isinstance(quality, (int, float)) and quality > 0.8:
+                return 1.0
+            if any(k in text for k in ("claude", "gpt", "pinecone", "qdrant", "sota", "quality")):
+                return 0.95
+            return 0.6
+
+        return 0.8
+
+    # --- 7. Preferred LLM Match ---
+    @classmethod
+    def _calc_preferred_llm_match(cls, entry: dict[str, Any], profile: ProjectProfile) -> float:
+        """Evaluate integration compatibility with user's preferred foundation model."""
+        if not profile.preferred_llm:
+            return 0.7
+
+        pref = profile.preferred_llm.strip().lower()
+        tech_name = str(entry.get("technology") or entry.get("name") or "").lower()
+        text = str(entry.get("text") or "").lower()
+
+        if pref in tech_name or pref in text:
+            return 1.0
+        return 0.4
+
+    # --- 8. First-Class Constraint Match ---
+    @classmethod
+    def _calc_constraint_match(cls, entry: dict[str, Any], profile: ProjectProfile) -> float:
+        """Treat constraints as first-class ranking signals with hard penalties and rewards."""
+        tech_name = str(entry.get("technology") or entry.get("name") or "").lower()
+        is_open_source = entry.get("open_source") is True or "open_source" in str(entry.get("path") or "").lower()
+
+        score = 1.0
+
+        if profile.requires_open_source:
+            if is_open_source or any(t in tech_name for t in ("chroma", "faiss", "qdrant", "deepseek", "ollama", "bge", "ragas", "docker")):
+                score += 0.15
+            else:
+                score -= 0.55
+
+        if profile.requires_local_execution:
+            if is_open_source or any(t in tech_name for t in ("chroma", "faiss", "ollama", "docker", "llama_cpp")):
+                score += 0.20
+            else:
+                score -= 0.45
+
+        if profile.requires_citations:
+            if any(t in tech_name for t in ("ragas", "qdrant", "llamaindex", "retriever", "bge")):
+                score += 0.25
+            else:
+                score -= 0.20
+
+        if profile.requires_enterprise_security:
+            if any(t in tech_name for t in ("pinecone", "claude", "aws", "azure", "kubernetes", "milvus")):
+                score += 0.25
+            else:
+                score -= 0.25
+
+        return min(1.0, max(0.0, round(score, 4)))
+
+    # --- 9. Metadata Quality ---
+    @classmethod
+    def _calc_metadata_quality(cls, entry: dict[str, Any]) -> float:
+        """Calculate metadata completeness score based on presence of enriched metadata fields."""
+        fields = [
+            "technology_id", "category", "organization", "license",
+            "priority", "update_frequency", "url", "source"
+        ]
+        present = sum(1 for f in fields if entry.get(f) is not None)
+        return round(present / len(fields), 4)
+
+    # --- 10. Documentation Quality ---
+    @classmethod
+    def _calc_documentation_quality(cls, entry: dict[str, Any]) -> float:
+        """Assess documentation depth and source authority."""
+        score = 0.5
+        if entry.get("url") and str(entry["url"]).startswith("http"):
+            score += 0.25
+        source = str(entry.get("source") or "").lower()
+        if source in ("documentation", "research_papers", "official_docs"):
+            score += 0.25
+        elif source == "github_repository":
+            score += 0.15
+        return min(1.0, round(score, 4))
+
+    @classmethod
+    def calculate_score(
+        cls, entry: dict[str, Any], target: Union[ProjectProfile, DecisionRequest]
+    ) -> float:
+        """Compute 10 sub-scores and weighted composite score for candidate using ProjectProfile."""
+        if isinstance(target, DecisionRequest):
+            profile = RequirementAnalyzer.analyze(target)
         else:
-            final_score = _DEFAULT_NEUTRAL_SCORE
+            profile = target
 
-        return min(1.0, max(0.0, round(final_score, 4)))
+        subscores: dict[str, float] = {
+            "semantic_similarity": cls._calc_semantic_similarity(entry, profile),
+            "domain_match": cls._calc_domain_match(entry, profile),
+            "deployment_match": cls._calc_deployment_match(entry, profile),
+            "budget_match": cls._calc_budget_match(entry, profile),
+            "scale_match": cls._calc_scale_match(entry, profile),
+            "priority_match": cls._calc_priority_match(entry, profile),
+            "preferred_llm_match": cls._calc_preferred_llm_match(entry, profile),
+            "constraint_match": cls._calc_constraint_match(entry, profile),
+            "metadata_quality": cls._calc_metadata_quality(entry),
+            "documentation_quality": cls._calc_documentation_quality(entry),
+        }
+
+        category = str(entry.get("category") or "").lower()
+
+        # Increase deployment_match weight to 35% specifically for 'deployment' category candidates
+        if category == "deployment":
+            weights = {
+                "semantic_similarity": 0.10,
+                "domain_match": 0.10,
+                "deployment_match": 0.35,  # 35% weight for deployment category!
+                "budget_match": 0.10 if profile.budget_tier == BudgetTier.FREE_LOW else 0.05,
+                "scale_match": 0.10 if profile.project_scale in (ScaleTier.LARGE, ScaleTier.ENTERPRISE) else 0.05,
+                "priority_match": 0.10,
+                "preferred_llm_match": 0.0,
+                "constraint_match": 0.15 if profile.constraints else 0.05,
+                "metadata_quality": 0.025,
+                "documentation_quality": 0.025,
+            }
+        else:
+            weights = {
+                "semantic_similarity": 0.10,
+                "domain_match": 0.15,
+                "deployment_match": 0.15,
+                "budget_match": 0.15 if profile.budget_tier == BudgetTier.FREE_LOW else 0.05,
+                "scale_match": 0.15 if profile.project_scale in (ScaleTier.LARGE, ScaleTier.ENTERPRISE) else 0.05,
+                "priority_match": 0.10,
+                "preferred_llm_match": 0.10 if profile.preferred_llm else 0.0,
+                "constraint_match": 0.20 if profile.constraints else 0.05,
+                "metadata_quality": 0.05,
+                "documentation_quality": 0.05,
+            }
+
+        weighted_sum = sum(subscores[k] * weights[k] for k in subscores)
+        weight_sum = sum(weights.values())
+
+        final_score = round(weighted_sum / weight_sum, 4) if weight_sum > 0 else _DEFAULT_NEUTRAL_SCORE
+        final_score = min(1.0, max(0.0, final_score))
+
+        entry["subscores"] = subscores
+        entry["score"] = final_score
+        return final_score
 
     def score_candidates(
         self,
-        request: DecisionRequest,
+        request: Union[ProjectProfile, DecisionRequest],
         candidates: dict[str, list[dict[str, Any]]],
     ) -> dict[str, list[dict[str, Any]]]:
-        """Score candidate technology entities and return candidates sorted by score descending."""
+        """Score candidate technology entities and return candidates sorted by composite score descending."""
+        profile = RequirementAnalyzer.analyze(request) if isinstance(request, DecisionRequest) else request
         scored_candidates: dict[str, list[dict[str, Any]]] = {}
 
         for category, items in candidates.items():
@@ -274,7 +359,7 @@ class ScoringEngine:
 
             for item in items:
                 item_copy = item.copy()
-                item_copy["score"] = self.calculate_score(item_copy, request.priority)
+                self.calculate_score(item_copy, profile)
                 scored_items.append(item_copy)
 
             scored_items.sort(key=lambda x: x.get("score", 0.0), reverse=True)

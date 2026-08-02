@@ -1,0 +1,57 @@
+{
+  "technology": "Vertex AI",
+  "category": "deployment",
+  "description": "Gemini Enterprise Agent Platform\n\n\n\n\n\n\nStay organized with collections\n\n\n\nSave and categorize content based on your preferences.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nGemini Enterprise Agent Platform is our open and comprehensive platform that empowers\nbusinesses to rapidly build, scale, govern and optimize enterprise-grade agents grounded\nin your enterprise data. It provides the full-stack foundation and extensive developer\nchoice you need to transform your applications and workflows into powerful, reliable\nage",
+  "aliases": [],
+  "tags": [
+    "agent",
+    "agents",
+    "platform",
+    "build",
+    "scale",
+    "optimize",
+    "enterprise",
+    "complex",
+    "gemini",
+    "govern",
+    "development",
+    "designed",
+    "building",
+    "manage",
+    "monitor"
+  ],
+  "performance": {
+    "quality_score": null,
+    "benchmark_score": null,
+    "latency_ms": null,
+    "throughput": null
+  },
+  "pricing": {
+    "open_source": null,
+    "free_tier": null,
+    "monthly_cost": null,
+    "license": null
+  },
+  "adoption": {
+    "github_stars": null,
+    "monthly_downloads": null,
+    "active_users": null,
+    "enterprise_users": null,
+    "community_score": null
+  },
+  "capabilities": {
+    "supported_deployments": [],
+    "supported_languages": [],
+    "features": [
+      "agents",
+      "python",
+      "rag",
+      "vector search"
+    ]
+  },
+  "recommendation": {
+    "score": null,
+    "confidence": null,
+    "reason": null
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "technology": "BGE Reranker",
+  "category": "rerankers",
+  "description": "News | Installation | Quick Start | Community | Projects | Model List | Contributor | Citation | License\n-\n3/6/2025: 🔥🔥 Introduce BGE-VL (HF repo), State-Of-The-Art multimodal embedding models to support Any visual search applications (everything, including text-to-image, image-to-text, image&prompt-to-image, text-to-image&text, and more)! They are released under the MIT license and are completely free for both academic and commercial use. We also release MegaPairs (repo, paper), a massive synth",
+  "aliases": [],
+  "tags": [
+    "model",
+    "baai",
+    "inputs",
+    "reranker",
+    "true",
+    "panda",
+    "scores",
+    "tokenizer",
+    "embedding",
+    "what",
+    "models",
+    "query",
+    "chinese",
+    "multilingual",
+    "finetune"
+  ],
+  "performance": {
+    "quality_score": null,
+    "benchmark_score": null,
+    "latency_ms": null,
+    "throughput": null
+  },
+  "pricing": {
+    "open_source": null,
+    "free_tier": null,
+    "monthly_cost": null,
+    "license": "MIT"
+  },
+  "adoption": {
+    "github_stars": null,
+    "monthly_downloads": null,
+    "active_users": null,
+    "enterprise_users": null,
+    "community_score": null
+  },
+  "capabilities": {
+    "supported_deployments": [],
+    "supported_languages": [],
+    "features": [
+      "embeddings",
+      "gpu",
+      "multimodal",
+      "rag"
+    ]
+  },
+  "recommendation": {
+    "score": null,
+    "confidence": null,
+    "reason": null
+  }
+}

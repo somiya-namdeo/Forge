@@ -1,0 +1,63 @@
+{
+  "technology": "Weaviate",
+  "category": "vectordbs",
+  "description": "APIs\nWeaviate provides multiple Application Programming Interfaces (APIs) to interact with the database, manage instances, and perform searches. Weaviate exposes three main APIs:\n-\nRESTful API: Enables almost complete management of a Weaviate instance.\n- Includes operations for managing collections (creating, reading, updating, deleting collections and their definitions), performing basic CRUD (Create, Read, Update, Delete) operations on individual data objects, checking node status, backups, an",
+  "aliases": [],
+  "tags": [
+    "weaviate",
+    "dirkkul",
+    "search",
+    "lsmkv",
+    "perf",
+    "amourao",
+    "antas-marcin",
+    "vector",
+    "usage",
+    "etiennedi",
+    "data",
+    "inverted",
+    "moogacs",
+    "none",
+    "test"
+  ],
+  "performance": {
+    "quality_score": null,
+    "benchmark_score": null,
+    "latency_ms": null,
+    "throughput": null
+  },
+  "pricing": {
+    "open_source": null,
+    "free_tier": null,
+    "monthly_cost": null,
+    "license": "BSD-3-Clause"
+  },
+  "adoption": {
+    "github_stars": null,
+    "monthly_downloads": null,
+    "active_users": null,
+    "enterprise_users": null,
+    "community_score": null
+  },
+  "capabilities": {
+    "supported_deployments": [],
+    "supported_languages": [],
+    "features": [
+      "agents",
+      "docker",
+      "embeddings",
+      "python",
+      "quantization",
+      "rag",
+      "reranking",
+      "rest api",
+      "streaming",
+      "vector search"
+    ]
+  },
+  "recommendation": {
+    "score": null,
+    "confidence": null,
+    "reason": null
+  }
+}

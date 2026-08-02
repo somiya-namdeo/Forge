@@ -1,0 +1,59 @@
+{
+  "technology": "NVIDIA Triton Inference Server",
+  "category": "deployment",
+  "description": "Warning\nYou are currently on the main branch which tracks under-development progress\ntowards the next release. The current release is version 2.71.0\nand corresponds to the 26.07 container release on NVIDIA GPU Cloud (NGC).\nTriton Inference Server is an open source inference serving software that streamlines AI inferencing. Triton enables teams to deploy any AI model from multiple deep learning and machine learning frameworks, including TensorRT, PyTorch, ONNX, OpenVINO, Python, RAPIDS FIL, and m",
+  "aliases": [],
+  "tags": [
+    "triton",
+    "inference",
+    "server",
+    "model",
+    "nvidia",
+    "models",
+    "supports",
+    "backends",
+    "client",
+    "multiple",
+    "learning",
+    "custom",
+    "examples",
+    "python",
+    "backend"
+  ],
+  "performance": {
+    "quality_score": null,
+    "benchmark_score": null,
+    "latency_ms": null,
+    "throughput": null
+  },
+  "pricing": {
+    "open_source": null,
+    "free_tier": null,
+    "monthly_cost": null,
+    "license": "BSD-3-Clause"
+  },
+  "adoption": {
+    "github_stars": null,
+    "monthly_downloads": null,
+    "active_users": null,
+    "enterprise_users": null,
+    "community_score": null
+  },
+  "capabilities": {
+    "supported_deployments": [],
+    "supported_languages": [],
+    "features": [
+      "cpu",
+      "docker",
+      "gpu",
+      "kubernetes",
+      "python",
+      "streaming"
+    ]
+  },
+  "recommendation": {
+    "score": null,
+    "confidence": null,
+    "reason": null
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "technology": "KServe",
+  "category": "deployment",
+  "description": "KServe is a standardized distributed generative and predictive AI inference platform for scalable, multi-framework deployment on Kubernetes.\nKServe is being used by many organizations and is a Cloud Native Computing Foundation (CNCF) incubating project.\nFor more details, visit the KServe website.\nSingle platform that unifies Generative and Predictive AI inference on Kubernetes. Simple enough for quick deployments, yet powerful enough to handle enterprise-scale AI workloads with advanced features",
+  "aliases": [],
+  "tags": [
+    "kserve",
+    "model",
+    "autoscaling",
+    "support",
+    "installation",
+    "predictive",
+    "inference",
+    "advanced",
+    "generative",
+    "deployment",
+    "optimized",
+    "models",
+    "caching",
+    "scale-to-zero",
+    "platform"
+  ],
+  "performance": {
+    "quality_score": null,
+    "benchmark_score": null,
+    "latency_ms": null,
+    "throughput": null
+  },
+  "pricing": {
+    "open_source": null,
+    "free_tier": null,
+    "monthly_cost": null,
+    "license": "Apache-2.0"
+  },
+  "adoption": {
+    "github_stars": null,
+    "monthly_downloads": null,
+    "active_users": null,
+    "enterprise_users": null,
+    "community_score": null
+  },
+  "capabilities": {
+    "supported_deployments": [],
+    "supported_languages": [],
+    "features": [
+      "cpu",
+      "gpu",
+      "kubernetes"
+    ]
+  },
+  "recommendation": {
+    "score": null,
+    "confidence": null,
+    "reason": null
+  }
+}

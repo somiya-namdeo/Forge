@@ -1,0 +1,56 @@
+{
+  "technology": "LangSmith",
+  "category": "evaluation",
+  "description": "This repository contains the Python and Javascript SDK's for interacting with the LangSmith platform. Please see LangSmith Documentation for documentation about using the LangSmith platform and the client SDK.\nLangSmith helps your team debug, evaluate, and monitor your language models and intelligent agents. It works with any LLM Application, including a native integration with the LangChain Python and LangChain JS open source libraries.\nLangSmith is developed and maintained by LangChain, the co",
+  "aliases": [],
+  "tags": [
+    "langsmith",
+    "openai",
+    "import",
+    "client",
+    "export",
+    "then",
+    "tracing",
+    "python",
+    "langchain",
+    "traceable",
+    "wrap",
+    "chat",
+    "role",
+    "content",
+    "model"
+  ],
+  "performance": {
+    "quality_score": null,
+    "benchmark_score": null,
+    "latency_ms": null,
+    "throughput": null
+  },
+  "pricing": {
+    "open_source": null,
+    "free_tier": null,
+    "monthly_cost": null,
+    "license": "MIT"
+  },
+  "adoption": {
+    "github_stars": null,
+    "monthly_downloads": null,
+    "active_users": null,
+    "enterprise_users": null,
+    "community_score": null
+  },
+  "capabilities": {
+    "supported_deployments": [],
+    "supported_languages": [],
+    "features": [
+      "agents",
+      "javascript",
+      "python"
+    ]
+  },
+  "recommendation": {
+    "score": null,
+    "confidence": null,
+    "reason": null
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "technology": "DSPy",
+  "category": "prompting",
+  "description": "Documentation: DSPy Docs\nDSPy is the framework for programming—rather than prompting—language models. It allows you to iterate fast on building modular AI systems and offers algorithms for optimizing their prompts and weights, whether you're building simple classifiers, sophisticated RAG pipelines, or Agent loops.\nDSPy stands for Declarative Self-improving Python. Instead of brittle prompts, you write compositional Python code and use DSPy to teach your LM to deliver high-quality outputs. Learn ",
+  "aliases": [],
+  "tags": [
+    "dspy",
+    "language",
+    "models",
+    "pipelines",
+    "model",
+    "docs",
+    "please",
+    "looking",
+    "understand",
+    "learning",
+    "documentation",
+    "framework",
+    "prompts",
+    "declarative",
+    "self-improving"
+  ],
+  "performance": {
+    "quality_score": null,
+    "benchmark_score": null,
+    "latency_ms": null,
+    "throughput": null
+  },
+  "pricing": {
+    "open_source": null,
+    "free_tier": null,
+    "monthly_cost": null,
+    "license": "MIT"
+  },
+  "adoption": {
+    "github_stars": null,
+    "monthly_downloads": null,
+    "active_users": null,
+    "enterprise_users": null,
+    "community_score": null
+  },
+  "capabilities": {
+    "supported_deployments": [],
+    "supported_languages": [],
+    "features": [
+      "python",
+      "rag"
+    ]
+  },
+  "recommendation": {
+    "score": null,
+    "confidence": null,
+    "reason": null
+  }
+}

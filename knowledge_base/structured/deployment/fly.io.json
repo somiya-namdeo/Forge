@@ -1,0 +1,52 @@
+{
+  "technology": "Fly.io",
+  "category": "deployment",
+  "description": "Fly.io developer documentation\nReady to get started?\nStep 1: Install flyctl\nbrew install flyctl\nNot using brew? Check out the installation guide\nStep 2: Run fly launch\n\nExplore Fly.io by features\nCould you use more help?\nOur Community forum and Support team have the answers.\nCommunity Forum\n- Free to use\n- Discuss Fly.io with other users\n- See new Fly.io developments first\n- Searchable backlog\n- Quick answers to common issues\nSupport\n- Plans start at $29/month\n- Guaranteed response time\n- Run by",
+  "aliases": [],
+  "tags": [
+    "support",
+    "step",
+    "install",
+    "flyctl",
+    "brew",
+    "community",
+    "forum",
+    "answers",
+    "developer",
+    "documentation",
+    "ready",
+    "started",
+    "check",
+    "installation",
+    "guide"
+  ],
+  "performance": {
+    "quality_score": null,
+    "benchmark_score": null,
+    "latency_ms": null,
+    "throughput": null
+  },
+  "pricing": {
+    "open_source": null,
+    "free_tier": null,
+    "monthly_cost": null,
+    "license": null
+  },
+  "adoption": {
+    "github_stars": null,
+    "monthly_downloads": null,
+    "active_users": null,
+    "enterprise_users": null,
+    "community_score": null
+  },
+  "capabilities": {
+    "supported_deployments": [],
+    "supported_languages": [],
+    "features": []
+  },
+  "recommendation": {
+    "score": null,
+    "confidence": null,
+    "reason": null
+  }
+}

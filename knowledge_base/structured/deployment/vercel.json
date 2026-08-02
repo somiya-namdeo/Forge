@@ -1,0 +1,54 @@
+{
+  "technology": "Vercel",
+  "category": "deployment",
+  "description": "Ship anything with Vercel\nimport { generateText } from 'ai';\n\nconst { text } = await generateText({\nmodel: 'anthropic/claude-opus-4.7',\nprompt: 'What is the capital of France?',\n});import os\nfrom openai import OpenAI\n\nclient = OpenAI(\napi_key=os.getenv('AI_GATEWAY_API_KEY'),\nbase_url='https://ai-gateway.vercel.sh/v1'\n)\nresponse = client.chat.completions.create(\nmodel='openai/gpt-5.5',\nmessages=[{'role': 'user', 'content': 'Why is the sky blue?'}]\n)curl -X POST \"https://ai-gateway.vercel.sh/v1/ch",
+  "aliases": [],
+  "tags": [
+    "vercel",
+    "openai",
+    "tools",
+    "environments",
+    "production",
+    "following",
+    "roll",
+    "deployments",
+    "import",
+    "model",
+    "gateway",
+    "content",
+    "application",
+    "preview",
+    "build"
+  ],
+  "performance": {
+    "quality_score": null,
+    "benchmark_score": null,
+    "latency_ms": null,
+    "throughput": null
+  },
+  "pricing": {
+    "open_source": null,
+    "free_tier": null,
+    "monthly_cost": null,
+    "license": null
+  },
+  "adoption": {
+    "github_stars": null,
+    "monthly_downloads": null,
+    "active_users": null,
+    "enterprise_users": null,
+    "community_score": null
+  },
+  "capabilities": {
+    "supported_deployments": [],
+    "supported_languages": [],
+    "features": [
+      "agents"
+    ]
+  },
+  "recommendation": {
+    "score": null,
+    "confidence": null,
+    "reason": null
+  }
+}

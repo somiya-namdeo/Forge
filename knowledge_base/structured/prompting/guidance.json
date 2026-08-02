@@ -1,0 +1,56 @@
+{
+  "technology": "Guidance",
+  "category": "prompting",
+  "description": "Guidance is an efficient programming paradigm for steering language models. With Guidance, you can control how output is structured and get high-quality output for your use case—while reducing latency and cost vs. conventional prompting or fine-tuning. It allows users to constrain generation (e.g. with regex and CFGs) as well as to interleave control (conditionals, loops, tool use) and generation seamlessly.\nGuidance is available through PyPI and supports a variety of backends (Transformers, lla",
+  "aliases": [],
+  "tags": [
+    "guidance",
+    "model",
+    "html",
+    "assistant",
+    "system",
+    "name",
+    "user",
+    "language",
+    "text",
+    "answer",
+    "grammar",
+    "import",
+    "choice",
+    "json",
+    "select"
+  ],
+  "performance": {
+    "quality_score": null,
+    "benchmark_score": null,
+    "latency_ms": null,
+    "throughput": null
+  },
+  "pricing": {
+    "open_source": null,
+    "free_tier": null,
+    "monthly_cost": null,
+    "license": "MIT"
+  },
+  "adoption": {
+    "github_stars": null,
+    "monthly_downloads": null,
+    "active_users": null,
+    "enterprise_users": null,
+    "community_score": null
+  },
+  "capabilities": {
+    "supported_deployments": [],
+    "supported_languages": [],
+    "features": [
+      "gpu",
+      "python",
+      "rag"
+    ]
+  },
+  "recommendation": {
+    "score": null,
+    "confidence": null,
+    "reason": null
+  }
+}

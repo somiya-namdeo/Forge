@@ -1,0 +1,64 @@
+{
+  "technology": "Milvus",
+  "category": "vectordbs",
+  "description": "🐦 Milvus is a high-performance vector database built for scale. It powers AI applications by efficiently organizing and searching vast amounts of unstructured data, such as text, images, and multi-modal information.\n🧑💻 Written in Go and C++, Milvus implements hardware acceleration for CPU/GPU to achieve best-in-class vector search performance. Thanks to its fully-distributed and K8s-native architecture, Milvus can scale horizontally, handle tens of thousands of search queries on billions of vect",
+  "aliases": [],
+  "tags": [
+    "milvus",
+    "search",
+    "vector",
+    "fixed",
+    "issue",
+    "data",
+    "version",
+    "could",
+    "collection",
+    "query",
+    "added",
+    "fields",
+    "release",
+    "field",
+    "client"
+  ],
+  "performance": {
+    "quality_score": null,
+    "benchmark_score": null,
+    "latency_ms": null,
+    "throughput": null
+  },
+  "pricing": {
+    "open_source": null,
+    "free_tier": null,
+    "monthly_cost": null,
+    "license": "Apache 2.0"
+  },
+  "adoption": {
+    "github_stars": null,
+    "monthly_downloads": null,
+    "active_users": null,
+    "enterprise_users": null,
+    "community_score": null
+  },
+  "capabilities": {
+    "supported_deployments": [],
+    "supported_languages": [],
+    "features": [
+      "cpu",
+      "docker",
+      "embeddings",
+      "gpu",
+      "multimodal",
+      "python",
+      "quantization",
+      "rag",
+      "reranking",
+      "streaming",
+      "vector search"
+    ]
+  },
+  "recommendation": {
+    "score": null,
+    "confidence": null,
+    "reason": null
+  }
+}

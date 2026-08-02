@@ -1,0 +1,57 @@
+{
+  "technology": "DeepSeek",
+  "category": "llms",
+  "description": "Your First API Call\nThe DeepSeek API uses an API format compatible with OpenAI/Anthropic. By modifying the configuration, you can use the OpenAI/Anthropic SDK or softwares compatible with the OpenAI/Anthropic API to access the DeepSeek API.\n| PARAM | VALUE |\n|---|---|\n| base_url (OpenAI) | https://api.deepseek.com |\n| base_url (Anthropic) | https://api.deepseek.com/anthropic |\n| api_key | apply for an API key |\n| model(1) | deepseek-v4-flashdeepseek-v4-pro |\n(1) The deepseek-v4-flash model has b",
+  "aliases": [],
+  "tags": [
+    "deepseek-v3",
+    "deepseek",
+    "shot",
+    "model",
+    "training",
+    "bf16",
+    "openai",
+    "weights",
+    "performance",
+    "what",
+    "inference",
+    "please",
+    "models",
+    "chat",
+    "supports"
+  ],
+  "performance": {
+    "quality_score": null,
+    "benchmark_score": null,
+    "latency_ms": null,
+    "throughput": null
+  },
+  "pricing": {
+    "open_source": null,
+    "free_tier": null,
+    "monthly_cost": null,
+    "license": "MIT"
+  },
+  "adoption": {
+    "github_stars": null,
+    "monthly_downloads": null,
+    "active_users": null,
+    "enterprise_users": null,
+    "community_score": null
+  },
+  "capabilities": {
+    "supported_deployments": [],
+    "supported_languages": [],
+    "features": [
+      "gpu",
+      "python",
+      "quantization",
+      "rag"
+    ]
+  },
+  "recommendation": {
+    "score": null,
+    "confidence": null,
+    "reason": null
+  }
+}

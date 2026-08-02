@@ -1,0 +1,57 @@
+{
+  "technology": "Dense Retrieval",
+  "category": "retrieval",
+  "description": "Dense Passage Retrieval (DPR) - is a set of tools and models for state-of-the-art open-domain Q&A research.\nIt is based on the following paper:\nVladimir Karpukhin, Barlas Oguz, Sewon Min, Patrick Lewis, Ledell Wu, Sergey Edunov, Danqi Chen, Wen-tau Yih. Dense Passage Retrieval for Open-Domain Question Answering. Proceedings of the 2020 Conference on Empirical Methods in Natural Language Processing (EMNLP), pages 6769–6781, 2020.\nIf you find this work useful, please cite the following paper:\n@inp",
+  "aliases": [],
+  "tags": [
+    "data",
+    "train",
+    "file",
+    "retriever",
+    "model",
+    "passages",
+    "path",
+    "files",
+    "python",
+    "results",
+    "output",
+    "resource",
+    "training",
+    "checkpoint",
+    "download"
+  ],
+  "performance": {
+    "quality_score": null,
+    "benchmark_score": null,
+    "latency_ms": null,
+    "throughput": null
+  },
+  "pricing": {
+    "open_source": null,
+    "free_tier": null,
+    "monthly_cost": null,
+    "license": "CC-BY-NC 4.0"
+  },
+  "adoption": {
+    "github_stars": null,
+    "monthly_downloads": null,
+    "active_users": null,
+    "enterprise_users": null,
+    "community_score": null
+  },
+  "capabilities": {
+    "supported_deployments": [],
+    "supported_languages": [],
+    "features": [
+      "embeddings",
+      "gpu",
+      "python",
+      "rag"
+    ]
+  },
+  "recommendation": {
+    "score": null,
+    "confidence": null,
+    "reason": null
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "technology": "Prometheus",
+  "category": "deployment",
+  "description": "Visit prometheus.io for the full documentation, examples and guides.\nPrometheus, a Cloud Native Computing Foundation project, is a systems and service monitoring system. It collects metrics from configured targets at given intervals, evaluates rule expressions, displays the results, and can trigger alerts when specified conditions are observed.\nThe features that distinguish Prometheus from other metrics and monitoring systems are:\n- A multi-dimensional data model (time series defined by metric n",
+  "aliases": [],
+  "tags": [
+    "prometheus",
+    "build",
+    "make",
+    "data",
+    "time",
+    "series",
+    "tags",
+    "version",
+    "service",
+    "metrics",
+    "support",
+    "static",
+    "file",
+    "assets",
+    "library"
+  ],
+  "performance": {
+    "quality_score": null,
+    "benchmark_score": null,
+    "latency_ms": null,
+    "throughput": null
+  },
+  "pricing": {
+    "open_source": null,
+    "free_tier": null,
+    "monthly_cost": null,
+    "license": "Apache-2.0"
+  },
+  "adoption": {
+    "github_stars": null,
+    "monthly_downloads": null,
+    "active_users": null,
+    "enterprise_users": null,
+    "community_score": null
+  },
+  "capabilities": {
+    "supported_deployments": [],
+    "supported_languages": [],
+    "features": [
+      "docker",
+      "kubernetes",
+      "rag"
+    ]
+  },
+  "recommendation": {
+    "score": null,
+    "confidence": null,
+    "reason": null
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "technology": "ReAct",
+  "category": "prompting",
+  "description": "GPT-3 prompting code for ICLR 2023 paper ReAct: Synergizing Reasoning and Acting in Language Models.\nTo use ReAct for more tasks, consider trying LangChain's zero-shot ReAct Agent.\nYou need to first have an OpenAI API key and store it in the environment variable OPENAI_API_KEY (see here).\nPackage requirement: openai, and install alfworld following instructions here.\nRun {hotpotqa,fever,alfworld,webshop}.ipynb. As HotpotQA and FEVER have large validation sets, we only run 500 random examples (see",
+  "aliases": [],
+  "tags": [
+    "what",
+    "reasoning",
+    "react",
+    "language",
+    "acting",
+    "models",
+    "gpt-3",
+    "code",
+    "paper",
+    "synergizing",
+    "tasks",
+    "alfworld",
+    "hotpotqa",
+    "fever",
+    "arxiv"
+  ],
+  "performance": {
+    "quality_score": null,
+    "benchmark_score": null,
+    "latency_ms": null,
+    "throughput": null
+  },
+  "pricing": {
+    "open_source": null,
+    "free_tier": null,
+    "monthly_cost": null,
+    "license": "MIT"
+  },
+  "adoption": {
+    "github_stars": null,
+    "monthly_downloads": null,
+    "active_users": null,
+    "enterprise_users": null,
+    "community_score": null
+  },
+  "capabilities": {
+    "supported_deployments": [],
+    "supported_languages": [],
+    "features": []
+  },
+  "recommendation": {
+    "score": null,
+    "confidence": null,
+    "reason": null
+  }
+}

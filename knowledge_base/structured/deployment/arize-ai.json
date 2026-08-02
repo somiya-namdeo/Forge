@@ -1,0 +1,55 @@
+{
+  "technology": "Arize AI",
+  "category": "deployment",
+  "description": "- Observe\n- Evaluate\n- Improve\nNew to Arize AX?\nStart here. Instrument your agent, view your first trace, and create your first eval.\nThe Arize AX workflow\n1\nInstrument\nCapture your first trace. Instrumentation adds tracking to your agents to capture traces: step-by-step records of agent activity (inputs, outputs, invoked tools, and costs). After instrumentation, your application streams traces into Arize AX to lay the foundation for measurable improvement.\nUsing a coding agent? Start with Arize",
+  "aliases": [],
+  "tags": [
+    "arize",
+    "agent",
+    "traces",
+    "coding",
+    "agents",
+    "install",
+    "skill",
+    "instrument",
+    "skills",
+    "steps",
+    "surface",
+    "code",
+    "setup",
+    "manual",
+    "signal"
+  ],
+  "performance": {
+    "quality_score": null,
+    "benchmark_score": null,
+    "latency_ms": null,
+    "throughput": null
+  },
+  "pricing": {
+    "open_source": null,
+    "free_tier": null,
+    "monthly_cost": null,
+    "license": null
+  },
+  "adoption": {
+    "github_stars": null,
+    "monthly_downloads": null,
+    "active_users": null,
+    "enterprise_users": null,
+    "community_score": null
+  },
+  "capabilities": {
+    "supported_deployments": [],
+    "supported_languages": [],
+    "features": [
+      "agents",
+      "rag"
+    ]
+  },
+  "recommendation": {
+    "score": null,
+    "confidence": null,
+    "reason": null
+  }
+}

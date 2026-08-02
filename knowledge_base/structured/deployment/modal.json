@@ -1,0 +1,52 @@
+{
+  "technology": "Modal",
+  "category": "deployment",
+  "description": "Modal provides a serverless cloud for engineers and researchers who want\nto build compute-intensive applications without thinking about\ninfrastructure.\n\nRun generative AI models, large-scale batch workflows, job queues, and more, all faster than ever before.\nGuide\nEverything you need to know to run code on Modal. Dive deep into all of our features and best practices.\nExamples\nPowerful applications built with Modal. Explore guided starting points for your use case.\nReference\nTechnical information",
+  "aliases": [],
+  "tags": [
+    "modal",
+    "serverless",
+    "cloud",
+    "applications",
+    "provides",
+    "engineers",
+    "researchers",
+    "want",
+    "build",
+    "compute-intensive",
+    "without",
+    "thinking",
+    "infrastructure",
+    "generative",
+    "models"
+  ],
+  "performance": {
+    "quality_score": null,
+    "benchmark_score": null,
+    "latency_ms": null,
+    "throughput": null
+  },
+  "pricing": {
+    "open_source": null,
+    "free_tier": null,
+    "monthly_cost": null,
+    "license": null
+  },
+  "adoption": {
+    "github_stars": null,
+    "monthly_downloads": null,
+    "active_users": null,
+    "enterprise_users": null,
+    "community_score": null
+  },
+  "capabilities": {
+    "supported_deployments": [],
+    "supported_languages": [],
+    "features": []
+  },
+  "recommendation": {
+    "score": null,
+    "confidence": null,
+    "reason": null
+  }
+}

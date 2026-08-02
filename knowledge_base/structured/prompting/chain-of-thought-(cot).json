@@ -1,0 +1,52 @@
+{
+  "technology": "Chain-of-Thought (CoT)",
+  "category": "prompting",
+  "description": "Computer Science > Computation and Language\n[Submitted on 28 Jan 2022 (v1), last revised 10 Jan 2023 (this version, v6)]\nTitle:Chain-of-Thought Prompting Elicits Reasoning in Large Language Models\nView PDF\nTitle:Chain-of-Thought Prompting Elicits Reasoning in Large Language Models\nView PDF\nAbstract:We explore how generating a chain of thought -- a series of intermediate reasoning steps -- significantly improves the ability of large language models to perform complex reasoning. In particular, we ",
+  "aliases": [],
+  "tags": [
+    "what",
+    "language",
+    "prompting",
+    "reasoning",
+    "large",
+    "models",
+    "chain",
+    "thought",
+    "sciencecast",
+    "influence",
+    "core",
+    "arxivlabs",
+    "view",
+    "citations",
+    "tools"
+  ],
+  "performance": {
+    "quality_score": null,
+    "benchmark_score": null,
+    "latency_ms": null,
+    "throughput": null
+  },
+  "pricing": {
+    "open_source": null,
+    "free_tier": null,
+    "monthly_cost": null,
+    "license": null
+  },
+  "adoption": {
+    "github_stars": null,
+    "monthly_downloads": null,
+    "active_users": null,
+    "enterprise_users": null,
+    "community_score": null
+  },
+  "capabilities": {
+    "supported_deployments": [],
+    "supported_languages": [],
+    "features": []
+  },
+  "recommendation": {
+    "score": null,
+    "confidence": null,
+    "reason": null
+  }
+}

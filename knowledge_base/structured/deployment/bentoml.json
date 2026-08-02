@@ -1,0 +1,62 @@
+{
+  "technology": "BentoML",
+  "category": "deployment",
+  "description": "🍱 Build model inference APIs and multi-model serving systems with any open-source or custom AI models. 👉 Join our forum!\nBentoML is a Python library for building online serving systems optimized for AI apps and model inference.\n- 🍱 Easily build APIs for Any AI/ML Model. Turn any model inference script into a REST API server with just a few lines of code and standard Python type hints.\n- 🐳 Docker Containers made simple. No more dependency hell! Manage your environments, dependencies and model ver",
+  "aliases": [],
+  "tags": [
+    "bentoml",
+    "model",
+    "inference",
+    "deploy",
+    "build",
+    "apis",
+    "python",
+    "models",
+    "code",
+    "summarization",
+    "custom",
+    "docker",
+    "pipeline",
+    "production",
+    "install"
+  ],
+  "performance": {
+    "quality_score": null,
+    "benchmark_score": null,
+    "latency_ms": null,
+    "throughput": null
+  },
+  "pricing": {
+    "open_source": null,
+    "free_tier": null,
+    "monthly_cost": null,
+    "license": "Apache-2.0"
+  },
+  "adoption": {
+    "github_stars": null,
+    "monthly_downloads": null,
+    "active_users": null,
+    "enterprise_users": null,
+    "community_score": null
+  },
+  "capabilities": {
+    "supported_deployments": [],
+    "supported_languages": [],
+    "features": [
+      "cpu",
+      "docker",
+      "embeddings",
+      "function calling",
+      "gpu",
+      "python",
+      "rag",
+      "rest api",
+      "streaming"
+    ]
+  },
+  "recommendation": {
+    "score": null,
+    "confidence": null,
+    "reason": null
+  }
+}

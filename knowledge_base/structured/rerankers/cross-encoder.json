@@ -1,0 +1,59 @@
+{
+  "technology": "Cross-Encoder",
+  "category": "rerankers",
+  "description": "This framework provides an easy method to compute embeddings for accessing, using, and training state-of-the-art embedding and reranker models. It can be used to compute embeddings using Sentence Transformer models (quickstart), to calculate similarity scores using Cross-Encoder (a.k.a. reranker) models (quickstart) or to generate sparse embeddings using Sparse Encoder models (quickstart). This unlocks a wide range of applications, including semantic search, semantic textual similarity, and para",
+  "aliases": [],
+  "tags": [
+    "sentence",
+    "models",
+    "embeddings",
+    "embedding",
+    "model",
+    "training",
+    "cross-encoder",
+    "sparse",
+    "similarity",
+    "cross-encoders",
+    "scores",
+    "encoder",
+    "sentences",
+    "query",
+    "print"
+  ],
+  "performance": {
+    "quality_score": null,
+    "benchmark_score": null,
+    "latency_ms": null,
+    "throughput": null
+  },
+  "pricing": {
+    "open_source": null,
+    "free_tier": null,
+    "monthly_cost": null,
+    "license": "Apache-2.0"
+  },
+  "adoption": {
+    "github_stars": null,
+    "monthly_downloads": null,
+    "active_users": null,
+    "enterprise_users": null,
+    "community_score": null
+  },
+  "capabilities": {
+    "supported_deployments": [],
+    "supported_languages": [],
+    "features": [
+      "cpu",
+      "embeddings",
+      "multimodal",
+      "python",
+      "quantization",
+      "reranking"
+    ]
+  },
+  "recommendation": {
+    "score": null,
+    "confidence": null,
+    "reason": null
+  }
+}

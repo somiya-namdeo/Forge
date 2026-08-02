@@ -1,0 +1,56 @@
+{
+  "technology": "Google Cloud Run",
+  "category": "deployment",
+  "description": "Cloud Run documentation\nCloud Run is a fully managed application platform that lets you run containers that are invocable via requests or events. Cloud Run is serverless: it abstracts away all infrastructure management, so you can focus on what matters most—building great applications.\nStart your proof of concept with $300 in free credit\n- Develop with our latest Generative AI models and tools.\n- Get free usage of 20+ popular products, including Compute Engine and AI APIs.\n- No automatic charges",
+  "aliases": [],
+  "tags": [
+    "cloud",
+    "data",
+    "service",
+    "google",
+    "processing",
+    "application",
+    "learn",
+    "services",
+    "applications",
+    "apis",
+    "tutorial",
+    "running",
+    "backend",
+    "serverless",
+    "images"
+  ],
+  "performance": {
+    "quality_score": null,
+    "benchmark_score": null,
+    "latency_ms": null,
+    "throughput": null
+  },
+  "pricing": {
+    "open_source": null,
+    "free_tier": null,
+    "monthly_cost": null,
+    "license": null
+  },
+  "adoption": {
+    "github_stars": null,
+    "monthly_downloads": null,
+    "active_users": null,
+    "enterprise_users": null,
+    "community_score": null
+  },
+  "capabilities": {
+    "supported_deployments": [],
+    "supported_languages": [],
+    "features": [
+      "gpu",
+      "rag",
+      "rest api"
+    ]
+  },
+  "recommendation": {
+    "score": null,
+    "confidence": null,
+    "reason": null
+  }
+}

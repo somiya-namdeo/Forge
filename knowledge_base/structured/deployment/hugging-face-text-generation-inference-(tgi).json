@@ -1,0 +1,62 @@
+{
+  "technology": "Hugging Face Text Generation Inference (TGI)",
+  "category": "deployment",
+  "description": "Caution\ntext-generation-inference is now in maintenance mode. Going forward, we will accept pull requests for minor bug fixes, documentation improvements and lightweight maintenance tasks.\nTGI has initiated the movement for optimized inference engines to rely on a transformers model architectures. This approach is now adopted by downstream inference engines, which we contribute to and recommend using going forward: vllm, SGLang, as well as local engines with inter-compatibility such as llama.cpp",
+  "aliases": [],
+  "tags": [
+    "inference",
+    "text-generation-inference",
+    "text",
+    "generation",
+    "python",
+    "token",
+    "make",
+    "model",
+    "install",
+    "models",
+    "gpus",
+    "server",
+    "volume",
+    "model-id",
+    "llms"
+  ],
+  "performance": {
+    "quality_score": null,
+    "benchmark_score": null,
+    "latency_ms": null,
+    "throughput": null
+  },
+  "pricing": {
+    "open_source": null,
+    "free_tier": null,
+    "monthly_cost": null,
+    "license": null
+  },
+  "adoption": {
+    "github_stars": null,
+    "monthly_downloads": null,
+    "active_users": null,
+    "enterprise_users": null,
+    "community_score": null
+  },
+  "capabilities": {
+    "supported_deployments": [],
+    "supported_languages": [],
+    "features": [
+      "cpu",
+      "docker",
+      "function calling",
+      "gpu",
+      "kubernetes",
+      "python",
+      "quantization",
+      "rest api",
+      "streaming"
+    ]
+  },
+  "recommendation": {
+    "score": null,
+    "confidence": null,
+    "reason": null
+  }
+}

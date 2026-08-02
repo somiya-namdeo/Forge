@@ -1,0 +1,58 @@
+{
+  "technology": "MLflow Evaluation",
+  "category": "evaluation",
+  "description": "MLflow is the largest open source AI engineering platform for agents, LLMs, and ML models. MLflow enables teams of all sizes to debug, evaluate, monitor, and optimize production-quality AI applications while controlling costs and managing access to models and data. With over 60 million monthly downloads, thousands of organizations rely on MLflow each day to ship AI to production with confidence.\nMLflow's comprehensive feature set for agents and LLM applications includes production-grade observab",
+  "aliases": [],
+  "tags": [
+    "mlflow",
+    "agents",
+    "models",
+    "gateway",
+    "model",
+    "started",
+    "openai",
+    "applications",
+    "evaluation",
+    "agent",
+    "databricks",
+    "please",
+    "costs",
+    "learn",
+    "setup"
+  ],
+  "performance": {
+    "quality_score": null,
+    "benchmark_score": null,
+    "latency_ms": null,
+    "throughput": null
+  },
+  "pricing": {
+    "open_source": null,
+    "free_tier": null,
+    "monthly_cost": null,
+    "license": "Apache-2.0"
+  },
+  "adoption": {
+    "github_stars": null,
+    "monthly_downloads": null,
+    "active_users": null,
+    "enterprise_users": null,
+    "community_score": null
+  },
+  "capabilities": {
+    "supported_deployments": [],
+    "supported_languages": [],
+    "features": [
+      "agents",
+      "docker",
+      "javascript",
+      "kubernetes",
+      "python"
+    ]
+  },
+  "recommendation": {
+    "score": null,
+    "confidence": null,
+    "reason": null
+  }
+}

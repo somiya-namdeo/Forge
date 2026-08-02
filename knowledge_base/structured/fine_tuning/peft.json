@@ -1,0 +1,58 @@
+{
+  "technology": "PEFT",
+  "category": "fine_tuning",
+  "description": "Fine-tuning large pretrained models is often prohibitively costly due to their scale. Parameter-Efficient Fine-Tuning (PEFT) methods enable efficient adaptation of large pretrained models to various downstream applications by only fine-tuning a small number of (extra) model parameters instead of all the model's parameters. This significantly decreases the computational and storage costs. Recent state-of-the-art PEFT techniques achieve performance comparable to fully fine-tuned models.\nPEFT is in",
+  "aliases": [],
+  "tags": [
+    "model",
+    "peft",
+    "models",
+    "training",
+    "adapter",
+    "methods",
+    "lora",
+    "transformers",
+    "inference",
+    "pretrained",
+    "train",
+    "fine-tuning",
+    "learn",
+    "load",
+    "large"
+  ],
+  "performance": {
+    "quality_score": null,
+    "benchmark_score": null,
+    "latency_ms": null,
+    "throughput": null
+  },
+  "pricing": {
+    "open_source": null,
+    "free_tier": null,
+    "monthly_cost": null,
+    "license": "Apache-2.0"
+  },
+  "adoption": {
+    "github_stars": null,
+    "monthly_downloads": null,
+    "active_users": null,
+    "enterprise_users": null,
+    "community_score": null
+  },
+  "capabilities": {
+    "supported_deployments": [],
+    "supported_languages": [],
+    "features": [
+      "cpu",
+      "gpu",
+      "quantization",
+      "rag",
+      "streaming"
+    ]
+  },
+  "recommendation": {
+    "score": null,
+    "confidence": null,
+    "reason": null
+  }
+}

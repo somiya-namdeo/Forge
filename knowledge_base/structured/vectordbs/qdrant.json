@@ -1,0 +1,66 @@
+{
+  "technology": "Qdrant",
+  "category": "vectordbs",
+  "description": "API Reference\nQdrant is a vector database and a semantic search engine. You can use its REST API to develop a production-ready service to store, search, and manage vectors with an additional payload.\nHow does Qdrant work?\n- First, you should create a collection to store all your data.\n- Then upsert data points and enrich them with a custom payload.\n- With a full collection, run a search to find relevant results.\n- Collections can be snapshotted, downloaded and restored.\n- When ready, setup a dis",
+  "aliases": [],
+  "tags": [
+    "qdrant",
+    "search",
+    "vector",
+    "shard",
+    "snapshot",
+    "data",
+    "payload",
+    "collection",
+    "update",
+    "docs",
+    "metrics",
+    "storage",
+    "prevent",
+    "report",
+    "index"
+  ],
+  "performance": {
+    "quality_score": null,
+    "benchmark_score": null,
+    "latency_ms": null,
+    "throughput": null
+  },
+  "pricing": {
+    "open_source": null,
+    "free_tier": null,
+    "monthly_cost": null,
+    "license": "Apache 2.0"
+  },
+  "adoption": {
+    "github_stars": null,
+    "monthly_downloads": null,
+    "active_users": null,
+    "enterprise_users": null,
+    "community_score": null
+  },
+  "capabilities": {
+    "supported_deployments": [],
+    "supported_languages": [],
+    "features": [
+      "agents",
+      "cpu",
+      "docker",
+      "embeddings",
+      "gpu",
+      "multimodal",
+      "python",
+      "quantization",
+      "rag",
+      "reranking",
+      "rest api",
+      "streaming",
+      "vector search"
+    ]
+  },
+  "recommendation": {
+    "score": null,
+    "confidence": null,
+    "reason": null
+  }
+}

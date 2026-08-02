@@ -1,6 +1,6 @@
 {
   "id": "source-weaviate",
-  "category": "vectordb",
+  "category": "vectordbs",
   "name": "Weaviate",
   "organization": "Weaviate",
   "official_documentation": [

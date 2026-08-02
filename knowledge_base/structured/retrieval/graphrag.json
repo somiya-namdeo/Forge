@@ -1,0 +1,54 @@
+{
+  "technology": "GraphRAG",
+  "category": "retrieval",
+  "description": "👉 Microsoft Research Blog Post\n👉 Read the docs\n👉 GraphRAG Arxiv\nThe GraphRAG project is a data pipeline and transformation suite that is designed to extract meaningful, structured data from unstructured text using the power of LLMs.\nTo learn more about GraphRAG and how it can be used to enhance your LLM's ability to reason about your private data, please visit the Microsoft Research Blog Post.\nTo get started with the GraphRAG system we recommend trying the command line quickstart.\nThis repositor",
+  "aliases": [],
+  "tags": [
+    "graphrag",
+    "what",
+    "microsoft",
+    "data",
+    "project",
+    "developing",
+    "trademarks",
+    "logos",
+    "learn",
+    "text",
+    "please",
+    "guidelines",
+    "arxiv",
+    "graph",
+    "approach"
+  ],
+  "performance": {
+    "quality_score": null,
+    "benchmark_score": null,
+    "latency_ms": null,
+    "throughput": null
+  },
+  "pricing": {
+    "open_source": null,
+    "free_tier": null,
+    "monthly_cost": null,
+    "license": "MIT"
+  },
+  "adoption": {
+    "github_stars": null,
+    "monthly_downloads": null,
+    "active_users": null,
+    "enterprise_users": null,
+    "community_score": null
+  },
+  "capabilities": {
+    "supported_deployments": [],
+    "supported_languages": [],
+    "features": [
+      "rag"
+    ]
+  },
+  "recommendation": {
+    "score": null,
+    "confidence": null,
+    "reason": null
+  }
+}

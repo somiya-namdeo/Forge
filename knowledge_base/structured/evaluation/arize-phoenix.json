@@ -1,0 +1,58 @@
+{
+  "technology": "Arize Phoenix",
+  "category": "evaluation",
+  "description": "Phoenix is an open-source AI observability platform designed for experimentation, evaluation, and troubleshooting. It provides:\n- Tracing - Trace your LLM application's runtime using OpenTelemetry-based instrumentation.\n- Evaluation - Leverage LLMs to benchmark your application's performance using response and retrieval evals.\n- Datasets - Create versioned datasets of examples for experimentation, evaluation, and fine-tuning.\n- Experiments - Track and evaluate changes to prompts, LLMs, and retri",
+  "aliases": [],
+  "tags": [
+    "phoenix",
+    "integration",
+    "guide",
+    "arizeai",
+    "agents",
+    "traces",
+    "version",
+    "agent",
+    "code",
+    "package",
+    "openinference",
+    "applications",
+    "server",
+    "claude",
+    "documentation"
+  ],
+  "performance": {
+    "quality_score": null,
+    "benchmark_score": null,
+    "latency_ms": null,
+    "throughput": null
+  },
+  "pricing": {
+    "open_source": null,
+    "free_tier": null,
+    "monthly_cost": null,
+    "license": null
+  },
+  "adoption": {
+    "github_stars": null,
+    "monthly_downloads": null,
+    "active_users": null,
+    "enterprise_users": null,
+    "community_score": null
+  },
+  "capabilities": {
+    "supported_deployments": [],
+    "supported_languages": [],
+    "features": [
+      "agents",
+      "docker",
+      "kubernetes",
+      "python",
+      "rag"
+    ]
+  },
+  "recommendation": {
+    "score": null,
+    "confidence": null,
+    "reason": null
+  }
+}

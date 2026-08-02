@@ -1,0 +1,55 @@
+{
+  "technology": "Docker Compose",
+  "category": "deployment",
+  "description": "Docker Compose is a tool for running multi-container applications on Docker\ndefined using the Compose file format.\nA Compose file is used to define how one or more containers that make up\nyour application are configured.\nOnce you have a Compose file, you can create and start your application with a\nsingle command: docker compose up.\nNote: About Docker Swarm Docker Swarm used to rely on the legacy compose file format but did not adopt the compose specification so is missing some of the recent enh",
+  "aliases": [],
+  "tags": [
+    "compose",
+    "docker",
+    "file",
+    "services",
+    "cli-plugins",
+    "running",
+    "application",
+    "start",
+    "swarm",
+    "copy",
+    "redis",
+    "issue",
+    "define",
+    "single",
+    "command"
+  ],
+  "performance": {
+    "quality_score": null,
+    "benchmark_score": null,
+    "latency_ms": null,
+    "throughput": null
+  },
+  "pricing": {
+    "open_source": null,
+    "free_tier": null,
+    "monthly_cost": null,
+    "license": "Apache-2.0"
+  },
+  "adoption": {
+    "github_stars": null,
+    "monthly_downloads": null,
+    "active_users": null,
+    "enterprise_users": null,
+    "community_score": null
+  },
+  "capabilities": {
+    "supported_deployments": [],
+    "supported_languages": [],
+    "features": [
+      "docker",
+      "python"
+    ]
+  },
+  "recommendation": {
+    "score": null,
+    "confidence": null,
+    "reason": null
+  }
+}

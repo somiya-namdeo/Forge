@@ -1,0 +1,54 @@
+{
+  "technology": "Docker",
+  "category": "deployment",
+  "description": "This repository is the home of the Docker CLI.\ndocker/cli is developed using Docker.\nBuild CLI from source:\ndocker buildx bake\nBuild binaries for all supported platforms:\ndocker buildx bake cross\nBuild for a specific platform:\ndocker buildx bake --set binary.platform=linux/arm64 Build dynamic binary for glibc or musl:\nUSE_GLIBC=1 docker buildx bake dynbinary Run all linting:\ndocker buildx bake lint shellcheck\nRun test:\ndocker buildx bake test\nRun the unit test:\n$ make -f docker.Makefile test-uni",
+  "aliases": [],
+  "tags": [
+    "docker",
+    "buildx",
+    "bake",
+    "test",
+    "build",
+    "make",
+    "transfer",
+    "license",
+    "platform",
+    "binary",
+    "glibc",
+    "makefile",
+    "full",
+    "development",
+    "responsibility"
+  ],
+  "performance": {
+    "quality_score": null,
+    "benchmark_score": null,
+    "latency_ms": null,
+    "throughput": null
+  },
+  "pricing": {
+    "open_source": null,
+    "free_tier": null,
+    "monthly_cost": null,
+    "license": "Apache-2.0"
+  },
+  "adoption": {
+    "github_stars": null,
+    "monthly_downloads": null,
+    "active_users": null,
+    "enterprise_users": null,
+    "community_score": null
+  },
+  "capabilities": {
+    "supported_deployments": [],
+    "supported_languages": [],
+    "features": [
+      "docker"
+    ]
+  },
+  "recommendation": {
+    "score": null,
+    "confidence": null,
+    "reason": null
+  }
+}

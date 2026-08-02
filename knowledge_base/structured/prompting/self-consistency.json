@@ -1,0 +1,54 @@
+{
+  "technology": "Self-Consistency",
+  "category": "prompting",
+  "description": "Computer Science > Computation and Language\n[Submitted on 21 Mar 2022 (v1), last revised 7 Mar 2023 (this version, v4)]\nTitle:Self-Consistency Improves Chain of Thought Reasoning in Language Models\nView PDF\nView PDF\nAbstract:Chain-of-thought prompting combined with pre-trained large language models has achieved encouraging results on complex reasoning tasks. In this paper, we propose a new decoding strategy, self-consistency, to replace the naive greedy decoding used in chain-of-thought promptin",
+  "aliases": [],
+  "tags": [
+    "what",
+    "reasoning",
+    "self-consistency",
+    "sciencecast",
+    "influence",
+    "core",
+    "arxivlabs",
+    "language",
+    "view",
+    "chain-of-thought",
+    "prompting",
+    "citations",
+    "tools",
+    "papers",
+    "community"
+  ],
+  "performance": {
+    "quality_score": null,
+    "benchmark_score": null,
+    "latency_ms": null,
+    "throughput": null
+  },
+  "pricing": {
+    "open_source": null,
+    "free_tier": null,
+    "monthly_cost": null,
+    "license": null
+  },
+  "adoption": {
+    "github_stars": null,
+    "monthly_downloads": null,
+    "active_users": null,
+    "enterprise_users": null,
+    "community_score": null
+  },
+  "capabilities": {
+    "supported_deployments": [],
+    "supported_languages": [],
+    "features": [
+      "rag"
+    ]
+  },
+  "recommendation": {
+    "score": null,
+    "confidence": null,
+    "reason": null
+  }
+}

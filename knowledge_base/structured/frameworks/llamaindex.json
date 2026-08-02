@@ -1,0 +1,64 @@
+{
+  "technology": "LlamaIndex",
+  "category": "frameworks",
+  "description": "API Reference# LlamaIndex provides thorough documentation of modules and integrations used in the framework. Use the navigation or search to find the classes you are interested in!\nLlamaIndex OSS (by LlamaIndex) is an open-source framework to build agentic applications. Parse is our enterprise platform for agentic OCR, parsing, extraction, indexing and more. You can use LlamaParse with this framework or on its own; see LlamaParse below for signup and product links.\nBuilding with LlamaIndex typic",
+  "aliases": [],
+  "tags": [
+    "chore",
+    "llamaindex",
+    "across",
+    "bump",
+    "deps",
+    "group",
+    "directories",
+    "updates",
+    "newsletter",
+    "update",
+    "data",
+    "document",
+    "python",
+    "llamaparse",
+    "agents"
+  ],
+  "performance": {
+    "quality_score": null,
+    "benchmark_score": null,
+    "latency_ms": null,
+    "throughput": null
+  },
+  "pricing": {
+    "open_source": null,
+    "free_tier": null,
+    "monthly_cost": null,
+    "license": "MIT"
+  },
+  "adoption": {
+    "github_stars": null,
+    "monthly_downloads": null,
+    "active_users": null,
+    "enterprise_users": null,
+    "community_score": null
+  },
+  "capabilities": {
+    "supported_deployments": [],
+    "supported_languages": [],
+    "features": [
+      "agents",
+      "docker",
+      "embeddings",
+      "javascript",
+      "multimodal",
+      "python",
+      "rag",
+      "reranking",
+      "streaming",
+      "tool calling",
+      "vector search"
+    ]
+  },
+  "recommendation": {
+    "score": null,
+    "confidence": null,
+    "reason": null
+  }
+}

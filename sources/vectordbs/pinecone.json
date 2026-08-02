@@ -1,6 +1,6 @@
 {
   "id": "source-pinecone",
-  "category": "vectordb",
+  "category": "vectordbs",
   "name": "Pinecone",
   "organization": "Pinecone Systems",
   "official_documentation": [

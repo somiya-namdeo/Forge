@@ -1,10 +1,7 @@
 """Recommendation engine module for selecting optimal AI architecture components."""
 
-from typing import Any
-
+from typing import Any, List, Optional
 from app.schemas.decision import RecommendationItem
-
-_DEFAULT_CONFIDENCE = 0.70
 
 _NAME_PATHS = (
     "display_name",
@@ -14,60 +11,6 @@ _NAME_PATHS = (
     "technology",
     "id",
     "title",
-)
-
-_CONFIDENCE_PATHS = (
-    "recommendation.confidence",
-    "recommendation.score",
-    "confidence",
-    "score",
-)
-
-_OPEN_SOURCE_PATHS = (
-    "open_source",
-    "is_open_source",
-    "pricing.open_source",
-    "pricing.is_open_source",
-    "cost.open_source",
-)
-
-_FREE_TIER_PATHS = (
-    "free_tier",
-    "has_free_tier",
-    "pricing.free_tier",
-    "pricing.has_free_tier",
-    "cost.free_tier",
-)
-
-_LATENCY_PATHS = (
-    "latency_ms",
-    "latency",
-    "performance.latency_ms",
-    "performance.inference_latency_ms",
-)
-
-_STARS_PATHS = (
-    "stars",
-    "github_stars",
-    "adoption.stars",
-    "adoption.github_stars",
-)
-
-_COMMUNITY_PATHS = (
-    "community_score",
-    "popularity",
-    "adoption.community_score",
-    "adoption.popularity",
-)
-
-_QUALITY_PATHS = (
-    "quality_score",
-    "performance_score",
-    "quality",
-    "accuracy",
-    "performance.quality_score",
-    "performance.score",
-    "performance.accuracy",
 )
 
 _SPECIAL_DISPLAY_NAMES: dict[str, str] = {
@@ -112,15 +55,6 @@ class RecommendationEngine:
         return curr
 
     @classmethod
-    def _extract_first_value(cls, entry: dict[str, Any], paths: tuple[str, ...]) -> Any:
-        """Retrieve the first non-None value matching any flat or dot-separated path."""
-        for path in paths:
-            val = cls._get_nested_value(entry, path)
-            if val is not None:
-                return val
-        return None
-
-    @classmethod
     def _extract_name(cls, entry: dict[str, Any]) -> str:
         """Extract candidate display name using priority metadata paths and formatting fallbacks."""
         for path in _NAME_PATHS:
@@ -143,62 +77,17 @@ class RecommendationEngine:
         return "Unknown"
 
     @classmethod
-    def _extract_confidence(cls, entry: dict[str, Any]) -> float:
-        """Extract recommendation confidence score, clamped to [0.0, 1.0]."""
-        for path in _CONFIDENCE_PATHS:
-            val = cls._get_nested_value(entry, path)
-            if isinstance(val, (int, float)):
-                score_float = float(val)
-                if 1.0 < score_float <= 100.0:
-                    score_float /= 100.0
-                return max(0.0, min(1.0, score_float))
-        return _DEFAULT_CONFIDENCE
+    def _calculate_dynamic_confidence(
+        cls, top_candidate: dict[str, Any], runner_up: Optional[dict[str, Any]] = None
+    ) -> float:
+        """Calculate calibrated confidence score directly reflecting recommendation strength and score margin."""
+        top_score = float(top_candidate.get("score", 0.7))
+        runner_up_score = float(runner_up.get("score", 0.0)) if runner_up else 0.0
+        margin = max(0.0, top_score - runner_up_score)
 
-    @classmethod
-    def _build_reason(cls, entry: dict[str, Any], category: str) -> str:
-        """Construct a deterministic, metadata-aware rationale sentence."""
-        phrases: list[str] = [
-            f"Selected as the top candidate for '{category}' based on suitability scoring."
-        ]
-
-        # 1. Open Source check
-        is_open_source = cls._extract_first_value(entry, _OPEN_SOURCE_PATHS)
-        if is_open_source is True:
-            phrases.append("Open-source solution.")
-
-        # 2. Free Tier check
-        has_free_tier = cls._extract_first_value(entry, _FREE_TIER_PATHS)
-        if has_free_tier is True:
-            phrases.append("Offers free tier.")
-
-        # 3. Community Adoption check
-        stars = cls._extract_first_value(entry, _STARS_PATHS)
-        community = cls._extract_first_value(entry, _COMMUNITY_PATHS)
-        if (isinstance(stars, (int, float)) and stars > 1000) or (
-            isinstance(community, (int, float)) and community > 0.70
-        ):
-            phrases.append("High community adoption.")
-
-        # 4. Latency check
-        latency = cls._extract_first_value(entry, _LATENCY_PATHS)
-        if isinstance(latency, (int, float)) and 0 < latency < 100:
-            phrases.append("Optimized for low latency.")
-
-        # 5. Production deployment check
-        deployments = (
-            entry.get("supported_deployments")
-            or entry.get("deployments")
-            or entry.get("supported_platforms")
-        )
-        if deployments:
-            phrases.append("Suitable for production deployments.")
-
-        # 6. Quality check
-        quality = cls._extract_first_value(entry, _QUALITY_PATHS)
-        if isinstance(quality, (int, float)) and (quality > 0.80 or quality > 80):
-            phrases.append("High quality and accuracy ratings.")
-
-        return " ".join(phrases)
+        # Base confidence scales directly with composite top_score and margin dominance
+        confidence = round(top_score * 0.85 + margin * 0.15 + 0.10, 4)
+        return min(0.98, max(0.20, confidence))
 
     @classmethod
     def _extract_alternatives(
@@ -238,19 +127,27 @@ class RecommendationEngine:
             return None
 
         top_candidate = items[0]
+        runner_up = items[1] if len(items) > 1 else None
+
         recommended_name = cls._extract_name(top_candidate)
         top_id = str(top_candidate.get("id") or top_candidate.get("technology") or recommended_name).strip().lower()
-        confidence = cls._extract_confidence(top_candidate)
-        reason = cls._build_reason(top_candidate, category)
+
+        # Calculate calibrated confidence score
+        confidence = cls._calculate_dynamic_confidence(top_candidate, runner_up)
+
+        reason = f"Recommended for {category} based on multi-factor suitability scoring."
         alternatives = cls._extract_alternatives(items, recommended_name, top_id)
 
-        return RecommendationItem(
+        rec = RecommendationItem(
             category=category,
             recommended=recommended_name,
             confidence=confidence,
             reason=reason,
             alternatives=alternatives,
         )
+        rec._top_candidate = top_candidate
+        rec._runner_up = runner_up
+        return rec
 
     def recommend(
         self, scored_candidates: dict[str, list[dict[str, Any]]]
@@ -264,5 +161,4 @@ class RecommendationEngine:
                 recommendations.append(rec_item)
 
         recommendations.sort(key=lambda rec: rec.category)
-
         return recommendations

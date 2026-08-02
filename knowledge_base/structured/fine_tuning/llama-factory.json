@@ -1,0 +1,63 @@
+{
+  "technology": "LLaMA-Factory",
+  "category": "fine_tuning",
+  "description": "Check our new open-source project —\n🐧 PenguinHarness: Your desktop agent that automatically builds agents for just $0.02 of tokens!\nFollow our project: https://github.com/Prism-Shadow/penguin-harness\nrag_en.mp4\n👋 Join our WeChat and NPU user groups.\n[ English | 中文 ]\nFine-tuning a large language model can be easy as...\ntrain_en.mp4\nStart local training:\n- Please refer to usage\nStart cloud training:\n- Colab (free): https://colab.research.google.com/drive/1eRTPn37ltBbYsISy9Aw2NuI2Aq5CQrD9?usp=shari",
+  "aliases": [],
+  "tags": [
+    "arxiv",
+    "models",
+    "language",
+    "supported",
+    "model",
+    "fine-tuning",
+    "docker",
+    "large",
+    "llamafactory",
+    "install",
+    "training",
+    "llama",
+    "examples",
+    "usage",
+    "qwen3"
+  ],
+  "performance": {
+    "quality_score": null,
+    "benchmark_score": null,
+    "latency_ms": null,
+    "throughput": null
+  },
+  "pricing": {
+    "open_source": null,
+    "free_tier": null,
+    "monthly_cost": null,
+    "license": "Apache-2.0"
+  },
+  "adoption": {
+    "github_stars": null,
+    "monthly_downloads": null,
+    "active_users": null,
+    "enterprise_users": null,
+    "community_score": null
+  },
+  "capabilities": {
+    "supported_deployments": [],
+    "supported_languages": [],
+    "features": [
+      "agents",
+      "cpu",
+      "docker",
+      "embeddings",
+      "gpu",
+      "multimodal",
+      "python",
+      "quantization",
+      "rag",
+      "streaming"
+    ]
+  },
+  "recommendation": {
+    "score": null,
+    "confidence": null,
+    "reason": null
+  }
+}

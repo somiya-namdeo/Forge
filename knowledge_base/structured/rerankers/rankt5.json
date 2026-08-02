@@ -1,0 +1,54 @@
+{
+  "technology": "RankT5",
+  "category": "rerankers",
+  "description": "RankT5 fine-tunes the sequence-to-sequence T5 model for ranking problems. Specifically, RankT5 allows the model to output ranking scores for each query-document pair, and fine-tunes the model with ranking losses to optimize ranking performance. Our experiments show that the proposed models with ranking losses can achieve substantial ranking performance gains on different public text ranking data sets. Moreover, when fine-tuned with listwise ranking losses, the ranking model has better zero-shot ",
+  "aliases": [],
+  "tags": [
+    "ranking",
+    "what",
+    "losses",
+    "model",
+    "data",
+    "rankt5",
+    "fine-tuned",
+    "models",
+    "text",
+    "performance",
+    "sets",
+    "encoder-decoder",
+    "substantial",
+    "listwise",
+    "softmax"
+  ],
+  "performance": {
+    "quality_score": null,
+    "benchmark_score": null,
+    "latency_ms": null,
+    "throughput": null
+  },
+  "pricing": {
+    "open_source": null,
+    "free_tier": null,
+    "monthly_cost": null,
+    "license": "Apache-2.0"
+  },
+  "adoption": {
+    "github_stars": null,
+    "monthly_downloads": null,
+    "active_users": null,
+    "enterprise_users": null,
+    "community_score": null
+  },
+  "capabilities": {
+    "supported_deployments": [],
+    "supported_languages": [],
+    "features": [
+      "rag"
+    ]
+  },
+  "recommendation": {
+    "score": null,
+    "confidence": null,
+    "reason": null
+  }
+}

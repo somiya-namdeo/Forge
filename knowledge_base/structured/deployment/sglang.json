@@ -1,0 +1,57 @@
+{
+  "technology": "SGLang",
+  "category": "deployment",
+  "description": "Blog | Documentation | Roadmap | Join Slack | Weekly Dev Meeting | Slides\n- [2026/06] 🔥 The next generation of speculative decoding: DFlash and Spec V2 (blog).\n- [2026/04] 🔥 DeepSeek-V4 on Day 0: From Fast Inference to Verified RL with SGLang and Miles (blog).\n- [2026/06] SGLang provides day-0 support for latest open models (Nemotron 3 Ultra, Nemotron 3 Super, Higgs Audio v3 TTS).\n- [2026/02] 🔥 Unlocking 25x Inference Performance with SGLang on NVIDIA GB300 NVL72 (blog).\n- [2026/01] SGLang Diffu",
+  "aliases": [],
+  "tags": [
+    "sglang",
+    "blog",
+    "models",
+    "support",
+    "inference",
+    "large",
+    "deepseek",
+    "serving",
+    "faster",
+    "provides",
+    "gpus",
+    "release",
+    "decoding",
+    "nvidia",
+    "deploying"
+  ],
+  "performance": {
+    "quality_score": null,
+    "benchmark_score": null,
+    "latency_ms": null,
+    "throughput": null
+  },
+  "pricing": {
+    "open_source": null,
+    "free_tier": null,
+    "monthly_cost": null,
+    "license": "Apache-2.0"
+  },
+  "adoption": {
+    "github_stars": null,
+    "monthly_downloads": null,
+    "active_users": null,
+    "enterprise_users": null,
+    "community_score": null
+  },
+  "capabilities": {
+    "supported_deployments": [],
+    "supported_languages": [],
+    "features": [
+      "cpu",
+      "gpu",
+      "multimodal",
+      "quantization"
+    ]
+  },
+  "recommendation": {
+    "score": null,
+    "confidence": null,
+    "reason": null
+  }
+}

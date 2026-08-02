@@ -1,0 +1,57 @@
+{
+  "technology": "LangChain",
+  "category": "frameworks",
+  "description": "Reference Docs\nUnified API reference documentation for LangChain, LangGraph, Deep Agents, LangSmith, and integrations. Browse Python and TypeScript packages, explore classes, functions, and types across the entire LangChain ecosystem.\nLooking for guides, tutorials, and conceptual docs? Visit the main documentation site.\nLangChain is a framework for building agents and LLM-powered applications. It helps you chain together interoperable components and third-party integrations to simplify AI applic",
+  "aliases": [],
+  "tags": [
+    "langchain",
+    "agent",
+    "model",
+    "weather",
+    "city",
+    "agents",
+    "data",
+    "refresh",
+    "chore",
+    "create",
+    "profile",
+    "model-profiles",
+    "result",
+    "messages",
+    "content"
+  ],
+  "performance": {
+    "quality_score": null,
+    "benchmark_score": null,
+    "latency_ms": null,
+    "throughput": null
+  },
+  "pricing": {
+    "open_source": null,
+    "free_tier": null,
+    "monthly_cost": null,
+    "license": "MIT"
+  },
+  "adoption": {
+    "github_stars": null,
+    "monthly_downloads": null,
+    "active_users": null,
+    "enterprise_users": null,
+    "community_score": null
+  },
+  "capabilities": {
+    "supported_deployments": [],
+    "supported_languages": [],
+    "features": [
+      "agents",
+      "embeddings",
+      "python",
+      "rag"
+    ]
+  },
+  "recommendation": {
+    "score": null,
+    "confidence": null,
+    "reason": null
+  }
+}

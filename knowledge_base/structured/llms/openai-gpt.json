@@ -1,0 +1,65 @@
+{
+  "technology": "OpenAI GPT",
+  "category": "llms",
+  "description": "API Overview\nUse this reference to look up OpenAI API endpoints, request and response schemas, streaming events, client library methods, and shared behavior such as authentication, errors, rate limits, and request IDs.\nStart here\nSection titled “Start here”\n- Choose the API surface for your application:\n- Responses for direct model requests, tool use, audio, image, and text inputs, and stateful interactions.\n- Realtime API for low-latency voice or audio sessions over WebRTC, WebSocket, or SIP. U",
+  "aliases": [],
+  "tags": [
+    "endobj",
+    "openai",
+    "stream",
+    "endstream",
+    "length",
+    "filter",
+    "flatedecode",
+    "type",
+    "client",
+    "model",
+    "resources",
+    "gpt-5",
+    "page",
+    "response",
+    "import"
+  ],
+  "performance": {
+    "quality_score": null,
+    "benchmark_score": null,
+    "latency_ms": null,
+    "throughput": null
+  },
+  "pricing": {
+    "open_source": null,
+    "free_tier": null,
+    "monthly_cost": null,
+    "license": "Proprietary"
+  },
+  "adoption": {
+    "github_stars": null,
+    "monthly_downloads": null,
+    "active_users": null,
+    "enterprise_users": null,
+    "community_score": null
+  },
+  "capabilities": {
+    "supported_deployments": [],
+    "supported_languages": [],
+    "features": [
+      "agents",
+      "embeddings",
+      "function calling",
+      "gpu",
+      "javascript",
+      "kubernetes",
+      "multimodal",
+      "python",
+      "rag",
+      "rest api",
+      "streaming",
+      "tool calling"
+    ]
+  },
+  "recommendation": {
+    "score": null,
+    "confidence": null,
+    "reason": null
+  }
+}

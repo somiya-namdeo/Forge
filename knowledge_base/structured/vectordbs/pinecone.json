@@ -1,0 +1,60 @@
+{
+  "technology": "Pinecone",
+  "category": "vectordbs",
+  "description": "SDK versions are pinned to specific API versions.\nDatabase\nUse the Database API to store and query records in Pinecone Database. The following Pinecone SDKs support the Database API:\nCLI\nPython SDK\nNode.js SDK\nJava SDK\nGo SDK\nInference\nUse the Inference API to generate vector embeddings and rerank results using embedding models and reranking models hosted on Pinecone’s infrastructure. There are two ways to use the Inference API:\n- As a standalone service, through the Rerank documents and Generat",
+  "aliases": [],
+  "tags": [
+    "pinecone",
+    "assistant",
+    "search",
+    "data",
+    "database",
+    "available",
+    "indexes",
+    "plan",
+    "metadata",
+    "roles",
+    "model",
+    "limits",
+    "access",
+    "builder",
+    "fetch"
+  ],
+  "performance": {
+    "quality_score": null,
+    "benchmark_score": null,
+    "latency_ms": null,
+    "throughput": null
+  },
+  "pricing": {
+    "open_source": null,
+    "free_tier": null,
+    "monthly_cost": null,
+    "license": "Proprietary"
+  },
+  "adoption": {
+    "github_stars": null,
+    "monthly_downloads": null,
+    "active_users": null,
+    "enterprise_users": null,
+    "community_score": null
+  },
+  "capabilities": {
+    "supported_deployments": [],
+    "supported_languages": [],
+    "features": [
+      "agents",
+      "embeddings",
+      "multimodal",
+      "python",
+      "rag",
+      "reranking",
+      "rest api"
+    ]
+  },
+  "recommendation": {
+    "score": null,
+    "confidence": null,
+    "reason": null
+  }
+}

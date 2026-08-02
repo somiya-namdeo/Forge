@@ -1,0 +1,54 @@
+{
+  "technology": "Render",
+  "category": "deployment",
+  "description": "Render Documentation\nLearn how to deploy and scale apps on the Render platform.\nCreate\n- Deploy servicesConnect your repo and ship with every push.\n- Store dataProvision flexible datastores with advanced recovery features.\n- Run workflows BetaExecute chains of long-running tasks on distributed compute.\nConfigure\n- Service settingsApply essential config.\n- NetworkingHandle connections to, from, and between your services.\n- Infrastructure-as-codeManage your multi-service architecture with a single",
+  "aliases": [],
+  "tags": [
+    "render",
+    "deploy",
+    "service",
+    "documentation",
+    "learn",
+    "scale",
+    "apps",
+    "platform",
+    "create",
+    "servicesconnect",
+    "repo",
+    "ship",
+    "every",
+    "push",
+    "store"
+  ],
+  "performance": {
+    "quality_score": null,
+    "benchmark_score": null,
+    "latency_ms": null,
+    "throughput": null
+  },
+  "pricing": {
+    "open_source": null,
+    "free_tier": null,
+    "monthly_cost": null,
+    "license": null
+  },
+  "adoption": {
+    "github_stars": null,
+    "monthly_downloads": null,
+    "active_users": null,
+    "enterprise_users": null,
+    "community_score": null
+  },
+  "capabilities": {
+    "supported_deployments": [],
+    "supported_languages": [],
+    "features": [
+      "agents"
+    ]
+  },
+  "recommendation": {
+    "score": null,
+    "confidence": null,
+    "reason": null
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "technology": "Few-Shot Prompting",
+  "category": "prompting",
+  "description": "Computer Science > Computation and Language\n[Submitted on 28 May 2020 (v1), last revised 22 Jul 2020 (this version, v4)]\nTitle:Language Models are Few-Shot Learners\nView PDF\nAbstract:Recent work has demonstrated substantial gains on many NLP tasks and benchmarks by pre-training on a large corpus of text followed by fine-tuning on a specific task. While typically task-agnostic in architecture, this method still requires task-specific fine-tuning datasets of thousands or tens of thousands of examp",
+  "aliases": [],
+  "tags": [
+    "what",
+    "language",
+    "gpt-3",
+    "few-shot",
+    "tasks",
+    "model",
+    "fine-tuning",
+    "datasets",
+    "performance",
+    "sciencecast",
+    "influence",
+    "core",
+    "arxivlabs",
+    "still",
+    "tools"
+  ],
+  "performance": {
+    "quality_score": null,
+    "benchmark_score": null,
+    "latency_ms": null,
+    "throughput": null
+  },
+  "pricing": {
+    "open_source": null,
+    "free_tier": null,
+    "monthly_cost": null,
+    "license": null
+  },
+  "adoption": {
+    "github_stars": null,
+    "monthly_downloads": null,
+    "active_users": null,
+    "enterprise_users": null,
+    "community_score": null
+  },
+  "capabilities": {
+    "supported_deployments": [],
+    "supported_languages": [],
+    "features": []
+  },
+  "recommendation": {
+    "score": null,
+    "confidence": null,
+    "reason": null
+  }
+}

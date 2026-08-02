@@ -1,0 +1,55 @@
+{
+  "technology": "Weights & Biases",
+  "category": "deployment",
+  "description": "Use W&B to build better models faster. Track and visualize all the pieces of your machine learning pipeline, from datasets to production machine learning models. Get started with W&B today, sign up for a W&B account!\nBuilding an LLM app? Track, debug, evaluate, and monitor LLM apps with Weave, our new suite of tools for GenAI.\nSee the W&B Developer Guide and API Reference Guide for a full technical description of the W&B platform.\nInstall W&B to track, visualize, and manage machine learning expe",
+  "aliases": [],
+  "tags": [
+    "wandb",
+    "cloud",
+    "platform",
+    "python",
+    "project",
+    "account",
+    "guide",
+    "config",
+    "version",
+    "machine",
+    "init",
+    "fully",
+    "models",
+    "track",
+    "learning"
+  ],
+  "performance": {
+    "quality_score": null,
+    "benchmark_score": null,
+    "latency_ms": null,
+    "throughput": null
+  },
+  "pricing": {
+    "open_source": null,
+    "free_tier": null,
+    "monthly_cost": null,
+    "license": "MIT"
+  },
+  "adoption": {
+    "github_stars": null,
+    "monthly_downloads": null,
+    "active_users": null,
+    "enterprise_users": null,
+    "community_score": null
+  },
+  "capabilities": {
+    "supported_deployments": [],
+    "supported_languages": [],
+    "features": [
+      "python",
+      "rag"
+    ]
+  },
+  "recommendation": {
+    "score": null,
+    "confidence": null,
+    "reason": null
+  }
+}

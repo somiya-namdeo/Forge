@@ -1,0 +1,62 @@
+{
+  "technology": "Sentence Transformers",
+  "category": "embeddings",
+  "description": "SentenceTransformer\nSentenceTransformer\n- class sentence_transformers.sentence_transformer.model.SentenceTransformer(model_name_or_path: str | None = None, *, modules: list[Module] | None = None, device: str | None = None, prompts: dict[str, str] | None = None, default_prompt_name: str | None = None, cache_folder: str | None = None, trust_remote_code: bool = False, revision: str | None = None, local_files_only: bool = False, token: bool | str | None = None, use_auth_token: bool | str | None = No",
+  "aliases": [],
+  "tags": [
+    "model",
+    "none",
+    "models",
+    "transformers",
+    "sentence",
+    "embeddings",
+    "sentence-transformers",
+    "image",
+    "install",
+    "text",
+    "training",
+    "optional",
+    "embedding",
+    "list",
+    "tensor"
+  ],
+  "performance": {
+    "quality_score": null,
+    "benchmark_score": null,
+    "latency_ms": null,
+    "throughput": null
+  },
+  "pricing": {
+    "open_source": null,
+    "free_tier": null,
+    "monthly_cost": null,
+    "license": "Apache 2.0"
+  },
+  "adoption": {
+    "github_stars": null,
+    "monthly_downloads": null,
+    "active_users": null,
+    "enterprise_users": null,
+    "community_score": null
+  },
+  "capabilities": {
+    "supported_deployments": [],
+    "supported_languages": [],
+    "features": [
+      "agents",
+      "cpu",
+      "embeddings",
+      "gpu",
+      "multimodal",
+      "python",
+      "quantization",
+      "rag",
+      "reranking"
+    ]
+  },
+  "recommendation": {
+    "score": null,
+    "confidence": null,
+    "reason": null
+  }
+}

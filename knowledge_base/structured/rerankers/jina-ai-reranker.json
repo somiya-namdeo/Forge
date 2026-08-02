@@ -1,0 +1,59 @@
+{
+  "technology": "Jina AI Reranker",
+  "category": "rerankers",
+  "description": "Reranker\nMaximize the search relevancy and RAG accuracy with our cutting-edge reranker API.\nReranker API\nTry our cutting-edge reranker API to maximize your search relevancy and RAG accuracy. Starting for free!\nchevron_leftchevron_right\nNumber of returned documents\ntop_n\ntop_k\nExample query\nExample candidate documents to rank\n| Organic skincare for sensitive skin with aloe vera and chamomile: Imagine the soothing embrace of nature with our organic skincare range, crafted specifically for sensitiv",
+  "aliases": [],
+  "tags": [
+    "arrow",
+    "down",
+    "keyboard",
+    "reranker",
+    "jina",
+    "documents",
+    "tokens",
+    "search",
+    "code",
+    "aloe",
+    "vera",
+    "what",
+    "https",
+    "input",
+    "number"
+  ],
+  "performance": {
+    "quality_score": null,
+    "benchmark_score": null,
+    "latency_ms": null,
+    "throughput": null
+  },
+  "pricing": {
+    "open_source": null,
+    "free_tier": null,
+    "monthly_cost": null,
+    "license": null
+  },
+  "adoption": {
+    "github_stars": null,
+    "monthly_downloads": null,
+    "active_users": null,
+    "enterprise_users": null,
+    "community_score": null
+  },
+  "capabilities": {
+    "supported_deployments": [],
+    "supported_languages": [],
+    "features": [
+      "embeddings",
+      "kubernetes",
+      "multimodal",
+      "rag",
+      "reranking",
+      "vector search"
+    ]
+  },
+  "recommendation": {
+    "score": null,
+    "confidence": null,
+    "reason": null
+  }
+}

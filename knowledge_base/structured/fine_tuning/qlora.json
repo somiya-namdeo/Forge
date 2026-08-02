@@ -1,0 +1,58 @@
+{
+  "technology": "QLoRA",
+  "category": "fine_tuning",
+  "description": "| Paper | Adapter Weights | Demo |\nThis repo supports the paper \"QLoRA: Efficient Finetuning of Quantized LLMs\", an effort to democratize access to LLM research.\nQLoRA uses bitsandbytes for quantization and is integrated with Hugging Face's PEFT and transformers libraries. QLoRA was developed by members of the University of Washington's UW NLP group.\n- 7/19/2023 - Added LLaMA 2 example script and updated version requirements\n- 7/18/2023 - Fixed non-frozen embeddings when adding new tokens\nWe pre",
+  "aliases": [],
+  "tags": [
+    "qlora",
+    "model",
+    "guanaco",
+    "finetuning",
+    "models",
+    "dataset",
+    "what",
+    "quantization",
+    "memory",
+    "performance",
+    "training",
+    "here",
+    "chatgpt",
+    "path",
+    "access"
+  ],
+  "performance": {
+    "quality_score": null,
+    "benchmark_score": null,
+    "latency_ms": null,
+    "throughput": null
+  },
+  "pricing": {
+    "open_source": null,
+    "free_tier": null,
+    "monthly_cost": null,
+    "license": "MIT"
+  },
+  "adoption": {
+    "github_stars": null,
+    "monthly_downloads": null,
+    "active_users": null,
+    "enterprise_users": null,
+    "community_score": null
+  },
+  "capabilities": {
+    "supported_deployments": [],
+    "supported_languages": [],
+    "features": [
+      "embeddings",
+      "gpu",
+      "python",
+      "quantization",
+      "rag"
+    ]
+  },
+  "recommendation": {
+    "score": null,
+    "confidence": null,
+    "reason": null
+  }
+}

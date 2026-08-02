@@ -1,0 +1,56 @@
+{
+  "technology": "LoRA",
+  "category": "fine_tuning",
+  "description": "This repo contains the source code of the Python package loralib and several examples of how to integrate it with PyTorch models, such as those in Hugging Face.\nWe only support PyTorch for now.\nSee our paper for a detailed description of LoRA.\nLoRA: Low-Rank Adaptation of Large Language Models\nEdward J. Hu*, Yelong Shen*, Phillip Wallis, Zeyuan Allen-Zhu, Yuanzhi Li, Shean Wang, Lu Wang, Weizhu Chen\nPaper: https://arxiv.org/abs/2106.09685\nVideo explainer: https://www.youtube.com/watch?v=DhRoTONc",
+  "aliases": [],
+  "tags": [
+    "lora",
+    "model",
+    "gpt-2",
+    "only",
+    "trainable",
+    "what",
+    "loralib",
+    "checkpoint",
+    "parameters",
+    "large",
+    "load",
+    "microsoft",
+    "roberta",
+    "deberta",
+    "state"
+  ],
+  "performance": {
+    "quality_score": null,
+    "benchmark_score": null,
+    "latency_ms": null,
+    "throughput": null
+  },
+  "pricing": {
+    "open_source": null,
+    "free_tier": null,
+    "monthly_cost": null,
+    "license": "MIT"
+  },
+  "adoption": {
+    "github_stars": null,
+    "monthly_downloads": null,
+    "active_users": null,
+    "enterprise_users": null,
+    "community_score": null
+  },
+  "capabilities": {
+    "supported_deployments": [],
+    "supported_languages": [],
+    "features": [
+      "gpu",
+      "python",
+      "rag"
+    ]
+  },
+  "recommendation": {
+    "score": null,
+    "confidence": null,
+    "reason": null
+  }
+}

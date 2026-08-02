@@ -1,0 +1,54 @@
+{
+  "technology": "Azure AI Foundry",
+  "category": "deployment",
+  "description": "Overview\nWhat is Microsoft Foundry?\nMicrosoft Foundry documentation\nThe AI app and agent factory - build, optimize, and govern AI apps and agents at scale.\nConcept\nChoose how to build\nQuickstart\nQuickstart: Build with models and agents\nQuickstart\nQuickstart: Deploy a hosted agent\nFoundry Tools\nObservability and evaluation\nSoftware development kits (SDKs)\nGet started with the Foundry SDK in your favorite programming language.",
+  "aliases": [],
+  "tags": [
+    "foundry",
+    "quickstart",
+    "build",
+    "microsoft",
+    "agent",
+    "agents",
+    "overview",
+    "what",
+    "documentation",
+    "factory",
+    "optimize",
+    "govern",
+    "apps",
+    "scale",
+    "concept"
+  ],
+  "performance": {
+    "quality_score": null,
+    "benchmark_score": null,
+    "latency_ms": null,
+    "throughput": null
+  },
+  "pricing": {
+    "open_source": null,
+    "free_tier": null,
+    "monthly_cost": null,
+    "license": null
+  },
+  "adoption": {
+    "github_stars": null,
+    "monthly_downloads": null,
+    "active_users": null,
+    "enterprise_users": null,
+    "community_score": null
+  },
+  "capabilities": {
+    "supported_deployments": [],
+    "supported_languages": [],
+    "features": [
+      "agents"
+    ]
+  },
+  "recommendation": {
+    "score": null,
+    "confidence": null,
+    "reason": null
+  }
+}

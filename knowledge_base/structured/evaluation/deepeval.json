@@ -1,0 +1,57 @@
+{
+  "technology": "DeepEval",
+  "category": "evaluation",
+  "description": "Deutsch | Español | français | 日本語 | 한국어 | Português | Русский | 中文\nDeepEval is a simple-to-use, open-source LLM evaluation framework, for evaluating large-language model systems. It is similar to Pytest but specialized for unit testing LLM apps. DeepEval incorporates the latest research to run evals via metrics such as G-Eval, task completion, answer relevancy, hallucination, etc., which uses LLM-as-a-judge and other NLP models that run locally on your machine.\nWhether you're building AI agents",
+  "aliases": [],
+  "tags": [
+    "deepeval",
+    "metrics",
+    "import",
+    "evaluate",
+    "test",
+    "golden",
+    "input",
+    "metric",
+    "output",
+    "trace",
+    "taskcompletionmetric",
+    "evals",
+    "dataset",
+    "case",
+    "openai"
+  ],
+  "performance": {
+    "quality_score": null,
+    "benchmark_score": null,
+    "latency_ms": null,
+    "throughput": null
+  },
+  "pricing": {
+    "open_source": null,
+    "free_tier": null,
+    "monthly_cost": null,
+    "license": "Apache-2.0"
+  },
+  "adoption": {
+    "github_stars": null,
+    "monthly_downloads": null,
+    "active_users": null,
+    "enterprise_users": null,
+    "community_score": null
+  },
+  "capabilities": {
+    "supported_deployments": [],
+    "supported_languages": [],
+    "features": [
+      "agents",
+      "multimodal",
+      "python",
+      "rag"
+    ]
+  },
+  "recommendation": {
+    "score": null,
+    "confidence": null,
+    "reason": null
+  }
+}

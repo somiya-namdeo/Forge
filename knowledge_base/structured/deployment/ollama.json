@@ -1,0 +1,61 @@
+{
+  "technology": "Ollama",
+  "category": "deployment",
+  "description": "Start building with open models.\ncurl -fsSL https://ollama.com/install.sh | shirm https://ollama.com/install.ps1 | iexcurl -fsSL https://ollama.com/install.sh | sh\nThe official Ollama Docker image ollama/ollama is available on Docker Hub.\nollama\nYou'll be prompted to run a model or connect Ollama to your existing agents or applications such as Claude Code, OpenClaw, OpenCode , Codex, Copilot, and more.\nTo launch a specific integration:\nollama launch claude\nSupported integrations include Claude C",
+  "aliases": [],
+  "tags": [
+    "ollama",
+    "client",
+    "chat",
+    "assistant",
+    "framework",
+    "desktop",
+    "langchain",
+    "example",
+    "open",
+    "code",
+    "interface",
+    "agent",
+    "copilot",
+    "model",
+    "agents"
+  ],
+  "performance": {
+    "quality_score": null,
+    "benchmark_score": null,
+    "latency_ms": null,
+    "throughput": null
+  },
+  "pricing": {
+    "open_source": null,
+    "free_tier": null,
+    "monthly_cost": null,
+    "license": "MIT"
+  },
+  "adoption": {
+    "github_stars": null,
+    "monthly_downloads": null,
+    "active_users": null,
+    "enterprise_users": null,
+    "community_score": null
+  },
+  "capabilities": {
+    "supported_deployments": [],
+    "supported_languages": [],
+    "features": [
+      "agents",
+      "docker",
+      "embeddings",
+      "gpu",
+      "multimodal",
+      "python",
+      "rag",
+      "rest api"
+    ]
+  },
+  "recommendation": {
+    "score": null,
+    "confidence": null,
+    "reason": null
+  }
+}

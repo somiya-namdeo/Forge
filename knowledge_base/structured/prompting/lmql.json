@@ -1,0 +1,57 @@
+{
+  "technology": "LMQL",
+  "category": "prompting",
+  "description": "A programming language for large language models.\n\nDocumentation »\n\n\nExplore Examples\n·\nPlayground IDE\n·\nReport Bug\n\n\n\n\n\nLMQL is a programming language for large language models (LLMs) based on a superset of Python. LMQL offers a novel way of interweaving traditional programming with the ability to call LLMs in your code. It goes beyond traditional templating languages by integrating LLM interaction natively at the level of your program code.\nHelp us shape the next major version of LMQL by filli",
+  "aliases": [],
+  "tags": [
+    "lmql",
+    "conda",
+    "environment",
+    "install",
+    "models",
+    "openai",
+    "support",
+    "playground",
+    "model",
+    "following",
+    "local",
+    "language",
+    "python",
+    "program",
+    "like"
+  ],
+  "performance": {
+    "quality_score": null,
+    "benchmark_score": null,
+    "latency_ms": null,
+    "throughput": null
+  },
+  "pricing": {
+    "open_source": null,
+    "free_tier": null,
+    "monthly_cost": null,
+    "license": "MIT"
+  },
+  "adoption": {
+    "github_stars": null,
+    "monthly_downloads": null,
+    "active_users": null,
+    "enterprise_users": null,
+    "community_score": null
+  },
+  "capabilities": {
+    "supported_deployments": [],
+    "supported_languages": [],
+    "features": [
+      "gpu",
+      "python",
+      "rag",
+      "streaming"
+    ]
+  },
+  "recommendation": {
+    "score": null,
+    "confidence": null,
+    "reason": null
+  }
+}

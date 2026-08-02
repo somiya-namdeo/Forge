@@ -1,0 +1,56 @@
+{
+  "technology": "Self-Query Retrieval",
+  "category": "retrieval",
+  "description": "LangChain is a framework for building agents and LLM-powered applications. It helps you chain together interoperable components and third-party integrations to simplify AI application development — all while future-proofing decisions as the underlying technology evolves.\nTip\nJust getting started? Check out Deep Agents — a higher-level package built on LangChain for agents that have built-in capabilites for common usage patterns such as planning, subagents, file system usage, and more.\nuv add lan",
+  "aliases": [],
+  "tags": [
+    "langchain",
+    "agents",
+    "applications",
+    "model",
+    "integrations",
+    "models",
+    "langsmith",
+    "build",
+    "framework",
+    "check",
+    "deep",
+    "chat",
+    "agent",
+    "langgraph",
+    "debugging"
+  ],
+  "performance": {
+    "quality_score": null,
+    "benchmark_score": null,
+    "latency_ms": null,
+    "throughput": null
+  },
+  "pricing": {
+    "open_source": null,
+    "free_tier": null,
+    "monthly_cost": null,
+    "license": "MIT"
+  },
+  "adoption": {
+    "github_stars": null,
+    "monthly_downloads": null,
+    "active_users": null,
+    "enterprise_users": null,
+    "community_score": null
+  },
+  "capabilities": {
+    "supported_deployments": [],
+    "supported_languages": [],
+    "features": [
+      "agents",
+      "embeddings",
+      "rag"
+    ]
+  },
+  "recommendation": {
+    "score": null,
+    "confidence": null,
+    "reason": null
+  }
+}

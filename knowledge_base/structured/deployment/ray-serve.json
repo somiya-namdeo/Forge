@@ -1,0 +1,58 @@
+{
+  "technology": "Ray Serve",
+  "category": "deployment",
+  "description": "Ray is a unified framework for scaling AI and Python applications. Ray consists of a core distributed runtime and a set of AI libraries for simplifying ML compute:\nLearn more about Ray AI Libraries:\n- Data: Scalable Datasets for ML\n- Train: Distributed Training\n- Tune: Scalable Hyperparameter Tuning\n- RLlib: Scalable Reinforcement Learning\n- Serve: Scalable and Programmable Serving\nOr more about Ray Core and its key abstractions:\n- Tasks: Stateless functions executed in the cluster.\n- Actors: St",
+  "aliases": [],
+  "tags": [
+    "serve",
+    "self",
+    "import",
+    "deployment",
+    "model",
+    "requests",
+    "request",
+    "json",
+    "application",
+    "hello",
+    "result",
+    "models",
+    "serving",
+    "install",
+    "query"
+  ],
+  "performance": {
+    "quality_score": null,
+    "benchmark_score": null,
+    "latency_ms": null,
+    "throughput": null
+  },
+  "pricing": {
+    "open_source": null,
+    "free_tier": null,
+    "monthly_cost": null,
+    "license": "Apache-2.0"
+  },
+  "adoption": {
+    "github_stars": null,
+    "monthly_downloads": null,
+    "active_users": null,
+    "enterprise_users": null,
+    "community_score": null
+  },
+  "capabilities": {
+    "supported_deployments": [],
+    "supported_languages": [],
+    "features": [
+      "gpu",
+      "kubernetes",
+      "python",
+      "rag",
+      "streaming"
+    ]
+  },
+  "recommendation": {
+    "score": null,
+    "confidence": null,
+    "reason": null
+  }
+}

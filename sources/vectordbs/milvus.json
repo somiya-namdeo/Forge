@@ -1,6 +1,6 @@
 {
   "id": "source-milvus",
-  "category": "vectordb",
+  "category": "vectordbs",
   "name": "Milvus",
   "organization": "Zilliz / LF AI & Data Foundation",
   "official_documentation": [

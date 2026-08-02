@@ -1,6 +1,6 @@
 {
   "id": "source-faiss",
-  "category": "vectordb",
+  "category": "vectordbs",
   "name": "FAISS",
   "organization": "Meta AI",
   "official_documentation": [

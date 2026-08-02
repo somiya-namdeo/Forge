@@ -1,0 +1,52 @@
+{
+  "technology": "Railway",
+  "category": "deployment",
+  "description": "Railway Documentation\nRailway is an all-in-one intelligent cloud provider that makes it easy to provision infrastructure, develop locally, and deploy to the cloud.\nQuick Start\nDeploy in minutes. Jump into our quickstart guide to get your first app running.\nAI\nBuild with Railway using Agent Skills and the MCP server for AI-powered workflows.\nCLI\nDevelop locally and deploy from your terminal with the Railway CLI.\nTemplates\nOne-click deployable applications and starters for common use cases.\nYour s",
+  "aliases": [],
+  "tags": [
+    "railway",
+    "deploy",
+    "cloud",
+    "develop",
+    "locally",
+    "minutes",
+    "templates",
+    "documentation",
+    "all-in-one",
+    "intelligent",
+    "provider",
+    "makes",
+    "easy",
+    "provision",
+    "infrastructure"
+  ],
+  "performance": {
+    "quality_score": null,
+    "benchmark_score": null,
+    "latency_ms": null,
+    "throughput": null
+  },
+  "pricing": {
+    "open_source": null,
+    "free_tier": null,
+    "monthly_cost": null,
+    "license": null
+  },
+  "adoption": {
+    "github_stars": null,
+    "monthly_downloads": null,
+    "active_users": null,
+    "enterprise_users": null,
+    "community_score": null
+  },
+  "capabilities": {
+    "supported_deployments": [],
+    "supported_languages": [],
+    "features": []
+  },
+  "recommendation": {
+    "score": null,
+    "confidence": null,
+    "reason": null
+  }
+}

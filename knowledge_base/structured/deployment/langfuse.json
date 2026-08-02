@@ -1,0 +1,59 @@
+{
+  "technology": "Langfuse",
+  "category": "deployment",
+  "description": "Langfuse is an open source LLM engineering platform. It helps teams collaboratively develop, monitor, evaluate, and debug AI applications. Langfuse can be self-hosted in minutes and is battle-tested. Proudly made with ClickHouse open source database.\nLangfuse is growing fast (we doubled the team in the last 6 months) - since January 2026 we're part of ClickHouse, we're hiring engineering hybrid across the EU. We hire engineers who love open source and great developer experiences. See open roles ",
+  "aliases": [],
+  "tags": [
+    "langfuse",
+    "open",
+    "source",
+    "prompts",
+    "python",
+    "application",
+    "platform",
+    "evaluation",
+    "create",
+    "development",
+    "chat",
+    "agent",
+    "traces",
+    "openai",
+    "agents"
+  ],
+  "performance": {
+    "quality_score": null,
+    "benchmark_score": null,
+    "latency_ms": null,
+    "throughput": null
+  },
+  "pricing": {
+    "open_source": null,
+    "free_tier": null,
+    "monthly_cost": null,
+    "license": "MIT"
+  },
+  "adoption": {
+    "github_stars": null,
+    "monthly_downloads": null,
+    "active_users": null,
+    "enterprise_users": null,
+    "community_score": null
+  },
+  "capabilities": {
+    "supported_deployments": [],
+    "supported_languages": [],
+    "features": [
+      "agents",
+      "docker",
+      "javascript",
+      "kubernetes",
+      "python",
+      "rag"
+    ]
+  },
+  "recommendation": {
+    "score": null,
+    "confidence": null,
+    "reason": null
+  }
+}

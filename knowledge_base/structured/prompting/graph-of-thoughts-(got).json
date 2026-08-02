@@ -1,0 +1,54 @@
+{
+  "technology": "Graph of Thoughts (GoT)",
+  "category": "prompting",
+  "description": "This is the official implementation of Graph of Thoughts: Solving Elaborate Problems with Large Language Models.\nThis framework gives you the ability to solve complex problems by modeling them as a Graph of Operations (GoO), which is automatically executed with a Large Language Model (LLM) as the engine.\nThis framework is designed to be flexible and extensible, allowing you to not only solve problems using the new GoT approach, but also to implement GoOs resembling previous approaches like CoT o",
+  "aliases": [],
+  "tags": [
+    "graph",
+    "what",
+    "thoughts",
+    "output",
+    "operations",
+    "controller",
+    "language",
+    "framework",
+    "sorting",
+    "json",
+    "examples",
+    "models",
+    "code",
+    "problems",
+    "ctrl"
+  ],
+  "performance": {
+    "quality_score": null,
+    "benchmark_score": null,
+    "latency_ms": null,
+    "throughput": null
+  },
+  "pricing": {
+    "open_source": null,
+    "free_tier": null,
+    "monthly_cost": null,
+    "license": "MIT"
+  },
+  "adoption": {
+    "github_stars": null,
+    "monthly_downloads": null,
+    "active_users": null,
+    "enterprise_users": null,
+    "community_score": null
+  },
+  "capabilities": {
+    "supported_deployments": [],
+    "supported_languages": [],
+    "features": [
+      "python"
+    ]
+  },
+  "recommendation": {
+    "score": null,
+    "confidence": null,
+    "reason": null
+  }
+}

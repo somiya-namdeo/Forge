@@ -1,0 +1,57 @@
+{
+  "technology": "LangGraph",
+  "category": "frameworks",
+  "description": "Welcome to the LangGraph package reference documentation!\nLangGraph is a framework for building resilient language agents as graphs. The langgraph package is the main entrypoint, providing everything you need to define stateful, multi-step agent workflows. The packages below form the LangGraph ecosystem:\nTrusted by companies shaping the future of agents – including Klarna, Replit, Elastic, and more – LangGraph is a low-level orchestration framework for building, managing, and deploying long-runn",
+  "aliases": [],
+  "tags": [
+    "langgraph",
+    "chore",
+    "bump",
+    "libs",
+    "deps",
+    "agents",
+    "langchain",
+    "agent",
+    "langsmith",
+    "release",
+    "changes",
+    "since",
+    "group",
+    "stateful",
+    "checkpoint-postgres"
+  ],
+  "performance": {
+    "quality_score": null,
+    "benchmark_score": null,
+    "latency_ms": null,
+    "throughput": null
+  },
+  "pricing": {
+    "open_source": null,
+    "free_tier": null,
+    "monthly_cost": null,
+    "license": "MIT"
+  },
+  "adoption": {
+    "github_stars": null,
+    "monthly_downloads": null,
+    "active_users": null,
+    "enterprise_users": null,
+    "community_score": null
+  },
+  "capabilities": {
+    "supported_deployments": [],
+    "supported_languages": [],
+    "features": [
+      "agents",
+      "python",
+      "rag",
+      "streaming"
+    ]
+  },
+  "recommendation": {
+    "score": null,
+    "confidence": null,
+    "reason": null
+  }
+}

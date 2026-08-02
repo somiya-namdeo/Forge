@@ -1,0 +1,58 @@
+{
+  "technology": "vLLM",
+  "category": "deployment",
+  "description": "| Documentation | Blog | Paper | Twitter/X | User Forum | Developer Slack |\n🔥 We have built a vLLM website to help you get started with vLLM. Please visit vllm.ai to learn more. For events, please visit vllm.ai/events to join us.\nvLLM is a fast and easy-to-use library for LLM inference and serving.\nOriginally developed in the Sky Computing Lab at UC Berkeley, vLLM has grown into one of the most active open-source AI projects built and maintained by a diverse community of many dozens of academic ",
+  "aliases": [],
+  "tags": [
+    "vllm",
+    "models",
+    "please",
+    "serving",
+    "including",
+    "fast",
+    "attention",
+    "efficient",
+    "model",
+    "full",
+    "outputs",
+    "support",
+    "llms",
+    "inference",
+    "pagedattention"
+  ],
+  "performance": {
+    "quality_score": null,
+    "benchmark_score": null,
+    "latency_ms": null,
+    "throughput": null
+  },
+  "pricing": {
+    "open_source": null,
+    "free_tier": null,
+    "monthly_cost": null,
+    "license": "Apache-2.0"
+  },
+  "adoption": {
+    "github_stars": null,
+    "monthly_downloads": null,
+    "active_users": null,
+    "enterprise_users": null,
+    "community_score": null
+  },
+  "capabilities": {
+    "supported_deployments": [],
+    "supported_languages": [],
+    "features": [
+      "cpu",
+      "gpu",
+      "quantization",
+      "streaming",
+      "tool calling"
+    ]
+  },
+  "recommendation": {
+    "score": null,
+    "confidence": null,
+    "reason": null
+  }
+}

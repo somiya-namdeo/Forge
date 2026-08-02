@@ -1,0 +1,55 @@
+{
+  "technology": "MonoT5",
+  "category": "rerankers",
+  "description": "PyGaggle provides a gaggle of deep neural architectures for text ranking and question answering. It was designed for tight integration with Pyserini, but can be easily adapted for other sources as well.\nCurrently, this repo contains implementations of the rerankers for MS MARCO Passage Retrieval, MS MARCO Document Retrieval, TREC-COVID and CovidQA.\n-\nClone the repo with git clone --recursive https://github.com/castorini/pygaggle.git\n-\nMake you sure you have an installation of Python 3.8+. All py",
+  "aliases": [],
+  "tags": [
+    "model",
+    "geocentric",
+    "theory",
+    "system",
+    "pygaggle",
+    "earth",
+    "universe",
+    "what",
+    "heliocentric",
+    "rerank",
+    "import",
+    "around",
+    "reranker",
+    "text",
+    "query"
+  ],
+  "performance": {
+    "quality_score": null,
+    "benchmark_score": null,
+    "latency_ms": null,
+    "throughput": null
+  },
+  "pricing": {
+    "open_source": null,
+    "free_tier": null,
+    "monthly_cost": null,
+    "license": "Apache-2.0"
+  },
+  "adoption": {
+    "github_stars": null,
+    "monthly_downloads": null,
+    "active_users": null,
+    "enterprise_users": null,
+    "community_score": null
+  },
+  "capabilities": {
+    "supported_deployments": [],
+    "supported_languages": [],
+    "features": [
+      "python",
+      "reranking"
+    ]
+  },
+  "recommendation": {
+    "score": null,
+    "confidence": null,
+    "reason": null
+  }
+}

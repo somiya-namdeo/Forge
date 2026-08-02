@@ -1,0 +1,52 @@
+{
+  "technology": "Zero-Shot Prompting",
+  "category": "prompting",
+  "description": "Computer Science > Computation and Language\n[Submitted on 3 Sep 2021 (v1), last revised 8 Feb 2022 (this version, v5)]\nTitle:Finetuned Language Models Are Zero-Shot Learners\nView PDF\nAbstract:This paper explores a simple method for improving the zero-shot learning abilities of language models. We show that instruction tuning -- finetuning language models on a collection of tasks described via instructions -- substantially improves zero-shot performance on unseen tasks.\nWe take a 137B parameter p",
+  "aliases": [],
+  "tags": [
+    "what",
+    "language",
+    "zero-shot",
+    "tasks",
+    "sciencecast",
+    "influence",
+    "core",
+    "arxivlabs",
+    "models",
+    "instruction",
+    "model",
+    "flan",
+    "citations",
+    "tools",
+    "papers"
+  ],
+  "performance": {
+    "quality_score": null,
+    "benchmark_score": null,
+    "latency_ms": null,
+    "throughput": null
+  },
+  "pricing": {
+    "open_source": null,
+    "free_tier": null,
+    "monthly_cost": null,
+    "license": null
+  },
+  "adoption": {
+    "github_stars": null,
+    "monthly_downloads": null,
+    "active_users": null,
+    "enterprise_users": null,
+    "community_score": null
+  },
+  "capabilities": {
+    "supported_deployments": [],
+    "supported_languages": [],
+    "features": []
+  },
+  "recommendation": {
+    "score": null,
+    "confidence": null,
+    "reason": null
+  }
+}

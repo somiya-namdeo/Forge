@@ -1,0 +1,60 @@
+{
+  "technology": "FAISS",
+  "category": "vectordbs",
+  "description": "-\nNotifications\nYou must be signed in to change notification settings\n- Fork 4.5k\nIndexing 1M vectors\nThis page gives some advice and results on datasets of around 1M vectors.\nWhen the dataset is around 1m vectors, the exhaustive index becomes too slow, so a good alternative is IndexIVFFlat. It still returns exact distances but occasionally misses a neighbor because it is non-exhaustive.\nExperiments from 2018\nBelow are a few experiments on datasets of size 1M with different indexing methods. We ",
+  "aliases": [],
+  "tags": [
+    "faiss",
+    "search",
+    "index",
+    "vectors",
+    "query",
+    "support",
+    "quantization",
+    "product",
+    "fbcode",
+    "remove",
+    "similarity",
+    "vector",
+    "hnsw",
+    "cuvs",
+    "test"
+  ],
+  "performance": {
+    "quality_score": null,
+    "benchmark_score": null,
+    "latency_ms": null,
+    "throughput": null
+  },
+  "pricing": {
+    "open_source": null,
+    "free_tier": null,
+    "monthly_cost": null,
+    "license": "MIT"
+  },
+  "adoption": {
+    "github_stars": null,
+    "monthly_downloads": null,
+    "active_users": null,
+    "enterprise_users": null,
+    "community_score": null
+  },
+  "capabilities": {
+    "supported_deployments": [],
+    "supported_languages": [],
+    "features": [
+      "cpu",
+      "docker",
+      "gpu",
+      "python",
+      "quantization",
+      "rag",
+      "reranking"
+    ]
+  },
+  "recommendation": {
+    "score": null,
+    "confidence": null,
+    "reason": null
+  }
+}

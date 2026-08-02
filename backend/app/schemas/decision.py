@@ -2,6 +2,7 @@
 
 from datetime import datetime
 from enum import Enum
+from typing import Any
 
 from pydantic import BaseModel, ConfigDict, Field, NonNegativeFloat, NonNegativeInt
 
@@ -41,16 +42,31 @@ class DecisionRequest(BaseModel):
     model_config = ConfigDict(frozen=True)
 
 
+class AlternativeDetail(BaseModel):
+    """Detailed trade-off analysis for a runner-up alternative candidate."""
+
+    name: str = Field(..., min_length=1, description="Name of alternative technology.")
+    reason: str = Field(..., min_length=1, description="Specific trade-off or score penalty explanation.")
+
+    model_config = ConfigDict(frozen=True)
+
+
 class RecommendationItem(BaseModel):
     """Recommendation item for a specific architectural component category."""
 
     category: str = Field(..., min_length=1, description="Architectural category (e.g. Vector DB, LLM, Reranker).")
     recommended: str = Field(..., min_length=1, description="Recommended technology or model choice.")
     confidence: float = Field(..., ge=0.0, le=1.0, description="Confidence score between 0.0 and 1.0.")
+    confidence_level: str = Field(default="Medium", description="Human-readable confidence label (Very High, High, Medium, Low, Weak).")
     reason: str = Field(..., min_length=1, description="Explanation justifying the recommendation.")
     alternatives: list[str] = Field(default_factory=list, description="Alternative technology choices considered.")
+    alternative_analysis: list[AlternativeDetail] = Field(default_factory=list, description="Structured trade-off analysis for lower-ranked alternatives.")
+    score_breakdown: dict[str, float] = Field(default_factory=dict, description="Individual sub-scores contributing to composite score.")
+    decision_trace: list[str] = Field(default_factory=list, description="Major project inputs driving the recommendation.")
+    evidence: dict[str, Any] = Field(default_factory=dict, description="Enriched knowledge base metadata for the recommended technology.")
+    metadata_used: list[str] = Field(default_factory=list, description="List of metadata fields that influenced the ranking.")
 
-    model_config = ConfigDict(frozen=True)
+    model_config = ConfigDict(frozen=True, arbitrary_types_allowed=True)
 
 
 class DecisionResponse(BaseModel):
@@ -61,5 +77,6 @@ class DecisionResponse(BaseModel):
     overall_confidence: float = Field(..., ge=0.0, le=1.0, description="Aggregate confidence score between 0.0 and 1.0.")
     generated_at: datetime = Field(..., description="UTC timestamp marking when recommendations were generated.")
     metadata: dict[str, str] = Field(default_factory=dict, description="Additional recommendation metadata.")
+    pipeline_statistics: dict[str, Any] = Field(default_factory=dict, description="Execution timings and candidate counts.")
 
-    model_config = ConfigDict(frozen=True)
+    model_config = ConfigDict(frozen=True, arbitrary_types_allowed=True)

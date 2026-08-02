@@ -1,0 +1,55 @@
+{
+  "technology": "Cloudflare Workers AI",
+  "category": "deployment",
+  "description": "Run machine learning models, powered by serverless GPUs, on Cloudflare's global network.\nWorkers AI allows you to run AI models in a serverless way, without having to worry about scaling, maintaining, or paying for unused infrastructure. You can invoke models running on GPUs on Cloudflare's network from your own code — from Workers, Pages, or anywhere via the Cloudflare API.\nWorkers AI gives you access to:\n- 50+ open-source models, available as a part of our model catalog\n- Serverless, pay-for-w",
+  "aliases": [],
+  "tags": [
+    "workers",
+    "cloudflare",
+    "storage",
+    "applications",
+    "models",
+    "serverless",
+    "global",
+    "build",
+    "learn",
+    "network",
+    "model",
+    "deploy",
+    "create",
+    "vectorize",
+    "data"
+  ],
+  "performance": {
+    "quality_score": null,
+    "benchmark_score": null,
+    "latency_ms": null,
+    "throughput": null
+  },
+  "pricing": {
+    "open_source": null,
+    "free_tier": null,
+    "monthly_cost": null,
+    "license": null
+  },
+  "adoption": {
+    "github_stars": null,
+    "monthly_downloads": null,
+    "active_users": null,
+    "enterprise_users": null,
+    "community_score": null
+  },
+  "capabilities": {
+    "supported_deployments": [],
+    "supported_languages": [],
+    "features": [
+      "gpu",
+      "rag"
+    ]
+  },
+  "recommendation": {
+    "score": null,
+    "confidence": null,
+    "reason": null
+  }
+}

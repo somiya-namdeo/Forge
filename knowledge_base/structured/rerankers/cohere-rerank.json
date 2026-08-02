@@ -1,0 +1,52 @@
+{
+  "technology": "Cohere Rerank",
+  "category": "rerankers",
+  "description": "Rerank API (v2)\nRerank API (v2)\nAuthentication\nBearer authentication of the form Bearer <token>, where token is your auth token.\nHeaders\nRequest\nThe identifier of the model to use, eg rerank-v3.5.\nDefaults to 4096. Long documents will be automatically truncated to the specified number of tokens.\nControls how early the request is handled. Lower numbers indicate higher priority (default: 0, the highest). When the system is under load, higher-priority requests are processed first and are the least ",
+  "aliases": [],
+  "tags": [
+    "token",
+    "rerank",
+    "authentication",
+    "bearer",
+    "request",
+    "form",
+    "auth",
+    "headers",
+    "identifier",
+    "model",
+    "rerank-v3",
+    "defaults",
+    "long",
+    "documents",
+    "automatically"
+  ],
+  "performance": {
+    "quality_score": null,
+    "benchmark_score": null,
+    "latency_ms": null,
+    "throughput": null
+  },
+  "pricing": {
+    "open_source": null,
+    "free_tier": null,
+    "monthly_cost": null,
+    "license": null
+  },
+  "adoption": {
+    "github_stars": null,
+    "monthly_downloads": null,
+    "active_users": null,
+    "enterprise_users": null,
+    "community_score": null
+  },
+  "capabilities": {
+    "supported_deployments": [],
+    "supported_languages": [],
+    "features": []
+  },
+  "recommendation": {
+    "score": null,
+    "confidence": null,
+    "reason": null
+  }
+}

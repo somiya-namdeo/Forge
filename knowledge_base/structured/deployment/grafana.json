@@ -1,0 +1,54 @@
+{
+  "technology": "Grafana",
+  "category": "deployment",
+  "description": "The open-source platform for monitoring and observability\nGrafana allows you to query, visualize, alert on and understand your metrics no matter where they are stored. Create, explore, and share dashboards with your team and foster a data-driven culture:\n- Visualizations: Fast and flexible client side graphs with a multitude of options. Panel plugins offer many different ways to visualize metrics and logs.\n- Dynamic Dashboards: Create dynamic & reusable dashboards with template variables that ap",
+  "aliases": [],
+  "tags": [
+    "grafana",
+    "explore",
+    "logs",
+    "metrics",
+    "data",
+    "available",
+    "https",
+    "query",
+    "visualize",
+    "alert",
+    "through",
+    "like",
+    "source",
+    "documentation",
+    "help"
+  ],
+  "performance": {
+    "quality_score": null,
+    "benchmark_score": null,
+    "latency_ms": null,
+    "throughput": null
+  },
+  "pricing": {
+    "open_source": null,
+    "free_tier": null,
+    "monthly_cost": null,
+    "license": "AGPL-3.0"
+  },
+  "adoption": {
+    "github_stars": null,
+    "monthly_downloads": null,
+    "active_users": null,
+    "enterprise_users": null,
+    "community_score": null
+  },
+  "capabilities": {
+    "supported_deployments": [],
+    "supported_languages": [],
+    "features": [
+      "streaming"
+    ]
+  },
+  "recommendation": {
+    "score": null,
+    "confidence": null,
+    "reason": null
+  }
+}

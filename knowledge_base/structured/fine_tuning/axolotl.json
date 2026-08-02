@@ -1,0 +1,59 @@
+{
+  "technology": "Axolotl",
+  "category": "fine_tuning",
+  "description": "- 2026/07:\n- NVFP4 (4-bit) MoE LoRA training is now supported via ScatterMoE (W4A16) and SonicMoE (W4A4), including lossless adapter merge back into a plain NVFP4 checkpoint.\n- 2026/06:\n- Expert Parallelism (EP) for distributed MoE training via DeepEP, remote training through Tinker-compatible APIs, Context Parallelism for hybrid SSM models (Nemotron-H, Falcon-H1, Bamba), BitNet 1.58-bit fine-tuning, and a multimodal assistant-only loss-masking fix.\n- 2026/04:\n- New model support has been added ",
+  "aliases": [],
+  "tags": [
+    "axolotl",
+    "support",
+    "training",
+    "models",
+    "added",
+    "fine-tuning",
+    "lora",
+    "examples",
+    "docs",
+    "model",
+    "agent-docs",
+    "parallelism",
+    "guide",
+    "deepspeed",
+    "grpo"
+  ],
+  "performance": {
+    "quality_score": null,
+    "benchmark_score": null,
+    "latency_ms": null,
+    "throughput": null
+  },
+  "pricing": {
+    "open_source": null,
+    "free_tier": null,
+    "monthly_cost": null,
+    "license": "Apache-2.0"
+  },
+  "adoption": {
+    "github_stars": null,
+    "monthly_downloads": null,
+    "active_users": null,
+    "enterprise_users": null,
+    "community_score": null
+  },
+  "capabilities": {
+    "supported_deployments": [],
+    "supported_languages": [],
+    "features": [
+      "agents",
+      "docker",
+      "gpu",
+      "multimodal",
+      "python",
+      "quantization"
+    ]
+  },
+  "recommendation": {
+    "score": null,
+    "confidence": null,
+    "reason": null
+  }
+}
