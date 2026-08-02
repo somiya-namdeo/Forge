@@ -1,7 +1,0 @@
-{
-  "technology": "nomic_embed",
-  "source": "official_documentation",
-  "path": "nomic_embed/official_documentation.txt",
-  "content": "Nomic Documentation\nNomic is a domain-specific AEC AI workspace and project delivery agent. Use it to understand your project data, run workflows for drawing reviews and compliance, and work with the tools and files you already use—cited answers, structured outputs, and PDF markups.\nUpload or sync drawings, specs, and project files—then run drawing reviews, code checks, submittals, and cross-project research—with the same connections your administrators use for Autodesk Forma, SharePoint, Egnyte, and more.\nStart here\nWhat you can do with Nomic\nModels\nAssistant defaults to Auto, where Nomic picks the current backend default model for each new session. Assistant runs on commercial foundation models; Embed and Parse power search and document understanding across the platform. Session pricing is pass-through at provider rates—see Models for the full table.\n| Model | Provider | Input (per 1M) | Output (per 1M) |\n|---|---|---|---|\n| Haiku 4.5 | Anthropic | $1.00 | $5.00 |\n| Sonnet 4.6 | Anthropic | $3.00 | $15.00 |\n| Sonnet 5 | Anthropic | $3.00 | $15.00 |\n| Opus 4.8 | Anthropic | $5.00 | $25.00 |\n| Opus 4.6 | Anthropic | $5.00 | $25.00 |\n| Gemini 3.5 Flash | $1.50 | $9.00 | |\n| Gemini 3.1 Pro | $2.00 | $12.00 |\nMore resources\nDeployment and compliance: Deployment options · Security and privacy",
-  "character_count": 1309
-}

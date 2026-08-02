@@ -1,7 +1,0 @@
-{
-  "technology": "azure_ai_foundry",
-  "source": "official_documentation",
-  "path": "azure_ai_foundry/official_documentation.txt",
-  "content": "Overview\nWhat is Microsoft Foundry?Microsoft Foundry documentation\nThe AI app and agent factory - build, optimize, and govern AI apps and agents at scale.\nConcept\nChoose how to buildQuickstart\nQuickstart: Build with models and agentsQuickstart\nQuickstart: Deploy a hosted agentFoundry Tools\nObservability and evaluation\nSoftware development kits (SDKs)\nGet started with the Foundry SDK in your favorite programming language.",
-  "character_count": 424
-}

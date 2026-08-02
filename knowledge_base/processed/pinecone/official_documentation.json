@@ -1,7 +1,0 @@
-{
-  "technology": "pinecone",
-  "source": "official_documentation",
-  "path": "pinecone/official_documentation.txt",
-  "content": "Get started\nDatabase quickstart\nBuild semantic search and knowledge retrieval into your agent or app\nAssistant quickstart\nCreate an AI assistant that answers questions about your proprietary data\nMarketplace quickstart\nPublish a no-code knowledge app from a template (public preview)\nBuild\nIDEs & CLIs\nUse Pinecone with Claude Code, Gemini CLI, Cursor, and other agentic tools\nMCP server\nConnect any MCP-compatible agent to Pinecone for search and index management\nAPI reference\nComprehensive details about the Pinecone APIs, SDKs, and architecture\nExamples\nNotebooks and sample apps with common AI patterns\nIntegrations\nThird-party integrations for LangChain, LlamaIndex, and more\nReleases\nWhat’s new in Pinecone",
-  "character_count": 713
-}

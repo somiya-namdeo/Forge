@@ -1,7 +1,0 @@
-{
-  "technology": "anthropic_claude",
-  "source": "github_repository",
-  "path": "anthropic_claude/github_repository.txt",
-  "content": "The Claude SDK for Python provides access to the Claude API from Python applications.\nFull documentation is available at platform.claude.com/docs/en/api/sdks/python.\npip install anthropicimport os\nfrom anthropic import Anthropic\nclient = Anthropic(\napi_key=os.environ.get(\"ANTHROPIC_API_KEY\"), # This is the default and can be omitted\n)\nmessage = client.messages.create(\nmax_tokens=1024,\nmessages=[\n{\n\"role\": \"user\",\n\"content\": \"Hello, Claude\",\n}\n],\nmodel=\"claude-opus-4-6\",\n)\nprint(message.content)Python 3.9+\nSee CONTRIBUTING.md.\nThis project is licensed under the MIT License. See the LICENSE file for details.",
-  "character_count": 613
-}

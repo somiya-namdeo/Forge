@@ -1,7 +1,0 @@
-{
-  "technology": "docker",
-  "source": "github_repository",
-  "path": "docker/github_repository.txt",
-  "content": "This repository is the home of the Docker CLI.\ndocker/cli is developed using Docker.\nBuild CLI from source:\ndocker buildx bakeBuild binaries for all supported platforms:\ndocker buildx bake crossBuild for a specific platform:\ndocker buildx bake --set binary.platform=linux/arm64 Build dynamic binary for glibc or musl:\nUSE_GLIBC=1 docker buildx bake dynbinary Run all linting:\ndocker buildx bake lint shellcheckRun test:\ndocker buildx bake testRun the unit test:\n$ make -f docker.Makefile test-unit\nRun the full test suite:\n$ make -f docker.Makefile test\nList all the available targets:\nmake helpStart an interactive development environment:\nmake shellBrought to you courtesy of our legal counsel. For more context, see the NOTICE document in this repo.\nUse and transfer of Docker may be subject to certain restrictions by the United States and other governments.\nIt is your responsibility to ensure that your use and/or transfer does not violate applicable laws.\nFor more information, see https://www.bis.doc.gov\ndocker/cli is licensed under the Apache License, Version 2.0. See LICENSE for the full license text.",
-  "character_count": 1113
-}

@@ -7,7 +7,7 @@ load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parents[2]
 
-QDRANT_PATH = BASE_DIR / "vector_store" / "qdrant"
+QDRANT_PATH = BASE_DIR / "knowledge_base" / "vector_store"
 
 COLLECTION_NAME = "forge_knowledge"
 

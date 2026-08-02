@@ -1,7 +1,0 @@
-{
-  "technology": "pinecone",
-  "source": "github_repository",
-  "path": "pinecone/github_repository.txt",
-  "content": "Pinecone is the leading vector database for building accurate, performant AI\napplications at scale. We give models long-term memory and access to your data\nso they can reason over what they know and retrieve what they don't. Trusted by\n9,000+ companies and 800,000+ developers to power agents, search, and recommendation systems.\nWebsite · Documentation · Blog · Community\n- Official clients: Python, TypeScript, Go, Java\n- Examples: notebooks and sample apps\n- AI assistants: AI coding tools and Pinecone MCP\n- Infrastructure as code: Terraform provider\nNew to vector databases? Start with the quickstart.",
-  "character_count": 606
-}

@@ -1,7 +1,0 @@
-{
-  "technology": "render",
-  "source": "official_documentation",
-  "path": "render/official_documentation.txt",
-  "content": "Render Documentation\nLearn how to deploy and scale apps on the Render platform.\nCreate\n- Deploy services- Connect your repo and ship with every push.\n- Store data- Provision flexible datastores with advanced recovery features.\n- Run workflowsBeta- Execute chains of long-running tasks on distributed compute.\nConfigure\n- Service settings- Apply essential config.\n- Networking- Handle connections to, from, and between your services.\n- Infrastructure-as-code- Manage your multi-service architecture with a single YAML file.\nOperate\n- Service actions- Respond to increased load, app regressions, and other events.\n- Integrations- Manage infra with agents, scripts, and API calls.\nQuickstarts\nUse your favorite language and framework.\n- If you have questions, reach out on Discord.\n- See @render-examples on GitHub for more examples.",
-  "character_count": 830
-}

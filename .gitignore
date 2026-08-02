@@ -99,3 +99,18 @@ temp/
 
 # Git
 .git-credentials
+
+# Generated Knowledge Base
+knowledge_base/raw/
+knowledge_base/processed/
+knowledge_base/chunks/
+knowledge_base/vector_store/
+
+knowledge_base/chunks.json
+knowledge_base/embeddings.npy
+knowledge_base/embedding_metadata.json
+
+scratch/
+
+knowledge_base/chunks.json
+knowledge_base/*.csv

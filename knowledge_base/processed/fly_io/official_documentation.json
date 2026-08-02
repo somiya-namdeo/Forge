@@ -1,7 +1,0 @@
-{
-  "technology": "fly_io",
-  "source": "official_documentation",
-  "path": "fly_io/official_documentation.txt",
-  "content": "Fly.io developer documentation\nReady to get started?\nStep 1: Install flyctl\nbrew install flyctl\nNot using brew? Check out the installation guide\nStep 2: Run fly launch\n\nExplore Fly.io by features\nCould you use more help?\nOur Community forum and Support team have the answers.\nCommunity Forum\n- Free to use\n- Discuss Fly.io with other users\n- See new Fly.io developments first\n- Searchable backlog\n- Quick answers to common issues\nSupport\n- Plans start at $29/month\n- Guaranteed response time\n- Run by Fly.io engineers, not chat bots\n- Technical architecture support\n- Public metrics",
-  "character_count": 582
-}

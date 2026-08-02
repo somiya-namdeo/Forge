@@ -1,7 +1,0 @@
-{
-  "technology": "langgraph",
-  "source": "api_reference",
-  "path": "langgraph/api_reference.txt",
-  "content": "Welcome to the LangGraph package reference documentation!\nLangGraph is a framework for building resilient language agents as graphs. The langgraph package is the main entrypoint, providing everything you need to define stateful, multi-step agent workflows. The packages below form the LangGraph ecosystem:\nlanggraphThe core framework for building stateful, multi-actor applications with LLMs as graphs.\nlanggraph.prebuiltPre-built agents and tool nodes for common patterns like ReAct agents.\nlanggraph.checkpointBase interfaces and serialization for graph state checkpointing.\nlanggraph.checkpoint.postgresPostgreSQL-backed checkpoint storage for persistent graph state.\nlanggraph.store.postgresPostgreSQL-backed store implementations for long-term memory and search.\nlanggraph.checkpoint.sqliteSQLite-backed checkpoint storage for lightweight local persistence.\nlanggraph_cliCommand-line interface for managing and deploying LangGraph applications.\nlanggraph_sdkPython SDK client for interacting with deployed LangGraph APIs.\nlanggraph_supervisorBuild multi-agent systems with a supervisor agent that delegates to sub-agents.\nlanggraph_swarmBuild multi-agent systems with swarm-style agent handoff patterns.",
-  "character_count": 1208
-}

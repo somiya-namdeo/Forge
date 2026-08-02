@@ -1,7 +1,0 @@
-{
-  "technology": "anthropic_claude",
-  "source": "technical_blog",
-  "path": "anthropic_claude/technical_blog.txt",
-  "content": "Newsroom\n- Press inquirespress@anthropic.com\n- Non-media inquiriesHow to get support\n- Media assetsDownload press kit\nInviting hard questions\nWe’re asking the public for their hardest questions about AI, and committing to show our work as we address them.\nThe Making of Claude Code\nThe inside story of how Claude Code went from an internal CLI to Anthropic's coding agent, told by researchers, engineers and early users who built it.\nRedeploying Fable 5\nFable 5 returns globally July 1. We're also proposing an industry-wide framework for scoring jailbreak severity, together with Amazon, Microsoft, Google, and other Glasswing partners.\nIntroducing Claude Sonnet 5\nSonnet 5 delivers frontier performance across coding, agents, and professional work at scale.\nNews\n- Our position on open-weights models\n- Cognizant and Anthropic expand their partnership to bring Claude to enterprise clients\n- Introducing Claude Opus 5\n- A research agenda for the Economic Futures Research Fund\n- Ask Claude about the Anthropic Economic Index\n- Anthropic is donating another $20 million to Public First Action\n- Apply for Anthropic’s AI for Science rare disease research grants\n- Introducing Claude for Teachers\n- Anthropic commits $10 million to Canadian AI research\n- UST is bringing Claude to physical AI",
-  "character_count": 1291
-}

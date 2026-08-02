@@ -1,7 +1,0 @@
-{
-  "technology": "peft",
-  "source": "official_documentation",
-  "path": "peft/official_documentation.txt",
-  "content": "PEFT documentation\nPEFT\nGet started\nGuides\nConfigurations and modelsIntegrations Memory Efficient TrainingModel mergingQuantizationCustom modelsAdapter injectionMixing PEFT methodstorch.compileContribute to PEFTTroubleshootingPEFT checkpoint format\nDistributed Training\nMethods\nAPI reference\nPEFT\n🤗 PEFT (Parameter-Efficient Fine-Tuning) is a library for efficiently adapting large pretrained models to various downstream applications without fine-tuning all of a model’s parameters because it is prohibitively costly. PEFT methods only fine-tune a small number of (extra) model parameters - significantly decreasing computational and storage costs - while yielding performance comparable to a fully fine-tuned model. This makes it more accessible to train and store large language models (LLMs) and other big models on consumer hardware.\nPEFT is integrated with the Transformers, Diffusers, and Accelerate libraries to provide a faster and easier way to load, train, and use large models for inference.\nThere are numerous methods to \"adapt\" existing models, often extensively integrating into the model. PEFT can be thought of as a framework for arbitrary methods of model adaption (modifying weights, wrapping layers, manipulating KV-caches, ...) while also serving as a reference implementation for many fine-tuning methods.\nUpdate on GitHub",
-  "character_count": 1344
-}

@@ -1,7 +1,0 @@
-{
-  "technology": "langchain",
-  "source": "official_documentation",
-  "path": "langchain/official_documentation.txt",
-  "content": "create_agent: a minimal, highly configurable harness. The harness is everything around the model loop: the prompt, the tools, and any middleware that shapes behavior. Start with the primitives and compose exactly what your use case needs. Supports OpenAI, Anthropic, Google, and more.\nCreate an agent\nThis example demonstrates how to create a simple LangChain agent with a custom tool:Core benefits\nStandard model interface\nUse one interface for chat models, embeddings, and more across providers. Switch models with minimal code changes and keep your application portable as requirements evolve.\nHighly configurable harness\nStart with\ncreate_agent as a minimal harness and add capabilities incrementally through middleware. Compose only what your use case needs, from guardrails and retries to routing and custom tool policies.Built on top of LangGraph\nLangChain’s agents are built on top of LangGraph. This allows us to take advantage of LangGraph’s durable execution, human-in-the-loop support, persistence, and more.\nDebug with LangSmith\nInspect traces, tool calls, state transitions, and latency in one place. Find failure modes, evaluate quality, and improve agent behavior with execution data.\nConnect these docs to Claude, VSCode, and more via MCP for real-time answers.",
-  "character_count": 1278
-}

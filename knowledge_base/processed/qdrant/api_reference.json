@@ -1,7 +1,0 @@
-{
-  "technology": "qdrant",
-  "source": "api_reference",
-  "path": "qdrant/api_reference.txt",
-  "content": "API Reference\nQdrant is a vector database and a semantic search engine. You can use its REST API to develop a production-ready service to store, search, and manage vectors with an additional payload.\nHow does Qdrant work?\n- First, you should create a collection to store all your data.\n- Then upsert data points and enrich them with a custom payload.\n- With a full collection, run a search to find relevant results.\n- Collections can be snapshotted, downloaded and restored.\n- When ready, setup a distributed system for production.\nJust getting started?\nTry the development quickstart guide.",
-  "character_count": 591
-}

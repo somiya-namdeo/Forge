@@ -1,7 +1,0 @@
-{
-  "technology": "modal",
-  "source": "official_documentation",
-  "path": "modal/official_documentation.txt",
-  "content": "Guide\nEverything you need to know to run code on Modal. Dive deep into all of our features and best practices.\nExamples\nPowerful applications built with Modal. Explore guided starting points for your use case.\nReference\nTechnical information about the Modal API. Quickly refer to basic descriptions of various programming functionalities.\nPlayground\nInteractive tutorials to learn how to start using Modal. Run serverless cloud functions from your browser.",
-  "character_count": 456
-}

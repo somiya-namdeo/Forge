@@ -1,7 +1,0 @@
-{
-  "technology": "anthropic_claude",
-  "source": "official_documentation",
-  "path": "anthropic_claude/official_documentation.txt",
-  "content": "Claude Platform\nStart building with Claude\nEverything you need to integrate Claude into your applications. From first API call to production.\nWhat do you want to build?\nimport anthropic\nclient = anthropic.Anthropic()\nmessage = client.messages.create(\nmodel=\"claude-opus-5\",\nmax_tokens=1024,\nmessages=[{\n\"role\": \"user\",\n\"content\": \"Hello, Claude\"\n}]\n)\nfor block in message.content:\nif block.type == \"text\":\nprint(block.text)Choose how you build\nPick the developer surface that matches your approach, and the infrastructure that fits your stack.\nMessages\nDirect model access. You construct every turn, manage conversation state, and write your own tool loop.\nManaged Agents\nFully managed agent infrastructure. Deploy and manage autonomous agents in stateful sessions with persistent event history.\nFrom idea to production\nFollow the lifecycle or jump to what you need.\n- Get started\n- Build\n- Evaluate and ship\n- Operate\nThe Claude model family\nChoose the right model for your use case.\nMost capable\nFable 5Highest capability for the most demanding reasoning and long-horizon agentic work.",
-  "character_count": 1087
-}

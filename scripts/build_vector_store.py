@@ -104,6 +104,7 @@ def build_vector_store(
     )
     logger.info(f"Collection '{collection_name}' created successfully.")
 
+    logger.info("Preparing Qdrant points with enriched metadata payloads...")
     points = [
         PointStruct(
             id=idx,
