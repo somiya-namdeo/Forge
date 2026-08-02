@@ -4,9 +4,10 @@ import json
 from pathlib import Path
 from typing import Any
 
+from app.core.config import BASE_DIR
 from app.schemas.decision import DecisionRequest
 
-_DEFAULT_KNOWLEDGE_DIR = Path(__file__).resolve().parents[3] / "knowledge_base"
+_DEFAULT_KNOWLEDGE_DIR = BASE_DIR / "knowledge_base"
 
 # Mapping from common directory names or stems to standard logical category names
 _CATEGORY_MAPPING: dict[str, str] = {
@@ -219,6 +220,12 @@ class KnowledgeRetriever:
                 capitalized.append(w.capitalize())
         return " ".join(capitalized)
 
+    @staticmethod
+    def _normalize_category(raw_category: str) -> str:
+        """Map raw category string to standard logical category name using _CATEGORY_MAPPING."""
+        lowered = raw_category.strip().lower()
+        return _CATEGORY_MAPPING.get(lowered, lowered)
+
     def _infer_category(self, file_path: Path) -> str:
         """Determine logical category for a JSON knowledge file dynamically from path and content hints."""
         try:
@@ -301,22 +308,28 @@ class KnowledgeRetriever:
             self._cache = {}
             return self._cache
 
-        # Scan all JSON files recursively
+        # Scan all JSON files recursively (excluding individual chunk files and chunks directory)
         for json_file in sorted(self.knowledge_dir.rglob("*.json")):
-            # Skip document text chunk files and embedding vector metadata files
-            if json_file.name in ("chunks.json", "embedding_metadata.json"):
+            if "chunks" in json_file.parts or json_file.name in ("chunks.json", "embedding_metadata.json"):
                 continue
 
-            category = self._infer_category(json_file)
+            file_inferred_category = self._infer_category(json_file)
             parsed_entities = self._parse_json_file(json_file)
-
-            if category not in raw_category_candidates:
-                raw_category_candidates[category] = {}
 
             for entity in parsed_entities:
                 # Skip raw text chunk items
                 if "chunk_id" in entity or "chunk_index" in entity:
                     continue
+
+                # Use category stored inside entity metadata if available, falling back to file inference
+                entity_cat = entity.get("category")
+                if entity_cat and isinstance(entity_cat, str) and entity_cat.strip():
+                    category = self._normalize_category(entity_cat)
+                else:
+                    category = file_inferred_category
+
+                if category not in raw_category_candidates:
+                    raw_category_candidates[category] = {}
 
                 # Extended technology identifier extraction lookup order
                 tech_id = (
