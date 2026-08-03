@@ -20,6 +20,7 @@ from app.services.decision_service import DecisionService
 from app.services.evaluation_service import EvaluationService
 from app.thresholds.threshold_manager import ThresholdManager
 from app.utils.weighting import WeightingEngine
+from app.services.comparison_service import ComparisonService
 
 
 @lru_cache
@@ -178,3 +179,9 @@ def get_decision_service(
         recommendation_engine=recommendation_engine,
         explanation_engine=explanation_engine,
     )
+
+def get_comparison_service() -> ComparisonService:
+    """Return ComparisonService instance."""
+    return ComparisonService()
+
+

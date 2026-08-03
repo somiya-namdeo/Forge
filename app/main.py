@@ -3,7 +3,7 @@ from fastapi import FastAPI
 from app.api.routes.benchmark import router as benchmark_router
 from app.api.routes.decision import router as decision_router
 from app.routes.evaluation import router as evaluation_router
-
+from app.api.routes.comparison import router as comparison_router
 app = FastAPI(
     title="Forge AI Engineering Decision Platform",
     description=(
@@ -23,6 +23,10 @@ app.include_router(
 )
 app.include_router(
     benchmark_router,
+    prefix="/api/v1",
+)
+app.include_router(
+    comparison_router,
     prefix="/api/v1",
 )
 

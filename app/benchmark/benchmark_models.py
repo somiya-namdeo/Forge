@@ -63,13 +63,15 @@ class BenchmarkRunConfig(BaseModel):
                         "category": "legal",
                         "difficulty": "medium",
                         "question": "What is the notice period for contract termination?",
-                        "contexts": ["Section 4: Termination requires 30 days written notice."],
+                        "contexts": [
+                            "Section 4: Termination requires 30 days written notice."
+                        ],
                         "ground_truth": "30 days written notice."
                     }
                 ],
                 "provider": "ragas"
             }
-        }
+        },
     )
 
 
@@ -86,17 +88,67 @@ class BenchmarkSampleResult(BaseModel):
     model_config = ConfigDict(frozen=True)
 
 
+class MetricStatistics(BaseModel):
+    """Detailed statistical summary for an individual evaluation metric."""
+
+    average: float = Field(..., ge=0.0, le=1.0, description="Average metric score.")
+    median: float = Field(..., ge=0.0, le=1.0, description="Median metric score.")
+    minimum: float = Field(..., ge=0.0, le=1.0, description="Minimum metric score.")
+    maximum: float = Field(..., ge=0.0, le=1.0, description="Maximum metric score.")
+    standard_deviation: NonNegativeFloat = Field(..., description="Standard deviation of metric scores.")
+
+    model_config = ConfigDict(frozen=True)
+
+
 class BenchmarkStatistics(BaseModel):
     """Aggregated statistical summary across benchmark sample runs."""
 
     total_samples: NonNegativeInt = Field(..., description="Total number of evaluated samples.")
+
     passed_samples: NonNegativeInt = Field(..., description="Number of samples passing quality gates.")
+
     warning_samples: NonNegativeInt = Field(default=0, description="Number of samples with warning status.")
+
     failed_samples: NonNegativeInt = Field(..., description="Number of samples failing quality gates.")
-    average_score: float = Field(..., ge=0.0, le=1.0, description="Mean overall score across samples.")
-    average_execution_time_ms: NonNegativeFloat = Field(..., description="Mean sample execution time in milliseconds.")
-    metric_averages: dict[str, float] = Field(default_factory=dict, description="Mean score breakdown per metric.")
-    status_distribution: dict[str, int] = Field(default_factory=dict, description="Count distribution per evaluation status.")
+
+    average_score: float = Field(..., ge=0.0, le=1.0, description="Average overall score.")
+
+    median_score: float = Field(..., ge=0.0, le=1.0, description="Median overall score.")
+
+    minimum_score: float = Field(..., ge=0.0, le=1.0, description="Minimum overall score.")
+
+    maximum_score: float = Field(..., ge=0.0, le=1.0, description="Maximum overall score.")
+
+    score_standard_deviation: NonNegativeFloat = Field(..., description="Standard deviation of overall scores.")
+
+    average_execution_time_ms: NonNegativeFloat = Field(..., description="Average execution time.")
+
+    median_execution_time_ms: NonNegativeFloat = Field(..., description="Median execution time.")
+
+    minimum_execution_time_ms: NonNegativeFloat = Field(..., description="Minimum execution time.")
+
+    maximum_execution_time_ms: NonNegativeFloat = Field(..., description="Maximum execution time.")
+
+    p95_execution_time_ms: NonNegativeFloat = Field(..., description="95th percentile execution time.")
+
+    success_rate: float = Field(..., ge=0.0, le=1.0, description="Ratio of passed samples.")
+
+    failure_rate: float = Field(..., ge=0.0, le=1.0, description="Ratio of failed samples.")
+
+    metric_averages: dict[str, float] = Field(
+        default_factory=dict,
+        description="Average score for each metric.",
+    )
+
+    metric_statistics: dict[str, MetricStatistics] = Field(
+        default_factory=dict,
+        description="Detailed statistics for every evaluation metric.",
+    )
+
+    status_distribution: dict[str, int] = Field(
+        default_factory=dict,
+        description="Distribution of evaluation statuses.",
+    )
 
     model_config = ConfigDict(frozen=True)
 
