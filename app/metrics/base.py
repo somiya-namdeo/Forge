@@ -2,34 +2,49 @@
 
 from abc import ABC, abstractmethod
 from collections.abc import Sequence
+from typing import TYPE_CHECKING, Any, Dict
 
-from app.schemas.evaluation import EvaluationRequest
+if TYPE_CHECKING:
+    from app.schemas.evaluation import EvaluationRequest
 
 
 class BaseMetricEvaluator(ABC):
-    """Abstract base contract for evaluation metric providers."""
+    """Abstract base contract for all evaluation providers."""
 
+    @property
     @abstractmethod
     def provider_name(self) -> str:
-        """Return the provider identifier."""
+        """Unique provider identifier (e.g. ragas, deepeval)."""
         raise NotImplementedError
 
     @property
     def name(self) -> str:
-        """Return the provider name."""
-        return self.provider_name()
+        """Human-readable provider name."""
+        return self.provider_name
 
+    @property
     @abstractmethod
     def supported_metrics(self) -> Sequence[str]:
-        """Return the sequence of metrics supported by the provider."""
+        """Metrics supported by this provider."""
         raise NotImplementedError
 
     @abstractmethod
-    def evaluate(self, request: EvaluationRequest) -> dict[str, float]:
-        """Execute synchronous evaluation returning raw metric scores dict."""
+    def evaluate(self, request: Any) -> Dict[str, float]:
+        """
+        Evaluate a single RAG response.
+
+        Returns:
+            Dictionary mapping metric names to normalized scores.
+        """
         raise NotImplementedError
 
-    @abstractmethod
-    async def evaluate_async(self, request: EvaluationRequest) -> dict[str, float]:
-        """Execute asynchronous evaluation returning raw metric scores dict."""
-        raise NotImplementedError
+    async def evaluate_async(
+        self,
+        request: Any,
+    ) -> Dict[str, float]:
+        """
+        Default asynchronous implementation.
+
+        Providers may override this with a native async implementation.
+        """
+        return self.evaluate(request)

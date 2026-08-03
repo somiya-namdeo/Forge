@@ -1,50 +1,62 @@
-"""Metric registry for managing evaluation provider instances."""
+"""Registry for evaluation metric providers."""
 
-from typing import Any, Dict, List, Optional
-from app.metrics import BaseMetricEvaluator, EvaluationProvider
+from app.metrics import BaseMetricEvaluator
 
 
 class MetricRegistry:
-    """Registry managing evaluation provider instances."""
+    """Registry managing all evaluation providers."""
 
     def __init__(self) -> None:
-        """Initialize empty metric registry."""
-        self._providers: Dict[Any, BaseMetricEvaluator] = {}
-
-    def register_provider(self, evaluator: BaseMetricEvaluator) -> None:
-        """Register a new metric evaluation provider."""
-        name = evaluator.provider_name() if callable(evaluator.provider_name) else evaluator.provider_name
-        self._providers[name] = evaluator
+        self._providers: dict[str, BaseMetricEvaluator] = {}
 
     def register(self, provider: BaseMetricEvaluator) -> None:
-        """Alias for register_provider."""
-        self.register_provider(provider)
+        """
+        Register an evaluation provider.
 
-    def unregister(self, provider_name: Any) -> None:
-        """Unregister an evaluation provider by name."""
+        Raises:
+            ValueError: If provider already exists.
+        """
+        name = provider.provider_name
+
+        if name in self._providers:
+            raise ValueError(
+                f"Provider '{name}' is already registered."
+            )
+
+        self._providers[name] = provider
+
+    # Backward compatibility
+    register_provider = register
+
+    def unregister(self, provider_name: str) -> None:
+        """Remove a registered provider."""
         if provider_name not in self._providers:
-            raise ValueError(f"Provider '{provider_name}' is not registered.")
+            raise ValueError(
+                f"Provider '{provider_name}' is not registered."
+            )
+
         del self._providers[provider_name]
 
-    def get_provider(self, provider: Any) -> Optional[BaseMetricEvaluator]:
-        """Retrieve registered metric evaluator by provider enum or name."""
-        return self._providers.get(provider)
+    def get(self, provider_name: str) -> BaseMetricEvaluator:
+        """Return a registered provider."""
+        try:
+            return self._providers[provider_name]
+        except KeyError as exc:
+            raise ValueError(
+                f"Provider '{provider_name}' is not registered."
+            ) from exc
 
-    def get(self, provider_name: Any) -> BaseMetricEvaluator:
-        """Retrieve a registered evaluation provider by name."""
-        res = self.get_provider(provider_name)
-        if res is None:
-            raise ValueError(f"Provider '{provider_name}' is not registered.")
-        return res
+    # Backward compatibility
+    get_provider = get
 
-    def exists(self, provider_name: Any) -> bool:
-        """Check whether a provider is registered."""
+    def exists(self, provider_name: str) -> bool:
+        """Check if provider exists."""
         return provider_name in self._providers
 
-    def list_providers(self) -> List[Any]:
-        """Return list of registered provider names."""
-        return list(self._providers.keys())
+    def list_providers(self) -> list[str]:
+        """Return all registered provider names."""
+        return sorted(self._providers.keys())
 
-    def providers(self) -> Dict[Any, BaseMetricEvaluator]:
-        """Return a shallow copy of the provider registry."""
+    def providers(self) -> dict[str, BaseMetricEvaluator]:
+        """Return a copy of the registry."""
         return self._providers.copy()
