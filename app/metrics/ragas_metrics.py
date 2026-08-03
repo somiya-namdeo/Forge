@@ -21,6 +21,11 @@ from app.core.config import EMBEDDING_MODEL, GROQ_API_KEY, LLM_MODEL
 from app.metrics.base import BaseMetricEvaluator
 from app.schemas.evaluation import EvaluationRequest
 
+import time
+import logging
+
+logger = logging.getLogger(__name__)
+
 _REFERENCE_REQUIRED_METRICS = {"context_precision", "context_recall"}
 
 
@@ -39,8 +44,27 @@ class RagasEvaluator(BaseMetricEvaluator):
     """RAGAS evaluation framework provider implementing BaseMetricEvaluator.
 
     Maintains singletons for LLM and Embeddings wrappers, ensuring high performance
-    and zero model re-initialization during repeated evaluations.
+    and zero model re-initialization during repeated evaluations. Includes a 60s provider
+    circuit breaker on rate limits / timeouts.
     """
+
+    _circuit_breaker_until: float = 0.0
+
+    @classmethod
+    def is_circuit_open(cls) -> bool:
+        """Return True if circuit breaker is currently open (cooling down)."""
+        return time.time() < cls._circuit_breaker_until
+
+    @classmethod
+    def trip_circuit_breaker(cls, cooldown_seconds: float = 60.0) -> None:
+        """Trip circuit breaker for cooldown_seconds on 429/timeout/provider failures."""
+        cls._circuit_breaker_until = time.time() + cooldown_seconds
+        logger.info("RAGAS circuit breaker TRIP OPEN (60s cooldown initiated).")
+
+    @classmethod
+    def reset_circuit_breaker(cls) -> None:
+        """Reset circuit breaker state (for testing)."""
+        cls._circuit_breaker_until = 0.0
 
     def __init__(self) -> None:
         """Initialize RAGAS evaluator with Groq LLM and BGE embeddings wrappers."""
@@ -113,8 +137,13 @@ class RagasEvaluator(BaseMetricEvaluator):
             dict[str, float]: Dictionary mapping metric names to normalized scores.
 
         Raises:
-            ValueError: If RAGAS evaluation fails.
+            ValueError: If RAGAS evaluation fails or circuit breaker is open.
         """
+        if self.is_circuit_open():
+            cooldown_rem = int(self._circuit_breaker_until - time.time())
+            logger.info("RAGAS circuit breaker OPEN (%ds cooldown remaining). Skipping provider call.", max(1, cooldown_rem))
+            raise ValueError(f"RAGAS circuit breaker OPEN ({cooldown_rem}s remaining on 429/timeout cooldown)")
+
         eval_metrics = self._resolve_requested_metrics(request)
         if not eval_metrics:
             return {}
@@ -144,6 +173,7 @@ class RagasEvaluator(BaseMetricEvaluator):
                 raise_exceptions=True,
             )
         except Exception as exc:
+            self.trip_circuit_breaker(60.0)
             metric_names = [getattr(m, "name", str(m)) for m in eval_metrics]
             raise ValueError(
                 f"RAGAS evaluation failed for metrics {metric_names}: {exc}"

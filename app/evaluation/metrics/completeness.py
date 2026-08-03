@@ -65,10 +65,18 @@ class CompletenessCalculator(MetricCalculator):
     def _try_ragas(self, metric_input: MetricInput) -> Optional[float]:
         try:
             from app.metrics.ragas_metrics import get_ragas_evaluator
-            from app.schemas.evaluation import EvaluationRequest
+            from app.schemas.evaluation import EvaluationRequest, MetricConfig, MetricType
             evaluator = get_ragas_evaluator()
-            req = EvaluationRequest(question=metric_input.question or "", answer=metric_input.answer or "",
-                                    contexts=metric_input.contexts, ground_truth=metric_input.ground_truth)
+            if evaluator.is_circuit_open():
+                logger.info("RAGAS circuit breaker OPEN (429 rate limit). Using deterministic fallback for completeness.")
+                return None
+            req = EvaluationRequest(
+                question=metric_input.question or "",
+                answer=metric_input.answer or "",
+                contexts=metric_input.contexts,
+                ground_truth=metric_input.ground_truth,
+                metric_config=[MetricConfig(metric_type=MetricType.ANSWER_RELEVANCY)],
+            )
             scores = evaluator.evaluate(req)
             if isinstance(scores, dict) and "answer_relevancy" in scores:
                 return float(scores["answer_relevancy"])

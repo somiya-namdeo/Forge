@@ -64,6 +64,11 @@ class DeepEvalToxicityMetric:
         return 0.0
 
 
+import time
+import logging
+
+logger = logging.getLogger(__name__)
+
 _deepeval_evaluator_instance = None
 
 
@@ -77,6 +82,24 @@ def get_deepeval_evaluator() -> "DeepEvalEvaluator":
 
 class DeepEvalEvaluator(BaseMetricEvaluator):
     """Evaluation provider implementation wrapping the DeepEval framework."""
+
+    _circuit_breaker_until: float = 0.0
+
+    @classmethod
+    def is_circuit_open(cls) -> bool:
+        """Return True if circuit breaker is open."""
+        return time.time() < cls._circuit_breaker_until
+
+    @classmethod
+    def trip_circuit_breaker(cls, cooldown_seconds: float = 60.0) -> None:
+        """Trip circuit breaker for cooldown_seconds."""
+        cls._circuit_breaker_until = time.time() + cooldown_seconds
+        logger.info("DeepEval circuit breaker TRIP OPEN (60s cooldown initiated).")
+
+    @classmethod
+    def reset_circuit_breaker(cls) -> None:
+        """Reset circuit breaker state."""
+        cls._circuit_breaker_until = 0.0
 
     def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """Initialize DeepEval evaluator configuration.

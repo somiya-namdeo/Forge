@@ -54,10 +54,18 @@ class CoherenceCalculator(MetricCalculator):
     def _try_deepeval(self, metric_input: MetricInput) -> Optional[float]:
         try:
             from app.metrics.deepeval_metrics import get_deepeval_evaluator
-            from app.schemas.evaluation import EvaluationRequest
+            from app.schemas.evaluation import EvaluationRequest, MetricConfig, MetricType
             evaluator = get_deepeval_evaluator()
-            req = EvaluationRequest(question=metric_input.question or "", answer=metric_input.answer or "",
-                                    contexts=metric_input.contexts, ground_truth=metric_input.ground_truth)
+            if evaluator.is_circuit_open():
+                logger.info("DeepEval circuit breaker OPEN (429 rate limit). Using deterministic fallback for coherence.")
+                return None
+            req = EvaluationRequest(
+                question=metric_input.question or "",
+                answer=metric_input.answer or "",
+                contexts=metric_input.contexts,
+                ground_truth=metric_input.ground_truth,
+                metric_config=[MetricConfig(metric_type=MetricType.COHERENCE)],
+            )
             scores = evaluator.evaluate(req)
             if isinstance(scores, dict) and "coherence" in scores:
                 return float(scores["coherence"])

@@ -116,14 +116,19 @@ class ContextRecallCalculator(MetricCalculator):
         """Attempt calculation using RAGAS Evaluator provider."""
         try:
             from app.metrics.ragas_metrics import get_ragas_evaluator
-            from app.schemas.evaluation import EvaluationRequest
+            from app.schemas.evaluation import EvaluationRequest, MetricConfig, MetricType
 
             evaluator = get_ragas_evaluator()
+            if evaluator.is_circuit_open():
+                logger.info("RAGAS circuit breaker OPEN (429 rate limit). Using deterministic fallback for context_recall.")
+                return None
+
             req = EvaluationRequest(
                 question=metric_input.question or "Evaluate context recall",
                 answer=metric_input.answer or "",
                 contexts=metric_input.contexts,
                 ground_truth=metric_input.ground_truth,
+                metric_config=[MetricConfig(metric_type=MetricType.CONTEXT_RECALL)],
             )
             scores = evaluator.evaluate(req)
             if isinstance(scores, dict) and "context_recall" in scores:
@@ -136,14 +141,19 @@ class ContextRecallCalculator(MetricCalculator):
         """Attempt calculation using DeepEval Evaluator provider."""
         try:
             from app.metrics.deepeval_metrics import get_deepeval_evaluator
-            from app.schemas.evaluation import EvaluationRequest
+            from app.schemas.evaluation import EvaluationRequest, MetricConfig, MetricType
 
             evaluator = get_deepeval_evaluator()
+            if evaluator.is_circuit_open():
+                logger.info("DeepEval circuit breaker OPEN (429 rate limit). Using deterministic fallback for context_recall.")
+                return None
+
             req = EvaluationRequest(
                 question=metric_input.question or "Evaluate context recall",
                 answer=metric_input.answer or "",
                 contexts=metric_input.contexts,
                 ground_truth=metric_input.ground_truth,
+                metric_config=[MetricConfig(metric_type=MetricType.CONTEXT_RECALL)],
             )
             scores = evaluator.evaluate(req)
             if isinstance(scores, dict) and "context_recall" in scores:
