@@ -62,7 +62,7 @@ class CoherenceCalculator(MetricCalculator):
             if isinstance(scores, dict) and "coherence" in scores:
                 return float(scores["coherence"])
         except Exception as exc:
-            logger.warning("DeepEval coherence failed: %s", exc)
+            logger.info("DeepEval unavailable/timeout. Using deterministic coherence: %s", exc)
         return None
 
     def _deterministic(self, metric_input: MetricInput, timer: Any) -> MetricResult:

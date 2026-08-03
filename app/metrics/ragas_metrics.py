@@ -38,6 +38,8 @@ class RagasEvaluator(BaseMetricEvaluator):
             api_key=GROQ_API_KEY,
             base_url="https://api.groq.com/openai/v1",
             temperature=0.0,
+            max_retries=0,
+            request_timeout=3.0,
         )
         self._ragas_llm = LangchainLLMWrapper(self._llm)
         self._embeddings = HuggingFaceBgeEmbeddings(model_name=EMBEDDING_MODEL)

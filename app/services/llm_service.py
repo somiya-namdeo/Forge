@@ -14,6 +14,8 @@ class LLMService:
             api_key=GROQ_API_KEY,
             base_url="https://api.groq.com/openai/v1",
             temperature=0.2,
+            max_retries=0,
+            request_timeout=3.0,
         )
 
     def generate(self, prompt: str) -> str:

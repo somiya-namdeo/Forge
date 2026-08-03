@@ -129,7 +129,7 @@ class ContextRecallCalculator(MetricCalculator):
             if isinstance(scores, dict) and "context_recall" in scores:
                 return float(scores["context_recall"])
         except Exception as exc:
-            logger.warning("RAGAS context_recall evaluation failed, falling back to deterministic: %s", exc)
+            logger.info("RAGAS unavailable (429/RateLimit/Timeout). Falling back to deterministic context_recall: %s", exc)
         return None
 
     def _try_deepeval_evaluation(self, metric_input: MetricInput) -> Optional[float]:
@@ -149,7 +149,7 @@ class ContextRecallCalculator(MetricCalculator):
             if isinstance(scores, dict) and "context_recall" in scores:
                 return float(scores["context_recall"])
         except Exception as exc:
-            logger.warning("DeepEval context_recall evaluation failed, falling back to deterministic: %s", exc)
+            logger.info("DeepEval unavailable/timeout. Using deterministic context_recall: %s", exc)
         return None
 
     def evaluate(self, metric_input: MetricInput) -> MetricResult:

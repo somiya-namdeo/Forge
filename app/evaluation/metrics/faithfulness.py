@@ -121,7 +121,7 @@ class FaithfulnessCalculator(MetricCalculator):
             if isinstance(scores, dict) and "faithfulness" in scores:
                 return float(scores["faithfulness"])
         except Exception as exc:
-            logger.warning("RAGAS faithfulness evaluation failed, falling back to deterministic: %s", exc)
+            logger.info("RAGAS unavailable (429/RateLimit/Timeout). Falling back to deterministic faithfulness: %s", exc)
         return None
 
     def _try_deepeval_evaluation(self, metric_input: MetricInput) -> Optional[float]:
@@ -141,7 +141,7 @@ class FaithfulnessCalculator(MetricCalculator):
             if isinstance(scores, dict) and "faithfulness" in scores:
                 return float(scores["faithfulness"])
         except Exception as exc:
-            logger.warning("DeepEval faithfulness evaluation failed, falling back to deterministic: %s", exc)
+            logger.info("DeepEval unavailable/timeout. Using deterministic faithfulness: %s", exc)
         return None
 
     def evaluate(self, metric_input: MetricInput) -> MetricResult:

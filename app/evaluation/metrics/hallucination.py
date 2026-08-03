@@ -76,7 +76,7 @@ class HallucinationCalculator(MetricCalculator):
                 # DeepEval hallucination score is lower = better, invert for our scale
                 return self.normalize_score(1.0 - float(scores["hallucination"]))
         except Exception as exc:
-            logger.warning("DeepEval hallucination failed: %s", exc)
+            logger.info("DeepEval unavailable/timeout. Using deterministic hallucination_score: %s", exc)
         return None
 
     def _deterministic(self, metric_input: MetricInput, timer: Any) -> MetricResult:

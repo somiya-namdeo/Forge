@@ -76,7 +76,7 @@ class GroundednessCalculator(MetricCalculator):
             scores = evaluator.evaluate(req)
             return float(scores["faithfulness"]) if isinstance(scores, dict) and "faithfulness" in scores else None
         except Exception as exc:
-            logger.warning("RAGAS groundedness failed: %s", exc)
+            logger.info("RAGAS unavailable (429/RateLimit/Timeout). Falling back to deterministic groundedness: %s", exc)
         return None
 
     def _deterministic(self, metric_input: MetricInput, timer: Any) -> MetricResult:

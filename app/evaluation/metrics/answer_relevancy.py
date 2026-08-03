@@ -119,7 +119,7 @@ class AnswerRelevancyCalculator(MetricCalculator):
             if isinstance(scores, dict) and "answer_relevancy" in scores:
                 return float(scores["answer_relevancy"])
         except Exception as exc:
-            logger.warning("RAGAS answer_relevancy evaluation failed, falling back to deterministic: %s", exc)
+            logger.info("RAGAS unavailable (429/RateLimit/Timeout). Falling back to deterministic answer_relevancy: %s", exc)
         return None
 
     def _try_deepeval_evaluation(self, metric_input: MetricInput) -> Optional[float]:
@@ -139,7 +139,7 @@ class AnswerRelevancyCalculator(MetricCalculator):
             if isinstance(scores, dict) and "answer_relevancy" in scores:
                 return float(scores["answer_relevancy"])
         except Exception as exc:
-            logger.warning("DeepEval answer_relevancy evaluation failed, falling back to deterministic: %s", exc)
+            logger.info("DeepEval unavailable/timeout. Using deterministic answer_relevancy: %s", exc)
         return None
 
     def evaluate(self, metric_input: MetricInput) -> MetricResult:

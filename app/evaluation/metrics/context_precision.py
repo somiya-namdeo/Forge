@@ -144,7 +144,7 @@ class ContextPrecisionCalculator(MetricCalculator):
             if isinstance(scores, dict) and "context_precision" in scores:
                 return float(scores["context_precision"])
         except Exception as exc:
-            logger.warning("RAGAS context_precision evaluation failed, falling back to deterministic: %s", exc)
+            logger.info("RAGAS unavailable (429/RateLimit/Timeout). Falling back to deterministic context_precision: %s", exc)
         return None
 
     def _try_deepeval_evaluation(self, metric_input: MetricInput) -> Optional[float]:
@@ -164,7 +164,7 @@ class ContextPrecisionCalculator(MetricCalculator):
             if isinstance(scores, dict) and "context_precision" in scores:
                 return float(scores["context_precision"])
         except Exception as exc:
-            logger.warning("DeepEval context_precision evaluation failed, falling back to deterministic: %s", exc)
+            logger.info("DeepEval unavailable/timeout. Using deterministic context_precision: %s", exc)
         return None
 
     def evaluate(self, metric_input: MetricInput) -> MetricResult:

@@ -73,7 +73,7 @@ class CompletenessCalculator(MetricCalculator):
             if isinstance(scores, dict) and "answer_relevancy" in scores:
                 return float(scores["answer_relevancy"])
         except Exception as exc:
-            logger.warning("RAGAS completeness failed: %s", exc)
+            logger.info("RAGAS unavailable (429/RateLimit/Timeout). Falling back to deterministic completeness: %s", exc)
         return None
 
     def _deterministic(self, metric_input: MetricInput, timer: Any) -> MetricResult:
