@@ -52,3 +52,7 @@ class BenchmarkLoader:
     def load_default(cls) -> list[BenchmarkSample]:
         """Load default Forge benchmark dataset from disk."""
         return cls.load(_DEFAULT_DATASET_PATH)
+
+
+LocalBenchmarkLoader = BenchmarkLoader
+BenchmarkDatasetLoader = BenchmarkLoader
