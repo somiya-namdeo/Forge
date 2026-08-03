@@ -105,10 +105,10 @@ class AnswerRelevancyCalculator(MetricCalculator):
     def _try_ragas_evaluation(self, metric_input: MetricInput) -> Optional[float]:
         """Attempt calculation using RAGAS Evaluator provider."""
         try:
-            from app.metrics.ragas_metrics import RagasEvaluator
+            from app.metrics.ragas_metrics import get_ragas_evaluator
             from app.schemas.evaluation import EvaluationRequest
 
-            evaluator = RagasEvaluator()
+            evaluator = get_ragas_evaluator()
             req = EvaluationRequest(
                 question=metric_input.question or "",
                 answer=metric_input.answer or "",
@@ -125,10 +125,10 @@ class AnswerRelevancyCalculator(MetricCalculator):
     def _try_deepeval_evaluation(self, metric_input: MetricInput) -> Optional[float]:
         """Attempt calculation using DeepEval Evaluator provider."""
         try:
-            from app.metrics.deepeval_metrics import DeepEvalEvaluator
+            from app.metrics.deepeval_metrics import get_deepeval_evaluator
             from app.schemas.evaluation import EvaluationRequest
 
-            evaluator = DeepEvalEvaluator()
+            evaluator = get_deepeval_evaluator()
             req = EvaluationRequest(
                 question=metric_input.question or "",
                 answer=metric_input.answer or "",

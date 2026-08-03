@@ -66,9 +66,9 @@ class HallucinationCalculator(MetricCalculator):
 
     def _try_deepeval(self, metric_input: MetricInput) -> Optional[float]:
         try:
-            from app.metrics.deepeval_metrics import DeepEvalEvaluator
+            from app.metrics.deepeval_metrics import get_deepeval_evaluator
             from app.schemas.evaluation import EvaluationRequest
-            evaluator = DeepEvalEvaluator()
+            evaluator = get_deepeval_evaluator()
             req = EvaluationRequest(question=metric_input.question or "", answer=metric_input.answer or "",
                                     contexts=metric_input.contexts, ground_truth=metric_input.ground_truth)
             scores = evaluator.evaluate(req)

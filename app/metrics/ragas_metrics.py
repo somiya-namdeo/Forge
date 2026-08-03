@@ -24,6 +24,17 @@ from app.schemas.evaluation import EvaluationRequest
 _REFERENCE_REQUIRED_METRICS = {"context_precision", "context_recall"}
 
 
+_ragas_evaluator_instance = None
+
+
+def get_ragas_evaluator() -> "RagasEvaluator":
+    """Return singleton instance of RagasEvaluator to avoid model re-initialization."""
+    global _ragas_evaluator_instance
+    if _ragas_evaluator_instance is None:
+        _ragas_evaluator_instance = RagasEvaluator()
+    return _ragas_evaluator_instance
+
+
 class RagasEvaluator(BaseMetricEvaluator):
     """RAGAS evaluation framework provider implementing BaseMetricEvaluator.
 

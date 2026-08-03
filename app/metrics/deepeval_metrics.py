@@ -64,6 +64,17 @@ class DeepEvalToxicityMetric:
         return 0.0
 
 
+_deepeval_evaluator_instance = None
+
+
+def get_deepeval_evaluator() -> "DeepEvalEvaluator":
+    """Return singleton instance of DeepEvalEvaluator."""
+    global _deepeval_evaluator_instance
+    if _deepeval_evaluator_instance is None:
+        _deepeval_evaluator_instance = DeepEvalEvaluator()
+    return _deepeval_evaluator_instance
+
+
 class DeepEvalEvaluator(BaseMetricEvaluator):
     """Evaluation provider implementation wrapping the DeepEval framework."""
 

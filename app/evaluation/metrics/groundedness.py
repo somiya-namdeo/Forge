@@ -68,9 +68,9 @@ class GroundednessCalculator(MetricCalculator):
 
     def _try_ragas(self, metric_input: MetricInput) -> Optional[float]:
         try:
-            from app.metrics.ragas_metrics import RagasEvaluator
+            from app.metrics.ragas_metrics import get_ragas_evaluator
             from app.schemas.evaluation import EvaluationRequest
-            evaluator = RagasEvaluator()
+            evaluator = get_ragas_evaluator()
             req = EvaluationRequest(question=metric_input.question or "", answer=metric_input.answer or "",
                                     contexts=metric_input.contexts, ground_truth=metric_input.ground_truth)
             scores = evaluator.evaluate(req)
