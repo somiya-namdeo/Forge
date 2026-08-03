@@ -187,11 +187,19 @@ class ComprehensiveEvaluationReport(BaseModel):
     evaluation_id: str = Field(
         default_factory=lambda: str(uuid4()), description="Unique evaluation execution UUID."
     )
+    evaluation_version: str = Field(default="2.0", description="Evaluation module version identifier.")
     provider: EvaluationProvider = Field(
         default=EvaluationProvider.RAGAS, description="Provider framework utilized."
     )
     overall_score: float = Field(
         default=0.0, ge=0.0, le=1.0, description="Final composite or primary evaluation score."
+    )
+    quality_grade: str = Field(
+        default="F", description="Letter grade: A+, A, B, C, D, F."
+    )
+    deployment_readiness: str = Field(
+        default="Research Only",
+        description="Deployment readiness tier: Production Ready, Pilot Ready, Prototype, Experimental, Research Only.",
     )
     status: PassFailStatus = Field(
         default=PassFailStatus.PASS, description="Pass/Fail/Warning status across quality gates."
@@ -210,6 +218,23 @@ class ComprehensiveEvaluationReport(BaseModel):
     )
     metrics: Dict[str, float] = Field(
         default_factory=dict, description="Flat map of metric scores for backward compatibility."
+    )
+    # Metric execution tracking
+    total_metrics: int = Field(default=0, description="Total number of metric calculators executed.")
+    successful_metrics: List[str] = Field(default_factory=list, description="Names of successfully computed metrics.")
+    failed_metrics: List[str] = Field(default_factory=list, description="Names of failed metric calculations.")
+    metric_execution_summary: Dict[str, Any] = Field(
+        default_factory=dict, description="Per-metric execution details (provider_used, latency_ms, success)."
+    )
+    provider_summary: Dict[str, List[str]] = Field(
+        default_factory=dict, description="Map of provider name to list of metrics it computed."
+    )
+    providers_used: List[str] = Field(default_factory=list, description="List of distinct providers used.")
+    fallback_metrics: List[str] = Field(
+        default_factory=list, description="Metrics that fell back to deterministic calculation."
+    )
+    average_metric_latency_ms: float = Field(
+        default=0.0, description="Average latency in ms across all metric executions."
     )
     execution_time_ms: float = Field(default=0.0, description="Total execution duration in milliseconds.")
     created_at: datetime = Field(

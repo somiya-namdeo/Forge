@@ -1,21 +1,17 @@
-"""EvaluationEngine module for orchestrating RAG evaluation metrics."""
+"""EvaluationEngine: production-grade RAG evaluation orchestrator for Forge."""
 
 from datetime import datetime, timezone
 import logging
 import time
-from typing import Any, Dict, List, Optional
-from uuid import uuid4
+from collections import defaultdict
+from typing import Any, Dict, List, Optional, Tuple
 
-from app.evaluation.metrics.answer_relevancy import AnswerRelevancyCalculator
-from app.evaluation.metrics.base_metric import MetricInput, MetricResult
-from app.evaluation.metrics.context_precision import ContextPrecisionCalculator
-from app.evaluation.metrics.context_recall import ContextRecallCalculator
-from app.evaluation.metrics.faithfulness import FaithfulnessCalculator
+from app.evaluation.metrics.base_metric import MetricCategory, MetricInput, MetricResult
+from app.evaluation.registry import MetricCalculatorRegistry, build_default_registry
 from app.metrics import EvaluationProvider, PassFailStatus
 from app.schemas.evaluation import (
     ComprehensiveEvaluationReport,
     EvaluationRequest,
-    EvaluationResponse,
     EvaluationSummarySchema,
     GenerationMetricsSchema,
     OperationalMetricsSchema,
@@ -24,94 +20,181 @@ from app.schemas.evaluation import (
 
 logger = logging.getLogger(__name__)
 
-_DEFAULT_WEIGHTS: Dict[str, float] = {
-    "faithfulness": 0.30,
-    "answer_relevancy": 0.30,
-    "context_precision": 0.20,
-    "context_recall": 0.20,
+# ─────────────────────────────────────────────
+# Default weights (must sum to ≤ 1.0; operational metrics excluded from quality score)
+# ─────────────────────────────────────────────
+_DEFAULT_QUALITY_WEIGHTS: Dict[str, float] = {
+    "faithfulness": 0.20,
+    "answer_relevancy": 0.20,
+    "context_precision": 0.15,
+    "context_recall": 0.15,
+    "groundedness": 0.10,
+    "hallucination_score": 0.05,
+    "completeness": 0.05,
+    "coherence": 0.05,
+    "precision_at_k": 0.02,
+    "recall_at_k": 0.01,
+    "mrr": 0.01,
+    "ndcg": 0.01,
+    "hit_rate": 0.00,
 }
+
+# Operational metric names excluded from quality scoring
+_OPERATIONAL_METRIC_NAMES = frozenset({
+    "latency_ms", "token_usage", "estimated_cost_usd", "throughput_tokens_per_second"
+})
+
+
+def _assign_quality_grade(score: float) -> str:
+    """Return letter grade based on overall quality score."""
+    if score >= 0.97:
+        return "A+"
+    elif score >= 0.90:
+        return "A"
+    elif score >= 0.80:
+        return "B"
+    elif score >= 0.70:
+        return "C"
+    elif score >= 0.55:
+        return "D"
+    return "F"
+
+
+def _assign_deployment_readiness(score: float) -> str:
+    """Return deployment readiness tier based on overall quality score."""
+    if score >= 0.90:
+        return "Production Ready"
+    elif score >= 0.80:
+        return "Pilot Ready"
+    elif score >= 0.65:
+        return "Prototype"
+    elif score >= 0.50:
+        return "Experimental"
+    return "Research Only"
+
+
+def _generate_strengths(scores: Dict[str, float]) -> List[str]:
+    strengths: List[str] = []
+    if scores.get("faithfulness", 0.0) >= 0.90:
+        strengths.append("Excellent factual grounding with high context adherence.")
+    if scores.get("groundedness", 0.0) >= 0.90:
+        strengths.append("Every claim in the answer is attributable to a retrieved source.")
+    if scores.get("hallucination_score", 0.0) >= 0.90:
+        strengths.append("Near-zero hallucination detected in generated answers.")
+    if scores.get("answer_relevancy", 0.0) >= 0.85:
+        strengths.append("Highly relevant generated responses directly answering the prompt.")
+    if scores.get("context_precision", 0.0) >= 0.85:
+        strengths.append("Highly precise retrieved context with minimal noise.")
+    if scores.get("context_recall", 0.0) >= 0.85:
+        strengths.append("Comprehensive context retrieval covering all required concepts.")
+    if scores.get("coherence", 0.0) >= 0.80:
+        strengths.append("Well-structured and coherent generated responses.")
+    if scores.get("completeness", 0.0) >= 0.85:
+        strengths.append("Answers comprehensively cover all aspects of the question.")
+    if scores.get("mrr", 0.0) >= 0.85:
+        strengths.append("Excellent retrieval ranking — most relevant document appears near the top.")
+    return strengths
+
+
+def _generate_weaknesses(scores: Dict[str, float]) -> List[str]:
+    weaknesses: List[str] = []
+    if scores.get("faithfulness", 1.0) < 0.70:
+        weaknesses.append("Generated answer contains claims not fully supported by retrieved context.")
+    if scores.get("groundedness", 1.0) < 0.70:
+        weaknesses.append("Multiple answer claims lack clear attribution to retrieved sources.")
+    if scores.get("hallucination_score", 1.0) < 0.70:
+        weaknesses.append("Significant hallucination detected — answer includes ungrounded content.")
+    if scores.get("answer_relevancy", 1.0) < 0.70:
+        weaknesses.append("Generated answer only partially addresses the user question.")
+    if scores.get("context_precision", 1.0) < 0.60:
+        weaknesses.append("Retrieved contexts include significant noisy or irrelevant chunks.")
+    if scores.get("context_recall", 1.0) < 0.60:
+        weaknesses.append("Retriever missed important supporting information.")
+    if scores.get("coherence", 1.0) < 0.60:
+        weaknesses.append("Generated answers lack logical structure or fluency.")
+    if scores.get("completeness", 1.0) < 0.60:
+        weaknesses.append("Answers do not fully cover all aspects of the question.")
+    if scores.get("precision_at_k", 1.0) < 0.50:
+        weaknesses.append("Retriever returns many irrelevant documents (low Precision@K).")
+    if scores.get("recall_at_k", 1.0) < 0.50:
+        weaknesses.append("Retriever misses many relevant documents (low Recall@K).")
+    if scores.get("mrr", 1.0) < 0.50:
+        weaknesses.append("First relevant document appears too far down the ranked list.")
+    if scores.get("ndcg", 1.0) < 0.50:
+        weaknesses.append("Overall retrieval ranking quality is below acceptable threshold.")
+    return weaknesses
+
+
+def _generate_recommendations(scores: Dict[str, float]) -> List[str]:
+    recs: List[str] = []
+    if scores.get("context_recall", 1.0) < 0.60:
+        recs.append("Increase retrieval depth (top_k) or optimize query expansion to capture missing information.")
+    if scores.get("context_precision", 1.0) < 0.60:
+        recs.append("Introduce a reranker or tighten similarity thresholds to filter noisy chunks.")
+    if scores.get("faithfulness", 1.0) < 0.70:
+        recs.append("Enforce stricter system prompt grounding and context-only generation constraints.")
+    if scores.get("groundedness", 1.0) < 0.70:
+        recs.append("Add citation-grounding instructions to the generation prompt.")
+    if scores.get("hallucination_score", 1.0) < 0.70:
+        recs.append("Improve retrieved context quality or add hallucination detection post-processing.")
+    if scores.get("answer_relevancy", 1.0) < 0.70:
+        recs.append("Refine prompt templates to focus generation on addressing the user query.")
+    if scores.get("coherence", 1.0) < 0.60:
+        recs.append("Improve LLM selection or prompt engineering for structured response generation.")
+    if scores.get("completeness", 1.0) < 0.60:
+        recs.append("Instruct the LLM to comprehensively address all aspects of the question.")
+    if scores.get("precision_at_k", 1.0) < 0.50:
+        recs.append("Improve the retriever model or add a reranking stage.")
+    if scores.get("recall_at_k", 1.0) < 0.50:
+        recs.append("Increase retrieval depth or use hybrid retrieval (dense + sparse).")
+    if scores.get("mrr", 1.0) < 0.50 or scores.get("ndcg", 1.0) < 0.50:
+        recs.append("Improve retrieval ranking: consider a cross-encoder reranker.")
+    return recs
 
 
 class EvaluationEngine:
-    """Engine responsible for orchestrating independent metric calculators, fault isolation, and report synthesis."""
+    """Production-grade RAG evaluation orchestrator.
 
-    def __init__(self, default_weights: Optional[Dict[str, float]] = None) -> None:
-        """Initialize EvaluationEngine with registered metric calculators and configurable weights."""
-        self._calculators = [
-            FaithfulnessCalculator(),
-            AnswerRelevancyCalculator(),
-            ContextPrecisionCalculator(),
-            ContextRecallCalculator(),
-        ]
-        self._default_weights = default_weights or _DEFAULT_WEIGHTS
+    Automatically discovers and executes all registered MetricCalculator implementations.
+    Isolates failures, aggregates scores with configurable weights, assigns quality grades,
+    and populates ComprehensiveEvaluationReport.
+    """
 
-    def _extract_metric_weights(self, request: EvaluationRequest) -> Dict[str, float]:
-        """Extract and normalize metric weights from request or configuration."""
+    def __init__(
+        self,
+        registry: Optional[MetricCalculatorRegistry] = None,
+        default_weights: Optional[Dict[str, float]] = None,
+    ) -> None:
+        """Initialize EvaluationEngine with a metric registry and configurable weights."""
+        self._registry = registry or build_default_registry()
+        self._default_weights = default_weights or _DEFAULT_QUALITY_WEIGHTS
+        logger.info(
+            "EvaluationEngine initialized with %d metric calculators: %s",
+            len(self._registry),
+            self._registry.metric_names,
+        )
+
+    # kept for backward-compat with Phase 3 tests
+    @property
+    def _calculators(self) -> List:
+        return self._registry.all()
+
+    def _extract_weights(self, request: EvaluationRequest) -> Dict[str, float]:
         weights = dict(self._default_weights)
         if request.metric_config:
             for cfg in request.metric_config:
-                m_type = cfg.metric_type.value if hasattr(cfg.metric_type, "value") else str(cfg.metric_type)
-                if m_type in weights:
-                    weights[m_type] = float(cfg.weight)
-
-        total = sum(weights.values())
+                key = cfg.metric_type.value if hasattr(cfg.metric_type, "value") else str(cfg.metric_type)
+                if key in weights:
+                    weights[key] = float(cfg.weight)
+        total = sum(v for k, v in weights.items() if k not in _OPERATIONAL_METRIC_NAMES)
         if total > 0:
-            return {k: v / total for k, v in weights.items()}
+            return {k: (v / total if k not in _OPERATIONAL_METRIC_NAMES else 0.0)
+                    for k, v in weights.items()}
         return dict(self._default_weights)
 
-    def _generate_strengths(self, scores: Dict[str, float]) -> List[str]:
-        """Generate automated strengths based on high-performing metric scores."""
-        strengths: List[str] = []
-        if scores.get("faithfulness", 0.0) >= 0.90:
-            strengths.append("Excellent factual grounding with high context adherence.")
-        if scores.get("answer_relevancy", 0.0) >= 0.85:
-            strengths.append("Highly relevant generated response directly answering the prompt.")
-        if scores.get("context_precision", 0.0) >= 0.85:
-            strengths.append("Highly relevant retrieved context chunks with low noise.")
-        if scores.get("context_recall", 0.0) >= 0.85:
-            strengths.append("Comprehensive context retrieval covering all required golden concepts.")
-        return strengths
-
-    def _generate_weaknesses(self, scores: Dict[str, float]) -> List[str]:
-        """Generate automated weaknesses based on low-performing metric scores."""
-        weaknesses: List[str] = []
-        if scores.get("faithfulness", 1.0) < 0.70:
-            weaknesses.append("Answer contains claims not fully supported by retrieved context.")
-        if scores.get("answer_relevancy", 1.0) < 0.70:
-            weaknesses.append("Generated answer only partially addresses the user question.")
-        if scores.get("context_precision", 1.0) < 0.60:
-            weaknesses.append("Retrieved contexts contain significant noisy or irrelevant chunks.")
-        if scores.get("context_recall", 1.0) < 0.60:
-            weaknesses.append("Retriever missed important supporting information required for completeness.")
-        return weaknesses
-
-    def _generate_recommendations(self, scores: Dict[str, float]) -> List[str]:
-        """Generate automated recommendations based on identified metric gaps."""
-        recs: List[str] = []
-        if scores.get("context_recall", 1.0) < 0.60:
-            recs.append("Increase retrieval depth (top_k) or optimize query expansion to capture missing supporting information.")
-        if scores.get("context_precision", 1.0) < 0.60:
-            recs.append("Introduce a reranker or tighten vector similarity thresholds to filter out noisy chunks.")
-        if scores.get("faithfulness", 1.0) < 0.70:
-            recs.append("Enforce stricter system prompt grounding and context-only generation constraints.")
-        if scores.get("answer_relevancy", 1.0) < 0.70:
-            recs.append("Refine prompt templates to focus generation on the user query.")
-        return recs
-
-    def evaluate(self, request: EvaluationRequest) -> ComprehensiveEvaluationReport:
-        """Execute independent evaluation metrics with fault isolation and assemble ComprehensiveEvaluationReport.
-
-        Args:
-            request (EvaluationRequest): Single evaluation request containing question, answer, contexts, and reference.
-
-        Returns:
-            ComprehensiveEvaluationReport: Fully populated production report schema.
-        """
-        t0 = time.perf_counter()
-        evaluation_id = str(uuid4())
-
+    def _build_metric_input(self, request: EvaluationRequest) -> MetricInput:
         provider_name = request.provider.value if hasattr(request.provider, "value") else str(request.provider)
-        metric_input = MetricInput(
+        return MetricInput(
             question=request.question,
             answer=request.answer,
             contexts=request.contexts,
@@ -119,20 +202,13 @@ class EvaluationEngine:
             metadata={"provider": provider_name},
         )
 
+    def _run_all_metrics(self, metric_input: MetricInput) -> Dict[str, MetricResult]:
         results: Dict[str, MetricResult] = {}
-
-        # Independent execution with fault isolation
-        for calc in self._calculators:
+        for calc in self._registry.all():
             try:
-                res = calc.evaluate(metric_input)
-                results[calc.metric_name] = res
+                results[calc.metric_name] = calc.evaluate(metric_input)
             except Exception as exc:
-                logger.error(
-                    "Fault isolation triggered: calculator '%s' failed unexpectedly: %s",
-                    calc.metric_name,
-                    exc,
-                    exc_info=True,
-                )
+                logger.error("Fault isolation: calculator '%s' failed: %s", calc.metric_name, exc, exc_info=True)
                 results[calc.metric_name] = MetricResult(
                     metric_name=calc.metric_name,
                     category=calc.metric_category,
@@ -140,44 +216,101 @@ class EvaluationEngine:
                     success=False,
                     error_message=str(exc),
                 )
+        return results
 
-        # Extract metric scores map
-        flat_metrics: Dict[str, float] = {}
-        for m_name, res in results.items():
+    def _build_execution_metadata(
+        self, results: Dict[str, MetricResult]
+    ) -> Tuple[List[str], List[str], Dict[str, Any], Dict[str, List[str]], List[str], List[str], float]:
+        successful, failed = [], []
+        exec_summary: Dict[str, Any] = {}
+        provider_map: Dict[str, List[str]] = defaultdict(list)
+        providers_used: List[str] = []
+        fallback_metrics: List[str] = []
+        latencies: List[float] = []
+
+        for name, res in results.items():
             if res.success:
-                flat_metrics[m_name] = res.score
+                successful.append(name)
             else:
-                flat_metrics[m_name] = 0.0
+                failed.append(name)
 
-        # Weighted composite overall_score calculation
-        weights = self._extract_metric_weights(request)
-        weighted_score = sum(flat_metrics.get(k, 0.0) * w for k, w in weights.items())
-        overall_score = round(max(0.0, min(1.0, weighted_score)), 4)
+            provider = res.metadata.get("provider_used", "unknown") if res.metadata else "unknown"
+            exec_summary[name] = {
+                "success": res.success,
+                "score": res.score,
+                "latency_ms": res.latency_ms,
+                "provider_used": provider,
+                "error": res.error_message,
+            }
+            provider_map[provider].append(name)
+            if "deterministic" in provider:
+                fallback_metrics.append(name)
+            latencies.append(res.latency_ms)
+
+        providers_used = list(provider_map.keys())
+        avg_latency = sum(latencies) / len(latencies) if latencies else 0.0
+        return successful, failed, exec_summary, dict(provider_map), providers_used, fallback_metrics, avg_latency
+
+    def _build_schemas(self, flat: Dict[str, float], ms: float) -> Tuple[RetrievalMetricsSchema, GenerationMetricsSchema, OperationalMetricsSchema]:
+        retrieval = RetrievalMetricsSchema(
+            precision_at_k=flat.get("precision_at_k", 0.0),
+            recall_at_k=flat.get("recall_at_k", 0.0),
+            hit_rate=flat.get("hit_rate", 0.0),
+            mrr=flat.get("mrr", 0.0),
+            ndcg=flat.get("ndcg", 0.0),
+        )
+        generation = GenerationMetricsSchema(
+            faithfulness=flat.get("faithfulness", 0.0),
+            answer_relevancy=flat.get("answer_relevancy", 0.0),
+            context_precision=flat.get("context_precision", 0.0),
+            context_recall=flat.get("context_recall", 0.0),
+            groundedness=flat.get("groundedness", 0.0),
+            hallucination_score=flat.get("hallucination_score", 0.0),
+            completeness=flat.get("completeness", 0.0),
+            coherence=flat.get("coherence", 0.0),
+        )
+        operational = OperationalMetricsSchema(
+            total_latency_ms=ms,
+            retrieval_latency_ms=flat.get("retrieval_latency_ms", 0.0),
+            generation_latency_ms=flat.get("generation_latency_ms", 0.0),
+        )
+        return retrieval, generation, operational
+
+    def evaluate(self, request: EvaluationRequest) -> ComprehensiveEvaluationReport:
+        """Execute all registered metrics with fault isolation and return ComprehensiveEvaluationReport."""
+        from uuid import uuid4
+        t0 = time.perf_counter()
+        evaluation_id = str(uuid4())
+
+        metric_input = self._build_metric_input(request)
+        results = self._run_all_metrics(metric_input)
+
+        flat_metrics: Dict[str, float] = {k: (r.score if r.success else 0.0) for k, r in results.items()}
+
+        weights = self._extract_weights(request)
+        overall_score = sum(
+            flat_metrics.get(k, 0.0) * w
+            for k, w in weights.items()
+            if k not in _OPERATIONAL_METRIC_NAMES
+        )
+        overall_score = round(max(0.0, min(1.0, overall_score)), 4)
 
         status = PassFailStatus.PASS if overall_score >= 0.70 else PassFailStatus.FAIL
+        quality_grade = _assign_quality_grade(overall_score)
+        deployment_readiness = _assign_deployment_readiness(overall_score)
 
-        # Diagnostic feedback
-        strengths = self._generate_strengths(flat_metrics)
-        weaknesses = self._generate_weaknesses(flat_metrics)
-        recommendations = self._generate_recommendations(flat_metrics)
+        strengths = _generate_strengths(flat_metrics)
+        weaknesses = _generate_weaknesses(flat_metrics)
+        recommendations = _generate_recommendations(flat_metrics)
 
-        total_latency_ms = round((time.perf_counter() - t0) * 1000.0, 2)
+        (successful, failed, exec_summary,
+         provider_map, providers_used,
+         fallback_metrics, avg_latency) = self._build_execution_metadata(results)
 
-        # Structured Category Schemas
-        retrieval_schema = RetrievalMetricsSchema()
+        total_ms = round((time.perf_counter() - t0) * 1000.0, 2)
+        retrieval_schema, generation_schema, operational_schema = self._build_schemas(flat_metrics, total_ms)
 
-        generation_schema = GenerationMetricsSchema(
-            faithfulness=flat_metrics.get("faithfulness", 0.0),
-            answer_relevancy=flat_metrics.get("answer_relevancy", 0.0),
-            context_precision=flat_metrics.get("context_precision", 0.0),
-            context_recall=flat_metrics.get("context_recall", 0.0),
-        )
-
-        operational_schema = OperationalMetricsSchema(
-            total_latency_ms=total_latency_ms,
-        )
-
-        summary_schema = EvaluationSummarySchema(
+        summary = EvaluationSummarySchema(
             overall_score=overall_score,
             status=status,
             metric_weights=weights,
@@ -186,18 +319,27 @@ class EvaluationEngine:
             recommendations=recommendations,
         )
 
-        report = ComprehensiveEvaluationReport(
+        return ComprehensiveEvaluationReport(
             evaluation_id=evaluation_id,
+            evaluation_version="2.0",
             provider=request.provider,
             overall_score=overall_score,
+            quality_grade=quality_grade,
+            deployment_readiness=deployment_readiness,
             status=status,
-            summary=summary_schema,
+            summary=summary,
             retrieval=retrieval_schema,
             generation=generation_schema,
             operational=operational_schema,
             metrics=flat_metrics,
-            execution_time_ms=total_latency_ms,
+            total_metrics=len(results),
+            successful_metrics=successful,
+            failed_metrics=failed,
+            metric_execution_summary=exec_summary,
+            provider_summary=provider_map,
+            providers_used=providers_used,
+            fallback_metrics=fallback_metrics,
+            average_metric_latency_ms=round(avg_latency, 2),
+            execution_time_ms=total_ms,
             created_at=datetime.now(timezone.utc),
         )
-
-        return report
