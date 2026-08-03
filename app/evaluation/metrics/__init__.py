@@ -8,6 +8,7 @@ from app.evaluation.metrics.base_metric import (
     MetricResult,
 )
 from app.evaluation.metrics.context_precision import ContextPrecisionCalculator
+from app.evaluation.metrics.context_recall import ContextRecallCalculator
 from app.evaluation.metrics.faithfulness import FaithfulnessCalculator
 
 __all__ = [
@@ -18,4 +19,5 @@ __all__ = [
     "FaithfulnessCalculator",
     "AnswerRelevancyCalculator",
     "ContextPrecisionCalculator",
+    "ContextRecallCalculator",
 ]
