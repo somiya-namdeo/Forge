@@ -3,10 +3,13 @@
 from typing import Any, Dict, List, Optional, Union
 from app.decision.requirement_analyzer import ProjectProfile, RequirementAnalyzer
 from app.schemas.decision import AlternativeDetail, DecisionRequest, RecommendationItem
-
+from app.services.llm_service import LLMService
 
 class ExplanationEngine:
     """Engine responsible for synthesizing factor-driven rationale, score breakdowns, evidence, and alternative trade-off analysis."""
+    def __init__(self) -> None:
+        """Initialize ExplanationEngine."""
+        self._llm = LLMService()
 
     @classmethod
     def _map_confidence_level(cls, confidence: float) -> str:
@@ -207,6 +210,39 @@ class ExplanationEngine:
             analysis.append(AlternativeDetail(name=alt_name, reason=reason_str))
 
         return analysis
+    
+    def _enhance_reason_with_llm(
+        self,
+        reason: str,
+        item: RecommendationItem,
+    ) -> str:
+        """Use the LLM to improve the readability of the recommendation reason."""
+
+        prompt = f"""
+    You are an AI systems architect.
+
+    Rewrite the following recommendation explanation to be more natural,
+    professional, and concise.
+
+    Rules:
+    - Keep the same meaning.
+    - Do not invent new facts.
+    - Do not change the recommendation.
+    - Mention trade-offs if already present.
+    - Return only the rewritten explanation.
+
+    Recommendation:
+    {item.recommended}
+
+    Original Explanation:
+    {reason}
+    """
+
+        try:
+            return self._llm.reason(prompt)
+        except Exception as exc:
+            logger.warning("LLM explanation enhancement failed, falling back to deterministic reason: %s", exc)
+            return reason
 
     def generate(
         self,
@@ -226,12 +262,14 @@ class ExplanationEngine:
             subscores = top_candidate.get("subscores", {})
             top_score = float(top_candidate.get("score", item.confidence))
 
-            enriched_reason = self._build_project_specific_reason(
+            base_reason = self._build_project_specific_reason(
                 item=item,
                 top_candidate=top_candidate,
                 runner_up=runner_up,
                 profile=profile,
             )
+
+            enriched_reason = self._enhance_reason_with_llm(base_reason, item)
 
             confidence_label = self._map_confidence_level(item.confidence)
             evidence_dict = self._extract_evidence_metadata(top_candidate)
