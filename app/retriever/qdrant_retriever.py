@@ -1,5 +1,7 @@
 """Qdrant semantic retriever module for Forge AI engineering platform."""
 
+import logging
+import time
 from typing import Any
 
 from langchain_community.embeddings import HuggingFaceBgeEmbeddings
@@ -7,6 +9,8 @@ from qdrant_client import QdrantClient
 
 from app.core.config import COLLECTION_NAME, EMBEDDING_MODEL, QDRANT_PATH, TOP_K
 from app.schemas.decision import DecisionRequest
+
+logger = logging.getLogger(__name__)
 
 
 class QdrantRetriever:
@@ -38,50 +42,34 @@ class QdrantRetriever:
             raise RuntimeError(f"Failed to load embedding model '{EMBEDDING_MODEL}': {exc}") from exc
 
     @staticmethod
-    def _format_field_val(val: Any) -> str:
-        """Format an arbitrary request field value into a clean string snippet."""
+    def _format_value(val: Any) -> str:
+        """Format an arbitrary Pydantic field value into a clean string representation."""
         if val is None:
             return ""
         if hasattr(val, "value"):
             return str(val.value)
         if isinstance(val, (list, tuple, set)):
-            items = [str(i.value) if hasattr(i, "value") else str(i) for i in val if i]
-            return ", ".join(items)
+            formatted_items = [str(i.value) if hasattr(i, "value") else str(i) for i in val if i]
+            return ", ".join(formatted_items)
+        if isinstance(val, dict):
+            formatted_pairs = [f"{k}: {v}" for k, v in val.items() if v]
+            return "; ".join(formatted_pairs)
         return str(val).strip()
 
-    def _build_search_query(self, request: DecisionRequest) -> str:
-        """Construct a comprehensive semantic search query string from DecisionRequest attributes."""
-        parts: list[str] = []
+    def _build_semantic_query(self, request: DecisionRequest) -> str:
+        """Dynamically construct a semantic query string from all non-empty DecisionRequest fields."""
+        data = request.model_dump(exclude_none=True)
+        query_parts: list[str] = []
 
-        fields_to_extract = (
-            "project_name",
-            "project_description",
-            "deployment_target",
-            "priority",
-            "business_goal",
-            "business_goals",
-            "constraints",
-            "functional_requirements",
-            "non_functional_requirements",
-            "preferred_llms",
-            "preferred_llm",
-            "preferred_vector_databases",
-            "preferred_vector_db",
-            "preferred_embedding_models",
-            "preferred_embedding_model",
-            "preferred_frameworks",
-            "preferred_framework",
-        )
-
-        for field in fields_to_extract:
-            val = getattr(request, field, None)
-            formatted = self._format_field_val(val)
+        for field_name, value in data.items():
+            formatted = self._format_value(value)
             if formatted:
-                parts.append(f"{field.replace('_', ' ')}: {formatted}")
+                clean_field = field_name.replace("_", " ").title()
+                query_parts.append(f"{clean_field}: {formatted}")
 
-        query_text = " | ".join(parts)
+        query_text = " | ".join(query_parts)
         if not query_text.strip():
-            query_text = f"{request.project_name} {request.project_description}"
+            query_text = str(request)
 
         return query_text.strip()
 
@@ -90,25 +78,26 @@ class QdrantRetriever:
         request: DecisionRequest,
         limit: int | None = None,
     ) -> dict[str, list[dict[str, Any]]]:
-        """Retrieve relevant technology payload dictionaries from Qdrant grouped by category.
+        """Retrieve relevant technology payloads from Qdrant grouped by category with similarity scores.
 
         Args:
-            request (DecisionRequest): User decision request containing requirement parameters.
-            limit (int | None): Optional limit on number of retrieved results. Defaults to TOP_K.
+            request (DecisionRequest): Input parameters detailing project requirements.
+            limit (int | None): Optional limit on number of retrieved points. Defaults to TOP_K.
 
         Returns:
             dict[str, list[dict[str, Any]]]: Dictionary mapping candidate categories to lists
-                of retrieved payload dictionaries.
+                of retrieved payload dictionaries including appended `_score` similarity scores.
 
         Raises:
-            ValueError: If query embedding fails or search returns empty/invalid results.
+            ValueError: If query embedding fails or search returns empty results.
             RuntimeError: If Qdrant communication encounters execution failures.
         """
+        start_time = time.perf_counter()
         top_limit = limit or self.top_k
 
-        query_text = self._build_search_query(request)
+        query_text = self._build_semantic_query(request)
         if not query_text.strip():
-            raise ValueError("Cannot execute Qdrant retrieval: constructed search query is empty.")
+            raise ValueError("Cannot execute Qdrant retrieval: generated semantic search query is empty.")
 
         try:
             query_vector = self._embeddings.embed_query(query_text)
@@ -119,18 +108,12 @@ class QdrantRetriever:
             raise ValueError("Generated query embedding vector is empty.")
 
         try:
-            try:
-                raw_points = self._client.query_points(
-                    collection_name=COLLECTION_NAME,
-                    query=query_vector,
-                    limit=top_limit,
-                ).points
-            except Exception:
-                raw_points = self._client.search(
-                    collection_name=COLLECTION_NAME,
-                    query_vector=query_vector,
-                    limit=top_limit,
-                )
+            response = self._client.query_points(
+                collection_name=COLLECTION_NAME,
+                query=query_vector,
+                limit=top_limit,
+            )
+            raw_points = response.points
         except Exception as exc:
             raise RuntimeError(
                 f"Failed to execute Qdrant search against collection '{COLLECTION_NAME}': {exc}"
@@ -140,13 +123,17 @@ class QdrantRetriever:
             raise ValueError(f"Qdrant search returned empty results for query '{query_text}'.")
 
         grouped_payloads: dict[str, list[dict[str, Any]]] = {}
+        top_score: float = float(raw_points[0].score) if raw_points and hasattr(raw_points[0], "score") else 0.0
 
         for point in raw_points:
             payload = getattr(point, "payload", None)
             if not payload or not isinstance(payload, dict):
                 continue
 
-            category = payload.get("category")
+            item_payload = payload.copy()
+            item_payload["_score"] = float(point.score) if hasattr(point, "score") else 0.0
+
+            category = item_payload.get("category")
             if not category or not isinstance(category, str) or not category.strip():
                 category = "general"
             else:
@@ -155,11 +142,20 @@ class QdrantRetriever:
             if category not in grouped_payloads:
                 grouped_payloads[category] = []
 
-            grouped_payloads[category].append(payload.copy())
+            grouped_payloads[category].append(item_payload)
 
         if not grouped_payloads:
             raise ValueError(
                 f"Qdrant search returned {len(raw_points)} points, but no valid payloads were found."
             )
+
+        elapsed_ms = round((time.perf_counter() - start_time) * 1000, 2)
+        total_docs = sum(len(items) for items in grouped_payloads.values())
+
+        logger.info(
+            f"Qdrant retrieval completed | Collection: '{COLLECTION_NAME}' | "
+            f"Query: '{query_text[:60]}...' | Latency: {elapsed_ms} ms | "
+            f"Documents: {total_docs} | Top Similarity Score: {top_score:.4f}"
+        )
 
         return grouped_payloads
