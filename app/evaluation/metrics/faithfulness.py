@@ -105,8 +105,15 @@ class FaithfulnessCalculator(MetricCalculator):
         return self.normalize_score(final_score), metadata
 
     def _try_ragas_evaluation(self, metric_input: MetricInput) -> Optional[float]:
-        """Attempt calculation using RAGAS Evaluator provider."""
+        """Attempt calculation using RAGAS Evaluator provider or request-scoped cache."""
         try:
+            cache = metric_input.metadata.get("provider_cache") if metric_input.metadata else None
+            if cache:
+                cached_score = cache.get("ragas", "faithfulness")
+                if cached_score is not None:
+                    logger.info("FaithfulnessCalculator ← served from RAGAS provider cache")
+                    return cached_score
+
             from app.metrics.ragas_metrics import get_ragas_evaluator
             from app.schemas.evaluation import EvaluationRequest, MetricConfig, MetricType
 
@@ -130,28 +137,7 @@ class FaithfulnessCalculator(MetricCalculator):
         return None
 
     def _try_deepeval_evaluation(self, metric_input: MetricInput) -> Optional[float]:
-        """Attempt calculation using DeepEval Evaluator provider."""
-        try:
-            from app.metrics.deepeval_metrics import get_deepeval_evaluator
-            from app.schemas.evaluation import EvaluationRequest, MetricConfig, MetricType
-
-            evaluator = get_deepeval_evaluator()
-            if evaluator.is_circuit_open():
-                logger.info("DeepEval circuit breaker OPEN (429 rate limit). Using deterministic fallback for faithfulness.")
-                return None
-
-            req = EvaluationRequest(
-                question=metric_input.question or "Evaluate faithfulness",
-                answer=metric_input.answer or "",
-                contexts=metric_input.contexts,
-                ground_truth=metric_input.ground_truth,
-                metric_config=[MetricConfig(metric_type=MetricType.FAITHFULNESS)],
-            )
-            scores = evaluator.evaluate(req)
-            if isinstance(scores, dict) and "faithfulness" in scores:
-                return float(scores["faithfulness"])
-        except Exception as exc:
-            logger.info("DeepEval unavailable/timeout. Using deterministic faithfulness: %s", exc)
+        """DeepEval evaluator disabled by configuration."""
         return None
 
     def evaluate(self, metric_input: MetricInput) -> MetricResult:

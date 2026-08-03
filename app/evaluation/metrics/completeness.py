@@ -64,6 +64,13 @@ class CompletenessCalculator(MetricCalculator):
 
     def _try_ragas(self, metric_input: MetricInput) -> Optional[float]:
         try:
+            cache = metric_input.metadata.get("provider_cache") if metric_input.metadata else None
+            if cache:
+                cached_score = cache.get("ragas", "answer_relevancy")
+                if cached_score is not None:
+                    logger.info("CompletenessCalculator ← served from RAGAS provider cache (answer_relevancy)")
+                    return cached_score
+
             from app.metrics.ragas_metrics import get_ragas_evaluator
             from app.schemas.evaluation import EvaluationRequest, MetricConfig, MetricType
             evaluator = get_ragas_evaluator()

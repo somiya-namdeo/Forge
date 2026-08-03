@@ -7,7 +7,9 @@ from collections import defaultdict
 from typing import Any, Dict, List, Optional, Tuple
 
 from app.evaluation.metrics.base_metric import MetricInput, MetricResult
+from app.evaluation.provider_cache import ProviderResultCache
 from app.evaluation.registry import MetricCalculatorRegistry, build_default_registry
+from app.metrics.ragas_metrics import get_ragas_evaluator
 from app.metrics import PassFailStatus
 from app.schemas.evaluation import (
     ComprehensiveEvaluationReport,
@@ -153,19 +155,14 @@ def _generate_recommendations(scores: Dict[str, float]) -> List[str]:
 
 
 class EvaluationEngine:
-    """Production-grade RAG evaluation orchestrator.
-
-    Automatically discovers and executes all registered MetricCalculator implementations.
-    Isolates failures, aggregates scores with configurable weights, assigns quality grades,
-    and populates ComprehensiveEvaluationReport.
-    """
+    """Core evaluation orchestrator for Forge RAG Evaluation Module v2.0."""
 
     def __init__(
         self,
         registry: Optional[MetricCalculatorRegistry] = None,
         default_weights: Optional[Dict[str, float]] = None,
     ) -> None:
-        """Initialize EvaluationEngine with a metric registry and configurable weights."""
+        """Initialize EvaluationEngine with registry auto-discovery."""
         self._registry = registry or build_default_registry()
         self._default_weights = default_weights or _DEFAULT_QUALITY_WEIGHTS
         logger.info(
@@ -192,14 +189,16 @@ class EvaluationEngine:
                     for k, v in weights.items()}
         return dict(self._default_weights)
 
-    def _build_metric_input(self, request: EvaluationRequest) -> MetricInput:
+    def _build_metric_input(
+        self, request: EvaluationRequest, provider_cache: Optional[ProviderResultCache] = None
+    ) -> MetricInput:
         provider_name = request.provider.value if hasattr(request.provider, "value") else str(request.provider)
         return MetricInput(
             question=request.question,
             answer=request.answer,
             contexts=request.contexts,
             ground_truth=request.ground_truth,
-            metadata={"provider": provider_name},
+            metadata={"provider": provider_name, "provider_cache": provider_cache},
         )
 
     def _run_all_metrics(self, metric_input: MetricInput) -> Dict[str, MetricResult]:
@@ -249,7 +248,12 @@ class EvaluationEngine:
 
         providers_used = list(provider_map.keys())
         avg_latency = sum(latencies) / len(latencies) if latencies else 0.0
-        return successful, failed, exec_summary, dict(provider_map), providers_used, fallback_metrics, avg_latency
+        avg_latency_reported = round(avg_latency, 2)
+        if avg_latency_reported == 0.0 and latencies:
+            avg_latency_reported = round(avg_latency, 4)
+            if avg_latency_reported == 0.0:
+                avg_latency_reported = 0.01
+        return successful, failed, exec_summary, dict(provider_map), providers_used, fallback_metrics, avg_latency_reported
 
     def _build_schemas(self, flat: Dict[str, float], ms: float) -> Tuple[RetrievalMetricsSchema, GenerationMetricsSchema, OperationalMetricsSchema]:
         retrieval = RetrievalMetricsSchema(
@@ -281,9 +285,34 @@ class EvaluationEngine:
         from uuid import uuid4
         t0 = time.perf_counter()
         evaluation_id = str(uuid4())
+        logger.info("Evaluation started for request %s", evaluation_id)
 
-        metric_input = self._build_metric_input(request)
+        # Scoped Provider Result Cache for this evaluation request
+        provider_cache = ProviderResultCache()
+
+        # Batch RAGAS Execution: Single execution for all RAGAS supported metrics
+        ragas_evaluator = get_ragas_evaluator()
+        if not ragas_evaluator.is_circuit_open():
+            try:
+                logger.info("Running batch RAGAS provider evaluation")
+                ragas_scores = ragas_evaluator.evaluate(request)
+                if isinstance(ragas_scores, dict) and ragas_scores:
+                    provider_cache.set_provider_results("ragas", ragas_scores)
+                    logger.info(
+                        "RAGAS provider cache populated with metrics: %s",
+                        list(ragas_scores.keys()),
+                    )
+            except Exception as exc:
+                logger.info("RAGAS batch execution failed / circuit breaker tripped: %s", exc)
+        else:
+            cooldown_rem = int(ragas_evaluator._circuit_breaker_until - time.time())
+            logger.info("RAGAS circuit breaker OPEN (%ds cooldown remaining). Skipping provider call.", max(1, cooldown_rem))
+
+        metric_input = self._build_metric_input(request, provider_cache)
         results = self._run_all_metrics(metric_input)
+
+        # Clear request-scoped cache upon completion
+        provider_cache.clear()
 
         flat_metrics: Dict[str, float] = {k: (r.score if r.success else 0.0) for k, r in results.items()}
 

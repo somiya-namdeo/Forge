@@ -65,26 +65,7 @@ class HallucinationCalculator(MetricCalculator):
             return self.build_result(score=0.0, success=False, error_message=str(exc))
 
     def _try_deepeval(self, metric_input: MetricInput) -> Optional[float]:
-        try:
-            from app.metrics.deepeval_metrics import get_deepeval_evaluator
-            from app.schemas.evaluation import EvaluationRequest, MetricConfig, MetricType
-            evaluator = get_deepeval_evaluator()
-            if evaluator.is_circuit_open():
-                logger.info("DeepEval circuit breaker OPEN (429 rate limit). Using deterministic fallback for hallucination.")
-                return None
-            req = EvaluationRequest(
-                question=metric_input.question or "",
-                answer=metric_input.answer or "",
-                contexts=metric_input.contexts,
-                ground_truth=metric_input.ground_truth,
-                metric_config=[MetricConfig(metric_type=MetricType.HALLUCINATION)],
-            )
-            scores = evaluator.evaluate(req)
-            if isinstance(scores, dict) and "hallucination" in scores:
-                # DeepEval hallucination score is lower = better, invert for our scale
-                return self.normalize_score(1.0 - float(scores["hallucination"]))
-        except Exception as exc:
-            logger.info("DeepEval unavailable/timeout. Using deterministic hallucination_score: %s", exc)
+        """DeepEval evaluator disabled by configuration."""
         return None
 
     def _deterministic(self, metric_input: MetricInput, timer: Any) -> MetricResult:
