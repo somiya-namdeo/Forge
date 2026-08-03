@@ -77,6 +77,21 @@ class RecommendationEngine:
         return "Unknown"
 
     @classmethod
+    def _extract_tech_key(cls, entry: dict[str, Any]) -> str:
+        """Extract a normalized unique key representing a technology entity."""
+        raw = (
+            entry.get("technology_id")
+            or entry.get("technology")
+            or entry.get("canonical_name")
+            or entry.get("id")
+            or entry.get("display_name")
+            or entry.get("name")
+            or ""
+        )
+        s = str(raw).strip().lower().replace("_", " ").replace("-", " ")
+        return " ".join(s.split())
+
+    @classmethod
     def _calculate_dynamic_confidence(
         cls, top_candidate: dict[str, Any], runner_up: Optional[dict[str, Any]] = None
     ) -> float:
@@ -90,63 +105,58 @@ class RecommendationEngine:
         return min(0.98, max(0.20, confidence))
 
     @classmethod
-    def _extract_alternatives(
-        cls, items: list[dict[str, Any]], top_name: str, top_id: str
-    ) -> list[str]:
-        """Extract up to 3 distinct alternative technology names."""
-        alternatives: list[str] = []
-        seen_names: set[str] = {top_name.lower()}
-        seen_ids: set[str] = {top_id.lower()}
-
-        for item in items[1:]:
-            if len(alternatives) >= 3:
-                break
-
-            alt_name = cls._extract_name(item)
-            alt_id = str(item.get("id") or item.get("technology") or alt_name).strip().lower()
-
-            if alt_name == "Unknown":
-                continue
-
-            lowered_name = alt_name.lower()
-            if lowered_name in seen_names or alt_id in seen_ids:
-                continue
-
-            seen_names.add(lowered_name)
-            seen_ids.add(alt_id)
-            alternatives.append(alt_name)
-
-        return alternatives
-
-    @classmethod
     def _create_recommendation_item(
         cls, category: str, items: list[dict[str, Any]]
     ) -> RecommendationItem | None:
-        """Construct a RecommendationItem from a category's scored candidates."""
+        """Construct a RecommendationItem from a category's scored candidates, filtering out duplicate technologies."""
         if not items:
             return None
 
-        top_candidate = items[0]
-        runner_up = items[1] if len(items) > 1 else None
+        # Deduplicate candidate entries by technology key and display name, preserving score ranking order
+        unique_candidates: list[dict[str, Any]] = []
+        seen_keys: set[str] = set()
 
+        for item in items:
+            tech_key = cls._extract_tech_key(item)
+            display_name = cls._extract_name(item)
+
+            if display_name == "Unknown":
+                continue
+
+            lowered_name = display_name.lower()
+            if tech_key in seen_keys or lowered_name in seen_keys:
+                continue
+
+            seen_keys.add(tech_key)
+            seen_keys.add(lowered_name)
+            unique_candidates.append(item)
+
+        if not unique_candidates:
+            return None
+
+        top_candidate = unique_candidates[0]
         recommended_name = cls._extract_name(top_candidate)
-        top_id = str(top_candidate.get("id") or top_candidate.get("technology") or recommended_name).strip().lower()
+
+        # Extract distinct alternative candidates (up to 3)
+        alt_candidates = unique_candidates[1:4]
+        alt_names = [cls._extract_name(cand) for cand in alt_candidates]
+        runner_up = alt_candidates[0] if alt_candidates else None
 
         # Calculate calibrated confidence score
         confidence = cls._calculate_dynamic_confidence(top_candidate, runner_up)
 
         reason = f"Recommended for {category} based on multi-factor suitability scoring."
-        alternatives = cls._extract_alternatives(items, recommended_name, top_id)
 
         rec = RecommendationItem(
             category=category,
             recommended=recommended_name,
             confidence=confidence,
             reason=reason,
-            alternatives=alternatives,
+            alternatives=alt_names,
         )
         rec._top_candidate = top_candidate
         rec._runner_up = runner_up
+        rec._alternative_candidates = alt_candidates
         return rec
 
     def recommend(

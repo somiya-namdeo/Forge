@@ -1,14 +1,20 @@
 """Explanation engine module for generating project-specific, evidence-backed recommendation rationale."""
 
+import logging
 from typing import Any, Dict, List, Optional, Union
+
 from app.decision.requirement_analyzer import ProjectProfile, RequirementAnalyzer
 from app.schemas.decision import AlternativeDetail, DecisionRequest, RecommendationItem
 from app.services.llm_service import LLMService
 
+logger = logging.getLogger(__name__)
+
+
 class ExplanationEngine:
     """Engine responsible for synthesizing factor-driven rationale, score breakdowns, evidence, and alternative trade-off analysis."""
+
     def __init__(self) -> None:
-        """Initialize ExplanationEngine."""
+        """Initialize ExplanationEngine with LLM service singleton."""
         self._llm = LLMService()
 
     @classmethod
@@ -172,7 +178,9 @@ class ExplanationEngine:
             if trade_offs:
                 sentence2 = f" Alternative '{runner_up_name}' ranked lower due to {', '.join(trade_offs)}."
             else:
-                score_diff = round((top_candidate.get("score", 0) - runner_up.get("score", 0)) * 100, 1)
+                top_s = float(top_candidate.get("score", 0.0))
+                run_s = float(runner_up.get("score", 0.0))
+                score_diff = round(max(0.0, top_s - run_s) * 100, 1)
                 sentence2 = f" Alternative '{runner_up_name}' ranked second with a {score_diff}% score margin."
 
         return sentence1 + sentence2
@@ -181,63 +189,89 @@ class ExplanationEngine:
     def _build_alternative_analysis(
         cls,
         alternatives: list[str],
-        runner_up: Optional[dict[str, Any]],
+        alt_candidates: list[dict[str, Any]],
         top_candidate: dict[str, Any],
         profile: ProjectProfile,
     ) -> list[AlternativeDetail]:
-        """Construct structured AlternativeDetail list with specific trade-off reasons for each alternative."""
+        """Construct structured AlternativeDetail list with metadata-backed trade-offs for each alternative."""
         analysis: list[AlternativeDetail] = []
+        top_subscores = top_candidate.get("subscores", {})
+        top_score = float(top_candidate.get("score", 0.0))
 
         for idx, alt_name in enumerate(alternatives):
+            cand = alt_candidates[idx] if idx < len(alt_candidates) else None
             reason_parts: list[str] = []
-            if idx == 0 and runner_up:
-                runner_subscores = runner_up.get("subscores", {})
-                top_subscores = top_candidate.get("subscores", {})
 
-                if runner_subscores.get("deployment_match", 1.0) < top_subscores.get("deployment_match", 1.0):
-                    reason_parts.append(f"Lower {profile.deployment.value} deployment compatibility")
-                if runner_subscores.get("constraint_match", 1.0) < top_subscores.get("constraint_match", 1.0):
-                    reason_parts.append("Less alignment with active project constraints")
-                if runner_subscores.get("budget_match", 1.0) < top_subscores.get("budget_match", 1.0):
-                    reason_parts.append("Higher estimated operating cost")
-                if runner_subscores.get("scale_match", 1.0) < top_subscores.get("scale_match", 1.0):
-                    reason_parts.append("Lower throughput capacity")
+            if cand:
+                cand_sub = cand.get("subscores", {})
+                cand_score = float(cand.get("score", 0.0))
+                is_open = cand.get("open_source") is True or "open" in str(cand.get("license", "")).lower()
 
-            if not reason_parts:
+                # 1. Constraint & Open Source / Privacy Tradeoffs
+                if profile.requires_open_source and not is_open:
+                    reason_parts.append(f"{alt_name} is proprietary software, violating open-source constraints")
+                elif profile.requires_local_execution and not (is_open or "local" in str(cand.get("path", "")).lower()):
+                    reason_parts.append(f"{alt_name} lacks native local/on-prem execution support")
+                elif cand_sub.get("constraint_match", 1.0) < top_subscores.get("constraint_match", 1.0):
+                    reason_parts.append(f"Lower adherence to project constraints compared to top choice")
+
+                # 2. Deployment Target Fit
+                if cand_sub.get("deployment_match", 1.0) < top_subscores.get("deployment_match", 1.0):
+                    reason_parts.append(f"Reduced compatibility with {profile.deployment.value} infrastructure")
+
+                # 3. Budget & Cost Efficiency
+                if cand_sub.get("budget_match", 1.0) < top_subscores.get("budget_match", 1.0):
+                    reason_parts.append("Higher estimated monthly operating cost")
+
+                # 4. Scale & Throughput
+                if cand_sub.get("scale_match", 1.0) < top_subscores.get("scale_match", 1.0):
+                    reason_parts.append("Lower scale and throughput capacity for large document indexing")
+
+                # 5. Domain Specialization
+                if cand_sub.get("domain_match", 1.0) < top_subscores.get("domain_match", 1.0):
+                    reason_parts.append(f"Less specialized domain fit for {profile.domain.value} applications")
+
+                # 6. Primary Priority Optimization
+                if cand_sub.get("priority_match", 1.0) < top_subscores.get("priority_match", 1.0):
+                    reason_parts.append(f"Lower alignment with {profile.priority.value} optimization priority")
+
+                # Fallback to score margin if no subscore delta triggered
+                if not reason_parts:
+                    margin = round(max(0.0, top_score - cand_score) * 100, 1)
+                    reason_parts.append(f"Lower overall composite suitability score ({margin}% score margin)")
+            else:
                 reason_parts.append("Lower overall composite suitability score")
 
             reason_str = f"{'; '.join(reason_parts)}."
             analysis.append(AlternativeDetail(name=alt_name, reason=reason_str))
 
         return analysis
-    
+
     def _enhance_reason_with_llm(
         self,
         reason: str,
         item: RecommendationItem,
     ) -> str:
         """Use the LLM to improve the readability of the recommendation reason."""
-
         prompt = f"""
-    You are an AI systems architect.
+You are an AI systems architect.
 
-    Rewrite the following recommendation explanation to be more natural,
-    professional, and concise.
+Rewrite the following recommendation explanation to be more natural,
+professional, and concise.
 
-    Rules:
-    - Keep the same meaning.
-    - Do not invent new facts.
-    - Do not change the recommendation.
-    - Mention trade-offs if already present.
-    - Return only the rewritten explanation.
+Rules:
+- Keep the same meaning.
+- Do not invent new facts.
+- Do not change the recommendation.
+- Mention trade-offs if already present.
+- Return only the rewritten explanation.
 
-    Recommendation:
-    {item.recommended}
+Recommendation:
+{item.recommended}
 
-    Original Explanation:
-    {reason}
-    """
-
+Original Explanation:
+{reason}
+"""
         try:
             return self._llm.reason(prompt)
         except Exception as exc:
@@ -259,6 +293,7 @@ class ExplanationEngine:
         for item in recommendations:
             top_candidate = getattr(item, "_top_candidate", {}) or {}
             runner_up = getattr(item, "_runner_up", None)
+            alt_candidates = getattr(item, "_alternative_candidates", []) or ([] if not runner_up else [runner_up])
             subscores = top_candidate.get("subscores", {})
             top_score = float(top_candidate.get("score", item.confidence))
 
@@ -277,7 +312,7 @@ class ExplanationEngine:
             decision_trace_list = self._build_decision_trace(profile)
             metadata_used_list = self._build_metadata_used(top_candidate, profile)
             alternative_analysis_list = self._build_alternative_analysis(
-                item.alternatives, runner_up, top_candidate, profile
+                item.alternatives, alt_candidates, top_candidate, profile
             )
 
             enriched_item = RecommendationItem(
