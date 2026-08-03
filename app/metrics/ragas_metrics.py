@@ -2,6 +2,7 @@
 
 from collections.abc import Sequence
 import math
+from typing import Any
 
 from datasets import Dataset
 from langchain_community.embeddings import HuggingFaceBgeEmbeddings
@@ -24,10 +25,14 @@ _REFERENCE_REQUIRED_METRICS = {"context_precision", "context_recall"}
 
 
 class RagasEvaluator(BaseMetricEvaluator):
-    """RAGAS evaluation framework provider implementing BaseMetricEvaluator."""
+    """RAGAS evaluation framework provider implementing BaseMetricEvaluator.
+
+    Maintains singletons for LLM and Embeddings wrappers, ensuring high performance
+    and zero model re-initialization during repeated evaluations.
+    """
 
     def __init__(self) -> None:
-        """Initialize RAGAS evaluator with Groq LLM and BGE embeddings."""
+        """Initialize RAGAS evaluator with Groq LLM and BGE embeddings wrappers."""
         self._llm = ChatOpenAI(
             model=LLM_MODEL,
             api_key=GROQ_API_KEY,
@@ -37,12 +42,13 @@ class RagasEvaluator(BaseMetricEvaluator):
         self._ragas_llm = LangchainLLMWrapper(self._llm)
         self._embeddings = HuggingFaceBgeEmbeddings(model_name=EMBEDDING_MODEL)
         self._ragas_embeddings = LangchainEmbeddingsWrapper(self._embeddings)
-        self._all_metrics = [
-            faithfulness,
-            answer_relevancy,
-            context_precision,
-            context_recall,
-        ]
+
+        self._metric_map = {
+            "faithfulness": faithfulness,
+            "answer_relevancy": answer_relevancy,
+            "context_precision": context_precision,
+            "context_recall": context_recall,
+        }
 
     @property
     def provider_name(self) -> str:
@@ -52,35 +58,83 @@ class RagasEvaluator(BaseMetricEvaluator):
     @property
     def supported_metrics(self) -> Sequence[str]:
         """Return sequence of metrics supported by RAGAS provider."""
-        return ("faithfulness", "answer_relevancy", "context_precision", "context_recall")
+        return tuple(self._metric_map.keys())
 
-    def evaluate(self, request: EvaluationRequest) -> dict[str, float]:
-        """Evaluate a single RAG response using RAGAS framework metrics."""
+    def _resolve_requested_metrics(self, request: EvaluationRequest) -> list[Any]:
+        """Resolve enabled metrics based on request metric_config and ground_truth presence."""
         has_ground_truth = bool(request.ground_truth and request.ground_truth.strip())
 
-        if has_ground_truth:
-            eval_metrics = self._all_metrics
-        else:
-            eval_metrics = [m for m in self._all_metrics if m.name not in _REFERENCE_REQUIRED_METRICS]
+        if request.metric_config:
+            enabled_names = set()
+            for cfg in request.metric_config:
+                if hasattr(cfg, "metric_type"):
+                    m_val = getattr(cfg.metric_type, "value", str(cfg.metric_type))
+                elif hasattr(cfg, "value"):
+                    m_val = cfg.value
+                else:
+                    m_val = str(cfg)
+                enabled_names.add(m_val.lower().strip())
 
-        dataset_dict = {
+            selected_metrics = [
+                m_obj
+                for name, m_obj in self._metric_map.items()
+                if name in enabled_names
+            ]
+        else:
+            selected_metrics = list(self._metric_map.values())
+
+        if not has_ground_truth:
+            selected_metrics = [
+                m for m in selected_metrics if m.name not in _REFERENCE_REQUIRED_METRICS
+            ]
+
+        return selected_metrics
+
+    def evaluate(self, request: EvaluationRequest) -> dict[str, float]:
+        """Evaluate a single RAG response using RAGAS framework metrics.
+
+        Args:
+            request (EvaluationRequest): Evaluation input request.
+
+        Returns:
+            dict[str, float]: Dictionary mapping metric names to normalized scores.
+
+        Raises:
+            ValueError: If RAGAS evaluation fails.
+        """
+        eval_metrics = self._resolve_requested_metrics(request)
+        if not eval_metrics:
+            return {}
+
+        has_ground_truth = bool(request.ground_truth and request.ground_truth.strip())
+        contexts_list = request.contexts if request.contexts else [""]
+
+        dataset_dict: dict[str, list[Any]] = {
+            "user_input": [request.question],
             "question": [request.question],
+            "response": [request.answer],
             "answer": [request.answer],
-            "contexts": [request.contexts if request.contexts else [""]],
+            "retrieved_contexts": [contexts_list],
+            "contexts": [contexts_list],
         }
         if has_ground_truth:
-            dataset_dict["ground_truth"] = [request.ground_truth]
             dataset_dict["reference"] = [request.ground_truth]
+            dataset_dict["ground_truth"] = [request.ground_truth]
 
-        dataset = Dataset.from_dict(dataset_dict)
-
-        results = evaluate(
-            dataset=dataset,
-            metrics=eval_metrics,
-            llm=self._ragas_llm,
-            embeddings=self._ragas_embeddings,
-            raise_exceptions=False,
-        )
+        try:
+            dataset = Dataset.from_dict(dataset_dict)
+            results = evaluate(
+                dataset=dataset,
+                metrics=eval_metrics,
+                llm=self._ragas_llm,
+                embeddings=self._ragas_embeddings,
+                raise_exceptions=True,
+            )
+        except Exception as exc:
+            metric_names = [getattr(m, "name", str(m)) for m in eval_metrics]
+            raise ValueError(
+                f"RAGAS evaluation failed for metrics {metric_names}: {exc}"
+            ) from exc
 
         scores: dict[str, float] = {}
         for metric in eval_metrics:
@@ -101,7 +155,7 @@ class RagasEvaluator(BaseMetricEvaluator):
                 else:
                     raw_val = 0.0
 
-            if raw_val is None or (isinstance(raw_val, float) and math.isnan(raw_val)):
+            if raw_val is None or not isinstance(raw_val, (int, float)) or math.isnan(raw_val):
                 scores[m_name] = 0.0
             else:
                 scores[m_name] = min(1.0, max(0.0, float(raw_val)))

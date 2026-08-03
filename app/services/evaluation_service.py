@@ -68,7 +68,8 @@ class EvaluationService:
 
     def _register_default_providers(self) -> None:
         """Register built-in evaluation metric providers (RAGAS, DeepEval, TruLens, Custom)."""
-        self.metric_registry.register_provider(RagasEvaluator())
+        if not self.metric_registry.exists("ragas"):
+            self.metric_registry.register_provider(RagasEvaluator())
 
     def evaluate(self, request: EvaluationRequest) -> EvaluationResponse:
         """Evaluate a single RAG sample response synchronously across configured metrics.
@@ -82,6 +83,7 @@ class EvaluationService:
         t0 = time.perf_counter()
         evaluation_id = str(uuid4())
 
+        provider_enum = request.provider
         provider_key = provider_enum.value if hasattr(provider_enum, "value") else str(provider_enum)
         evaluator = None
         try:
@@ -92,22 +94,9 @@ class EvaluationService:
         metrics_dict: Dict[str, float] = {}
 
         if evaluator and hasattr(evaluator, "evaluate"):
-            try:
-                metrics_dict = evaluator.evaluate(request)
-            except Exception:
-                metrics_dict = {
-                    "faithfulness": 0.88,
-                    "answer_relevancy": 0.82,
-                    "context_precision": 0.85,
-                    "context_recall": 0.80,
-                }
+            metrics_dict = evaluator.evaluate(request)
         else:
-            metrics_dict = {
-                "faithfulness": 0.88,
-                "answer_relevancy": 0.82,
-                "context_precision": 0.85,
-                "context_recall": 0.80,
-            }
+            raise ValueError(f"Provider '{provider_key}' is not registered in metric registry.")
 
         # Calculate overall score & status
         overall_score = sum(metrics_dict.values()) / len(metrics_dict) if metrics_dict else 0.85
