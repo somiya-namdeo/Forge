@@ -1,7 +1,7 @@
 {
   "technology": "Dense Retrieval",
   "category": "retrieval",
-  "description": "Dense Passage Retrieval (DPR) - is a set of tools and models for state-of-the-art open-domain Q&A research.\nIt is based on the following paper:\nVladimir Karpukhin, Barlas Oguz, Sewon Min, Patrick Lewis, Ledell Wu, Sergey Edunov, Danqi Chen, Wen-tau Yih. Dense Passage Retrieval for Open-Domain Question Answering. Proceedings of the 2020 Conference on Empirical Methods in Natural Language Processing (EMNLP), pages 6769–6781, 2020.\nIf you find this work useful, please cite the following paper:\n@inp",
+  "description": "Dense Passage Retrieval (DPR) - is a set of tools and models for state-of-the-art open-domain Q&A research.\nIt is based on the following paper:\nVladimir Karpukhin, Barlas Oguz, Sewon Min, Patrick Lewis, Ledell Wu, Sergey Edunov, Danqi Chen, Wen-tau Yih. Dense Passage Retrieval for Open-Domain Question Answering. Proceedings of the 2020 Conference on Empirical Methods in Natural Language Processing (EMNLP), pages 6769\u20136781, 2020.\nIf you find this work useful, please cite the following paper:\n@inp",
   "aliases": [],
   "tags": [
     "data",
@@ -53,5 +53,8 @@
     "score": null,
     "confidence": null,
     "reason": null
-  }
+  },
+  "open_source": true,
+  "commercial": true,
+  "license": "Apache-2.0"
 }

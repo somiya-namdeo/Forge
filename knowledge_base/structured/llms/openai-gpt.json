@@ -1,7 +1,7 @@
 {
   "technology": "OpenAI GPT",
   "category": "llms",
-  "description": "API Overview\nUse this reference to look up OpenAI API endpoints, request and response schemas, streaming events, client library methods, and shared behavior such as authentication, errors, rate limits, and request IDs.\nStart here\nSection titled “Start here”\n- Choose the API surface for your application:\n- Responses for direct model requests, tool use, audio, image, and text inputs, and stateful interactions.\n- Realtime API for low-latency voice or audio sessions over WebRTC, WebSocket, or SIP. U",
+  "description": "API Overview\nUse this reference to look up OpenAI API endpoints, request and response schemas, streaming events, client library methods, and shared behavior such as authentication, errors, rate limits, and request IDs.\nStart here\nSection titled \u201cStart here\u201d\n- Choose the API surface for your application:\n- Responses for direct model requests, tool use, audio, image, and text inputs, and stateful interactions.\n- Realtime API for low-latency voice or audio sessions over WebRTC, WebSocket, or SIP. U",
   "aliases": [],
   "tags": [
     "endobj",
@@ -61,5 +61,7 @@
     "score": null,
     "confidence": null,
     "reason": null
-  }
+  },
+  "open_source": false,
+  "license": "Proprietary"
 }

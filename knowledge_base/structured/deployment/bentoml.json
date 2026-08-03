@@ -1,7 +1,7 @@
 {
   "technology": "BentoML",
   "category": "deployment",
-  "description": "🍱 Build model inference APIs and multi-model serving systems with any open-source or custom AI models. 👉 Join our forum!\nBentoML is a Python library for building online serving systems optimized for AI apps and model inference.\n- 🍱 Easily build APIs for Any AI/ML Model. Turn any model inference script into a REST API server with just a few lines of code and standard Python type hints.\n- 🐳 Docker Containers made simple. No more dependency hell! Manage your environments, dependencies and model ver",
+  "description": "\ud83c\udf71 Build model inference APIs and multi-model serving systems with any open-source or custom AI models. \ud83d\udc49 Join our forum!\nBentoML is a Python library for building online serving systems optimized for AI apps and model inference.\n- \ud83c\udf71 Easily build APIs for Any AI/ML Model. Turn any model inference script into a REST API server with just a few lines of code and standard Python type hints.\n- \ud83d\udc33 Docker Containers made simple. No more dependency hell! Manage your environments, dependencies and model ver",
   "aliases": [],
   "tags": [
     "bentoml",
@@ -58,5 +58,8 @@
     "score": null,
     "confidence": null,
     "reason": null
-  }
+  },
+  "open_source": true,
+  "commercial": true,
+  "license": "Apache-2.0"
 }

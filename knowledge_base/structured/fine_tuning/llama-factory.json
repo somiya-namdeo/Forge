@@ -1,7 +1,7 @@
 {
   "technology": "LLaMA-Factory",
   "category": "fine_tuning",
-  "description": "Check our new open-source project —\n🐧 PenguinHarness: Your desktop agent that automatically builds agents for just $0.02 of tokens!\nFollow our project: https://github.com/Prism-Shadow/penguin-harness\nrag_en.mp4\n👋 Join our WeChat and NPU user groups.\n[ English | 中文 ]\nFine-tuning a large language model can be easy as...\ntrain_en.mp4\nStart local training:\n- Please refer to usage\nStart cloud training:\n- Colab (free): https://colab.research.google.com/drive/1eRTPn37ltBbYsISy9Aw2NuI2Aq5CQrD9?usp=shari",
+  "description": "Check our new open-source project \u2014\n\ud83d\udc27 PenguinHarness: Your desktop agent that automatically builds agents for just $0.02 of tokens!\nFollow our project: https://github.com/Prism-Shadow/penguin-harness\nrag_en.mp4\n\ud83d\udc4b Join our WeChat and NPU user groups.\n[ English | \u4e2d\u6587 ]\nFine-tuning a large language model can be easy as...\ntrain_en.mp4\nStart local training:\n- Please refer to usage\nStart cloud training:\n- Colab (free): https://colab.research.google.com/drive/1eRTPn37ltBbYsISy9Aw2NuI2Aq5CQrD9?usp=shari",
   "aliases": [],
   "tags": [
     "arxiv",
@@ -59,5 +59,8 @@
     "score": null,
     "confidence": null,
     "reason": null
-  }
+  },
+  "open_source": true,
+  "commercial": true,
+  "license": "MIT"
 }

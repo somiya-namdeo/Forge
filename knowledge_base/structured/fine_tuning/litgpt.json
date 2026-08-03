@@ -1,7 +1,7 @@
 {
   "technology": "LitGPT",
   "category": "fine_tuning",
-  "description": "20+ high-performance LLMs with recipes to pretrain, finetune, and deploy at scale.\n✅ From scratch implementations ✅ No abstractions ✅ Beginner friendly\n✅ Flash attention ✅ FSDP ✅ LoRA, QLoRA, Adapter\n✅ Reduce GPU memory (fp4/8/16/32) ✅ 1-1000+ GPUs/TPUs ✅ 20+ LLMs\nQuick start • Models • Finetune • Deploy • All workflows • Features • Recipes (YAML) • Lightning AI • Tutorials\nOver 340,000 developers use Lightning Cloud - purpose-built for PyTorch and PyTorch Lightning.\n- GPUs from $0.19.\n- Cluster",
+  "description": "20+ high-performance LLMs with recipes to pretrain, finetune, and deploy at scale.\n\u2705 From scratch implementations \u2705 No abstractions \u2705 Beginner friendly\n\u2705 Flash attention \u2705 FSDP \u2705 LoRA, QLoRA, Adapter\n\u2705 Reduce GPU memory (fp4/8/16/32) \u2705 1-1000+ GPUs/TPUs \u2705 20+ LLMs\nQuick start \u2022 Models \u2022 Finetune \u2022 Deploy \u2022 All workflows \u2022 Features \u2022 Recipes (YAML) \u2022 Lightning AI \u2022 Tutorials\nOver 340,000 developers use Lightning Cloud - purpose-built for PyTorch and PyTorch Lightning.\n- GPUs from $0.19.\n- Cluster",
   "aliases": [],
   "tags": [
     "litgpt",
@@ -55,5 +55,8 @@
     "score": null,
     "confidence": null,
     "reason": null
-  }
+  },
+  "open_source": true,
+  "commercial": true,
+  "license": "Apache-2.0"
 }

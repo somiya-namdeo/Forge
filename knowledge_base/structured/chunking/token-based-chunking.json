@@ -1,7 +1,7 @@
 {
   "technology": "Token-Based Chunking",
   "category": "chunking",
-  "description": "LangChain is a framework for building agents and LLM-powered applications. It helps you chain together interoperable components and third-party integrations to simplify AI application development — all while future-proofing decisions as the underlying technology evolves.\nTip\nJust getting started? Check out Deep Agents — a higher-level package built on LangChain for agents that have built-in capabilites for common usage patterns such as planning, subagents, file system usage, and more.\nuv add lan",
+  "description": "LangChain is a framework for building agents and LLM-powered applications. It helps you chain together interoperable components and third-party integrations to simplify AI application development \u2014 all while future-proofing decisions as the underlying technology evolves.\nTip\nJust getting started? Check out Deep Agents \u2014 a higher-level package built on LangChain for agents that have built-in capabilites for common usage patterns such as planning, subagents, file system usage, and more.\nuv add lan",
   "aliases": [],
   "tags": [
     "langchain",
@@ -52,5 +52,8 @@
     "score": null,
     "confidence": null,
     "reason": null
-  }
+  },
+  "open_source": true,
+  "commercial": true,
+  "license": "Apache-2.0"
 }

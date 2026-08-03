@@ -1,7 +1,7 @@
 {
   "technology": "LMQL",
   "category": "prompting",
-  "description": "A programming language for large language models.\n\nDocumentation »\n\n\nExplore Examples\n·\nPlayground IDE\n·\nReport Bug\n\n\n\n\n\nLMQL is a programming language for large language models (LLMs) based on a superset of Python. LMQL offers a novel way of interweaving traditional programming with the ability to call LLMs in your code. It goes beyond traditional templating languages by integrating LLM interaction natively at the level of your program code.\nHelp us shape the next major version of LMQL by filli",
+  "description": "A programming language for large language models.\n\nDocumentation \u00bb\n\n\nExplore Examples\n\u00b7\nPlayground IDE\n\u00b7\nReport Bug\n\n\n\n\n\nLMQL is a programming language for large language models (LLMs) based on a superset of Python. LMQL offers a novel way of interweaving traditional programming with the ability to call LLMs in your code. It goes beyond traditional templating languages by integrating LLM interaction natively at the level of your program code.\nHelp us shape the next major version of LMQL by filli",
   "aliases": [],
   "tags": [
     "lmql",
@@ -53,5 +53,8 @@
     "score": null,
     "confidence": null,
     "reason": null
-  }
+  },
+  "open_source": true,
+  "commercial": true,
+  "license": "Apache-2.0"
 }

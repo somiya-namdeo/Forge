@@ -1,7 +1,7 @@
 {
   "technology": "Hugging Face Inference Endpoints",
   "category": "deployment",
-  "description": "Inference Endpoints (dedicated) documentation\nInference Endpoints\nInference Endpoints\nInference Endpoints is a managed service to deploy your AI model to production. Here you’ll find quickstarts, guides, tutorials, use cases and a lot more.\n🔥 Quickstart\nDeploy a production ready AI model in minutes.\n🔍 How Inference Endpoints Works\nUnderstand the main components and benefits of Inference Endpoints.\n📖 Guides\nExplore our guides to learn how to configure or enable specific features on the platform.\n",
+  "description": "Inference Endpoints (dedicated) documentation\nInference Endpoints\nInference Endpoints\nInference Endpoints is a managed service to deploy your AI model to production. Here you\u2019ll find quickstarts, guides, tutorials, use cases and a lot more.\n\ud83d\udd25 Quickstart\nDeploy a production ready AI model in minutes.\n\ud83d\udd0d How Inference Endpoints Works\nUnderstand the main components and benefits of Inference Endpoints.\n\ud83d\udcd6 Guides\nExplore our guides to learn how to configure or enable specific features on the platform.\n",
   "aliases": [],
   "tags": [
     "inference",
@@ -50,5 +50,7 @@
     "score": null,
     "confidence": null,
     "reason": null
-  }
+  },
+  "open_source": false,
+  "license": "Proprietary"
 }

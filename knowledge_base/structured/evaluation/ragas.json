@@ -1,7 +1,7 @@
 {
   "technology": "Ragas",
   "category": "evaluation",
-  "description": "Supercharge Your LLM Application Evaluations 🚀\nObjective metrics, intelligent test generation, and data-driven insights for LLM apps\nRagas is your ultimate toolkit for evaluating and optimizing Large Language Model (LLM) applications. Say goodbye to time-consuming, subjective assessments and hello to data-driven, efficient evaluation workflows. Don't have a test dataset ready? We also do production-aligned test set generation.\n- 🎯 Objective Metrics: Evaluate your LLM applications with precision ",
+  "description": "Supercharge Your LLM Application Evaluations \ud83d\ude80\nObjective metrics, intelligent test generation, and data-driven insights for LLM apps\nRagas is your ultimate toolkit for evaluating and optimizing Large Language Model (LLM) applications. Say goodbye to time-consuming, subjective assessments and hello to data-driven, efficient evaluation workflows. Don't have a test dataset ready? We also do production-aligned test set generation.\n- \ud83c\udfaf Objective Metrics: Evaluate your LLM applications with precision ",
   "aliases": [],
   "tags": [
     "ragas",
@@ -51,5 +51,8 @@
     "score": null,
     "confidence": null,
     "reason": null
-  }
+  },
+  "open_source": true,
+  "commercial": true,
+  "license": "Apache-2.0"
 }

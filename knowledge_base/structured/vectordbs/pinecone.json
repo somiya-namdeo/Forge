@@ -1,7 +1,7 @@
 {
   "technology": "Pinecone",
   "category": "vectordbs",
-  "description": "SDK versions are pinned to specific API versions.\nDatabase\nUse the Database API to store and query records in Pinecone Database. The following Pinecone SDKs support the Database API:\nCLI\nPython SDK\nNode.js SDK\nJava SDK\nGo SDK\nInference\nUse the Inference API to generate vector embeddings and rerank results using embedding models and reranking models hosted on Pinecone’s infrastructure. There are two ways to use the Inference API:\n- As a standalone service, through the Rerank documents and Generat",
+  "description": "SDK versions are pinned to specific API versions.\nDatabase\nUse the Database API to store and query records in Pinecone Database. The following Pinecone SDKs support the Database API:\nCLI\nPython SDK\nNode.js SDK\nJava SDK\nGo SDK\nInference\nUse the Inference API to generate vector embeddings and rerank results using embedding models and reranking models hosted on Pinecone\u2019s infrastructure. There are two ways to use the Inference API:\n- As a standalone service, through the Rerank documents and Generat",
   "aliases": [],
   "tags": [
     "pinecone",
@@ -56,5 +56,7 @@
     "score": null,
     "confidence": null,
     "reason": null
-  }
+  },
+  "open_source": false,
+  "license": "Proprietary"
 }

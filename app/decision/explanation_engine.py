@@ -205,7 +205,17 @@ class ExplanationEngine:
             if cand:
                 cand_sub = cand.get("subscores", {})
                 cand_score = float(cand.get("score", 0.0))
-                is_open = cand.get("open_source") is True or "open" in str(cand.get("license", "")).lower()
+                lic_str = str(cand.get("license", "")).lower()
+                tech_str = (str(cand.get("technology") or "") + " " + str(cand.get("name") or "")).lower()
+                
+                is_open = (
+                    cand.get("open_source") is True
+                    or any(w in lic_str for w in ("open", "apache", "mit", "bsd", "gpl", "lgpl", "agpl", "community"))
+                    or any(t in tech_str for t in (
+                        "chroma", "milvus", "qdrant", "weaviate", "faiss", "langchain", "llamaindex", "haystack",
+                        "deepeval", "ragas", "flashrank", "bge", "llama", "mistral", "deepseek", "qwen", "ollama"
+                    ))
+                )
 
                 # 1. Constraint & Open Source / Privacy Tradeoffs
                 if profile.requires_open_source and not is_open:

@@ -1,7 +1,7 @@
 {
   "technology": "LangGraph",
   "category": "frameworks",
-  "description": "Welcome to the LangGraph package reference documentation!\nLangGraph is a framework for building resilient language agents as graphs. The langgraph package is the main entrypoint, providing everything you need to define stateful, multi-step agent workflows. The packages below form the LangGraph ecosystem:\nTrusted by companies shaping the future of agents – including Klarna, Replit, Elastic, and more – LangGraph is a low-level orchestration framework for building, managing, and deploying long-runn",
+  "description": "Welcome to the LangGraph package reference documentation!\nLangGraph is a framework for building resilient language agents as graphs. The langgraph package is the main entrypoint, providing everything you need to define stateful, multi-step agent workflows. The packages below form the LangGraph ecosystem:\nTrusted by companies shaping the future of agents \u2013 including Klarna, Replit, Elastic, and more \u2013 LangGraph is a low-level orchestration framework for building, managing, and deploying long-runn",
   "aliases": [],
   "tags": [
     "langgraph",
@@ -53,5 +53,8 @@
     "score": null,
     "confidence": null,
     "reason": null
-  }
+  },
+  "open_source": true,
+  "commercial": true,
+  "license": "MIT"
 }

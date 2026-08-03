@@ -1,7 +1,7 @@
 {
   "technology": "BGE Reranker",
   "category": "rerankers",
-  "description": "News | Installation | Quick Start | Community | Projects | Model List | Contributor | Citation | License\n-\n3/6/2025: 🔥🔥 Introduce BGE-VL (HF repo), State-Of-The-Art multimodal embedding models to support Any visual search applications (everything, including text-to-image, image-to-text, image&prompt-to-image, text-to-image&text, and more)! They are released under the MIT license and are completely free for both academic and commercial use. We also release MegaPairs (repo, paper), a massive synth",
+  "description": "News | Installation | Quick Start | Community | Projects | Model List | Contributor | Citation | License\n-\n3/6/2025: \ud83d\udd25\ud83d\udd25 Introduce BGE-VL (HF repo), State-Of-The-Art multimodal embedding models to support Any visual search applications (everything, including text-to-image, image-to-text, image&prompt-to-image, text-to-image&text, and more)! They are released under the MIT license and are completely free for both academic and commercial use. We also release MegaPairs (repo, paper), a massive synth",
   "aliases": [],
   "tags": [
     "model",
@@ -53,5 +53,8 @@
     "score": null,
     "confidence": null,
     "reason": null
-  }
+  },
+  "open_source": true,
+  "commercial": true,
+  "license": "MIT"
 }

@@ -1,7 +1,7 @@
 {
   "technology": "vLLM",
   "category": "deployment",
-  "description": "| Documentation | Blog | Paper | Twitter/X | User Forum | Developer Slack |\n🔥 We have built a vLLM website to help you get started with vLLM. Please visit vllm.ai to learn more. For events, please visit vllm.ai/events to join us.\nvLLM is a fast and easy-to-use library for LLM inference and serving.\nOriginally developed in the Sky Computing Lab at UC Berkeley, vLLM has grown into one of the most active open-source AI projects built and maintained by a diverse community of many dozens of academic ",
+  "description": "| Documentation | Blog | Paper | Twitter/X | User Forum | Developer Slack |\n\ud83d\udd25 We have built a vLLM website to help you get started with vLLM. Please visit vllm.ai to learn more. For events, please visit vllm.ai/events to join us.\nvLLM is a fast and easy-to-use library for LLM inference and serving.\nOriginally developed in the Sky Computing Lab at UC Berkeley, vLLM has grown into one of the most active open-source AI projects built and maintained by a diverse community of many dozens of academic ",
   "aliases": [],
   "tags": [
     "vllm",
@@ -54,5 +54,8 @@
     "score": null,
     "confidence": null,
     "reason": null
-  }
+  },
+  "open_source": true,
+  "commercial": true,
+  "license": "Apache-2.0"
 }

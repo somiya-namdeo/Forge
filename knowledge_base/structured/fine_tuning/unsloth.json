@@ -1,7 +1,7 @@
 {
   "technology": "Unsloth",
   "category": "fine_tuning",
-  "description": "Features • News • Quickstart • Notebooks • Documentation\ncurl -fsSL https://unsloth.ai/install.sh | shirm https://unsloth.ai/install.ps1 | iex\nUnsloth Studio (Beta) lets you run and train text, audio, embedding, vision models on Windows, Linux and macOS.\n- Search + download + run models including GGUF, LoRA adapters, safetensors\n- Export models: Save or export models to GGUF, 16-bit safetensors and other formats.\n- Tool calling: Support for self-healing tool calling and web search\n- Code executi",
+  "description": "Features \u2022 News \u2022 Quickstart \u2022 Notebooks \u2022 Documentation\ncurl -fsSL https://unsloth.ai/install.sh | shirm https://unsloth.ai/install.ps1 | iex\nUnsloth Studio (Beta) lets you run and train text, audio, embedding, vision models on Windows, Linux and macOS.\n- Search + download + run models including GGUF, LoRA adapters, safetensors\n- Export models: Save or export models to GGUF, 16-bit safetensors and other formats.\n- Tool calling: Support for self-healing tool calling and web search\n- Code executi",
   "aliases": [],
   "tags": [
     "unsloth",
@@ -55,5 +55,8 @@
     "score": null,
     "confidence": null,
     "reason": null
-  }
+  },
+  "open_source": true,
+  "commercial": true,
+  "license": "Apache-2.0"
 }

@@ -1,7 +1,7 @@
 {
   "technology": "TRL",
   "category": "fine_tuning",
-  "description": "🌍 Multi-environment agentic RL: GRPOTrainer now supports per-example environment selection and environment-owned rewards — mix multiple sandboxed task suites in one run and let each environment define its own scoring, with Harbor and OpenEnv.\n🎯 KTO is now stable: KTOTrainer graduates to the stable API after a full alignment pass with DPOTrainer.\nTRL is a cutting-edge library designed for post-training foundation models using advanced techniques like Supervised Fine-Tuning (SFT), Group Relative P",
+  "description": "\ud83c\udf0d Multi-environment agentic RL: GRPOTrainer now supports per-example environment selection and environment-owned rewards \u2014 mix multiple sandboxed task suites in one run and let each environment define its own scoring, with Harbor and OpenEnv.\n\ud83c\udfaf KTO is now stable: KTOTrainer graduates to the stable API after a full alignment pass with DPOTrainer.\nTRL is a cutting-edge library designed for post-training foundation models using advanced techniques like Supervised Fine-Tuning (SFT), Group Relative P",
   "aliases": [],
   "tags": [
     "dataset",
@@ -52,5 +52,8 @@
     "score": null,
     "confidence": null,
     "reason": null
-  }
+  },
+  "open_source": true,
+  "commercial": true,
+  "license": "Apache-2.0"
 }

@@ -55,5 +55,7 @@
     "score": null,
     "confidence": null,
     "reason": null
-  }
+  },
+  "open_source": false,
+  "license": "Proprietary"
 }

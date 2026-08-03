@@ -1,7 +1,7 @@
 {
   "technology": "Chroma",
   "category": "vectordbs",
-  "description": "How Chroma Sync Works\nSync runs the same pipeline regardless of source:\n- Managed ingestion. Connect a source once; every invocation runs through Chroma’s queue-based pipeline with automatic retries, rate-limit awareness, and error recovery. Monitor invocations in the dashboard or through the Sync API.\n- High throughput. The pipeline is designed to maximize throughput without dropping work, whether you’re syncing a handful of files or millions of documents.\n- Parse. Best-in-class PDF and documen",
+  "description": "How Chroma Sync Works\nSync runs the same pipeline regardless of source:\n- Managed ingestion. Connect a source once; every invocation runs through Chroma\u2019s queue-based pipeline with automatic retries, rate-limit awareness, and error recovery. Monitor invocations in the dashboard or through the Sync API.\n- High throughput. The pipeline is designed to maximize throughput without dropping work, whether you\u2019re syncing a handful of files or millions of documents.\n- Parse. Best-in-class PDF and documen",
   "aliases": [],
   "tags": [
     "rescrv",
@@ -60,5 +60,8 @@
     "score": null,
     "confidence": null,
     "reason": null
-  }
+  },
+  "open_source": true,
+  "commercial": true,
+  "license": "Apache-2.0"
 }

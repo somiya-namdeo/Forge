@@ -1,7 +1,7 @@
 {
   "technology": "FlashRank",
   "category": "rerankers",
-  "description": "Ultra-lite & Super-fast Python library to add re-ranking to your existing search & retrieval pipelines. It is based on SoTA LLMs and cross-encoders, with gratitude to all the model owners.\nSupports:\n- Pairwise / Pointwise rerankers. (Cross encoder based, i.e. Max tokens = 512 )\n- Listwise LLM based rerankers. (LLM based, i.e. Max tokens = 8192 )\n- See below for full list of supported models.\n-\n⚡ Ultra-lite:\n- No Torch or Transformers needed. Runs on CPU.\n- Boasts the tiniest reranking model in t",
+  "description": "Ultra-lite & Super-fast Python library to add re-ranking to your existing search & retrieval pipelines. It is based on SoTA LLMs and cross-encoders, with gratitude to all the model owners.\nSupports:\n- Pairwise / Pointwise rerankers. (Cross encoder based, i.e. Max tokens = 512 )\n- Listwise LLM based rerankers. (LLM based, i.e. Max tokens = 8192 )\n- See below for full list of supported models.\n-\n\u26a1 Ultra-lite:\n- No Torch or Transformers needed. Runs on CPU.\n- Boasts the tiniest reranking model in t",
   "aliases": [],
   "tags": [
     "model",
@@ -55,5 +55,8 @@
     "score": null,
     "confidence": null,
     "reason": null
-  }
+  },
+  "open_source": true,
+  "commercial": true,
+  "license": "Apache-2.0"
 }

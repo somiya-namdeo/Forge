@@ -1,7 +1,7 @@
 {
   "technology": "Qwen",
   "category": "llms",
-  "description": "💜 Qwen Chat   |   🤗 Hugging Face   |   🤖 ModelScope   |    📑 Paper    |    📑 Blog    ｜   📖 Documentation\n🖥️ Demo   |   💬 WeChat (微信)   |   🫨 Discord  \nVisit our Hugging Face or ModelScope organization (click links above), search checkpoints with names starting with Qwen3- or visit the Qwen3 collection, and you will find all you need! Enjoy!\nTo learn more about Qwen3, feel free to read our documentation [EN|ZH]. Our documentation consists of the following sections:\n- Quickstart: the basic usages ",
+  "description": "\ud83d\udc9c Qwen Chat\u00a0\u00a0 | \u00a0\u00a0\ud83e\udd17 Hugging Face\u00a0\u00a0 | \u00a0\u00a0\ud83e\udd16 ModelScope\u00a0\u00a0 | \u00a0\u00a0 \ud83d\udcd1 Paper \u00a0\u00a0 | \u00a0\u00a0 \ud83d\udcd1 Blog \u00a0\u00a0 \uff5c \u00a0\u00a0\ud83d\udcd6 Documentation\n\ud83d\udda5\ufe0f Demo\u00a0\u00a0 | \u00a0\u00a0\ud83d\udcac WeChat (\u5fae\u4fe1)\u00a0\u00a0 | \u00a0\u00a0\ud83e\udee8 Discord\u00a0\u00a0\nVisit our Hugging Face or ModelScope organization (click links above), search checkpoints with names starting with Qwen3- or visit the Qwen3 collection, and you will find all you need! Enjoy!\nTo learn more about Qwen3, feel free to read our documentation [EN|ZH]. Our documentation consists of the following sections:\n- Quickstart: the basic usages ",
   "aliases": [],
   "tags": [
     "model",
@@ -57,5 +57,8 @@
     "score": null,
     "confidence": null,
     "reason": null
-  }
+  },
+  "open_source": true,
+  "commercial": true,
+  "license": "Apache-2.0"
 }

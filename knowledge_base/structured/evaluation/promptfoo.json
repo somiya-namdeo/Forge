@@ -1,7 +1,7 @@
 {
   "technology": "Promptfoo",
   "category": "evaluation",
-  "description": "promptfoo is a CLI and library for evaluating and red-teaming LLM apps. Stop the trial-and-error approach - start shipping secure, reliable AI apps.\nWebsite · Getting Started · Red Teaming · Documentation · Discord\nPromptfoo is now part of OpenAI. Promptfoo remains open source and MIT licensed. Read the company update.\nRequires Node.js >=22.22.0 for npm and npx usage. Node.js 24 LTS\nis recommended; see the runtime support guide.\nnpm install -g promptfoo\npromptfoo init --example getting-started\nA",
+  "description": "promptfoo is a CLI and library for evaluating and red-teaming LLM apps. Stop the trial-and-error approach - start shipping secure, reliable AI apps.\nWebsite \u00b7 Getting Started \u00b7 Red Teaming \u00b7 Documentation \u00b7 Discord\nPromptfoo is now part of OpenAI. Promptfoo remains open source and MIT licensed. Read the company update.\nRequires Node.js >=22.22.0 for npm and npx usage. Node.js 24 LTS\nis recommended; see the runtime support guide.\nnpm install -g promptfoo\npromptfoo init --example getting-started\nA",
   "aliases": [],
   "tags": [
     "promptfoo",
@@ -52,5 +52,8 @@
     "score": null,
     "confidence": null,
     "reason": null
-  }
+  },
+  "open_source": true,
+  "commercial": true,
+  "license": "Apache-2.0"
 }
