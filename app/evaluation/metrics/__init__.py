@@ -6,10 +6,12 @@ from app.evaluation.metrics.base_metric import (
     MetricInput,
     MetricResult,
 )
+from app.evaluation.metrics.faithfulness import FaithfulnessCalculator
 
 __all__ = [
     "MetricCalculator",
     "MetricCategory",
     "MetricInput",
     "MetricResult",
+    "FaithfulnessCalculator",
 ]
