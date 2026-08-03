@@ -93,7 +93,7 @@ class QdrantRetriever:
             RuntimeError: If Qdrant communication encounters execution failures.
         """
         start_time = time.perf_counter()
-        top_limit = limit or self.top_k
+        top_limit = limit or (self.top_k * 40)
 
         query_text = self._build_semantic_query(request)
         if not query_text.strip():
