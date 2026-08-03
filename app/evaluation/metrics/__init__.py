@@ -1,5 +1,6 @@
 """Metric calculators package for Forge evaluation module."""
 
+from app.evaluation.metrics.answer_relevancy import AnswerRelevancyCalculator
 from app.evaluation.metrics.base_metric import (
     MetricCalculator,
     MetricCategory,
@@ -14,4 +15,5 @@ __all__ = [
     "MetricInput",
     "MetricResult",
     "FaithfulnessCalculator",
+    "AnswerRelevancyCalculator",
 ]
