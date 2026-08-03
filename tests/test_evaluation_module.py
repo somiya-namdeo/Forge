@@ -3,36 +3,36 @@ Unit tests verifying the evaluation module architecture, schemas, services, and 
 """
 
 import unittest
-from backend.app.metrics import (
+from app.metrics import (
     EvaluationProvider,
     MetricType,
     PassFailStatus,
     MetricRegistry,
 )
-from backend.app.metrics.ragas_metrics import RagasEvaluator
-from backend.app.metrics.deepeval_metrics import DeepEvalEvaluator
-from backend.app.metrics.custom_metrics import CustomEvaluator, TruLensEvaluator
-from backend.app.datasets.golden_dataset import GoldenDataset, GoldenSample
-from backend.app.datasets.benchmark_loader import LocalBenchmarkLoader, RemoteBenchmarkLoader
-from backend.app.thresholds.threshold_manager import (
+from app.metrics.ragas_metrics import RagasEvaluator
+from app.metrics.deepeval_metrics import DeepEvalEvaluator
+from app.metrics.custom_metrics import CustomEvaluator, TruLensEvaluator
+from app.datasets.golden_dataset import GoldenDataset, GoldenSample
+from app.datasets.benchmark_loader import LocalBenchmarkLoader, RemoteBenchmarkLoader
+from app.thresholds.threshold_manager import (
     ThresholdManager,
     ThresholdRule,
     ThresholdOperator,
 )
-from backend.app.utils.weighting import WeightConfig, WeightingEngine, WeightPreset
-from backend.app.utils.score_calculator import ScoreCalculator
-from backend.app.history.evaluation_history import EvaluationHistoryManager, EvaluationRecord
-from backend.app.reports.report_generator import ReportGenerator
-from backend.app.reports.export_pdf import PDFExporter
-from backend.app.reports.export_json import JSONExporter
-from backend.app.schemas.evaluation import (
+from app.utils.weighting import WeightConfig, WeightingEngine, WeightPreset
+from app.utils.score_calculator import ScoreCalculator
+from app.history.evaluation_history import EvaluationHistoryManager, EvaluationRecord
+from app.reports.report_generator import ReportGenerator
+from app.reports.export_pdf import PDFExporter
+from app.reports.export_json import JSONExporter
+from app.schemas.evaluation import (
     EvaluationRequest,
     EvaluationSampleSchema,
     MetricConfigSchema,
     ThresholdConfigSchema,
     EvaluationHistoryFilter,
 )
-from backend.app.services.evaluation_service import EvaluationService
+from app.services.evaluation_service import EvaluationService
 
 
 class TestEvaluationModuleStructure(unittest.TestCase):

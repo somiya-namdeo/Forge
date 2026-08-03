@@ -5,7 +5,7 @@ Defines Pydantic v2 data transfer objects (DTOs) for evaluation API requests,
 responses, metric settings, threshold configs, and query filters.
 """
 
-from backend.app.schemas.evaluation import (
+from app.schemas.evaluation import (
     EvaluationBatchRequest,
     EvaluationHistoryFilter,
     EvaluationRequest,

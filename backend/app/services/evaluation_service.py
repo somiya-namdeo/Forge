@@ -9,34 +9,34 @@ saving historical records, and producing PDF/JSON reports.
 from typing import Any, Dict, List, Optional
 from uuid import uuid4
 
-from backend.app.history.evaluation_history import (
+from app.history.evaluation_history import (
     EvaluationHistoryManager,
     EvaluationRecord,
 )
-from backend.app.metrics import (
+from app.metrics import (
     EvaluationProvider,
     MetricRegistry,
     PassFailStatus,
 )
-from backend.app.metrics.custom_metrics import CustomEvaluator, TruLensEvaluator
-from backend.app.metrics.deepeval_metrics import DeepEvalEvaluator
-from backend.app.metrics.ragas_metrics import RagasEvaluator
-from backend.app.reports.export_json import JSONExporter
-from backend.app.reports.export_pdf import PDFExporter
-from backend.app.reports.report_generator import EvaluationReport, ReportGenerator
-from backend.app.schemas.evaluation import (
+from app.metrics.custom_metrics import CustomEvaluator, TruLensEvaluator
+from app.metrics.deepeval_metrics import DeepEvalEvaluator
+from app.metrics.ragas_metrics import RagasEvaluator
+from app.reports.export_json import JSONExporter
+from app.reports.export_pdf import PDFExporter
+from app.reports.report_generator import EvaluationReport, ReportGenerator
+from app.schemas.evaluation import (
     EvaluationHistoryFilter,
     EvaluationRequest,
     EvaluationResponse,
     ReportResponseSchema,
     ThresholdConfigSchema,
 )
-from backend.app.thresholds.threshold_manager import (
+from app.thresholds.threshold_manager import (
     ThresholdManager,
     ThresholdRule,
 )
-from backend.app.utils.score_calculator import ScoreCalculator
-from backend.app.utils.weighting import WeightConfig, WeightingEngine
+from app.utils.score_calculator import ScoreCalculator
+from app.utils.weighting import WeightConfig, WeightingEngine
 
 
 class EvaluationService:

@@ -5,6 +5,6 @@ Contains business orchestration services bridging FastAPI endpoints with evaluat
 threshold managers, history repositories, and report generators.
 """
 
-from backend.app.services.evaluation_service import EvaluationService
+from app.services.evaluation_service import EvaluationService
 
 __all__ = ["EvaluationService"]

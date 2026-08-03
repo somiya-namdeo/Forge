@@ -7,7 +7,7 @@ regex rules, LLM-as-a-judge) and TruLens evaluation provider integration.
 
 from typing import Any, Callable, Dict, List, Optional
 
-from backend.app.metrics import (
+from app.metrics import (
     BaseMetricEvaluator,
     EvaluationProvider,
     MetricType,

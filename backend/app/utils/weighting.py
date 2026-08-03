@@ -8,7 +8,7 @@ Retrieval Heavy), and weight validation/normalization.
 from enum import Enum
 from typing import Dict, Optional
 
-from backend.app.metrics import MetricType
+from app.metrics import MetricType
 
 
 class WeightPreset(str, Enum):

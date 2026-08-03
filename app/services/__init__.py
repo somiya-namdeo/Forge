@@ -1,3 +1,3 @@
-from backend.app.services.decision_service import DecisionService
+from app.services.decision_service import DecisionService
 
 __all__ = ["DecisionService"]

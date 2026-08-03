@@ -5,7 +5,7 @@ Provides threshold managers, rule checkers, operator definitions, and quality ga
 pass/fail status evaluation.
 """
 
-from backend.app.thresholds.threshold_manager import (
+from app.thresholds.threshold_manager import (
     ThresholdCheckResult,
     ThresholdManager,
     ThresholdOperator,

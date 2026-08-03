@@ -7,7 +7,7 @@ Answer Relevancy, Context Recall, and Context Precision.
 
 from typing import Any, Dict, List, Optional
 
-from backend.app.metrics import (
+from app.metrics import (
     BaseMetricEvaluator,
     EvaluationProvider,
     MetricType,

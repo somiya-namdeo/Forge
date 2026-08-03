@@ -6,7 +6,7 @@ Renders EvaluationReport data into styled PDF document byte streams or exports t
 
 from typing import Optional
 
-from backend.app.reports.report_generator import EvaluationReport
+from app.reports.report_generator import EvaluationReport
 
 
 class PDFExporter:

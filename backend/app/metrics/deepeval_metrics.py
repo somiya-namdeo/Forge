@@ -7,7 +7,7 @@ Toxicity, and Contextual Precision/Recall.
 
 from typing import Any, Dict, List, Optional
 
-from backend.app.metrics import (
+from app.metrics import (
     BaseMetricEvaluator,
     EvaluationProvider,
     MetricType,

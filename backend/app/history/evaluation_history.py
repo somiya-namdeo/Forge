@@ -11,7 +11,7 @@ from datetime import datetime
 from typing import Any, Dict, List, Optional
 import uuid
 
-from backend.app.metrics import PassFailStatus
+from app.metrics import PassFailStatus
 
 
 @dataclass

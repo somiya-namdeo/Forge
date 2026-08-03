@@ -11,9 +11,9 @@ from uuid import uuid4
 
 from pydantic import BaseModel, ConfigDict, Field
 
-from backend.app.metrics import EvaluationProvider, MetricType, PassFailStatus
-from backend.app.thresholds import ThresholdOperator
-from backend.app.utils.weighting import WeightPreset
+from app.metrics import EvaluationProvider, MetricType, PassFailStatus
+from app.thresholds import ThresholdOperator
+from app.utils.weighting import WeightPreset
 
 
 class MetricConfigSchema(BaseModel):

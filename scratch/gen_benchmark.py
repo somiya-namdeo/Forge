@@ -3,7 +3,7 @@
 import json
 from pathlib import Path
 
-from backend.app.benchmark.benchmark_models import BenchmarkSample
+from app.benchmark.benchmark_models import BenchmarkSample
 
 samples_data = [
     # EASY (1-10)

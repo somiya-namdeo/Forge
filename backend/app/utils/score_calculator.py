@@ -7,8 +7,8 @@ summaries for RAG evaluation runs.
 
 from typing import Dict, List
 
-from backend.app.metrics import MetricType, MetricValue
-from backend.app.utils.weighting import WeightConfig, WeightingEngine
+from app.metrics import MetricType, MetricValue
+from app.utils.weighting import WeightConfig, WeightingEngine
 
 
 class ScoreCalculator:

@@ -7,7 +7,7 @@ Serializes EvaluationReport instances into standardized JSON format string repre
 import json
 from typing import Any, Dict
 
-from backend.app.reports.report_generator import EvaluationReport
+from app.reports.report_generator import EvaluationReport
 
 
 class JSONExporter:

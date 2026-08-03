@@ -5,6 +5,6 @@ Contains API endpoint routers for evaluation triggers, threshold configuration,
 history search, and report generation/exports.
 """
 
-from backend.app.routes.evaluation import router as evaluation_router
+from app.routes.evaluation import router as evaluation_router
 
 __all__ = ["evaluation_router"]

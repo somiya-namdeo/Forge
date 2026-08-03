@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from enum import Enum
 from typing import Dict, List, Optional
 
-from backend.app.metrics import MetricType, PassFailStatus
+from app.metrics import MetricType, PassFailStatus
 
 
 class ThresholdOperator(str, Enum):
