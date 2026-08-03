@@ -5,8 +5,8 @@ Provides mathematical score calculation, statistical aggregation, weight normali
 and preset weighting configurations for RAG evaluation.
 """
 
-from backend.app.utils.score_calculator import ScoreCalculator
-from backend.app.utils.weighting import WeightConfig, WeightingEngine
+from app.utils.score_calculator import ScoreCalculator
+from app.utils.weighting import WeightConfig, WeightingEngine
 
 __all__ = [
     "WeightConfig",
