@@ -2,7 +2,7 @@
 
 import logging
 import re
-from typing import Any, List, Optional, Set
+from typing import Any, Optional
 
 from app.evaluation.metrics.base_metric import (
     MetricCalculator,

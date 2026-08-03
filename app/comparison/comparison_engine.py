@@ -11,7 +11,6 @@ from typing import Dict, List, Optional
 from uuid import uuid4
 
 from app.comparison.comparison_models import (
-    ArchitectureCandidate,
     ComparisonExecutiveSummary,
     ComparisonMetadata,
     ComparisonRequest,

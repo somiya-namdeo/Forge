@@ -3,7 +3,7 @@
 import math
 import statistics
 from collections import Counter, defaultdict
-from typing import Dict, List, Tuple
+from typing import Dict, List
 
 from app.benchmark.benchmark_models import (
     BenchmarkSampleResult,

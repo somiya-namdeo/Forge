@@ -5,7 +5,6 @@ Provides reusable single-response evaluation engine routing requests to metric p
 (RAGAS, DeepEval, TruLens, Custom), running threshold quality gates, and computing weighted scores.
 """
 
-import time
 from typing import Any, Dict, List, Optional
 from uuid import uuid4
 

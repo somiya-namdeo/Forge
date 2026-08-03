@@ -1,6 +1,6 @@
 """Recommendation engine module for selecting optimal AI architecture components."""
 
-from typing import Any, List, Optional
+from typing import Any, Optional
 from app.schemas.decision import RecommendationItem
 
 _NAME_PATHS = (

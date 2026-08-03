@@ -1,7 +1,7 @@
 """Precision@K retrieval metric calculator for Forge evaluation module."""
 
 import logging
-from typing import Any, List, Optional
+
 
 from app.evaluation.metrics.base_metric import (
     MetricCalculator,

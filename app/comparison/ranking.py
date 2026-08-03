@@ -6,7 +6,7 @@ dimensions. Does NOT call EvaluationEngine or BenchmarkEngine — consumes
 pre-computed BenchmarkReport data only.
 """
 
-from typing import Dict, List, Optional, Tuple
+from typing import Dict, List, Tuple
 
 from app.comparison.comparison_models import (
     ArchitectureCandidate,
@@ -16,20 +16,8 @@ from app.comparison.comparison_models import (
     RankingStrategy,
 )
 
-# ─── Key metrics for scoring ──────────────────────────────────────────────────
-_RADAR_METRICS = [
-    "faithfulness", "groundedness", "answer_relevancy", "context_recall",
-    "context_precision", "hallucination_score", "mrr", "ndcg",
-]
-
 # ─── Grade → numeric value (for tie-breaking and sorting) ────────────────────
 _GRADE_ORDER = {"A+": 6, "A": 5, "B": 4, "C": 3, "D": 2, "F": 1, "": 0}
-
-# ─── Readiness → numeric value ────────────────────────────────────────────────
-_READINESS_ORDER = {
-    "Production Ready": 5, "Pilot Ready": 4, "Prototype": 3,
-    "Experimental": 2, "Research Only": 1, "": 0,
-}
 
 
 class RankingEngine:

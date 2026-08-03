@@ -1,7 +1,7 @@
 """Explanation engine module for generating project-specific, evidence-backed recommendation rationale."""
 
 import logging
-from typing import Any, Dict, List, Optional, Union
+from typing import Any, Optional, Union
 
 from app.decision.requirement_analyzer import ProjectProfile, RequirementAnalyzer
 from app.schemas.decision import AlternativeDetail, DecisionRequest, RecommendationItem

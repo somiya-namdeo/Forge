@@ -6,9 +6,9 @@ import time
 from collections import defaultdict
 from typing import Any, Dict, List, Optional, Tuple
 
-from app.evaluation.metrics.base_metric import MetricCategory, MetricInput, MetricResult
+from app.evaluation.metrics.base_metric import MetricInput, MetricResult
 from app.evaluation.registry import MetricCalculatorRegistry, build_default_registry
-from app.metrics import EvaluationProvider, PassFailStatus
+from app.metrics import PassFailStatus
 from app.schemas.evaluation import (
     ComprehensiveEvaluationReport,
     EvaluationRequest,

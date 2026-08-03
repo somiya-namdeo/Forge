@@ -1,7 +1,7 @@
 """Domain detection module inferring project domains from natural language descriptions."""
 
 from enum import Enum
-from typing import Dict, List, Set
+from typing import Dict, List
 
 
 class Domain(str, Enum):

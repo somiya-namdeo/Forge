@@ -1,9 +1,9 @@
 """Candidate scoring engine for AI Architecture Recommendation Engine."""
 
-from typing import Any, Dict, List, Optional, Union
+from typing import Any, Union
 from app.decision.domain_detector import Domain
 from app.decision.requirement_analyzer import BudgetTier, DocScaleTier, ProjectProfile, RequirementAnalyzer, ScaleTier
-from app.schemas.decision import DecisionRequest, DeploymentTarget, Priority
+from app.schemas.decision import DecisionRequest, Priority
 
 _DEFAULT_NEUTRAL_SCORE = 0.70
 
