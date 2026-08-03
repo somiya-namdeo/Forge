@@ -80,8 +80,8 @@ class EvaluationSampleSchema(BaseModel):
 class EvaluationRequest(BaseModel):
     """Pydantic v2 request schema for triggering an evaluation run."""
 
-    evaluation_name: str = Field(..., description="Descriptive name for evaluation job.")
-    rag_architecture_id: str = Field(..., description="ID of candidate RAG architecture being evaluated.")
+    evaluation_name: str = Field(default="Default Evaluation Job", description="Descriptive name for evaluation job.")
+    rag_architecture_id: str = Field(default="default-rag", description="ID of candidate RAG architecture being evaluated.")
     dataset_id: Optional[str] = Field(default=None, description="Dataset ID if using a pre-loaded dataset.")
     samples: List[EvaluationSampleSchema] = Field(
         default_factory=list, description="List of evaluation samples if inline."
@@ -187,9 +187,22 @@ class EvaluationResponse(BaseModel):
         default_factory=list, description="Quality gate threshold audit results."
     )
     execution_time_seconds: float = Field(default=0.0, description="Total execution time in seconds.")
+    execution_time_ms: float = Field(default=0.0, description="Total execution time in milliseconds.")
     created_at: datetime = Field(default_factory=datetime.utcnow, description="Creation timestamp.")
 
     model_config = ConfigDict(frozen=True)
+
+    @property
+    def overall_score(self) -> float:
+        return self.composite_score
+
+    @property
+    def status(self) -> PassFailStatus:
+        return self.overall_status
+
+    @property
+    def metrics(self) -> Dict[str, float]:
+        return self.metric_summary
 
 
 class EvaluationHistoryFilter(BaseModel):
