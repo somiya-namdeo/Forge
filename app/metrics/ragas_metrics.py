@@ -110,7 +110,10 @@ class RagasEvaluator(BaseMetricEvaluator):
                     m_val = cfg.value
                 else:
                     m_val = str(cfg)
-                enabled_names.add(m_val.lower().strip())
+                m_clean = m_val.lower().strip()
+                if m_clean == "answer_relevance":
+                    m_clean = "answer_relevancy"
+                enabled_names.add(m_clean)
 
             selected_metrics = [
                 m_obj

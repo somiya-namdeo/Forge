@@ -75,7 +75,7 @@ class CompletenessCalculator(MetricCalculator):
                 answer=metric_input.answer or "",
                 contexts=metric_input.contexts,
                 ground_truth=metric_input.ground_truth,
-                metric_config=[MetricConfig(metric_type=MetricType.ANSWER_RELEVANCY)],
+                metric_config=[MetricConfig(metric_type=MetricType.ANSWER_RELEVANCE)],
             )
             scores = evaluator.evaluate(req)
             if isinstance(scores, dict) and "answer_relevancy" in scores:
