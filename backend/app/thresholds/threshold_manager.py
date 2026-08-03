@@ -1,10 +1,3 @@
-"""
-Threshold Manager Module.
-
-Manages evaluation threshold rules, checking calculated metric scores against minimum/maximum
-acceptable criteria and determining overall Pass/Fail/Warning status.
-"""
-
 from dataclasses import dataclass
 from enum import Enum
 from typing import Dict, List, Optional

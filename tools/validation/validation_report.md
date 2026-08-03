@@ -4,7 +4,7 @@
 - **Registry Version:** v1.1
 - **Status:** COMPLETE
 - **Frozen:** TRUE
-- **Generated At:** 2026-07-28T09:29:30Z
+- **Generated At:** 2026-08-03T04:43:13Z
 
 ## Statistics
 - **Total Entries:** 117
@@ -22,7 +22,7 @@
 - **prompting**: 12 entries
 - **rerankers**: 9 entries
 - **retrieval**: 12 entries
-- **vectordb**: 6 entries
+- **vectordbs**: 6 entries
 
 ## Validation Checks Performed
 - [x] JSON syntax validation

@@ -10,26 +10,18 @@ from langchain_openai import ChatOpenAI
 from ragas import evaluate
 from ragas.embeddings import LangchainEmbeddingsWrapper
 from ragas.llms import LangchainLLMWrapper
-from ragas.metrics import (
-    answer_relevancy,
-    context_precision,
-    context_recall,
-    faithfulness,
-)
+from ragas.metrics import (answer_relevancy,context_precision,context_recall,faithfulness,)
 from ragas.metrics.base import Metric
 
 from app.core.config import EMBEDDING_MODEL, GROQ_API_KEY, LLM_MODEL
 from app.metrics.base import BaseMetricEvaluator
 from app.schemas.evaluation import EvaluationRequest
 
-_REFERENCE_REQUIRED_METRICS = {
-    "context_precision",
-    "context_recall",
-}
+_REFERENCE_REQUIRED_METRICS = {"context_precision","context_recall",}
 
 
 class RagasEvaluator(BaseMetricEvaluator):
-    """RAGAS framework metric evaluation provider using shared Groq LLM configuration."""
+    
 
     _METRIC_MAP: dict[str, Metric] = {
         "faithfulness": faithfulness,
