@@ -56,7 +56,7 @@ def get_evaluation_service(
         threshold_manager = get_threshold_manager()
 
     return EvaluationService(
-        registry=registry,
+        metric_registry=registry,
         weighting_engine=weighting_engine,
         threshold_manager=threshold_manager,
     )

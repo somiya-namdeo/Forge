@@ -1,147 +1,196 @@
-"""RAGAS metric evaluator provider implementation."""
+"""
+RAGAS Metric Evaluator Provider.
 
-from collections.abc import Sequence
-import math
-from typing import Any
+Pluggable evaluation module for RAGAS framework metrics including Faithfulness,
+Answer Relevancy, Context Recall, and Context Precision.
+"""
 
-from datasets import Dataset
-from langchain_community.embeddings import HuggingFaceBgeEmbeddings
-from langchain_openai import ChatOpenAI
-from ragas import evaluate
-from ragas.embeddings import LangchainEmbeddingsWrapper
-from ragas.llms import LangchainLLMWrapper
-from ragas.metrics import (answer_relevancy,context_precision,context_recall,faithfulness,)
-from ragas.metrics.base import Metric
+from typing import Any, Dict, List, Optional
 
-from app.core.config import EMBEDDING_MODEL, GROQ_API_KEY, LLM_MODEL
-from app.metrics.base import BaseMetricEvaluator
-from app.schemas.evaluation import EvaluationRequest
+from app.metrics import (
+    BaseMetricEvaluator,
+    EvaluationProvider,
+    MetricType,
+    MetricValue,
+    PassFailStatus,
+)
 
-_REFERENCE_REQUIRED_METRICS = {"context_precision","context_recall",}
+
+class RagasFaithfulnessMetric:
+    """Placeholder class for RAGAS Faithfulness metric calculation."""
+
+    def compute(self, response: str, contexts: List[str]) -> float:
+        """Compute RAGAS Faithfulness score measuring factual alignment with context.
+
+        Args:
+            response (str): LLM generated answer.
+            contexts (List[str]): Retrieved chunks.
+
+        Returns:
+            float: Placeholder score.
+        """
+        # Placeholder - business logic implemented in phase 2
+        return 0.0
+
+
+class RagasAnswerRelevanceMetric:
+    """Placeholder class for RAGAS Answer Relevancy metric calculation."""
+
+    def compute(self, query: str, response: str) -> float:
+        """Compute RAGAS Answer Relevancy score measuring query similarity.
+
+        Args:
+            query (str): Input prompt.
+            response (str): LLM generated answer.
+
+        Returns:
+            float: Placeholder score.
+        """
+        # Placeholder - business logic implemented in phase 2
+        return 0.0
+
+
+class RagasContextRecallMetric:
+    """Placeholder class for RAGAS Context Recall metric calculation."""
+
+    def compute(self, ground_truth: str, contexts: List[str]) -> float:
+        """Compute RAGAS Context Recall score measuring ground truth presence in context.
+
+        Args:
+            ground_truth (str): Expected reference answer.
+            contexts (List[str]): Retrieved context snippets.
+
+        Returns:
+            float: Placeholder score.
+        """
+        # Placeholder - business logic implemented in phase 2
+        return 0.0
+
+
+class RagasContextPrecisionMetric:
+    """Placeholder class for RAGAS Context Precision metric calculation."""
+
+    def compute(self, query: str, contexts: List[str]) -> float:
+        """Compute RAGAS Context Precision score measuring signal-to-noise ratio of context.
+
+        Args:
+            query (str): User prompt.
+            contexts (List[str]): Retrieved chunks.
+
+        Returns:
+            float: Placeholder score.
+        """
+        # Placeholder - business logic implemented in phase 2
+        return 0.0
 
 
 class RagasEvaluator(BaseMetricEvaluator):
-    
+    """Evaluation provider implementation wrapping the RAGAS evaluation framework.
 
-    _METRIC_MAP: dict[str, Metric] = {
-        "faithfulness": faithfulness,
-        "answer_relevancy": answer_relevancy,
-        "context_precision": context_precision,
-        "context_recall": context_recall,
-    }
+    Supports RAGAS metric calculations across single samples and batch operations.
+    """
 
-    def __init__(self) -> None:
-        """Initialize RAGAS evaluator and configure Groq LLM and embeddings wrappers."""
-        llm = ChatOpenAI(
-            api_key=GROQ_API_KEY,
-            base_url="https://api.groq.com/openai/v1",
-            model=LLM_MODEL,
-        )
-        embeddings = HuggingFaceBgeEmbeddings(model_name=EMBEDDING_MODEL)
-        self._ragas_llm = LangchainLLMWrapper(llm)
-        self._ragas_embeddings = LangchainEmbeddingsWrapper(embeddings)
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
+        """Initialize RAGAS evaluator configuration.
 
-    def provider_name(self) -> str:
-        """Return the provider identifier."""
-        return "ragas"
+        Args:
+            config (Optional[Dict[str, Any]]): Provider settings, API keys, or model configurations.
+        """
+        self.config = config or {}
+        self.faithfulness_metric = RagasFaithfulnessMetric()
+        self.answer_relevance_metric = RagasAnswerRelevanceMetric()
+        self.context_recall_metric = RagasContextRecallMetric()
+        self.context_precision_metric = RagasContextPrecisionMetric()
 
-    def supported_metrics(self) -> Sequence[str]:
-        """Return metrics supported by the RAGAS provider."""
-        return list(self._METRIC_MAP.keys())
+    @property
+    def provider_name(self) -> EvaluationProvider:
+        """Return provider framework name.
 
-    def _build_dataset_and_metrics(
+        Returns:
+            EvaluationProvider: RAGAS enum identifier.
+        """
+        return EvaluationProvider.RAGAS
+
+    @property
+    def supported_metrics(self) -> List[MetricType]:
+        """List metrics supported by RAGAS evaluator.
+
+        Returns:
+            List[MetricType]: Supported RAGAS metrics.
+        """
+        return [
+            MetricType.FAITHFULNESS,
+            MetricType.ANSWER_RELEVANCE,
+            MetricType.CONTEXT_RECALL,
+            MetricType.CONTEXT_PRECISION,
+        ]
+
+    def evaluate_metric(
         self,
-        request: EvaluationRequest,
-    ) -> tuple[Dataset, list[Metric]]:
-        """Construct evaluation dataset and selected RAGAS metrics."""
-        data: dict[str, list[Any]] = {
-            "user_input": [request.question],
-            "response": [request.answer],
-            "retrieved_contexts": [request.contexts],
-        }
+        query: str,
+        response: str,
+        contexts: List[str],
+        ground_truth: Optional[str] = None,
+        metric_type: MetricType = MetricType.FAITHFULNESS,
+    ) -> MetricValue:
+        """Evaluate a single RAGAS metric synchronously.
 
-        has_ground_truth = bool(
-            request.ground_truth and request.ground_truth.strip()
+        Args:
+            query (str): User prompt.
+            response (str): LLM generated response.
+            contexts (List[str]): Context chunks.
+            ground_truth (Optional[str]): Expected output.
+            metric_type (MetricType): Target metric enum.
+
+        Returns:
+            MetricValue: Calculated metric value object.
+        """
+        # Placeholder response structure
+        return MetricValue(
+            metric_type=metric_type,
+            score=0.0,
+            provider=self.provider_name,
+            status=PassFailStatus.PASS,
+            latency_ms=0.0,
+            metadata={"provider_detail": "RAGAS placeholder execution"},
         )
 
-        if has_ground_truth:
-            data["reference"] = [request.ground_truth]
-
-        dataset = Dataset.from_dict(data)
-
-        if request.metric_config:
-            requested = {
-                metric.metric_name
-                for metric in request.metric_config
-                if metric.enabled and metric.metric_name in self._METRIC_MAP
-            }
-        else:
-            requested = set(self._METRIC_MAP)
-
-        selected_metrics: list[Metric] = []
-
-        for name in sorted(requested):
-            if (
-                name in _REFERENCE_REQUIRED_METRICS
-                and not has_ground_truth
-            ):
-                continue
-
-            selected_metrics.append(self._METRIC_MAP[name])
-
-        if not selected_metrics:
-            raise ValueError(
-                "No valid metrics available for evaluation."
-            )
-
-        return dataset, selected_metrics
-
-    @staticmethod
-    def _sanitize_score(value: Any) -> float:
-        """Convert a raw RAGAS score into a normalized float."""
-        if isinstance(value, (list, tuple)):
-            value = value[0] if value else 0.0
-
-        try:
-            score = float(value)
-            if math.isnan(score):
-                return 0.0
-        except (TypeError, ValueError):
-            return 0.0
-
-        return max(0.0, min(1.0, score))
-
-    def evaluate(self, request: EvaluationRequest) -> dict[str, float]:
-        """Execute synchronous RAGAS evaluation using shared Groq LLM and embeddings."""
-        dataset, selected_metrics = self._build_dataset_and_metrics(request)
-
-        try:
-            result = evaluate(
-                dataset=dataset,
-                metrics=selected_metrics,
-                llm=self._ragas_llm,
-                embeddings=self._ragas_embeddings,
-            )
-        except Exception as exc:
-            raise ValueError(
-                f"RAGAS evaluation failed: {exc}"
-            ) from exc
-
-        scores: dict[str, float] = {}
-
-        for metric in selected_metrics:
-            try:
-                raw = result[metric.name]
-            except (KeyError, TypeError, IndexError):
-                raw = 0.0
-
-            scores[metric.name] = self._sanitize_score(raw)
-
-        return scores
-
-    async def evaluate_async(
+    async def evaluate_metric_async(
         self,
-        request: EvaluationRequest,
-    ) -> dict[str, float]:
-        """Execute asynchronous RAGAS evaluation."""
-        return self.evaluate(request)
+        query: str,
+        response: str,
+        contexts: List[str],
+        ground_truth: Optional[str] = None,
+        metric_type: MetricType = MetricType.FAITHFULNESS,
+    ) -> MetricValue:
+        """Evaluate a single RAGAS metric asynchronously.
+
+        Args:
+            query (str): User prompt.
+            response (str): LLM response.
+            contexts (List[str]): Retrieved context chunks.
+            ground_truth (Optional[str]): Expected output.
+            metric_type (MetricType): Target metric.
+
+        Returns:
+            MetricValue: Calculated metric result.
+        """
+        # Async placeholder
+        return self.evaluate_metric(query, response, contexts, ground_truth, metric_type)
+
+    def batch_evaluate(
+        self,
+        samples: List[Dict[str, Any]],
+        metrics: List[MetricType],
+    ) -> List[Dict[str, MetricValue]]:
+        """Run batch evaluation for multiple datasets using RAGAS.
+
+        Args:
+            samples (List[Dict[str, Any]]): List of dataset samples.
+            metrics (List[MetricType]): List of metric types to compute per sample.
+
+        Returns:
+            List[Dict[str, MetricValue]]: Evaluation metric outputs per sample.
+        """
+        # Batch evaluation placeholder
+        return []

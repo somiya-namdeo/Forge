@@ -1,63 +1,99 @@
-"""Evaluation score weighting configuration and engine."""
+"""
+Weighting Engine Module.
 
-from pydantic import BaseModel, ConfigDict, Field
+Manages metric weight assignments, preset profiles (RAG Standard, Accuracy Heavy,
+Retrieval Heavy), and weight validation/normalization.
+"""
 
-from app.schemas.evaluation import MetricConfig
+from enum import Enum
+from typing import Dict, Optional
+
+from app.metrics import MetricType
 
 
-class WeightConfig(BaseModel):
-    """Configuration model storing weights for evaluation metrics."""
+class WeightPreset(str, Enum):
+    """Pre-configured weighting profiles for evaluation scenarios."""
 
-    faithfulness: float = Field(default=0.25, ge=0.0, le=1.0, description="Weight for faithfulness metric.")
-    answer_relevancy: float = Field(default=0.25, ge=0.0, le=1.0, description="Weight for answer relevancy metric.")
-    context_precision: float = Field(default=0.25, ge=0.0, le=1.0, description="Weight for context precision metric.")
-    context_recall: float = Field(default=0.25, ge=0.0, le=1.0, description="Weight for context recall metric.")
+    BALANCED_RAG = "balanced_rag"
+    ACCURACY_FOCUSED = "accuracy_focused"
+    RETRIEVAL_FOCUSED = "retrieval_focused"
+    CUSTOM = "custom"
 
-    model_config = ConfigDict(frozen=True)
+
+class WeightConfig:
+    """Configuration class storing metric weight mapping."""
+
+    def __init__(
+        self,
+        weights: Optional[Dict[MetricType, float]] = None,
+        preset: WeightPreset = WeightPreset.BALANCED_RAG,
+    ) -> None:
+        """Initialize WeightConfig with weights dictionary or preset.
+
+        Args:
+            weights (Optional[Dict[MetricType, float]]): Custom metric weights mapping.
+            preset (WeightPreset): Target preset profile.
+        """
+        self.preset = preset
+        self.weights: Dict[MetricType, float] = weights or {}
+
+    def get_weight(self, metric_type: MetricType) -> float:
+        """Get weight for a specific metric.
+
+        Args:
+            metric_type (MetricType): Metric type enum.
+
+        Returns:
+            float: Assigned weight float value.
+        """
+        return self.weights.get(metric_type, 1.0)
 
 
 class WeightingEngine:
-    """Engine responsible for normalizing metric weights and computing composite scores."""
+    """Engine responsible for normalizing weights and generating presets."""
 
-    def create_config(self, metric_config: list[MetricConfig] | None = None) -> WeightConfig:
-        """Build WeightConfig applying custom metric weights and disabled flags."""
-        if not metric_config:
-            return WeightConfig()
+    @staticmethod
+    def get_preset_config(preset: WeightPreset) -> WeightConfig:
+        """Retrieve default weight configuration for a specified preset profile.
 
-        supported_fields = set(WeightConfig.model_fields.keys())
-        custom_weights = {}
-        for mc in metric_config:
-            if mc.metric_name in supported_fields:
-                custom_weights[mc.metric_name] = mc.weight if mc.enabled else 0.0
+        Args:
+            preset (WeightPreset): Desired preset profile.
 
-        return WeightConfig(**custom_weights)
+        Returns:
+            WeightConfig: Populated WeightConfig object.
+        """
+        if preset == WeightPreset.BALANCED_RAG:
+            return WeightConfig(
+                weights={
+                    MetricType.FAITHFULNESS: 0.3,
+                    MetricType.ANSWER_RELEVANCE: 0.3,
+                    MetricType.CONTEXT_RECALL: 0.2,
+                    MetricType.CONTEXT_PRECISION: 0.2,
+                },
+                preset=preset,
+            )
+        elif preset == WeightPreset.ACCURACY_FOCUSED:
+            return WeightConfig(
+                weights={
+                    MetricType.FAITHFULNESS: 0.5,
+                    MetricType.ANSWER_RELEVANCE: 0.3,
+                    MetricType.HALLUCINATION: 0.2,
+                },
+                preset=preset,
+            )
+        return WeightConfig(weights={}, preset=preset)
 
-    def normalize(self, config: WeightConfig) -> WeightConfig:
-        """Normalize configuration weights so their sum equals 1.0."""
-        field_values = {field: getattr(config, field) for field in WeightConfig.model_fields}
-        total = sum(field_values.values())
-        if total == 0.0:
-            raise ValueError("Total weight cannot be zero.")
-        normalized_values = {field: val / total for field, val in field_values.items()}
-        return WeightConfig(**normalized_values)
+    @staticmethod
+    def normalize_weights(weights: Dict[MetricType, float]) -> Dict[MetricType, float]:
+        """Normalize metric weights so their sum equals 1.0.
 
-    def calculate(
-        self,
-        metric_scores: dict[str, float],
-        config: WeightConfig,
-    ) -> float:
-        """Compute weighted average score for supported metric scores."""
-        supported_fields = set(WeightConfig.model_fields.keys())
-        valid_scores = {k: v for k, v in metric_scores.items() if k in supported_fields}
+        Args:
+            weights (Dict[MetricType, float]): Raw metric weight map.
 
-        if not valid_scores:
-            raise ValueError("No supported metric scores provided for calculation.")
-
-        weighted_sum = sum(valid_scores[m] * getattr(config, m) for m in valid_scores)
-        total_weight = sum(getattr(config, m) for m in valid_scores)
-
-        if total_weight == 0.0:
-            raise ValueError("Total weight for provided metrics cannot be zero.")
-
-        score = weighted_sum / total_weight
-        return min(1.0, max(0.0, float(score)))
+        Returns:
+            Dict[MetricType, float]: Normalized weights map summing to 1.0.
+        """
+        total = sum(weights.values())
+        if total == 0:
+            return {k: 0.0 for k in weights}
+        return {k: v / total for k, v in weights.items()}

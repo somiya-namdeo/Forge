@@ -2,7 +2,7 @@ from fastapi import FastAPI
 
 from app.api.routes.benchmark import router as benchmark_router
 from app.api.routes.decision import router as decision_router
-from backend.app.routes.evaluation import router as evaluation_router
+from app.routes.evaluation import router as evaluation_router
 
 app = FastAPI(
     title="Forge AI Engineering Decision Platform",
