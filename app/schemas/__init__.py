@@ -3,7 +3,6 @@
 from app.schemas.request import DecisionRequest
 from app.schemas.response import DecisionResponse
 from app.schemas.evaluation import (
-    EvaluationBatchRequest,
     EvaluationHistoryFilter,
     EvaluationRequest,
     EvaluationResponse,
@@ -13,7 +12,6 @@ from app.schemas.evaluation import (
     MetricResultSchema,
     ReportRequestSchema,
     ReportResponseSchema,
-    SampleEvaluationResultSchema,
     ThresholdConfig,
     ThresholdConfigSchema,
     ThresholdResultSchema,
@@ -28,9 +26,7 @@ __all__ = [
     "ThresholdConfigSchema",
     "EvaluationStatus",
     "EvaluationRequest",
-    "EvaluationBatchRequest",
     "MetricResultSchema",
-    "SampleEvaluationResultSchema",
     "ThresholdResultSchema",
     "EvaluationResponse",
     "EvaluationHistoryFilter",

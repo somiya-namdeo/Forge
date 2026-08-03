@@ -1,8 +1,8 @@
 """
 Evaluation Pydantic v2 Schemas.
 
-Contains data validation models for evaluation requests, results, metric configurations,
-quality gate thresholds, report generation, and historical filters.
+Contains data validation models for single-sample evaluation requests and responses,
+metric configurations, quality gate thresholds, and historical filters.
 """
 
 from datetime import datetime
@@ -13,7 +13,6 @@ from pydantic import BaseModel, ConfigDict, Field
 
 from app.metrics import EvaluationProvider, MetricType, PassFailStatus
 from app.thresholds import ThresholdOperator
-from app.utils.weighting import WeightPreset
 
 
 class MetricConfigSchema(BaseModel):
@@ -61,73 +60,36 @@ ThresholdConfig = ThresholdConfigSchema
 EvaluationStatus = PassFailStatus
 
 
-class EvaluationSampleSchema(BaseModel):
-    """Pydantic v2 schema for a single evaluation test input sample."""
-
-    sample_id: str = Field(default_factory=lambda: str(uuid4()), description="Unique sample identifier UUID.")
-    query: str = Field(..., description="User query or prompt input.")
-    expected_output: Optional[str] = Field(default=None, description="Golden expected answer.")
-    contexts: List[str] = Field(default_factory=list, description="Ground truth or retrieved reference contexts.")
-    actual_output: Optional[str] = Field(default=None, description="RAG system response under evaluation.")
-    retrieved_contexts: List[str] = Field(
-        default_factory=list, description="Context chunks retrieved by system under evaluation."
-    )
-    metadata: Dict[str, Any] = Field(default_factory=dict, description="Arbitrary metadata tags.")
-
-    model_config = ConfigDict(frozen=True)
-
-
 class EvaluationRequest(BaseModel):
-    """Pydantic v2 request schema for triggering an evaluation run."""
+    """Pydantic v2 request schema for evaluating a single RAG response."""
 
-    evaluation_name: str = Field(default="Default Evaluation Job", description="Descriptive name for evaluation job.")
-    rag_architecture_id: str = Field(default="default-rag", description="ID of candidate RAG architecture being evaluated.")
-    dataset_id: Optional[str] = Field(default=None, description="Dataset ID if using a pre-loaded dataset.")
-    samples: List[EvaluationSampleSchema] = Field(
-        default_factory=list, description="List of evaluation samples if inline."
+    question: str = Field(..., description="User question or prompt input.")
+    answer: str = Field(..., description="RAG system generated response answer.")
+    contexts: List[str] = Field(default_factory=list, description="Retrieved context document chunks.")
+    ground_truth: Optional[str] = Field(default=None, description="Expected golden reference answer.")
+    provider: EvaluationProvider = Field(
+        default=EvaluationProvider.RAGAS,
+        description="Target evaluation provider framework.",
     )
-    metrics: List[MetricConfigSchema] = Field(
-        default_factory=list, description="Explicit metric settings list."
+    metric_config: Optional[List[MetricConfigSchema]] = Field(
+        default=None, description="Optional metric configuration list."
     )
-    weight_preset: WeightPreset = Field(
-        default=WeightPreset.BALANCED_RAG, description="Preset weighting profile."
-    )
-    custom_thresholds: List[ThresholdConfigSchema] = Field(
-        default_factory=list, description="Custom quality gate thresholds."
-    )
-    async_execution: bool = Field(
-        default=False, description="Flag indicating async background execution."
+    threshold_config: Optional[List[ThresholdConfigSchema]] = Field(
+        default=None, description="Optional quality gate threshold rules."
     )
 
     model_config = ConfigDict(
         frozen=True,
         json_schema_extra={
             "example": {
-                "evaluation_name": "Legal RAG Benchmark Run",
-                "rag_architecture_id": "arch_hybrid_rerank_v1",
-                "weight_preset": "balanced_rag",
-                "async_execution": False,
-                "samples": [
-                    {
-                        "query": "What is the termination notice period?",
-                        "actual_output": "The notice period is 30 days.",
-                        "contexts": ["Section 4: Termination requires 30 days written notice."],
-                    }
-                ],
+                "question": "What is the termination notice period?",
+                "answer": "The notice period for termination is 30 days.",
+                "contexts": ["Section 4: Termination requires 30 days written notice."],
+                "ground_truth": "30 days written notice.",
+                "provider": "ragas",
             }
         },
     )
-
-
-class EvaluationBatchRequest(BaseModel):
-    """Pydantic v2 request schema for batch architecture evaluations."""
-
-    evaluation_name: str = Field(..., description="Batch job identifier name.")
-    rag_architecture_ids: List[str] = Field(..., description="List of architecture IDs to compare.")
-    dataset_id: str = Field(..., description="Benchmark dataset ID.")
-    weight_preset: WeightPreset = Field(default=WeightPreset.BALANCED_RAG, description="Preset weights.")
-
-    model_config = ConfigDict(frozen=True)
 
 
 class MetricResultSchema(BaseModel):
@@ -139,19 +101,6 @@ class MetricResultSchema(BaseModel):
     status: PassFailStatus = Field(default=PassFailStatus.PASS, description="Pass/Fail status.")
     latency_ms: float = Field(default=0.0, description="Execution time in milliseconds.")
     metadata: Dict[str, Any] = Field(default_factory=dict, description="Diagnostic data or error message.")
-
-    model_config = ConfigDict(frozen=True)
-
-
-class SampleEvaluationResultSchema(BaseModel):
-    """Pydantic v2 schema for single sample evaluation result containing metric breakdowns."""
-
-    sample_id: str = Field(..., description="Sample UUID.")
-    query: str = Field(..., description="Input prompt query.")
-    sample_score: float = Field(..., ge=0.0, le=1.0, description="Weighted composite score for this sample.")
-    metric_results: List[MetricResultSchema] = Field(
-        default_factory=list, description="Per-metric evaluation details."
-    )
 
     model_config = ConfigDict(frozen=True)
 
@@ -170,39 +119,39 @@ class ThresholdResultSchema(BaseModel):
 
 
 class EvaluationResponse(BaseModel):
-    """Pydantic v2 response schema for evaluation execution endpoint."""
+    """Pydantic v2 response schema for single RAG evaluation execution."""
 
-    evaluation_id: str = Field(..., description="Unique evaluation execution UUID.")
-    evaluation_name: str = Field(..., description="Name of evaluation job.")
-    rag_architecture_id: str = Field(..., description="Evaluated RAG architecture ID.")
-    composite_score: float = Field(..., ge=0.0, le=1.0, description="Final weighted composite score.")
-    overall_status: PassFailStatus = Field(..., description="Overall Pass/Fail status across quality gates.")
-    sample_results: List[SampleEvaluationResultSchema] = Field(
-        default_factory=list, description="Per-sample evaluation results."
+    evaluation_id: str = Field(
+        default_factory=lambda: str(uuid4()), description="Unique evaluation execution UUID."
     )
-    metric_summary: Dict[str, float] = Field(
-        default_factory=dict, description="Aggregate metric scores summary dictionary."
+    provider: EvaluationProvider = Field(..., description="Provider framework utilized.")
+    overall_score: float = Field(
+        ..., ge=0.0, le=1.0, description="Final composite or primary evaluation score."
     )
-    threshold_results: List[ThresholdResultSchema] = Field(
-        default_factory=list, description="Quality gate threshold audit results."
+    status: PassFailStatus = Field(..., description="Pass/Fail/Warning status across quality gates.")
+    metrics: Dict[str, float] = Field(
+        default_factory=dict, description="Per-metric calculated scores dictionary."
     )
-    execution_time_seconds: float = Field(default=0.0, description="Total execution time in seconds.")
-    execution_time_ms: float = Field(default=0.0, description="Total execution time in milliseconds.")
+    execution_time_ms: float = Field(default=0.0, description="Total execution duration in milliseconds.")
     created_at: datetime = Field(default_factory=datetime.utcnow, description="Creation timestamp.")
 
     model_config = ConfigDict(frozen=True)
 
     @property
-    def overall_score(self) -> float:
-        return self.composite_score
+    def composite_score(self) -> float:
+        return self.overall_score
 
     @property
-    def status(self) -> PassFailStatus:
-        return self.overall_status
+    def overall_status(self) -> PassFailStatus:
+        return self.status
 
     @property
-    def metrics(self) -> Dict[str, float]:
-        return self.metric_summary
+    def metric_summary(self) -> Dict[str, float]:
+        return self.metrics
+
+    @property
+    def execution_time_seconds(self) -> float:
+        return self.execution_time_ms / 1000.0
 
 
 class EvaluationHistoryFilter(BaseModel):

@@ -1,5 +1,6 @@
 """FastAPI router for Forge benchmark execution module."""
 
+from typing import Optional
 from fastapi import APIRouter, Depends, HTTPException, status
 
 from app.api.deps import get_benchmark_service
@@ -19,18 +20,19 @@ router = APIRouter(
     "/run",
     response_model=BenchmarkReport,
     status_code=status.HTTP_200_OK,
-    summary="Execute Benchmark Suite",
-    description="Run evaluation benchmark samples across dataset configurations.",
+    summary="Execute RAG Benchmark Suite",
+    description="Run evaluation benchmark samples across datasets or inline samples.",
 )
 def run_benchmark(
     config: BenchmarkRunConfig,
-    benchmark_name: str = "Forge Benchmark",
+    benchmark_name: Optional[str] = None,
     service: BenchmarkService = Depends(get_benchmark_service),
 ) -> BenchmarkReport:
-    """Execute benchmark run request and return summary report."""
+    """Execute benchmark run request and return aggregate summary report."""
+    name = benchmark_name or config.benchmark_name or "Forge Benchmark Suite"
     try:
         return service.run_benchmark(
-            benchmark_name=benchmark_name,
+            benchmark_name=name,
             config=config,
         )
     except ValueError as exc:

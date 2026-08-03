@@ -1,7 +1,7 @@
 """Benchmark data models for Forge evaluation framework."""
 
 from datetime import datetime
-from typing import Literal
+from typing import List, Literal, Optional
 
 from pydantic import (
     BaseModel,
@@ -23,28 +23,57 @@ from app.schemas.evaluation import (
 class BenchmarkSample(BaseModel):
     """Single evaluation sample within a benchmark dataset."""
 
-    sample_id: str = Field(..., description="Unique identifier for the benchmark sample.")
-    category: str = Field(..., description="Domain category or subject area of the sample.")
-    difficulty: Literal["easy", "medium", "hard"] = Field(..., description="Difficulty level of the evaluation prompt.")
+    sample_id: str = Field(default="sample_01", description="Unique identifier for the benchmark sample.")
+    category: str = Field(default="general", description="Domain category or subject area of the sample.")
+    difficulty: Literal["easy", "medium", "hard"] = Field(default="medium", description="Difficulty level of the evaluation prompt.")
     question: str = Field(..., description="Question or prompt for evaluation.")
-    contexts: list[str] = Field(..., description="Retrieved context document chunks.")
-    ground_truth: str = Field(..., description="Reference ground truth answer.")
-    expected_answer: str | None = Field(default=None, description="Optional expected reference output.")
+    contexts: List[str] = Field(default_factory=list, description="Retrieved context document chunks.")
+    ground_truth: str = Field(default="", description="Reference ground truth answer.")
+    expected_answer: Optional[str] = Field(default=None, description="Optional expected reference output.")
 
     model_config = ConfigDict(frozen=True)
 
 
 class BenchmarkRunConfig(BaseModel):
-    """Configuration parameters for executing a benchmark run."""
+    """Configuration parameters and request payload for executing a benchmark run."""
 
+    benchmark_name: str = Field(default="Forge Benchmark Suite", description="Name of the benchmark suite.")
+    rag_architecture_id: Optional[str] = Field(default="arch_v1", description="ID of RAG architecture being benchmarked.")
+    dataset_id: Optional[str] = Field(default=None, description="Dataset ID if using a pre-loaded dataset.")
+    samples: List[BenchmarkSample] = Field(default_factory=list, description="Inline list of evaluation benchmark samples.")
     provider: EvaluationProvider = Field(default=EvaluationProvider.RAGAS, description="Evaluation provider framework.")
-    metric_config: list[MetricConfig] | None = Field(default=None, description="Optional metric configuration overrides.")
-    threshold_config: ThresholdConfig | None = Field(default=None, description="Optional quality gate threshold overrides.")
+    metric_config: Optional[List[MetricConfig]] = Field(default=None, description="Optional metric configuration overrides.")
+    threshold_config: Optional[List[ThresholdConfig]] = Field(default=None, description="Optional quality gate threshold overrides.")
+    weight_preset: Optional[str] = Field(default="balanced_rag", description="Preset weighting profile.")
+    async_execution: bool = Field(default=False, description="Flag indicating async background execution.")
     parallel_workers: PositiveInt = Field(default=4, description="Number of parallel worker execution threads.")
     shuffle: bool = Field(default=False, description="Flag to shuffle evaluation sample ordering.")
-    max_samples: PositiveInt | None = Field(default=None, description="Maximum number of samples to execute.")
+    max_samples: Optional[PositiveInt] = Field(default=None, description="Maximum number of samples to execute.")
+    limit_samples: Optional[PositiveInt] = Field(default=None, description="Alias limit for max samples.")
 
-    model_config = ConfigDict(frozen=True)
+    model_config = ConfigDict(
+        frozen=True,
+        json_schema_extra={
+            "example": {
+                "benchmark_name": "RAG Quality Benchmark",
+                "rag_architecture_id": "arch_hybrid_v1",
+                "samples": [
+                    {
+                        "sample_id": "s1",
+                        "category": "legal",
+                        "difficulty": "medium",
+                        "question": "What is the notice period for contract termination?",
+                        "contexts": ["Section 4: Termination requires 30 days written notice."],
+                        "ground_truth": "30 days written notice."
+                    }
+                ],
+                "provider": "ragas"
+            }
+        }
+    )
+
+
+BenchmarkRequest = BenchmarkRunConfig
 
 
 class BenchmarkSampleResult(BaseModel):
@@ -81,7 +110,7 @@ class BenchmarkReport(BaseModel):
     started_at: datetime = Field(..., description="UTC timestamp marking when benchmark execution started.")
     completed_at: datetime = Field(..., description="UTC timestamp marking when benchmark execution completed.")
     statistics: BenchmarkStatistics = Field(..., description="Aggregated benchmark statistics summary.")
-    results: list[BenchmarkSampleResult] = Field(..., description="Detailed sample evaluation results list.")
+    results: List[BenchmarkSampleResult] = Field(..., description="Detailed sample evaluation results list.")
     metadata: dict[str, str] = Field(default_factory=dict, description="Additional benchmark metadata.")
 
     model_config = ConfigDict(frozen=True)
