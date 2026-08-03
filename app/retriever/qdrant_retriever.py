@@ -153,9 +153,19 @@ class QdrantRetriever:
         total_docs = sum(len(items) for items in grouped_payloads.values())
 
         logger.info(
-            f"Qdrant retrieval completed | Collection: '{COLLECTION_NAME}' | "
-            f"Query: '{query_text[:60]}...' | Latency: {elapsed_ms} ms | "
-            f"Documents: {total_docs} | Top Similarity Score: {top_score:.4f}"
+            "Qdrant retrieval completed | Collection=%s | Query=%s... | Latency=%sms | Documents=%d | TopScore=%.4f",
+            COLLECTION_NAME,
+            query_text[:60],
+            elapsed_ms,
+            total_docs,
+            top_score,
         )
 
         return grouped_payloads
+
+    def close(self) -> None:
+        """Close the underlying Qdrant client connection."""
+        try:
+            self._client.close()
+        except Exception:
+            pass
