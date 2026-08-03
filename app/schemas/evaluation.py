@@ -1,11 +1,10 @@
-"""
-Evaluation Pydantic v2 Schemas.
+"""Evaluation Pydantic v2 Schemas.
 
 Contains data validation models for single-sample evaluation requests and responses,
 metric configurations, quality gate thresholds, and historical filters.
 """
 
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Any, Dict, List, Optional
 from uuid import uuid4
 
@@ -118,22 +117,104 @@ class ThresholdResultSchema(BaseModel):
     model_config = ConfigDict(frozen=True)
 
 
-class EvaluationResponse(BaseModel):
-    """Pydantic v2 response schema for single RAG evaluation execution."""
+# =====================================================================
+# Phase 1 Expanded Evaluation Schemas
+# =====================================================================
+
+
+class RetrievalMetricsSchema(BaseModel):
+    """Pydantic v2 schema for retrieval accuracy and ranking metrics."""
+
+    precision_at_k: float = Field(default=0.0, ge=0.0, le=1.0, description="Precision@K score.")
+    recall_at_k: float = Field(default=0.0, ge=0.0, le=1.0, description="Recall@K score.")
+    hit_rate: float = Field(default=0.0, ge=0.0, le=1.0, description="Hit Rate score.")
+    mrr: float = Field(default=0.0, ge=0.0, le=1.0, description="Mean Reciprocal Rank score.")
+    ndcg: float = Field(default=0.0, ge=0.0, le=1.0, description="Normalized Discounted Cumulative Gain score.")
+
+    model_config = ConfigDict(frozen=True)
+
+
+class GenerationMetricsSchema(BaseModel):
+    """Pydantic v2 schema for RAG generation quality and factual alignment metrics."""
+
+    faithfulness: float = Field(default=0.0, ge=0.0, le=1.0, description="Faithfulness score.")
+    answer_relevancy: float = Field(default=0.0, ge=0.0, le=1.0, description="Answer Relevancy score.")
+    context_precision: float = Field(default=0.0, ge=0.0, le=1.0, description="Context Precision score.")
+    context_recall: float = Field(default=0.0, ge=0.0, le=1.0, description="Context Recall score.")
+    groundedness: float = Field(default=0.0, ge=0.0, le=1.0, description="Groundedness score.")
+    hallucination_score: float = Field(
+        default=0.0, ge=0.0, le=1.0, description="Hallucination score (0.0 = zero hallucination)."
+    )
+    completeness: float = Field(default=0.0, ge=0.0, le=1.0, description="Completeness score.")
+    coherence: float = Field(default=0.0, ge=0.0, le=1.0, description="Coherence score.")
+
+    model_config = ConfigDict(frozen=True)
+
+
+class OperationalMetricsSchema(BaseModel):
+    """Pydantic v2 schema for system performance, latency, and resource utilization metrics."""
+
+    retrieval_latency_ms: float = Field(default=0.0, ge=0.0, description="Retrieval latency in milliseconds.")
+    generation_latency_ms: float = Field(default=0.0, ge=0.0, description="Generation latency in milliseconds.")
+    total_latency_ms: float = Field(default=0.0, ge=0.0, description="Total execution latency in milliseconds.")
+    prompt_tokens: int = Field(default=0, ge=0, description="Input prompt token count.")
+    completion_tokens: int = Field(default=0, ge=0, description="Output completion token count.")
+    total_tokens: int = Field(default=0, ge=0, description="Total token consumption.")
+    estimated_cost_usd: float = Field(default=0.0, ge=0.0, description="Estimated USD cost.")
+    throughput_tokens_per_second: float = Field(
+        default=0.0, ge=0.0, description="Generation throughput in tokens/sec."
+    )
+
+    model_config = ConfigDict(frozen=True)
+
+
+class EvaluationSummarySchema(BaseModel):
+    """Pydantic v2 schema for high-level evaluation summary and diagnostic feedback."""
+
+    overall_score: float = Field(..., ge=0.0, le=1.0, description="Composite evaluation score.")
+    status: PassFailStatus = Field(default=PassFailStatus.PASS, description="Pass/Fail status across quality gates.")
+    metric_weights: Dict[str, float] = Field(default_factory=dict, description="Weights assigned per metric.")
+    strengths: List[str] = Field(default_factory=list, description="Identified architecture strengths.")
+    weaknesses: List[str] = Field(default_factory=list, description="Identified architecture weaknesses.")
+    recommendations: List[str] = Field(default_factory=list, description="Actionable optimization recommendations.")
+
+    model_config = ConfigDict(frozen=True)
+
+
+class ComprehensiveEvaluationReport(BaseModel):
+    """Pydantic v2 comprehensive evaluation report schema consumable by Benchmark and Comparison modules."""
 
     evaluation_id: str = Field(
         default_factory=lambda: str(uuid4()), description="Unique evaluation execution UUID."
     )
-    provider: EvaluationProvider = Field(..., description="Provider framework utilized.")
-    overall_score: float = Field(
-        ..., ge=0.0, le=1.0, description="Final composite or primary evaluation score."
+    provider: EvaluationProvider = Field(
+        default=EvaluationProvider.RAGAS, description="Provider framework utilized."
     )
-    status: PassFailStatus = Field(..., description="Pass/Fail/Warning status across quality gates.")
+    overall_score: float = Field(
+        default=0.0, ge=0.0, le=1.0, description="Final composite or primary evaluation score."
+    )
+    status: PassFailStatus = Field(
+        default=PassFailStatus.PASS, description="Pass/Fail/Warning status across quality gates."
+    )
+    summary: Optional[EvaluationSummarySchema] = Field(
+        default=None, description="Detailed diagnostic evaluation summary."
+    )
+    retrieval: RetrievalMetricsSchema = Field(
+        default_factory=RetrievalMetricsSchema, description="Retrieval accuracy and rank metrics."
+    )
+    generation: GenerationMetricsSchema = Field(
+        default_factory=GenerationMetricsSchema, description="Generation quality and alignment metrics."
+    )
+    operational: OperationalMetricsSchema = Field(
+        default_factory=OperationalMetricsSchema, description="Performance and latency metrics."
+    )
     metrics: Dict[str, float] = Field(
-        default_factory=dict, description="Per-metric calculated scores dictionary."
+        default_factory=dict, description="Flat map of metric scores for backward compatibility."
     )
     execution_time_ms: float = Field(default=0.0, description="Total execution duration in milliseconds.")
-    created_at: datetime = Field(default_factory=datetime.utcnow, description="Creation timestamp.")
+    created_at: datetime = Field(
+        default_factory=lambda: datetime.now(timezone.utc), description="Timezone-aware creation timestamp."
+    )
 
     model_config = ConfigDict(frozen=True)
 
@@ -152,6 +233,15 @@ class EvaluationResponse(BaseModel):
     @property
     def execution_time_seconds(self) -> float:
         return self.execution_time_ms / 1000.0
+
+
+# Property aliases & class exports for Phase 1 backward compatibility
+RetrievalMetrics = RetrievalMetricsSchema
+GenerationMetrics = GenerationMetricsSchema
+OperationalMetrics = OperationalMetricsSchema
+EvaluationSummary = EvaluationSummarySchema
+EvaluationResponse = ComprehensiveEvaluationReport
+EvaluationReport = ComprehensiveEvaluationReport
 
 
 class EvaluationHistoryFilter(BaseModel):
