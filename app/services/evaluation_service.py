@@ -80,51 +80,25 @@ class EvaluationService:
         Returns:
             EvaluationResponse: Calculated metric scores, overall composite score, status, and latency.
         """
-        t0 = time.perf_counter()
-        evaluation_id = str(uuid4())
+        # Delegate single sample evaluation to EvaluationEngine
+        if not hasattr(self, "_engine") or self._engine is None:
+            from app.evaluation.engine import EvaluationEngine
+            self._engine = EvaluationEngine()
 
-        provider_enum = request.provider
-        provider_key = provider_enum.value if hasattr(provider_enum, "value") else str(provider_enum)
-        evaluator = None
-        try:
-            evaluator = self.metric_registry.get(provider_key)
-        except Exception:
-            pass
-
-        metrics_dict: Dict[str, float] = {}
-
-        if evaluator and hasattr(evaluator, "evaluate"):
-            metrics_dict = evaluator.evaluate(request)
-        else:
-            raise ValueError(f"Provider '{provider_key}' is not registered in metric registry.")
-
-        # Calculate overall score & status
-        overall_score = sum(metrics_dict.values()) / len(metrics_dict) if metrics_dict else 0.85
-        status = PassFailStatus.PASS if overall_score >= 0.70 else PassFailStatus.FAIL
-
-        execution_time_ms = round((time.perf_counter() - t0) * 1000.0, 2)
-        if execution_time_ms <= 0.0:
-            execution_time_ms = 0.15
+        report = self._engine.evaluate(request)
 
         # Save single evaluation record to history manager
         record = EvaluationRecord(
-            evaluation_id=evaluation_id,
+            evaluation_id=report.evaluation_id,
             rag_architecture_id="single_evaluation",
             dataset_id="single_sample",
-            composite_score=overall_score,
-            overall_status=status,
-            metrics_summary=metrics_dict,
+            composite_score=report.overall_score,
+            overall_status=report.status,
+            metrics_summary=report.metrics,
         )
         self.history_manager.save(record)
 
-        return EvaluationResponse(
-            evaluation_id=evaluation_id,
-            provider=provider_enum,
-            overall_score=round(overall_score, 4),
-            status=status,
-            metrics=metrics_dict,
-            execution_time_ms=execution_time_ms,
-        )
+        return report
 
     run_evaluation = evaluate
 
