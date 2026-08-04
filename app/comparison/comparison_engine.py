@@ -106,20 +106,28 @@ class ComparisonEngine:
                 else None
             )
 
+            metric_title = metric_key.replace("_", " ").title()
+
             if runner_up_val is not None:
                 diff = round(abs(winner_val - runner_up_val), 4)
-                reason_str = (
-                    f"'{winner_arch.architecture_name}' outperform '{runner_up_arch.architecture_name}' "
-                    f"on {metric_key} by {diff:.4f} ({winner_val} vs {runner_up_val})."
-                )
+                if diff < 1e-4:
+                    winner_name = "Tie"
+                    reason_str = f"Both architectures achieved identical {metric_title} scores ({winner_val})."
+                else:
+                    winner_name = winner_arch.architecture_name
+                    reason_str = (
+                        f"'{winner_arch.architecture_name}' outperformed '{runner_up_arch.architecture_name}' "
+                        f"on {metric_key} by {diff:.4f} ({winner_val} vs {runner_up_val})."
+                    )
             else:
                 diff = 0.0
+                winner_name = winner_arch.architecture_name
                 reason_str = f"'{winner_arch.architecture_name}' achieved top score of {winner_val}."
 
             metric_winners.append(
                 MetricWinner(
                     metric=metric_key,
-                    winner=winner_arch.architecture_name,
+                    winner=winner_name,
                     winner_score=winner_val,
                     runner_up=runner_up_arch.architecture_name if runner_up_arch else None,
                     runner_up_score=runner_up_val,
@@ -138,6 +146,15 @@ class ComparisonEngine:
         """Automatically generate trade-off analysis across architectures."""
         tradeoffs: List[TradeOff] = []
         if len(rankings) < 2:
+            tradeoffs.append(
+                TradeOff(
+                    dimension="General Performance",
+                    winner=rankings[0].architecture_name if rankings else "None",
+                    loser="None",
+                    analysis="Single architecture evaluation — no comparative trade-offs identified.",
+                    recommendation="Evaluate additional candidate architectures for comparative trade-off analysis.",
+                )
+            )
             return tradeoffs
 
         winner = rankings[0]
@@ -147,7 +164,7 @@ class ComparisonEngine:
         quality_diff = winner.overall_score - runner_up.overall_score
         latency_diff = runner_up.average_latency_ms - winner.average_latency_ms
 
-        if quality_diff > 0 and latency_diff < 0:
+        if quality_diff > 1e-4 and latency_diff < -1.0:
             # Winner has higher quality but ALSO higher latency (slower)
             tradeoffs.append(
                 TradeOff(
@@ -155,16 +172,16 @@ class ComparisonEngine:
                     winner=winner.architecture_name,
                     loser=runner_up.architecture_name,
                     analysis=(
-                        f"'{winner.architecture_name}' offers higher quality (+{quality_diff:.3f} overall score) "
+                        f"'{winner.architecture_name}' offers higher overall quality (+{quality_diff:.3f} composite score) "
                         f"but incurs a latency penalty of {abs(latency_diff):.0f} ms compared to '{runner_up.architecture_name}'."
                     ),
                     recommendation=(
-                        f"If latency is critical (< {winner.average_latency_ms:.0f}ms required), consider '{runner_up.architecture_name}' "
+                        f"If response latency is critical (< {winner.average_latency_ms:.0f} ms required), consider '{runner_up.architecture_name}' "
                         f"or introduce caching to optimize '{winner.architecture_name}'."
                     ),
                 )
             )
-        elif quality_diff > 0 and latency_diff >= 0:
+        elif quality_diff > 1e-4 and latency_diff >= 0:
             # Winner dominates both quality and latency
             tradeoffs.append(
                 TradeOff(
@@ -172,15 +189,31 @@ class ComparisonEngine:
                     winner=winner.architecture_name,
                     loser=runner_up.architecture_name,
                     analysis=(
-                        f"'{winner.architecture_name}' dominates both quality (+{quality_diff:.3f}) and latency "
+                        f"'{winner.architecture_name}' dominates both overall quality (+{quality_diff:.3f}) and execution latency "
                         f"({winner.average_latency_ms:.0f} ms vs {runner_up.average_latency_ms:.0f} ms)."
                     ),
-                    recommendation=f"Clear advantage for '{winner.architecture_name}' — no latency penalty incurred.",
+                    recommendation=f"Clear operational advantage for '{winner.architecture_name}' — no latency penalty incurred.",
+                )
+            )
+        elif abs(quality_diff) <= 1e-4 and abs(latency_diff) > 1.0:
+            # Same quality, but different latency
+            faster = winner if winner.average_latency_ms < runner_up.average_latency_ms else runner_up
+            slower = runner_up if faster == winner else winner
+            tradeoffs.append(
+                TradeOff(
+                    dimension="Quality vs. Latency",
+                    winner=faster.architecture_name,
+                    loser=slower.architecture_name,
+                    analysis=(
+                        f"Both architectures achieved equivalent quality scores, but '{faster.architecture_name}' "
+                        f"is {abs(latency_diff):.0f} ms faster than '{slower.architecture_name}'."
+                    ),
+                    recommendation=f"Prefer '{faster.architecture_name}' for lower latency and better user experience.",
                 )
             )
 
         # 2. Retrieval Precision vs Recall Tradeoff
-        if winner.precision_at_k > runner_up.precision_at_k and winner.recall_at_k < runner_up.recall_at_k:
+        if winner.precision_at_k > runner_up.precision_at_k + 1e-4 and winner.recall_at_k < runner_up.recall_at_k - 1e-4:
             tradeoffs.append(
                 TradeOff(
                     dimension="Precision vs. Recall",
@@ -188,9 +221,34 @@ class ComparisonEngine:
                     loser=runner_up.architecture_name,
                     analysis=(
                         f"'{winner.architecture_name}' provides higher precision@k ({winner.precision_at_k:.2f}), "
-                        f"whereas '{runner_up.architecture_name}' retrieves broader context with higher recall@k ({winner.recall_at_k:.2f})."
+                        f"whereas '{runner_up.architecture_name}' retrieves broader context with higher recall@k ({runner_up.recall_at_k:.2f})."
                     ),
                     recommendation="Choose based on whether noiseless prompt context (precision) or maximum information retrieval (recall) is prioritized.",
+                )
+            )
+        elif runner_up.precision_at_k > winner.precision_at_k + 1e-4 and runner_up.recall_at_k < winner.recall_at_k - 1e-4:
+            tradeoffs.append(
+                TradeOff(
+                    dimension="Precision vs. Recall",
+                    winner=runner_up.architecture_name,
+                    loser=winner.architecture_name,
+                    analysis=(
+                        f"'{runner_up.architecture_name}' provides higher precision@k ({runner_up.precision_at_k:.2f}), "
+                        f"whereas '{winner.architecture_name}' retrieves broader context with higher recall@k ({winner.recall_at_k:.2f})."
+                    ),
+                    recommendation="Choose based on whether noiseless prompt context (precision) or maximum information retrieval (recall) is prioritized.",
+                )
+            )
+
+        # Never return an empty list
+        if not tradeoffs:
+            tradeoffs.append(
+                TradeOff(
+                    dimension="General Performance",
+                    winner="Both Architectures",
+                    loser="None",
+                    analysis="No significant trade-offs identified between compared architectures across quality, latency, and cost dimensions.",
+                    recommendation="Selection can be guided by external infrastructure or deployment constraints.",
                 )
             )
 
@@ -231,35 +289,56 @@ class ComparisonEngine:
         tradeoffs: List[TradeOff],
         goal: OptimizationGoal,
     ) -> ComparisonExecutiveSummary:
-        """Construct structured executive summary."""
-        verdict = (
-            f"'{winner.architecture_name}' is selected as the top RAG architecture candidate with a composite score of "
-            f"{winner.overall_score:.4f} (Quality Grade: {winner.quality_grade or 'N/A'}, Readiness: {winner.deployment_readiness or 'N/A'})."
-        )
-        if runner_up:
-            verdict += f" It outperforms runner-up '{runner_up.architecture_name}' by +{winner.overall_score - runner_up.overall_score:.4f} points."
+        """Construct structured executive summary with evidence-based tie handling."""
+        is_tie = runner_up is not None and abs(winner.overall_score - runner_up.overall_score) <= 1e-4
 
-        reason = winner.explanation or f"Highest composite score under '{goal.value}' optimization goal."
+        if is_tie and runner_up:
+            verdict = (
+                f"'{winner.architecture_name}' and '{runner_up.architecture_name}' achieved equivalent overall "
+                f"composite scores ({winner.overall_score:.4f}). Rank assignment reflects primary optimization goal "
+                f"('{goal.value}') and secondary metric tie-breaking."
+            )
+            reason = f"Tie — both candidates achieved equivalent composite scores under '{goal.value}' optimization."
+            dep_rec = (
+                f"Both '{winner.architecture_name}' and '{runner_up.architecture_name}' are suitable for deployment. "
+                f"Select based on operational constraints such as infrastructure or latency."
+            )
+            risk = "Low operational risk — architectures demonstrate equivalent benchmark quality."
+            mig_rec = (
+                "Both architectures demonstrate equivalent benchmark performance. "
+                "Selection should be based on deployment constraints such as latency, infrastructure, or cost."
+            )
+        elif runner_up:
+            score_diff = winner.overall_score - runner_up.overall_score
+            verdict = (
+                f"'{winner.architecture_name}' is selected as the top RAG architecture candidate with a composite score of "
+                f"{winner.overall_score:.4f} (Quality Grade: {winner.quality_grade or 'N/A'}, Readiness: {winner.deployment_readiness or 'N/A'}). "
+                f"It outperforms runner-up '{runner_up.architecture_name}' by +{score_diff:.4f} points."
+            )
+            reason = winner.explanation or f"Highest composite score under '{goal.value}' optimization goal."
+            dep_rec = f"Deploy '{winner.architecture_name}' to target environment ({winner.deployment_readiness or 'Production Ready'})."
+            risk = f"Low migration risk if upgrading from '{runner_up.architecture_name}' to '{winner.architecture_name}'."
+            
+            faith_diff = winner.faithfulness - runner_up.faithfulness
+            if faith_diff > 0.01:
+                mig_rec = (
+                    f"Recommended to transition workloads from '{runner_up.architecture_name}' to '{winner.architecture_name}' "
+                    f"to achieve +{faith_diff:.2f} higher faithfulness."
+                )
+            else:
+                mig_rec = f"Recommended to deploy '{winner.architecture_name}' as primary architecture."
+        else:
+            verdict = (
+                f"'{winner.architecture_name}' evaluated with composite score of {winner.overall_score:.4f} "
+                f"(Quality Grade: {winner.quality_grade or 'N/A'})."
+            )
+            reason = f"Evaluated under '{goal.value}' optimization goal."
+            dep_rec = f"Deploy '{winner.architecture_name}' to target environment."
+            risk = "Standard operational risks apply."
+            mig_rec = "Proceed with standard deployment."
 
         primary_tradeoff = (
             tradeoffs[0].analysis if tradeoffs else "No significant trade-offs identified among top candidates."
-        )
-
-        dep_rec = (
-            f"Deploy '{winner.architecture_name}' to target environment ({winner.deployment_readiness or 'Production Ready'})."
-        )
-
-        risk = (
-            f"Low migration risk if upgrading from '{runner_up.architecture_name}' to '{winner.architecture_name}'."
-            if runner_up
-            else "Standard operational risks apply."
-        )
-
-        mig_rec = (
-            f"Recommended to transition workloads from '{runner_up.architecture_name}' to '{winner.architecture_name}' "
-            f"to achieve +{winner.faithfulness - (runner_up.faithfulness if runner_up else 0):.2f} higher faithfulness."
-            if runner_up
-            else "Proceed with standard deployment."
         )
 
         return ComparisonExecutiveSummary(
@@ -291,6 +370,7 @@ class ComparisonEngine:
 
         winner = rankings[0]
         runner_up = rankings[1] if len(rankings) > 1 else None
+        is_tie = runner_up is not None and abs(winner.overall_score - runner_up.overall_score) <= 1e-4
 
         # 2. Metric winners
         metric_winners_list = self._determine_metric_winners(rankings)
@@ -322,7 +402,7 @@ class ComparisonEngine:
             metric_winners_map[mw.metric] = mw.winner
 
         if runner_up:
-            score_diff = round(winner.overall_score - runner_up.overall_score, 4)
+            score_diff = 0.0 if is_tie else round(winner.overall_score - runner_up.overall_score, 4)
             latency_diff_ms = round(runner_up.average_latency_ms - winner.average_latency_ms, 2)
             metric_diffs = {
                 "faithfulness": round(winner.faithfulness - runner_up.faithfulness, 4),
@@ -355,23 +435,35 @@ class ComparisonEngine:
             number_of_architectures=len(rankings),
         )
 
-        summary_text = (
-            f"Compared {len(rankings)} RAG architectures under '{request.optimization_goal.value}' optimization. "
-            f"Winner: '{winner.architecture_name}' (Score: {winner.overall_score:.4f}, Grade: {winner.quality_grade or 'N/A'})."
-        )
-        rec_paragraph = exec_summary.overall_verdict
-        recommendations = [
-            f"Deploy {winner.architecture_name} as the primary RAG architecture.",
-            f"Overall composite score: {winner.overall_score:.4f} (Grade: {winner.quality_grade or 'N/A'}).",
-            f"Faithfulness: {winner.faithfulness:.2f} | Answer Relevancy: {winner.answer_relevancy:.2f}.",
-            f"Average latency: {winner.average_latency_ms:.0f} ms | Deployment Readiness: {winner.deployment_readiness or 'Production Ready'}.",
-        ]
-        if runner_up:
-            recommendations.append(
-                f"Runner-up alternative: {runner_up.architecture_name} (score: {runner_up.overall_score:.4f})."
+        if is_tie and runner_up:
+            summary_text = (
+                f"Compared {len(rankings)} RAG architectures under '{request.optimization_goal.value}' optimization. "
+                f"Result: Tie between '{winner.architecture_name}' and '{runner_up.architecture_name}' (Score: {winner.overall_score:.4f})."
             )
+            recommendations = [
+                f"Both architectures demonstrate equivalent benchmark performance ({winner.overall_score:.4f}).",
+                "Selection should be based on deployment constraints such as latency, infrastructure, or cost.",
+                f"Faithfulness: {winner.faithfulness:.2f} vs {runner_up.faithfulness:.2f} | Answer Relevancy: {winner.answer_relevancy:.2f} vs {runner_up.answer_relevancy:.2f}.",
+                f"Average latency: {winner.architecture_name} ({winner.average_latency_ms:.0f} ms) vs {runner_up.architecture_name} ({runner_up.average_latency_ms:.0f} ms).",
+            ]
+        else:
+            summary_text = (
+                f"Compared {len(rankings)} RAG architectures under '{request.optimization_goal.value}' optimization. "
+                f"Winner: '{winner.architecture_name}' (Score: {winner.overall_score:.4f}, Grade: {winner.quality_grade or 'N/A'})."
+            )
+            recommendations = [
+                f"Deploy {winner.architecture_name} as the primary RAG architecture.",
+                f"Overall composite score: {winner.overall_score:.4f} (Grade: {winner.quality_grade or 'N/A'}).",
+                f"Faithfulness: {winner.faithfulness:.2f} | Answer Relevancy: {winner.answer_relevancy:.2f}.",
+                f"Average latency: {winner.average_latency_ms:.0f} ms | Deployment Readiness: {winner.deployment_readiness or 'Production Ready'}.",
+            ]
+            if runner_up:
+                recommendations.append(
+                    f"Runner-up alternative: {runner_up.architecture_name} (score: {runner_up.overall_score:.4f})."
+                )
 
-        # Cost vs quality / Latency vs quality text analysis
+        rec_paragraph = exec_summary.overall_verdict
+
         cost_vs_quality = (
             f"'{winner.architecture_name}' delivers a composite quality score of {winner.overall_score:.4f} "
             f"with competitive execution cost and resource utilization."

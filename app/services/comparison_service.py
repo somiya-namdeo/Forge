@@ -39,6 +39,7 @@ class ComparisonService:
                 run_cfg = BenchmarkRunConfig(
                     benchmark_name=f"Automated Benchmark - {candidate.architecture_name}",
                     rag_architecture_id=candidate.architecture_id,
+                    max_samples=1,
                 )
                 report = bm_service.run_benchmark(
                     benchmark_name=run_cfg.benchmark_name,

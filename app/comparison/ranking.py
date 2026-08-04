@@ -245,25 +245,32 @@ class RankingEngine:
         return strengths, weaknesses
 
     @staticmethod
-    def _generate_explanation(architecture_name: str, rank: int, overall_score: float, m: Dict) -> str:
-        """Generate human-readable rank explanation."""
+    def _generate_explanation(
+        architecture_name: str,
+        rank: int,
+        overall_score: float,
+        m: Dict,
+        is_tie: bool = False,
+    ) -> str:
+        """Generate human-readable rank explanation with evidence-based tie handling."""
         grade = m.get("quality_grade", "")
         readiness = m.get("deployment_readiness", "")
+        if is_tie:
+            return (
+                f"{architecture_name} achieved composite score {overall_score:.4f} "
+                f"(grade: {grade or 'N/A'}, readiness: {readiness or 'N/A'}). "
+                f"Rank determined using tie-breaking strategy."
+            )
         if rank == 1:
             return (
                 f"{architecture_name} ranked #1 — composite score {overall_score:.4f} "
-                f"(grade: {grade}, readiness: {readiness}), "
+                f"(grade: {grade or 'N/A'}, readiness: {readiness or 'N/A'}), "
                 f"faithfulness {m['faithfulness']:.2f}, answer_relevancy {m['answer_relevancy']:.2f}, "
                 f"latency {m['average_latency_ms']:.0f} ms."
             )
         return (
             f"{architecture_name} ranked #{rank} — composite score {overall_score:.4f} "
-            f"(grade: {grade}, readiness: {readiness}), "
-            f"latency {m['average_latency_ms']:.0f} ms."
-        )
-        return (
-            f"{architecture_name} ranked #{rank} — composite score {overall_score:.4f} "
-            f"(grade: {grade}, readiness: {readiness}), "
+            f"(grade: {grade or 'N/A'}, readiness: {readiness or 'N/A'}), "
             f"latency {m['average_latency_ms']:.0f} ms."
         )
 
@@ -290,9 +297,11 @@ class RankingEngine:
 
         scored.sort(key=lambda item: (item[0], _GRADE_ORDER.get(item[2].get("quality_grade", ""), 0)), reverse=True)
 
+        is_tie = len(scored) > 1 and abs(scored[0][0] - scored[1][0]) < 1e-4
+
         ranked: List[RankedArchitecture] = []
         for idx, (overall_score, candidate, m, strengths, weaknesses) in enumerate(scored, start=1):
-            explanation = self._generate_explanation(candidate.architecture_name, idx, overall_score, m)
+            explanation = self._generate_explanation(candidate.architecture_name, idx, overall_score, m, is_tie=is_tie)
             arch_meta = candidate.architecture_metadata if hasattr(candidate, "architecture_metadata") else ArchitectureMetadata()
 
             ranked.append(
