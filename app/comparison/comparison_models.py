@@ -4,7 +4,7 @@ Comparison data models for Forge architecture comparison engine (v2.0).
 
 from datetime import datetime
 from enum import Enum
-from typing import Dict, List, Optional
+from typing import Any, Dict, List, Optional
 
 from pydantic import BaseModel, ConfigDict, Field
 
@@ -102,7 +102,10 @@ class ArchitectureCandidate(BaseModel):
 
     architecture_id: str = Field(..., description="Unique architecture identifier.")
     architecture_name: str = Field(..., description="Human-readable architecture name.")
-    benchmark_report: BenchmarkReport = Field(..., description="Benchmark report for this architecture.")
+    configuration: Dict[str, Any] = Field(default_factory=dict, description="Architecture configuration parameters.")
+    benchmark_report: Optional[BenchmarkReport] = Field(
+        default=None, description="Optional pre-computed benchmark report (generated automatically if omitted)."
+    )
     metadata: Dict[str, str] = Field(default_factory=dict, description="Optional architecture metadata.")
     architecture_metadata: ArchitectureMetadata = Field(
         default_factory=ArchitectureMetadata,
@@ -124,8 +127,8 @@ class RankedArchitecture(BaseModel):
     average_latency_ms: float = Field(..., ge=0.0, description="Average execution latency in milliseconds.")
     faithfulness: float = Field(default=0.0, ge=0.0, le=1.0, description="Faithfulness score.")
     answer_relevancy: float = Field(default=0.0, ge=0.0, le=1.0, description="Answer relevancy score.")
-    context_precision: float = Field(default=0.0, ge=0.0, le=1.0, description="Context precision score.")
-    context_recall: float = Field(default=0.0, ge=0.0, le=1.0, description="Context recall score.")
+    precision_at_k: float = Field(default=0.0, ge=0.0, le=1.0, description="Precision@K score.")
+    recall_at_k: float = Field(default=0.0, ge=0.0, le=1.0, description="Recall@K score.")
     success_rate: float = Field(default=1.0, ge=0.0, le=1.0, description="Quality gate success rate ratio.")
     strengths: List[str] = Field(default_factory=list, description="Key strengths of this architecture.")
     weaknesses: List[str] = Field(default_factory=list, description="Key weaknesses or areas for improvement.")
@@ -205,7 +208,7 @@ class ComparisonMetadata(BaseModel):
 
 
 class ComparisonRequest(BaseModel):
-    """Request payload for comparing benchmarked architectures."""
+    """Request payload for comparing RAG architectures."""
 
     comparison_name: str = Field(default="Architecture Comparison", description="Comparison session name.")
     optimization_goal: OptimizationGoal = Field(
@@ -225,7 +228,33 @@ class ComparisonRequest(BaseModel):
                 "comparison_name": "Hybrid vs Naive RAG Comparison",
                 "optimization_goal": "balanced",
                 "ranking_strategy": "weighted_score",
-                "architectures": [],
+                "architectures": [
+                    {
+                        "architecture_id": "naive_rag_v1",
+                        "architecture_name": "Naive RAG Architecture",
+                        "configuration": {
+                            "retriever": "dense",
+                            "top_k": 5,
+                            "llm": "llama-3.3-70b-versatile"
+                        },
+                        "metadata": {
+                            "environment": "production"
+                        }
+                    },
+                    {
+                        "architecture_id": "hybrid_rag_v1",
+                        "architecture_name": "Hybrid RAG Architecture",
+                        "configuration": {
+                            "retriever": "hybrid",
+                            "top_k": 5,
+                            "reranker": "cross-encoder",
+                            "llm": "llama-3.3-70b-versatile"
+                        },
+                        "metadata": {
+                            "environment": "production"
+                        }
+                    }
+                ],
             }
         },
     )

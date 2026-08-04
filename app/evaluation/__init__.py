@@ -5,7 +5,7 @@ A clean, scalable, and modular evaluation subsystem for Retrieval-Augmented Gene
 (RAG) architectures and AI engineering decisions.
 
 Key Subpackages:
-    - metrics: Plug-in metric evaluation providers (RAGAS, DeepEval, TruLens, Custom).
+    - metrics: Plug-in metric evaluation providers (RAGAS, TruLens, Custom).
     - datasets: Benchmark loaders and golden dataset primitives.
     - thresholds: Quality gates, threshold managers, and pass/fail rules.
     - reports: Evaluation report generators and PDF/JSON export engines.

@@ -65,19 +65,16 @@ class WeightingEngine:
         if preset == WeightPreset.BALANCED_RAG:
             return WeightConfig(
                 weights={
-                    MetricType.FAITHFULNESS: 0.3,
-                    MetricType.ANSWER_RELEVANCE: 0.3,
-                    MetricType.CONTEXT_RECALL: 0.2,
-                    MetricType.CONTEXT_PRECISION: 0.2,
+                    MetricType.FAITHFULNESS: 0.5,
+                    MetricType.ANSWER_RELEVANCE: 0.5,
                 },
                 preset=preset,
             )
         elif preset == WeightPreset.ACCURACY_FOCUSED:
             return WeightConfig(
                 weights={
-                    MetricType.FAITHFULNESS: 0.5,
-                    MetricType.ANSWER_RELEVANCE: 0.3,
-                    MetricType.HALLUCINATION: 0.2,
+                    MetricType.FAITHFULNESS: 0.6,
+                    MetricType.ANSWER_RELEVANCE: 0.4,
                 },
                 preset=preset,
             )

@@ -2,15 +2,59 @@
 
 import logging
 import time
-from typing import Any
+from typing import Any, Optional
 
-from langchain_community.embeddings import HuggingFaceBgeEmbeddings
+from app.embeddings.embedding_service import get_embedding_model
 from qdrant_client import QdrantClient
 
-from app.core.config import COLLECTION_NAME, EMBEDDING_MODEL, QDRANT_PATH, TOP_K
+from app.core.config import COLLECTION_NAME, QDRANT_PATH, TOP_K
 from app.schemas.decision import DecisionRequest
 
 logger = logging.getLogger(__name__)
+
+
+_qdrant_client_instance: Optional[QdrantClient] = None
+_qdrant_retriever_instance: Optional["QdrantRetriever"] = None
+
+
+def get_qdrant_client() -> QdrantClient:
+    """Return singleton instance of QdrantClient to ensure single connection lifecycle."""
+    global _qdrant_client_instance
+    if _qdrant_client_instance is not None:
+        try:
+            inner_client = getattr(_qdrant_client_instance, "_client", None)
+            if inner_client is not None and getattr(inner_client, "closed", False):
+                _qdrant_client_instance = None
+        except Exception:
+            _qdrant_client_instance = None
+
+    if _qdrant_client_instance is None:
+        if not QDRANT_PATH.exists():
+            raise RuntimeError(f"Qdrant storage path '{QDRANT_PATH}' does not exist.")
+        try:
+            logger.info("Initializing QdrantClient singleton at path: %s", QDRANT_PATH)
+            _qdrant_client_instance = QdrantClient(path=str(QDRANT_PATH))
+        except Exception as exc:
+            err_str = str(exc).lower()
+            if any(k in err_str for k in ("already accessed", "locked", "permission denied")):
+                time.sleep(0.5)
+                try:
+                    _qdrant_client_instance = QdrantClient(path=str(QDRANT_PATH))
+                except Exception as retry_exc:
+                    raise RuntimeError(
+                        f"Failed to initialize QdrantClient at '{QDRANT_PATH}' (storage locked by another process): {retry_exc}"
+                    ) from retry_exc
+            else:
+                raise RuntimeError(f"Failed to initialize QdrantClient at '{QDRANT_PATH}': {exc}") from exc
+    return _qdrant_client_instance
+
+
+def get_qdrant_retriever() -> "QdrantRetriever":
+    """Return singleton instance of QdrantRetriever."""
+    global _qdrant_retriever_instance
+    if _qdrant_retriever_instance is None:
+        _qdrant_retriever_instance = QdrantRetriever()
+    return _qdrant_retriever_instance
 
 
 class QdrantRetriever:
@@ -19,14 +63,7 @@ class QdrantRetriever:
     def __init__(self, top_k: int = TOP_K) -> None:
         """Initialize QdrantRetriever with Qdrant client and embedding model singletons."""
         self.top_k = top_k
-
-        if not QDRANT_PATH.exists():
-            raise RuntimeError(f"Qdrant storage path '{QDRANT_PATH}' does not exist.")
-
-        try:
-            self._client = QdrantClient(path=str(QDRANT_PATH))
-        except Exception as exc:
-            raise RuntimeError(f"Failed to initialize QdrantClient at '{QDRANT_PATH}': {exc}") from exc
+        self._client = get_qdrant_client()
 
         try:
             collections = [c.name for c in self._client.get_collections().collections]
@@ -37,9 +74,9 @@ class QdrantRetriever:
             raise ValueError(f"Collection '{COLLECTION_NAME}' does not exist in Qdrant at '{QDRANT_PATH}'.")
 
         try:
-            self._embeddings = HuggingFaceBgeEmbeddings(model_name=EMBEDDING_MODEL)
+            self._embeddings = get_embedding_model()
         except Exception as exc:
-            raise RuntimeError(f"Failed to load embedding model '{EMBEDDING_MODEL}': {exc}") from exc
+            raise RuntimeError(f"Failed to load embedding model: {exc}") from exc
 
     @staticmethod
     def _format_value(val: Any) -> str:
@@ -67,6 +104,23 @@ class QdrantRetriever:
                 clean_field = field_name.replace("_", " ").title()
                 query_parts.append(f"{clean_field}: {formatted}")
 
+        if request.preferred_llm:
+            pref_low = request.preferred_llm.lower()
+            if any(w in pref_low for w in ("llama", "meta")):
+                query_parts.append("Preferred Foundation Model: Meta LLaMA 3 3.3 Llama")
+            elif any(w in pref_low for w in ("gpt", "openai")):
+                query_parts.append("Preferred Foundation Model: OpenAI GPT")
+            elif any(w in pref_low for w in ("claude", "anthropic")):
+                query_parts.append("Preferred Foundation Model: Anthropic Claude")
+            elif "mistral" in pref_low or "mixtral" in pref_low:
+                query_parts.append("Preferred Foundation Model: Mistral")
+            elif "qwen" in pref_low:
+                query_parts.append("Preferred Foundation Model: Qwen")
+            elif "deepseek" in pref_low:
+                query_parts.append("Preferred Foundation Model: DeepSeek")
+            elif "gemini" in pref_low:
+                query_parts.append("Preferred Foundation Model: Google Gemini")
+
         query_text = " | ".join(query_parts)
         if not query_text.strip():
             query_text = str(request)
@@ -93,7 +147,7 @@ class QdrantRetriever:
             RuntimeError: If Qdrant communication encounters execution failures.
         """
         start_time = time.perf_counter()
-        top_limit = limit or (self.top_k * 40)
+        top_limit = limit or 150
 
         query_text = self._build_semantic_query(request)
         if not query_text.strip():
@@ -128,6 +182,10 @@ class QdrantRetriever:
         for point in raw_points:
             payload = getattr(point, "payload", None)
             if not payload or not isinstance(payload, dict):
+                continue
+
+            tech_check = str(payload.get("technology") or payload.get("name") or payload.get("technology_id") or "").lower()
+            if "deepeval" in tech_check:
                 continue
 
             item_payload = payload.copy()
@@ -165,7 +223,10 @@ class QdrantRetriever:
 
     def close(self) -> None:
         """Close the underlying Qdrant client connection."""
+        global _qdrant_client_instance, _qdrant_retriever_instance
         try:
             self._client.close()
         except Exception:
             pass
+        _qdrant_client_instance = None
+        _qdrant_retriever_instance = None

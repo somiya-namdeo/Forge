@@ -26,8 +26,8 @@ class ComparisonReportBuilder:
             "deployment_readiness": winner.deployment_readiness,
             "faithfulness": winner.faithfulness,
             "answer_relevancy": winner.answer_relevancy,
-            "context_precision": winner.context_precision,
-            "context_recall": winner.context_recall,
+            "precision_at_k": winner.precision_at_k,
+            "recall_at_k": winner.recall_at_k,
             "explanation": winner.explanation,
         }
 
@@ -64,8 +64,8 @@ class ComparisonReportBuilder:
                     "deployment_readiness": arch.deployment_readiness,
                     "faithfulness": arch.faithfulness,
                     "answer_relevancy": arch.answer_relevancy,
-                    "context_precision": arch.context_precision,
-                    "context_recall": arch.context_recall,
+                    "precision_at_k": arch.precision_at_k,
+                    "recall_at_k": arch.recall_at_k,
                     "strengths": arch.strengths,
                     "weaknesses": arch.weaknesses,
                     "explanation": arch.explanation,

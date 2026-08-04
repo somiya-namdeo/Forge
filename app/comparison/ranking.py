@@ -79,16 +79,10 @@ class RankingEngine:
             "overall_score": average_score,
             "average_latency_ms": latency_ms,
             "success_rate": success_rate,
-            # Generation
+            # Generation (RAGAS)
             "faithfulness": _m("faithfulness"),
             "answer_relevancy": _m("answer_relevancy"),
-            "context_precision": _m("context_precision"),
-            "context_recall": _m("context_recall"),
-            "groundedness": _m("groundedness"),
-            "hallucination_score": _m("hallucination_score"),
-            "completeness": _m("completeness"),
-            "coherence": _m("coherence"),
-            # Retrieval
+            # Retrieval (Deterministic)
             "precision_at_k": _m("precision_at_k"),
             "recall_at_k": _m("recall_at_k"),
             "hit_rate": _m("hit_rate"),
@@ -133,7 +127,7 @@ class RankingEngine:
     ) -> Tuple[float, Dict]:
         """Calculate weighted composite comparison score.
 
-        Uses full v2.0 metric set from BenchmarkReport. Does not re-run evaluation.
+        Uses full metric set from BenchmarkReport. Does not re-run evaluation.
         """
         m = self._extract_metrics(candidate)
         latency_score = self._compute_latency_score(m["average_latency_ms"])
@@ -141,15 +135,11 @@ class RankingEngine:
 
         if strategy == RankingStrategy.HIGHEST_ACCURACY or goal == OptimizationGoal.QUALITY:
             score = (
-                m["overall_score"] * 0.20
-                + m["faithfulness"] * 0.18
-                + m["groundedness"] * 0.12
-                + m["answer_relevancy"] * 0.12
-                + m["hallucination_score"] * 0.10
-                + m["context_recall"] * 0.10
-                + m["context_precision"] * 0.08
-                + m["mrr"] * 0.05
-                + m["completeness"] * 0.05
+                m["overall_score"] * 0.30
+                + m["faithfulness"] * 0.25
+                + m["answer_relevancy"] * 0.25
+                + m["precision_at_k"] * 0.10
+                + m["mrr"] * 0.10
             )
         elif strategy == RankingStrategy.LOWEST_LATENCY or goal == OptimizationGoal.LATENCY:
             score = (
@@ -169,17 +159,13 @@ class RankingEngine:
         else:
             # Default BALANCED / WEIGHTED_SCORE
             score = (
-                m["overall_score"] * 0.20
-                + m["faithfulness"] * 0.15
-                + m["groundedness"] * 0.10
-                + m["answer_relevancy"] * 0.10
-                + m["hallucination_score"] * 0.08
-                + m["context_precision"] * 0.08
-                + m["context_recall"] * 0.08
+                m["overall_score"] * 0.30
+                + m["faithfulness"] * 0.25
+                + m["answer_relevancy"] * 0.25
+                + m["precision_at_k"] * 0.05
+                + m["recall_at_k"] * 0.05
                 + m["mrr"] * 0.05
-                + m["success_rate"] * 0.07
-                + latency_score * 0.05
-                + m["completeness"] * 0.04
+                + m["ndcg"] * 0.05
             )
 
         return round(min(1.0, max(0.0, score)), 4), m
@@ -191,11 +177,7 @@ class RankingEngine:
         architecture_name: str,
         m: Dict,
     ) -> Tuple[List[str], List[str]]:
-        """Generate strengths and weaknesses from full v2.0 metric set.
-
-        Falls back to pre-computed BenchmarkReport top_strengths/top_weaknesses
-        when available for richer diagnostic output.
-        """
+        """Generate strengths and weaknesses from supported metric set."""
         strengths: List[str] = []
         weaknesses: List[str] = []
 
@@ -211,17 +193,11 @@ class RankingEngine:
         elif m["faithfulness"] < 0.75:
             weaknesses.append(f"Poor factual faithfulness ({m['faithfulness']:.2f})")
 
-        # Groundedness
-        if m["groundedness"] >= 0.85:
-            strengths.append(f"Excellent groundedness ({m['groundedness']:.2f})")
-        elif m["groundedness"] < 0.70:
-            weaknesses.append(f"Low groundedness — answers may be unanchored ({m['groundedness']:.2f})")
-
-        # Hallucination
-        if m["hallucination_score"] >= 0.90:
-            strengths.append(f"Near-zero hallucination rate ({m['hallucination_score']:.2f})")
-        elif m["hallucination_score"] < 0.70:
-            weaknesses.append(f"High hallucination risk ({m['hallucination_score']:.2f})")
+        # Answer Relevancy
+        if m["answer_relevancy"] >= 0.85:
+            strengths.append(f"High answer relevancy ({m['answer_relevancy']:.2f})")
+        elif m["answer_relevancy"] < 0.75:
+            weaknesses.append(f"Poor answer relevancy ({m['answer_relevancy']:.2f})")
 
         # Latency
         if m["average_latency_ms"] <= 300.0:
@@ -236,30 +212,20 @@ class RankingEngine:
             weaknesses.append(f"Lower quality gate pass rate ({m['success_rate']*100:.0f}%)")
 
         # Retrieval
-        if m["context_recall"] >= 0.85:
-            strengths.append(f"Strong context recall ({m['context_recall']:.2f})")
-        elif m["context_recall"] < 0.70:
-            weaknesses.append(f"Poor context recall ({m['context_recall']:.2f})")
+        if m["recall_at_k"] >= 0.85:
+            strengths.append(f"Strong recall@k ({m['recall_at_k']:.2f})")
+        elif m["recall_at_k"] < 0.70:
+            weaknesses.append(f"Poor recall@k ({m['recall_at_k']:.2f})")
 
-        if m["context_precision"] >= 0.85:
-            strengths.append(f"High context precision ({m['context_precision']:.2f})")
-        elif m["context_precision"] < 0.70:
-            weaknesses.append(f"Noisy context retrieval ({m['context_precision']:.2f})")
+        if m["precision_at_k"] >= 0.85:
+            strengths.append(f"High precision@k ({m['precision_at_k']:.2f})")
+        elif m["precision_at_k"] < 0.70:
+            weaknesses.append(f"Low precision@k ({m['precision_at_k']:.2f})")
 
         if m["mrr"] >= 0.80:
             strengths.append(f"Strong MRR ranking quality ({m['mrr']:.2f})")
         elif m["mrr"] < 0.50:
             weaknesses.append(f"Weak MRR — relevant results not ranked first ({m['mrr']:.2f})")
-
-        # Coherence
-        if m["coherence"] < 0.60:
-            weaknesses.append(f"Generated responses lack coherence ({m['coherence']:.2f})")
-        elif m["coherence"] >= 0.80:
-            strengths.append(f"Well-structured coherent responses ({m['coherence']:.2f})")
-
-        # Completeness
-        if m["completeness"] < 0.65:
-            weaknesses.append(f"Answers appear incomplete ({m['completeness']:.2f})")
 
         # Enrich with pre-computed BenchmarkReport diagnostics
         bm_strengths: List[str] = m.get("top_strengths", [])
@@ -287,9 +253,14 @@ class RankingEngine:
             return (
                 f"{architecture_name} ranked #1 — composite score {overall_score:.4f} "
                 f"(grade: {grade}, readiness: {readiness}), "
-                f"faithfulness {m['faithfulness']:.2f}, groundedness {m['groundedness']:.2f}, "
-                f"hallucination {m['hallucination_score']:.2f}, latency {m['average_latency_ms']:.0f} ms."
+                f"faithfulness {m['faithfulness']:.2f}, answer_relevancy {m['answer_relevancy']:.2f}, "
+                f"latency {m['average_latency_ms']:.0f} ms."
             )
+        return (
+            f"{architecture_name} ranked #{rank} — composite score {overall_score:.4f} "
+            f"(grade: {grade}, readiness: {readiness}), "
+            f"latency {m['average_latency_ms']:.0f} ms."
+        )
         return (
             f"{architecture_name} ranked #{rank} — composite score {overall_score:.4f} "
             f"(grade: {grade}, readiness: {readiness}), "
@@ -334,8 +305,8 @@ class RankingEngine:
                     average_latency_ms=m["average_latency_ms"],
                     faithfulness=m["faithfulness"],
                     answer_relevancy=m["answer_relevancy"],
-                    context_precision=m["context_precision"],
-                    context_recall=m["context_recall"],
+                    precision_at_k=m["precision_at_k"],
+                    recall_at_k=m["recall_at_k"],
                     success_rate=m["success_rate"],
                     strengths=strengths,
                     weaknesses=weaknesses,

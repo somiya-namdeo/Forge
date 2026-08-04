@@ -26,18 +26,12 @@ logger = logging.getLogger(__name__)
 # Default weights (must sum to ≤ 1.0; operational metrics excluded from quality score)
 # ─────────────────────────────────────────────
 _DEFAULT_QUALITY_WEIGHTS: Dict[str, float] = {
-    "faithfulness": 0.20,
-    "answer_relevancy": 0.20,
-    "context_precision": 0.15,
-    "context_recall": 0.15,
-    "groundedness": 0.10,
-    "hallucination_score": 0.05,
-    "completeness": 0.05,
-    "coherence": 0.05,
-    "precision_at_k": 0.02,
-    "recall_at_k": 0.01,
-    "mrr": 0.01,
-    "ndcg": 0.01,
+    "faithfulness": 0.35,
+    "answer_relevancy": 0.35,
+    "precision_at_k": 0.08,
+    "recall_at_k": 0.08,
+    "mrr": 0.07,
+    "ndcg": 0.07,
     "hit_rate": 0.00,
 }
 
@@ -79,22 +73,14 @@ def _generate_strengths(scores: Dict[str, float]) -> List[str]:
     strengths: List[str] = []
     if scores.get("faithfulness", 0.0) >= 0.90:
         strengths.append("Excellent factual grounding with high context adherence.")
-    if scores.get("groundedness", 0.0) >= 0.90:
-        strengths.append("Every claim in the answer is attributable to a retrieved source.")
-    if scores.get("hallucination_score", 0.0) >= 0.90:
-        strengths.append("Near-zero hallucination detected in generated answers.")
     if scores.get("answer_relevancy", 0.0) >= 0.85:
         strengths.append("Highly relevant generated responses directly answering the prompt.")
-    if scores.get("context_precision", 0.0) >= 0.85:
-        strengths.append("Highly precise retrieved context with minimal noise.")
-    if scores.get("context_recall", 0.0) >= 0.85:
-        strengths.append("Comprehensive context retrieval covering all required concepts.")
-    if scores.get("coherence", 0.0) >= 0.80:
-        strengths.append("Well-structured and coherent generated responses.")
-    if scores.get("completeness", 0.0) >= 0.85:
-        strengths.append("Answers comprehensively cover all aspects of the question.")
     if scores.get("mrr", 0.0) >= 0.85:
         strengths.append("Excellent retrieval ranking — most relevant document appears near the top.")
+    if scores.get("precision_at_k", 0.0) >= 0.85:
+        strengths.append("High retrieval precision among top returned documents.")
+    if scores.get("recall_at_k", 0.0) >= 0.85:
+        strengths.append("Comprehensive retrieval recall covering target documents.")
     return strengths
 
 
@@ -102,24 +88,12 @@ def _generate_weaknesses(scores: Dict[str, float]) -> List[str]:
     weaknesses: List[str] = []
     if scores.get("faithfulness", 1.0) < 0.70:
         weaknesses.append("Generated answer contains claims not fully supported by retrieved context.")
-    if scores.get("groundedness", 1.0) < 0.70:
-        weaknesses.append("Multiple answer claims lack clear attribution to retrieved sources.")
-    if scores.get("hallucination_score", 1.0) < 0.70:
-        weaknesses.append("Significant hallucination detected — answer includes ungrounded content.")
     if scores.get("answer_relevancy", 1.0) < 0.70:
         weaknesses.append("Generated answer only partially addresses the user question.")
-    if scores.get("context_precision", 1.0) < 0.60:
-        weaknesses.append("Retrieved contexts include significant noisy or irrelevant chunks.")
-    if scores.get("context_recall", 1.0) < 0.60:
-        weaknesses.append("Retriever missed important supporting information.")
-    if scores.get("coherence", 1.0) < 0.60:
-        weaknesses.append("Generated answers lack logical structure or fluency.")
-    if scores.get("completeness", 1.0) < 0.60:
-        weaknesses.append("Answers do not fully cover all aspects of the question.")
     if scores.get("precision_at_k", 1.0) < 0.50:
-        weaknesses.append("Retriever returns many irrelevant documents (low Precision@K).")
+        weaknesses.append("Retriever returns low precision results (low Precision@K).")
     if scores.get("recall_at_k", 1.0) < 0.50:
-        weaknesses.append("Retriever misses many relevant documents (low Recall@K).")
+        weaknesses.append("Retriever misses relevant documents (low Recall@K).")
     if scores.get("mrr", 1.0) < 0.50:
         weaknesses.append("First relevant document appears too far down the ranked list.")
     if scores.get("ndcg", 1.0) < 0.50:
@@ -129,24 +103,12 @@ def _generate_weaknesses(scores: Dict[str, float]) -> List[str]:
 
 def _generate_recommendations(scores: Dict[str, float]) -> List[str]:
     recs: List[str] = []
-    if scores.get("context_recall", 1.0) < 0.60:
-        recs.append("Increase retrieval depth (top_k) or optimize query expansion to capture missing information.")
-    if scores.get("context_precision", 1.0) < 0.60:
-        recs.append("Introduce a reranker or tighten similarity thresholds to filter noisy chunks.")
     if scores.get("faithfulness", 1.0) < 0.70:
         recs.append("Enforce stricter system prompt grounding and context-only generation constraints.")
-    if scores.get("groundedness", 1.0) < 0.70:
-        recs.append("Add citation-grounding instructions to the generation prompt.")
-    if scores.get("hallucination_score", 1.0) < 0.70:
-        recs.append("Improve retrieved context quality or add hallucination detection post-processing.")
     if scores.get("answer_relevancy", 1.0) < 0.70:
         recs.append("Refine prompt templates to focus generation on addressing the user query.")
-    if scores.get("coherence", 1.0) < 0.60:
-        recs.append("Improve LLM selection or prompt engineering for structured response generation.")
-    if scores.get("completeness", 1.0) < 0.60:
-        recs.append("Instruct the LLM to comprehensively address all aspects of the question.")
     if scores.get("precision_at_k", 1.0) < 0.50:
-        recs.append("Improve the retriever model or add a reranking stage.")
+        recs.append("Improve retriever model or add a reranking stage.")
     if scores.get("recall_at_k", 1.0) < 0.50:
         recs.append("Increase retrieval depth or use hybrid retrieval (dense + sparse).")
     if scores.get("mrr", 1.0) < 0.50 or scores.get("ndcg", 1.0) < 0.50:
@@ -155,26 +117,16 @@ def _generate_recommendations(scores: Dict[str, float]) -> List[str]:
 
 
 class EvaluationEngine:
-    """Core evaluation orchestrator for Forge RAG Evaluation Module v2.0."""
+    """Core evaluation engine orchestrating metric execution, score calculation, and reporting."""
 
-    def __init__(
-        self,
-        registry: Optional[MetricCalculatorRegistry] = None,
-        default_weights: Optional[Dict[str, float]] = None,
-    ) -> None:
-        """Initialize EvaluationEngine with registry auto-discovery."""
+    def __init__(self, registry: Optional[MetricCalculatorRegistry] = None) -> None:
         self._registry = registry or build_default_registry()
-        self._default_weights = default_weights or _DEFAULT_QUALITY_WEIGHTS
+        self._default_weights = dict(_DEFAULT_QUALITY_WEIGHTS)
         logger.info(
             "EvaluationEngine initialized with %d metric calculators: %s",
             len(self._registry),
             self._registry.metric_names,
         )
-
-    # kept for backward-compat with Phase 3 tests
-    @property
-    def _calculators(self) -> List:
-        return self._registry.all()
 
     def _extract_weights(self, request: EvaluationRequest) -> Dict[str, float]:
         weights = dict(self._default_weights)
@@ -183,9 +135,18 @@ class EvaluationEngine:
                 key = cfg.metric_type.value if hasattr(cfg.metric_type, "value") else str(cfg.metric_type)
                 if key in weights:
                     weights[key] = float(cfg.weight)
-        total = sum(v for k, v in weights.items() if k not in _OPERATIONAL_METRIC_NAMES)
+
+        has_retrieval_ids = bool(
+            getattr(request, "retrieved_ids", None) is not None
+            and getattr(request, "relevant_ids", None) is not None
+        )
+        excluded = set(_OPERATIONAL_METRIC_NAMES)
+        if not has_retrieval_ids:
+            excluded.update({"precision_at_k", "recall_at_k", "mrr", "ndcg", "hit_rate"})
+
+        total = sum(v for k, v in weights.items() if k not in excluded)
         if total > 0:
-            return {k: (v / total if k not in _OPERATIONAL_METRIC_NAMES else 0.0)
+            return {k: (v / total if k not in excluded else 0.0)
                     for k, v in weights.items()}
         return dict(self._default_weights)
 
@@ -198,12 +159,24 @@ class EvaluationEngine:
             answer=request.answer,
             contexts=request.contexts,
             ground_truth=request.ground_truth,
+            retrieved_ids=getattr(request, "retrieved_ids", None),
+            relevant_ids=getattr(request, "relevant_ids", None),
             metadata={"provider": provider_name, "provider_cache": provider_cache},
         )
 
     def _run_all_metrics(self, metric_input: MetricInput) -> Dict[str, MetricResult]:
         results: Dict[str, MetricResult] = {}
+        cached_logged = False
+        retrieval_logged = False
         for calc in self._registry.all():
+            if calc.metric_name in ("faithfulness", "answer_relevancy"):
+                if not cached_logged:
+                    logger.info("Running Cached Metrics")
+                    cached_logged = True
+            else:
+                if not retrieval_logged:
+                    logger.info("Running Retrieval Metrics")
+                    retrieval_logged = True
             try:
                 results[calc.metric_name] = calc.evaluate(metric_input)
             except Exception as exc:
@@ -266,12 +239,6 @@ class EvaluationEngine:
         generation = GenerationMetricsSchema(
             faithfulness=flat.get("faithfulness", 0.0),
             answer_relevancy=flat.get("answer_relevancy", 0.0),
-            context_precision=flat.get("context_precision", 0.0),
-            context_recall=flat.get("context_recall", 0.0),
-            groundedness=flat.get("groundedness", 0.0),
-            hallucination_score=flat.get("hallucination_score", 0.0),
-            completeness=flat.get("completeness", 0.0),
-            coherence=flat.get("coherence", 0.0),
         )
         operational = OperationalMetricsSchema(
             total_latency_ms=ms,
@@ -285,23 +252,22 @@ class EvaluationEngine:
         from uuid import uuid4
         t0 = time.perf_counter()
         evaluation_id = str(uuid4())
-        logger.info("Evaluation started for request %s", evaluation_id)
+        logger.info("Evaluation Started")
 
         # Scoped Provider Result Cache for this evaluation request
         provider_cache = ProviderResultCache()
+        logger.info("Provider Cache Initialized")
 
         # Batch RAGAS Execution: Single execution for all RAGAS supported metrics
         ragas_evaluator = get_ragas_evaluator()
         if not ragas_evaluator.is_circuit_open():
             try:
-                logger.info("Running batch RAGAS provider evaluation")
+                logger.info("Calling ragas.evaluate()")
                 ragas_scores = ragas_evaluator.evaluate(request)
+                logger.info("RAGAS Returned")
                 if isinstance(ragas_scores, dict) and ragas_scores:
                     provider_cache.set_provider_results("ragas", ragas_scores)
-                    logger.info(
-                        "RAGAS provider cache populated with metrics: %s",
-                        list(ragas_scores.keys()),
-                    )
+                    logger.info("Caching Provider Results")
             except Exception as exc:
                 logger.info("RAGAS batch execution failed / circuit breaker tripped: %s", exc)
         else:
@@ -313,6 +279,7 @@ class EvaluationEngine:
 
         # Clear request-scoped cache upon completion
         provider_cache.clear()
+        logger.info("Evaluation Complete")
 
         flat_metrics: Dict[str, float] = {k: (r.score if r.success else 0.0) for k, r in results.items()}
 
@@ -348,10 +315,22 @@ class EvaluationEngine:
             recommendations=recommendations,
         )
 
+        provider_set = {p for p in providers_used if p not in ("skipped", "unknown")}
+        clean_providers_used = [p for p in providers_used if p not in ("skipped", "unknown")]
+        if not clean_providers_used:
+            clean_providers_used = ["deterministic_fallback"]
+
+        if "ragas" in provider_set and any("deterministic" in p for p in provider_set):
+            actual_provider = "ragas+deterministic_fallback"
+        elif "ragas" in provider_set:
+            actual_provider = "ragas"
+        else:
+            actual_provider = "deterministic_fallback"
+
         return ComprehensiveEvaluationReport(
             evaluation_id=evaluation_id,
             evaluation_version="2.0",
-            provider=request.provider,
+            provider=actual_provider,
             overall_score=overall_score,
             quality_grade=quality_grade,
             deployment_readiness=deployment_readiness,

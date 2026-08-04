@@ -226,14 +226,14 @@
     "sample_id": "sample_019",
     "category": "Comparison",
     "difficulty": "medium",
-    "question": "What are the core operational differences between DeepEval and RAGAS evaluation frameworks?",
+    "question": "What are the core operational differences between TruLens and RAGAS evaluation frameworks?",
     "contexts": [
       "RAGAS focuses primarily on component-level RAG evaluation metrics (faithfulness, answer relevancy, context precision, context recall) using datasets and LangChain integrations.",
-      "DeepEval provides unit-testing paradigms for LLM applications with Pytest integration, supporting G-Eval custom criteria, red-teaming safety tests, and CI/CD pipeline assertion gates.",
-      "While RAGAS excels at mathematical dataset-level metric scoring, DeepEval provides real-time unit-test style assertions for continuous integration."
+      "TruLens provides feedback function paradigms for LLM applications with instrumentation tracking, supporting custom criteria, red-teaming safety tests, and execution latency analysis.",
+      "While RAGAS excels at mathematical dataset-level metric scoring, TruLens provides real-time feedback function assertions for application monitoring."
     ],
-    "ground_truth": "RAGAS focuses on mathematical dataset-level RAG metrics (faithfulness, precision, recall), whereas DeepEval emphasizes unit-test style CI/CD assertions with Pytest integration and custom G-Eval criteria.",
-    "expected_answer": "RAGAS specializes in scoring dataset-level RAG quality metrics like faithfulness and context precision, while DeepEval offers Pytest-integrated unit testing and CI/CD assertion gates for continuous evaluation."
+    "ground_truth": "RAGAS focuses on mathematical dataset-level RAG metrics (faithfulness, precision, recall), whereas TruLens emphasizes feedback function assertions and instrumentation tracking.",
+    "expected_answer": "RAGAS specializes in scoring dataset-level RAG quality metrics like faithfulness and context precision, while TruLens offers feedback function assertions and latency tracking for continuous evaluation."
   },
   {
     "sample_id": "sample_020",
@@ -330,14 +330,14 @@
     "sample_id": "sample_027",
     "category": "Multi-hop Reasoning",
     "difficulty": "hard",
-    "question": "How does missing ground_truth affect metric selection during RagasEvaluator execution?",
+    "question": "Which semantic evaluation metrics does RagasEvaluator execute?",
     "contexts": [
-      "RagasEvaluator supports four primary metrics: faithfulness, answer_relevancy, context_precision, and context_recall.",
-      "Context precision and context recall metrics require a reference ground truth string to calculate factual precision and retrieval recall.",
-      "When EvaluationRequest contains no ground_truth or an empty string, RagasEvaluator automatically filters out reference-dependent metrics and evaluates only non-reference metrics (faithfulness and answer_relevancy)."
+      "RagasEvaluator evaluates two primary core semantic metrics: faithfulness and answer_relevancy.",
+      "Faithfulness measures factual adherence to retrieved context, while answer_relevancy measures how directly the answer addresses the prompt.",
+      "All evaluation requests execute RagasEvaluator for faithfulness and answer_relevancy."
     ],
-    "ground_truth": "When ground_truth is missing, RagasEvaluator automatically filters out context_precision and context_recall (which require a reference) and executes evaluation using only non-reference metrics (faithfulness and answer_relevancy).",
-    "expected_answer": "If ground_truth is absent, RagasEvaluator dynamically excludes reference-dependent metrics (context_precision and context_recall), evaluating the input solely on reference-free metrics like faithfulness and answer_relevancy."
+    "ground_truth": "RagasEvaluator executes two core semantic metrics: faithfulness and answer_relevancy.",
+    "expected_answer": "RagasEvaluator evaluates inputs solely on core semantic metrics: faithfulness and answer_relevancy."
   },
   {
     "sample_id": "sample_028",
@@ -345,7 +345,7 @@
     "difficulty": "hard",
     "question": "How should RAG evaluation score thresholds be configured for enterprise deployments?",
     "contexts": [
-      "Default ThresholdConfig sets faithfulness=0.8, answer_relevancy=0.8, context_precision=0.8, and context_recall=0.8.",
+      "Default ThresholdConfig sets faithfulness=0.8 and answer_relevancy=0.8.",
       "For mission-critical medical or legal RAG applications, Quality Assurance policies require setting faithfulness threshold to 0.95 and overall status to FAIL if any single metric fails.",
       "For exploratory internal Q&A bots, lower thresholds (0.70) with WARNING gates are acceptable to account for informal unstructured knowledge."
     ],

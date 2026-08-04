@@ -2,20 +2,20 @@
 
 from langchain_openai import ChatOpenAI
 
-from app.core.config import GROQ_API_KEY, LLM_MODEL
+from app.core.config import DECISION_API_KEY, DECISION_MODEL
 
 
 class LLMService:
-    """Reusable LLM wrapper used across Forge."""
+    """Reusable LLM wrapper used across Forge Decision Module (Groq)."""
 
     def __init__(self) -> None:
         self._llm = ChatOpenAI(
-            model=LLM_MODEL,
-            api_key=GROQ_API_KEY,
+            model=DECISION_MODEL,
+            api_key=DECISION_API_KEY,
             base_url="https://api.groq.com/openai/v1",
             temperature=0.2,
             max_retries=0,
-            request_timeout=3.0,
+            request_timeout=5.0,
         )
 
     def generate(self, prompt: str) -> str:

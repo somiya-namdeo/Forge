@@ -2,7 +2,7 @@
 Evaluation Metrics Package.
 
 Defines pluggable evaluator interfaces, provider registries, metric types,
-and score value containers supporting RAGAS, DeepEval, TruLens, and Custom evaluators.
+and score value containers supporting RAGAS, TruLens, and Custom evaluators.
 """
 
 from dataclasses import dataclass, field
@@ -17,9 +17,10 @@ class EvaluationProvider(str, Enum):
     """Supported evaluation provider frameworks."""
 
     RAGAS = "ragas"
-    DEEPEVAL = "deepeval"
     TRULENS = "trulens"
     CUSTOM = "custom"
+    DETERMINISTIC_FALLBACK = "deterministic_fallback"
+    RAGAS_DETERMINISTIC_FALLBACK = "ragas+deterministic_fallback"
 
 
 class MetricType(str, Enum):
@@ -27,10 +28,6 @@ class MetricType(str, Enum):
 
     FAITHFULNESS = "faithfulness"
     ANSWER_RELEVANCE = "answer_relevance"
-    CONTEXT_RECALL = "context_recall"
-    CONTEXT_PRECISION = "context_precision"
-    HALLUCINATION = "hallucination"
-    TOXICITY = "toxicity"
     LATENCY = "latency"
     COST = "cost"
     CUSTOM = "custom"

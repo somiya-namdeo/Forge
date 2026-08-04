@@ -184,43 +184,79 @@ class ScoringEngine:
         """Align candidate features with primary optimization goal (cost, latency, quality, balanced)."""
         p = profile.priority
         text = str(entry.get("text") or "").lower()
-        is_open_source = entry.get("open_source") is True or "open_source" in text
+        tech_name = str(entry.get("technology") or entry.get("name") or "").lower()
+        is_open_source = entry.get("open_source") is True or "open_source" in text or "open_source" in str(entry.get("path") or "").lower()
 
         if p == Priority.COST:
-            return 1.0 if is_open_source else 0.4
+            if is_open_source or any(t in tech_name for t in ("ollama", "mistral", "gemma", "qwen", "bge", "milvus", "qdrant", "chroma", "faiss", "litgpt")):
+                return 1.0
+            return 0.35
 
         if p == Priority.LATENCY:
             latency = entry.get("latency_ms") or entry.get("latency")
             if isinstance(latency, (int, float)) and latency < 100:
                 return 1.0
-            if any(k in text for k in ("fast", "latency", "c++", "rust", "deepseek", "bge")):
-                return 0.9
-            return 0.5
+            if any(k in text or k in tech_name for k in ("fast", "latency", "c++", "rust", "deepseek", "bge", "flashrank", "vllm")):
+                return 0.95
+            return 0.50
 
         if p == Priority.QUALITY:
             quality = entry.get("quality_score") or entry.get("benchmark_score")
             if isinstance(quality, (int, float)) and quality > 0.8:
                 return 1.0
-            if any(k in text for k in ("claude", "gpt", "pinecone", "qdrant", "sota", "quality")):
+            if any(k in text or k in tech_name for k in ("claude", "gpt", "pinecone", "qdrant", "milvus", "sota", "quality", "ragas", "llamaindex", "ray_serve")):
                 return 0.95
-            return 0.6
+            return 0.65
 
-        return 0.8
+        return 0.80
+
+    @classmethod
+    def _normalize_llm_family(cls, name: str) -> str:
+        """Extract canonical LLM family identifier from name string or alias."""
+        s = str(name).strip().lower().replace("_", " ").replace("-", " ").replace(".", " ")
+        if any(w in s for w in ("llama", "meta")):
+            return "llama"
+        if any(w in s for w in ("gpt", "openai")):
+            return "gpt"
+        if any(w in s for w in ("claude", "anthropic")):
+            return "claude"
+        if "mistral" in s or "mixtral" in s:
+            return "mistral"
+        if "gemma" in s:
+            return "gemma"
+        if "qwen" in s:
+            return "qwen"
+        if "deepseek" in s:
+            return "deepseek"
+        if "gemini" in s:
+            return "gemini"
+        return s
 
     # --- 7. Preferred LLM Match ---
     @classmethod
     def _calc_preferred_llm_match(cls, entry: dict[str, Any], profile: ProjectProfile) -> float:
-        """Evaluate integration compatibility with user's preferred foundation model."""
+        """Evaluate integration compatibility with user's preferred foundation model using canonical matching."""
         if not profile.preferred_llm:
-            return 0.7
+            return 0.70
 
-        pref = profile.preferred_llm.strip().lower()
-        tech_name = str(entry.get("technology") or entry.get("name") or "").lower()
-        text = str(entry.get("text") or "").lower()
+        pref_raw = profile.preferred_llm.strip().lower()
+        pref_family = cls._normalize_llm_family(pref_raw)
 
-        if pref in tech_name or pref in text:
+        tech_name = str(entry.get("technology") or entry.get("name") or entry.get("technology_id") or "").lower()
+        tech_family = cls._normalize_llm_family(tech_name)
+
+        if pref_family and (pref_family == tech_family or pref_family in tech_name):
             return 1.0
-        return 0.4
+        if pref_raw in tech_name:
+            return 1.0
+
+        category = str(entry.get("category") or "").lower()
+        if category not in ("llm", "llms"):
+            text = str(entry.get("text") or "").lower()
+            if pref_family and pref_family in text:
+                return 0.85
+
+        return 0.20
 
     # --- 8. First-Class Constraint Match ---
     @classmethod
@@ -232,28 +268,40 @@ class ScoringEngine:
         score = 1.0
 
         if profile.requires_open_source:
-            if is_open_source or any(t in tech_name for t in ("chroma", "faiss", "qdrant", "deepseek", "ollama", "bge", "ragas", "docker")):
-                score += 0.15
-            else:
-                score -= 0.55
-
-        if profile.requires_local_execution:
-            if is_open_source or any(t in tech_name for t in ("chroma", "faiss", "ollama", "docker", "llama_cpp")):
+            if is_open_source or any(t in tech_name for t in ("chroma", "faiss", "qdrant", "milvus", "deepseek", "ollama", "bge", "ragas", "docker", "litgpt", "mistral", "llama")):
                 score += 0.20
             else:
-                score -= 0.45
+                score -= 0.60
+
+        if profile.requires_local_execution:
+            if is_open_source or any(t in tech_name for t in ("chroma", "faiss", "ollama", "docker", "llama_cpp", "qdrant", "milvus", "bentoml", "bge", "litgpt", "fastapi")):
+                score += 0.25
+            else:
+                score -= 0.60
+
+        if profile.requires_privacy:
+            if is_open_source or any(t in tech_name for t in ("ollama", "qdrant", "milvus", "chroma", "docker", "on_prem", "privacy", "hipaa", "claude")):
+                score += 0.20
+            else:
+                score -= 0.40
 
         if profile.requires_citations:
-            if any(t in tech_name for t in ("ragas", "qdrant", "llamaindex", "retriever", "bge")):
+            if any(t in tech_name for t in ("ragas", "trulens", "qdrant", "llamaindex", "retriever", "bge", "reranker", "self_rag", "crag")):
                 score += 0.25
             else:
                 score -= 0.20
 
         if profile.requires_enterprise_security:
-            if any(t in tech_name for t in ("pinecone", "claude", "aws", "azure", "kubernetes", "milvus")):
+            if any(t in tech_name for t in ("pinecone", "claude", "aws", "azure", "kubernetes", "milvus", "qdrant", "soc2")):
                 score += 0.25
             else:
                 score -= 0.25
+
+        if profile.requires_high_availability:
+            if any(t in tech_name for t in ("milvus", "qdrant", "pinecone", "kubernetes", "vllm", "ray_serve", "aws", "azure")):
+                score += 0.25
+            else:
+                score -= 0.20
 
         return min(1.0, max(0.0, round(score, 4)))
 
@@ -312,11 +360,24 @@ class ScoringEngine:
             weights = {
                 "semantic_similarity": 0.10,
                 "domain_match": 0.10,
-                "deployment_match": 0.35,  # 35% weight for deployment category!
+                "deployment_match": 0.35,
                 "budget_match": 0.10 if profile.budget_tier == BudgetTier.FREE_LOW else 0.05,
                 "scale_match": 0.10 if profile.project_scale in (ScaleTier.LARGE, ScaleTier.ENTERPRISE) else 0.05,
                 "priority_match": 0.10,
                 "preferred_llm_match": 0.0,
+                "constraint_match": 0.15 if profile.constraints else 0.05,
+                "metadata_quality": 0.025,
+                "documentation_quality": 0.025,
+            }
+        elif category in ("llm", "llms") and profile.preferred_llm:
+            weights = {
+                "semantic_similarity": 0.10,
+                "domain_match": 0.10,
+                "deployment_match": 0.10,
+                "budget_match": 0.10 if profile.budget_tier == BudgetTier.FREE_LOW else 0.05,
+                "scale_match": 0.10 if profile.project_scale in (ScaleTier.LARGE, ScaleTier.ENTERPRISE) else 0.05,
+                "priority_match": 0.10,
+                "preferred_llm_match": 0.25,  # 25% weight when user specifies preferred_llm for LLM category
                 "constraint_match": 0.15 if profile.constraints else 0.05,
                 "metadata_quality": 0.025,
                 "documentation_quality": 0.025,

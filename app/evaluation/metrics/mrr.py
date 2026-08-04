@@ -29,6 +29,13 @@ class MRRCalculator(MetricCalculator):
 
     def evaluate(self, metric_input: MetricInput) -> MetricResult:
         try:
+            if metric_input.retrieved_ids is None or metric_input.relevant_ids is None:
+                return self.build_result(
+                    score=0.0,
+                    success=True,
+                    metadata={"status": "skipped", "reason": "retrieval_ranking_ids_unavailable", "provider_used": "skipped"}
+                )
+
             is_valid, err = self.validate_inputs(metric_input, required_fields=["retrieved_ids", "relevant_ids"])
             if not is_valid:
                 return self.build_result(score=0.0, success=False, error_message=err)

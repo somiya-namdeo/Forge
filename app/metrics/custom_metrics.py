@@ -46,9 +46,12 @@ class TruLensEvaluator(BaseMetricEvaluator):
         return [
             MetricType.FAITHFULNESS,
             MetricType.ANSWER_RELEVANCE,
-            MetricType.CONTEXT_RECALL,
             MetricType.LATENCY,
         ]
+
+    def evaluate(self, request: Any) -> Dict[str, float]:
+        """Evaluate request using TruLens evaluator."""
+        return {"faithfulness": 0.0, "answer_relevancy": 0.0}
 
     def evaluate_metric(
         self,
@@ -58,18 +61,7 @@ class TruLensEvaluator(BaseMetricEvaluator):
         ground_truth: Optional[str] = None,
         metric_type: MetricType = MetricType.FAITHFULNESS,
     ) -> MetricValue:
-        """Evaluate a metric using TruLens feedback functions.
-
-        Args:
-            query (str): User prompt.
-            response (str): LLM response.
-            contexts (List[str]): Context chunks.
-            ground_truth (Optional[str]): Expected answer.
-            metric_type (MetricType): Target metric.
-
-        Returns:
-            MetricValue: Calculated metric result.
-        """
+        """Evaluate a metric using TruLens feedback functions."""
         return MetricValue(
             metric_type=metric_type,
             score=0.0,
@@ -87,18 +79,7 @@ class TruLensEvaluator(BaseMetricEvaluator):
         ground_truth: Optional[str] = None,
         metric_type: MetricType = MetricType.FAITHFULNESS,
     ) -> MetricValue:
-        """Evaluate a metric asynchronously using TruLens.
-
-        Args:
-            query (str): User prompt.
-            response (str): LLM response.
-            contexts (List[str]): Contexts.
-            ground_truth (Optional[str]): Expected output.
-            metric_type (MetricType): Target metric.
-
-        Returns:
-            MetricValue: Metric calculation result.
-        """
+        """Evaluate a metric asynchronously using TruLens."""
         return self.evaluate_metric(query, response, contexts, ground_truth, metric_type)
 
 
@@ -111,37 +92,28 @@ class CustomEvaluator(BaseMetricEvaluator):
 
     @property
     def provider_name(self) -> EvaluationProvider:
-        """Return provider framework name.
-
-        Returns:
-            EvaluationProvider: Custom provider enum identifier.
-        """
+        """Return provider framework name."""
         return EvaluationProvider.CUSTOM
 
     @property
     def supported_metrics(self) -> List[MetricType]:
-        """List metrics supported by Custom evaluator.
-
-        Returns:
-            List[MetricType]: Supported custom metrics.
-        """
+        """List metrics supported by Custom evaluator."""
         return [
             MetricType.LATENCY,
             MetricType.COST,
             MetricType.CUSTOM,
         ]
 
+    def evaluate(self, request: Any) -> Dict[str, float]:
+        """Evaluate request using Custom evaluator."""
+        return {"custom": 0.0}
+
     def register_custom_function(
         self,
         name: str,
         func: Callable[..., float],
     ) -> None:
-        """Register a custom Python evaluation function.
-
-        Args:
-            name (str): Custom metric identifier name.
-            func (Callable[..., float]): Function computing float score.
-        """
+        """Register a custom Python evaluation function."""
         self._custom_functions[name] = func
 
     def evaluate_metric(
@@ -152,18 +124,7 @@ class CustomEvaluator(BaseMetricEvaluator):
         ground_truth: Optional[str] = None,
         metric_type: MetricType = MetricType.CUSTOM,
     ) -> MetricValue:
-        """Evaluate a custom user metric synchronously.
-
-        Args:
-            query (str): User prompt.
-            response (str): LLM response.
-            contexts (List[str]): Retrieved contexts.
-            ground_truth (Optional[str]): Ground truth answer.
-            metric_type (MetricType): Metric type.
-
-        Returns:
-            MetricValue: Evaluated custom score.
-        """
+        """Evaluate a custom user metric synchronously."""
         return MetricValue(
             metric_type=metric_type,
             score=0.0,
@@ -181,16 +142,5 @@ class CustomEvaluator(BaseMetricEvaluator):
         ground_truth: Optional[str] = None,
         metric_type: MetricType = MetricType.CUSTOM,
     ) -> MetricValue:
-        """Evaluate a custom metric asynchronously.
-
-        Args:
-            query (str): User prompt.
-            response (str): LLM response.
-            contexts (List[str]): Contexts.
-            ground_truth (Optional[str]): Ground truth.
-            metric_type (MetricType): Metric type.
-
-        Returns:
-            MetricValue: Evaluated metric result.
-        """
+        """Evaluate a custom metric asynchronously."""
         return self.evaluate_metric(query, response, contexts, ground_truth, metric_type)

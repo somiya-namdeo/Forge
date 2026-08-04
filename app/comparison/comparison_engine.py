@@ -27,14 +27,9 @@ from app.comparison.ranking import RankingEngine
 _ALL_COMPARED_METRICS = [
     ("faithfulness", "Faithfulness (factual adherence to contexts)"),
     ("answer_relevancy", "Answer Relevancy (relevance of generated response to prompt)"),
-    ("groundedness", "Groundedness (claims supported by source documents)"),
-    ("context_precision", "Context Precision (signal-to-noise ratio in retrieval)"),
-    ("context_recall", "Context Recall (completeness of retrieved context)"),
-    ("hallucination_score", "Hallucination Avoidance (freedom from ungrounded content)"),
-    ("completeness", "Answer Completeness (coverage of expected information)"),
-    ("coherence", "Answer Coherence (structural and logical clarity)"),
     ("precision_at_k", "Precision@K (top-K retrieval precision)"),
     ("recall_at_k", "Recall@K (top-K retrieval recall)"),
+    ("hit_rate", "Hit Rate (retrieval hit rate)"),
     ("mrr", "MRR (Mean Reciprocal Rank of first relevant document)"),
     ("ndcg", "NDCG (Normalized Discounted Cumulative Gain)"),
     ("latency_ms", "Average Execution Latency (ms)"),
@@ -44,13 +39,12 @@ _ALL_COMPARED_METRICS = [
 
 _RADAR_METRIC_KEYS = [
     "faithfulness",
-    "groundedness",
     "answer_relevancy",
-    "context_precision",
-    "context_recall",
-    "hallucination_score",
+    "precision_at_k",
+    "recall_at_k",
+    "hit_rate",
     "mrr",
-    "coherence",
+    "ndcg",
 ]
 
 
@@ -68,12 +62,14 @@ class ComparisonEngine:
             return arch.average_latency_ms
         if metric_key == "faithfulness":
             return arch.faithfulness
+        if metric_key == "faithfulness":
+            return arch.faithfulness
         if metric_key == "answer_relevancy":
             return arch.answer_relevancy
-        if metric_key == "context_precision":
-            return arch.context_precision
-        if metric_key == "context_recall":
-            return arch.context_recall
+        if metric_key == "precision_at_k":
+            return arch.precision_at_k
+        if metric_key == "recall_at_k":
+            return arch.recall_at_k
 
         # Check full metric_averages dict
         if arch.metric_averages and metric_key in arch.metric_averages:
@@ -184,34 +180,17 @@ class ComparisonEngine:
             )
 
         # 2. Retrieval Precision vs Recall Tradeoff
-        if winner.context_precision > runner_up.context_precision and winner.context_recall < runner_up.context_recall:
+        if winner.precision_at_k > runner_up.precision_at_k and winner.recall_at_k < runner_up.recall_at_k:
             tradeoffs.append(
                 TradeOff(
-                    dimension="Context Precision vs. Recall",
+                    dimension="Precision vs. Recall",
                     winner=winner.architecture_name,
                     loser=runner_up.architecture_name,
                     analysis=(
-                        f"'{winner.architecture_name}' provides higher context precision ({winner.context_precision:.2f}), "
-                        f"whereas '{runner_up.architecture_name}' retrieves broader context with higher recall ({runner_up.context_recall:.2f})."
+                        f"'{winner.architecture_name}' provides higher precision@k ({winner.precision_at_k:.2f}), "
+                        f"whereas '{runner_up.architecture_name}' retrieves broader context with higher recall@k ({winner.recall_at_k:.2f})."
                     ),
                     recommendation="Choose based on whether noiseless prompt context (precision) or maximum information retrieval (recall) is prioritized.",
-                )
-            )
-
-        # 3. Groundedness vs Coherence
-        w_groundedness = winner.metric_averages.get("groundedness", winner.faithfulness)
-        ru_groundedness = runner_up.metric_averages.get("groundedness", runner_up.faithfulness)
-        if w_groundedness > ru_groundedness:
-            tradeoffs.append(
-                TradeOff(
-                    dimension="Factual Groundedness",
-                    winner=winner.architecture_name,
-                    loser=runner_up.architecture_name,
-                    analysis=(
-                        f"'{winner.architecture_name}' has superior factual groundedness ({w_groundedness:.2f} vs {ru_groundedness:.2f}), "
-                        "reducing hallucination risk."
-                    ),
-                    recommendation="Recommended for high-compliance enterprise legal and technical domains.",
                 )
             )
 
@@ -231,10 +210,10 @@ class ComparisonEngine:
                     val = arch.faithfulness
                 elif key == "answer_relevancy":
                     val = arch.answer_relevancy
-                elif key == "context_precision":
-                    val = arch.context_precision
-                elif key == "context_recall":
-                    val = arch.context_recall
+                elif key == "precision_at_k":
+                    val = arch.precision_at_k
+                elif key == "recall_at_k":
+                    val = arch.recall_at_k
                 elif arch.metric_averages and key in arch.metric_averages:
                     val = arch.metric_averages[key]
                 else:
@@ -348,8 +327,8 @@ class ComparisonEngine:
             metric_diffs = {
                 "faithfulness": round(winner.faithfulness - runner_up.faithfulness, 4),
                 "answer_relevancy": round(winner.answer_relevancy - runner_up.answer_relevancy, 4),
-                "context_precision": round(winner.context_precision - runner_up.context_precision, 4),
-                "context_recall": round(winner.context_recall - runner_up.context_recall, 4),
+                "precision_at_k": round(winner.precision_at_k - runner_up.precision_at_k, 4),
+                "recall_at_k": round(winner.recall_at_k - runner_up.recall_at_k, 4),
             }
 
         comparison_summary = ComparisonSummaryDetails(

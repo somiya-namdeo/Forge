@@ -26,8 +26,7 @@ class AnswerRelevancyCalculator(MetricCalculator):
 
     Supports dynamic multi-provider execution:
     1. RAGAS Framework provider (if configured/available).
-    2. DeepEval Framework provider (if configured/available).
-    3. Deterministic keyword-coverage & completeness fallback (LLM-free).
+    2. Deterministic keyword-coverage & completeness fallback (LLM-free).
     """
 
     @property
@@ -103,39 +102,13 @@ class AnswerRelevancyCalculator(MetricCalculator):
         return normalized_score, metadata
 
     def _try_ragas_evaluation(self, metric_input: MetricInput) -> Optional[float]:
-        """Attempt calculation using RAGAS Evaluator provider or request-scoped cache."""
-        try:
-            cache = metric_input.metadata.get("provider_cache") if metric_input.metadata else None
-            if cache:
-                cached_score = cache.get("ragas", "answer_relevancy")
-                if cached_score is not None:
-                    logger.info("AnswerRelevancyCalculator ← served from RAGAS provider cache")
-                    return cached_score
-
-            from app.metrics.ragas_metrics import get_ragas_evaluator
-            from app.schemas.evaluation import EvaluationRequest, MetricConfig, MetricType
-
-            evaluator = get_ragas_evaluator()
-            if evaluator.is_circuit_open():
-                logger.info("RAGAS circuit breaker OPEN (429 rate limit). Using deterministic fallback for answer_relevancy.")
-                return None
-
-            req = EvaluationRequest(
-                question=metric_input.question or "",
-                answer=metric_input.answer or "",
-                contexts=metric_input.contexts,
-                ground_truth=metric_input.ground_truth,
-                metric_config=[MetricConfig(metric_type=MetricType.ANSWER_RELEVANCE)],
-            )
-            scores = evaluator.evaluate(req)
-            if isinstance(scores, dict) and "answer_relevancy" in scores:
-                return float(scores["answer_relevancy"])
-        except Exception as exc:
-            logger.info("RAGAS unavailable (429/RateLimit/Timeout). Falling back to deterministic answer_relevancy: %s", exc)
-        return None
-
-    def _try_deepeval_evaluation(self, metric_input: MetricInput) -> Optional[float]:
-        """DeepEval evaluator disabled by configuration."""
+        """Fetch Answer Relevancy metric score from request-scoped provider cache."""
+        cache = metric_input.metadata.get("provider_cache") if metric_input.metadata else None
+        if cache:
+            cached_score = cache.get("ragas", "answer_relevancy")
+            if cached_score is not None:
+                logger.info("Answer Relevancy from cache")
+                return cached_score
         return None
 
     def evaluate(self, metric_input: MetricInput) -> MetricResult:
@@ -175,31 +148,21 @@ class AnswerRelevancyCalculator(MetricCalculator):
                         success=True,
                         metadata=fallback_meta,
                     )
-                elif target_provider == "ragas":
-                    score = self._try_ragas_evaluation(metric_input)
-                    if score is not None:
-                        provider_used = "ragas"
-                elif target_provider == "deepeval":
-                    score = self._try_deepeval_evaluation(metric_input)
-                    if score is not None:
-                        provider_used = "deepeval"
 
-                if score is None:
-                    # Auto-detect or fallback
-                    score = self._try_ragas_evaluation(metric_input)
-                    if score is not None:
-                        provider_used = "ragas"
-                    else:
-                        score, fallback_meta = self._compute_deterministic_fallback(
-                            question=metric_input.question or "",
-                            answer=metric_input.answer or "",
-                        )
-                        return self.build_result(
-                            score=score,
-                            latency_ms=timer.elapsed_ms,
-                            success=True,
-                            metadata=fallback_meta,
-                        )
+                score = self._try_ragas_evaluation(metric_input)
+                if score is not None:
+                    provider_used = "ragas"
+                else:
+                    score, fallback_meta = self._compute_deterministic_fallback(
+                        question=metric_input.question or "",
+                        answer=metric_input.answer or "",
+                    )
+                    return self.build_result(
+                        score=score,
+                        latency_ms=timer.elapsed_ms,
+                        success=True,
+                        metadata=fallback_meta,
+                    )
 
                 meta = {
                     "provider_used": provider_used,

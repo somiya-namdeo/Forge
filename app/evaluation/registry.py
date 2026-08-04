@@ -61,16 +61,10 @@ def build_default_registry() -> MetricCalculatorRegistry:
     registry = MetricCalculatorRegistry()
 
     _candidates = [
-        # Generation metrics
+        # Generation metrics (RAGAS)
         ("app.evaluation.metrics.faithfulness", "FaithfulnessCalculator"),
         ("app.evaluation.metrics.answer_relevancy", "AnswerRelevancyCalculator"),
-        ("app.evaluation.metrics.context_precision", "ContextPrecisionCalculator"),
-        ("app.evaluation.metrics.context_recall", "ContextRecallCalculator"),
-        ("app.evaluation.metrics.groundedness", "GroundednessCalculator"),
-        ("app.evaluation.metrics.hallucination", "HallucinationCalculator"),
-        ("app.evaluation.metrics.completeness", "CompletenessCalculator"),
-        ("app.evaluation.metrics.coherence", "CoherenceCalculator"),
-        # Retrieval ranking metrics
+        # Retrieval ranking metrics (Deterministic)
         ("app.evaluation.metrics.precision_at_k", "PrecisionAtKCalculator"),
         ("app.evaluation.metrics.recall_at_k", "RecallAtKCalculator"),
         ("app.evaluation.metrics.hit_rate", "HitRateCalculator"),

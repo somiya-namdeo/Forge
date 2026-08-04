@@ -100,9 +100,20 @@ class RecommendationEngine:
         runner_up_score = float(runner_up.get("score", 0.0)) if runner_up else 0.0
         margin = max(0.0, top_score - runner_up_score)
 
-        # Base confidence scales directly with composite top_score and margin dominance
-        confidence = round(top_score * 0.85 + margin * 0.15 + 0.10, 4)
-        return min(0.98, max(0.20, confidence))
+        if top_score >= 0.88 and margin >= 0.10:
+            base_conf = 0.90 + min(0.08, (top_score - 0.88) * 0.40 + margin * 0.15)
+        elif top_score >= 0.72:
+            base_conf = 0.70 + min(0.15, (top_score - 0.72) * 0.80 + margin * 0.10)
+        elif top_score >= 0.55:
+            base_conf = 0.55 + min(0.14, (top_score - 0.55) * 0.70 + margin * 0.05)
+        else:
+            base_conf = max(0.20, round(top_score * 0.90, 4))
+
+        subscores = top_candidate.get("subscores", {})
+        if subscores.get("preferred_llm_match", 0.0) >= 0.90:
+            base_conf += 0.03
+
+        return min(0.98, max(0.20, round(base_conf, 4)))
 
     @classmethod
     def _create_recommendation_item(

@@ -7,13 +7,7 @@ from app.evaluation.metrics.base_metric import (
     MetricInput,
     MetricResult,
 )
-from app.evaluation.metrics.coherence import CoherenceCalculator
-from app.evaluation.metrics.completeness import CompletenessCalculator
-from app.evaluation.metrics.context_precision import ContextPrecisionCalculator
-from app.evaluation.metrics.context_recall import ContextRecallCalculator
 from app.evaluation.metrics.faithfulness import FaithfulnessCalculator
-from app.evaluation.metrics.groundedness import GroundednessCalculator
-from app.evaluation.metrics.hallucination import HallucinationCalculator
 from app.evaluation.metrics.hit_rate import HitRateCalculator
 from app.evaluation.metrics.mrr import MRRCalculator
 from app.evaluation.metrics.ndcg import NDCGCalculator
@@ -34,12 +28,6 @@ __all__ = [
     # Generation
     "FaithfulnessCalculator",
     "AnswerRelevancyCalculator",
-    "ContextPrecisionCalculator",
-    "ContextRecallCalculator",
-    "GroundednessCalculator",
-    "HallucinationCalculator",
-    "CompletenessCalculator",
-    "CoherenceCalculator",
     # Retrieval ranking
     "PrecisionAtKCalculator",
     "RecallAtKCalculator",

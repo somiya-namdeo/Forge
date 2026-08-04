@@ -180,8 +180,12 @@ def get_decision_service(
         explanation_engine=explanation_engine,
     )
 
-def get_comparison_service() -> ComparisonService:
+def get_comparison_service(
+    benchmark_service: BenchmarkService | None = Depends(get_benchmark_service),
+) -> ComparisonService:
     """Return ComparisonService instance."""
-    return ComparisonService()
+    if hasattr(benchmark_service, "dependency") or benchmark_service is None:
+        benchmark_service = get_benchmark_service()
+    return ComparisonService(benchmark_service=benchmark_service)
 
 

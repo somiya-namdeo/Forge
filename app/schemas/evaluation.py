@@ -139,14 +139,6 @@ class GenerationMetricsSchema(BaseModel):
 
     faithfulness: float = Field(default=0.0, ge=0.0, le=1.0, description="Faithfulness score.")
     answer_relevancy: float = Field(default=0.0, ge=0.0, le=1.0, description="Answer Relevancy score.")
-    context_precision: float = Field(default=0.0, ge=0.0, le=1.0, description="Context Precision score.")
-    context_recall: float = Field(default=0.0, ge=0.0, le=1.0, description="Context Recall score.")
-    groundedness: float = Field(default=0.0, ge=0.0, le=1.0, description="Groundedness score.")
-    hallucination_score: float = Field(
-        default=0.0, ge=0.0, le=1.0, description="Hallucination score (0.0 = zero hallucination)."
-    )
-    completeness: float = Field(default=0.0, ge=0.0, le=1.0, description="Completeness score.")
-    coherence: float = Field(default=0.0, ge=0.0, le=1.0, description="Coherence score.")
 
     model_config = ConfigDict(frozen=True)
 
@@ -188,7 +180,7 @@ class ComprehensiveEvaluationReport(BaseModel):
         default_factory=lambda: str(uuid4()), description="Unique evaluation execution UUID."
     )
     evaluation_version: str = Field(default="2.0", description="Evaluation module version identifier.")
-    provider: EvaluationProvider = Field(
+    provider: Any = Field(
         default=EvaluationProvider.RAGAS, description="Provider framework utilized."
     )
     overall_score: float = Field(

@@ -17,6 +17,8 @@ class ProviderResultCache:
     def __init__(self) -> None:
         """Initialize an empty provider result dictionary."""
         self._cache: Dict[str, Dict[str, float]] = {}
+        self.writes_count: int = 0
+        self.reads_count: int = 0
 
     def get(self, provider: str, metric_name: str) -> Optional[float]:
         """Get cached metric score for a provider if available.
@@ -28,6 +30,7 @@ class ProviderResultCache:
         Returns:
             Optional[float]: Cached score float if present, otherwise None.
         """
+        self.reads_count += 1
         provider_data = self._cache.get(provider.lower().strip())
         if provider_data and metric_name.lower().strip() in provider_data:
             return provider_data[metric_name.lower().strip()]
@@ -40,6 +43,7 @@ class ProviderResultCache:
             provider (str): Provider framework name.
             results (Dict[str, float]): Dictionary mapping metric names to scores.
         """
+        self.writes_count += 1
         normalized_results = {k.lower().strip(): float(v) for k, v in results.items()}
         self._cache[provider.lower().strip()] = normalized_results
 

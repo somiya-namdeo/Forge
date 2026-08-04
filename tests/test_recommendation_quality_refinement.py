@@ -105,8 +105,8 @@ def test_preferred_llm_affects_model_recommendation():
     res_claude = service.recommend(req_claude)
     res_gemini = service.recommend(req_gemini)
 
-    llm1 = next((r.recommended for r in res_claude.recommendations if r.category == "llm"), None)
-    llm2 = next((r.recommended for r in res_gemini.recommendations if r.category == "llm"), None)
+    llm1 = next((r.recommended for r in res_claude.recommendations if r.category in ("llm", "llms")), None)
+    llm2 = next((r.recommended for r in res_gemini.recommendations if r.category in ("llm", "llms")), None)
 
     assert llm1 != llm2
     print(f"Preferred Claude LLM Rec: {llm1} | Preferred Gemini LLM Rec: {llm2}")

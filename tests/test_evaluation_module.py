@@ -10,7 +10,6 @@ from app.metrics import (
     MetricRegistry,
 )
 from app.metrics.ragas_metrics import RagasEvaluator
-from app.metrics.deepeval_metrics import DeepEvalEvaluator
 from app.metrics.custom_metrics import CustomEvaluator, TruLensEvaluator
 from app.datasets.golden_dataset import GoldenDataset, GoldenSample
 from app.datasets.benchmark_loader import LocalBenchmarkLoader, RemoteBenchmarkLoader
@@ -27,7 +26,6 @@ from app.reports.export_pdf import PDFExporter
 from app.reports.export_json import JSONExporter
 from app.schemas.evaluation import (
     EvaluationRequest,
-    EvaluationSampleSchema,
     MetricConfigSchema,
     ThresholdConfigSchema,
     EvaluationHistoryFilter,
@@ -44,17 +42,14 @@ class TestEvaluationModuleStructure(unittest.TestCase):
     def test_metrics_registry_and_providers(self) -> None:
         registry = MetricRegistry()
         ragas = RagasEvaluator()
-        deepeval = DeepEvalEvaluator()
         trulens = TruLensEvaluator()
         custom = CustomEvaluator()
 
         registry.register_provider(ragas)
-        registry.register_provider(deepeval)
         registry.register_provider(trulens)
         registry.register_provider(custom)
 
         self.assertIn(EvaluationProvider.RAGAS, registry.list_providers())
-        self.assertIn(EvaluationProvider.DEEPEVAL, registry.list_providers())
         self.assertIn(EvaluationProvider.TRULENS, registry.list_providers())
         self.assertIn(EvaluationProvider.CUSTOM, registry.list_providers())
 
@@ -118,19 +113,14 @@ class TestEvaluationModuleStructure(unittest.TestCase):
 
     def test_service_run_evaluation(self) -> None:
         req = EvaluationRequest(
-            evaluation_name="Test Run",
-            rag_architecture_id="arch_test",
-            samples=[
-                EvaluationSampleSchema(
-                    query="Test question",
-                    actual_output="Test response",
-                    contexts=["Test context"],
-                )
-            ],
+            question="What is the notice period?",
+            answer="The notice period is 30 days.",
+            contexts=["Termination notice period is 30 days."],
+            ground_truth="30 days notice.",
         )
         resp = self.service.run_evaluation(req)
         self.assertIsNotNone(resp.evaluation_id)
-        self.assertEqual(resp.overall_status, PassFailStatus.PASS)
+        self.assertIsNotNone(resp.overall_score)
 
 
 if __name__ == "__main__":

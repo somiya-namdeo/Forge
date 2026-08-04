@@ -56,3 +56,4 @@ class BenchmarkLoader:
 
 LocalBenchmarkLoader = BenchmarkLoader
 BenchmarkDatasetLoader = BenchmarkLoader
+RemoteBenchmarkLoader = BenchmarkLoader

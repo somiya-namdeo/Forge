@@ -2,19 +2,19 @@
 
 from typing import Any
 
-from app.retriever.qdrant_retriever import QdrantRetriever
+from app.retriever.qdrant_retriever import get_qdrant_retriever
 from app.schemas.decision import DecisionRequest
 
 
 class KnowledgeRetriever:
     """High-level knowledge retrieval interface.
 
-    Delegates semantic retrieval to the Qdrant-backed retriever.
+    Delegates semantic retrieval to the Qdrant-backed retriever singleton.
     """
 
     def __init__(self) -> None:
-        """Initialize the semantic knowledge retriever."""
-        self._retriever = QdrantRetriever()
+        """Initialize the semantic knowledge retriever using the singleton QdrantRetriever."""
+        self._retriever = get_qdrant_retriever()
 
     def refresh_cache(self) -> None:
         """Compatibility method retained for backward compatibility.

@@ -5,7 +5,6 @@ from typing import Any, Optional, Union
 
 from app.decision.requirement_analyzer import ProjectProfile, RequirementAnalyzer
 from app.schemas.decision import AlternativeDetail, DecisionRequest, RecommendationItem
-from app.services.llm_service import LLMService
 
 logger = logging.getLogger(__name__)
 
@@ -15,6 +14,7 @@ class ExplanationEngine:
 
     def __init__(self) -> None:
         """Initialize ExplanationEngine with LLM service singleton."""
+        from app.services.llm_service import LLMService
         self._llm = LLMService()
 
     @classmethod
@@ -213,7 +213,7 @@ class ExplanationEngine:
                     or any(w in lic_str for w in ("open", "apache", "mit", "bsd", "gpl", "lgpl", "agpl", "community"))
                     or any(t in tech_str for t in (
                         "chroma", "milvus", "qdrant", "weaviate", "faiss", "langchain", "llamaindex", "haystack",
-                        "deepeval", "ragas", "flashrank", "bge", "llama", "mistral", "deepseek", "qwen", "ollama"
+                        "ragas", "flashrank", "bge", "llama", "mistral", "deepseek", "qwen", "ollama"
                     ))
                 )
 
@@ -257,36 +257,73 @@ class ExplanationEngine:
 
         return analysis
 
-    def _enhance_reason_with_llm(
+    def _batch_enhance_reasons_with_llm(
         self,
-        reason: str,
-        item: RecommendationItem,
-    ) -> str:
-        """Use the LLM to improve the readability of the recommendation reason."""
-        prompt = f"""
-You are an AI systems architect.
+        base_reasons: dict[str, str],
+        recommendations: list[RecommendationItem],
+    ) -> dict[str, str]:
+        """Perform ONE single Groq API completion request to enhance explanations for all recommendations in batch.
 
-Rewrite the following recommendation explanation to be more natural,
-professional, and concise.
+        Expects a JSON response mapping category names to enhanced explanation strings.
+        If parsing fails or any exception occurs, automatically returns base_reasons without retrying.
+        """
+        import json
+
+        if not base_reasons:
+            return base_reasons
+
+        items_payload = []
+        for item in recommendations:
+            cat = item.category
+            items_payload.append({
+                "category": cat,
+                "recommended": item.recommended,
+                "base_explanation": base_reasons.get(cat, "")
+            })
+
+        prompt = f"""You are an AI systems architect.
+
+Rewrite the following architectural recommendation explanations to be more natural, professional, and concise.
 
 Rules:
-- Keep the same meaning.
-- Do not invent new facts.
-- Do not change the recommendation.
+- Keep the exact same technical meaning and facts.
+- Do not change any recommended technology names.
 - Mention trade-offs if already present.
-- Return only the rewritten explanation.
+- Return ONLY a valid JSON object mapping each category name to its enhanced explanation string.
+- Do not include markdown block formatting or extraneous text outside the JSON object.
 
-Recommendation:
-{item.recommended}
+Input Recommendations:
+{json.dumps(items_payload, indent=2)}
 
-Original Explanation:
-{reason}
+JSON Output Format:
+{{
+  "category_name": "Enhanced explanation text..."
+}}
 """
         try:
-            return self._llm.reason(prompt)
+            raw_response = self._llm.reason(prompt).strip()
+            if raw_response.startswith("```"):
+                lines = raw_response.splitlines()
+                if lines[0].startswith("```"):
+                    lines = lines[1:]
+                if lines and lines[-1].startswith("```"):
+                    lines = lines[:-1]
+                raw_response = "\n".join(lines).strip()
+
+            parsed = json.loads(raw_response)
+            if isinstance(parsed, dict) and parsed:
+                enhanced: dict[str, str] = {}
+                for cat, base_txt in base_reasons.items():
+                    val = parsed.get(cat) or parsed.get(cat.lower())
+                    if val and isinstance(val, str) and val.strip():
+                        enhanced[cat] = val.strip()
+                    else:
+                        enhanced[cat] = base_txt
+                return enhanced
         except Exception as exc:
-            logger.warning("LLM explanation enhancement failed, falling back to deterministic reason: %s", exc)
-            return reason
+            logger.warning("Batch LLM explanation enhancement failed or JSON parse error. Using deterministic base reasons: %s", exc)
+
+        return base_reasons
 
     def generate(
         self,
@@ -300,12 +337,13 @@ Original Explanation:
         profile = RequirementAnalyzer.analyze(request) if isinstance(request, DecisionRequest) else request
         final_items: list[RecommendationItem] = []
 
+        base_reasons: dict[str, str] = {}
+        item_data_map: dict[str, dict[str, Any]] = {}
+
         for item in recommendations:
             top_candidate = getattr(item, "_top_candidate", {}) or {}
             runner_up = getattr(item, "_runner_up", None)
             alt_candidates = getattr(item, "_alternative_candidates", []) or ([] if not runner_up else [runner_up])
-            subscores = top_candidate.get("subscores", {})
-            top_score = float(top_candidate.get("score", item.confidence))
 
             base_reason = self._build_project_specific_reason(
                 item=item,
@@ -313,8 +351,25 @@ Original Explanation:
                 runner_up=runner_up,
                 profile=profile,
             )
+            base_reasons[item.category] = base_reason
+            item_data_map[item.category] = {
+                "top_candidate": top_candidate,
+                "runner_up": runner_up,
+                "alt_candidates": alt_candidates,
+            }
 
-            enriched_reason = self._enhance_reason_with_llm(base_reason, item)
+        enhanced_reasons = self._batch_enhance_reasons_with_llm(base_reasons, recommendations)
+
+        for item in recommendations:
+            category_data = item_data_map.get(item.category, {})
+            top_candidate = category_data.get("top_candidate", {})
+            runner_up = category_data.get("runner_up")
+            alt_candidates = category_data.get("alt_candidates", [])
+            subscores = top_candidate.get("subscores", {})
+            top_score = float(top_candidate.get("score", item.confidence))
+
+            base_reason = base_reasons.get(item.category, item.reason)
+            enriched_reason = enhanced_reasons.get(item.category, base_reason)
 
             confidence_label = self._map_confidence_level(item.confidence)
             evidence_dict = self._extract_evidence_metadata(top_candidate)

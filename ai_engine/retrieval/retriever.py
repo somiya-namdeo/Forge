@@ -35,9 +35,10 @@ class Retriever:
     """Retrieval component for vector similarity search over Qdrant."""
 
     def __init__(self) -> None:
-        """Initialize QueryEncoder and Qdrant database client."""
+        """Initialize QueryEncoder and Qdrant database client singleton."""
+        from app.retriever.qdrant_retriever import get_qdrant_client
         self.encoder = QueryEncoder()
-        self.client = QdrantClient(path=str(QDRANT_PATH))
+        self.client = get_qdrant_client()
 
     def retrieve(self, query: str, limit: int = TOP_K) -> RetrievalResult:
         """Encode natural language query, search vector store, and return formatted context with enriched metadata.

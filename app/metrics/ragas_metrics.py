@@ -5,19 +5,22 @@ import math
 from typing import Any
 
 from datasets import Dataset
-from langchain_community.embeddings import HuggingFaceBgeEmbeddings
 from langchain_openai import ChatOpenAI
 from ragas import evaluate
+from ragas.run_config import RunConfig
 from ragas.embeddings import LangchainEmbeddingsWrapper
 from ragas.llms import LangchainLLMWrapper
 from ragas.metrics import (
     answer_relevancy,
-    context_precision,
-    context_recall,
     faithfulness,
 )
 
-from app.core.config import EMBEDDING_MODEL, GROQ_API_KEY, LLM_MODEL
+from app.core.config import (
+    EVALUATION_API_KEY,
+    EVALUATION_MODEL,
+    EVALUATION_PROVIDER,
+)
+from app.embeddings.embedding_service import get_embedding_model
 from app.metrics.base import BaseMetricEvaluator
 from app.schemas.evaluation import EvaluationRequest
 
@@ -25,8 +28,6 @@ import time
 import logging
 
 logger = logging.getLogger(__name__)
-
-_REFERENCE_REQUIRED_METRICS = {"context_precision", "context_recall"}
 
 
 _ragas_evaluator_instance = None
@@ -67,24 +68,22 @@ class RagasEvaluator(BaseMetricEvaluator):
         cls._circuit_breaker_until = 0.0
 
     def __init__(self) -> None:
-        """Initialize RAGAS evaluator with Groq LLM and BGE embeddings wrappers."""
+        """Initialize RAGAS evaluator with Evaluation Groq account LLM and BGE embeddings wrappers."""
         self._llm = ChatOpenAI(
-            model=LLM_MODEL,
-            api_key=GROQ_API_KEY,
+            model=EVALUATION_MODEL,
+            api_key=EVALUATION_API_KEY,
             base_url="https://api.groq.com/openai/v1",
             temperature=0.0,
             max_retries=0,
-            request_timeout=3.0,
+            request_timeout=5.0,
         )
         self._ragas_llm = LangchainLLMWrapper(self._llm)
-        self._embeddings = HuggingFaceBgeEmbeddings(model_name=EMBEDDING_MODEL)
+        self._embeddings = get_embedding_model()
         self._ragas_embeddings = LangchainEmbeddingsWrapper(self._embeddings)
 
         self._metric_map = {
             "faithfulness": faithfulness,
             "answer_relevancy": answer_relevancy,
-            "context_precision": context_precision,
-            "context_recall": context_recall,
         }
 
     @property
@@ -98,9 +97,7 @@ class RagasEvaluator(BaseMetricEvaluator):
         return tuple(self._metric_map.keys())
 
     def _resolve_requested_metrics(self, request: EvaluationRequest) -> list[Any]:
-        """Resolve enabled metrics based on request metric_config and ground_truth presence."""
-        has_ground_truth = bool(request.ground_truth and request.ground_truth.strip())
-
+        """Resolve enabled metrics based on request metric_config."""
         if request.metric_config:
             enabled_names = set()
             for cfg in request.metric_config:
@@ -122,11 +119,6 @@ class RagasEvaluator(BaseMetricEvaluator):
             ]
         else:
             selected_metrics = list(self._metric_map.values())
-
-        if not has_ground_truth:
-            selected_metrics = [
-                m for m in selected_metrics if m.name not in _REFERENCE_REQUIRED_METRICS
-            ]
 
         return selected_metrics
 
@@ -168,11 +160,17 @@ class RagasEvaluator(BaseMetricEvaluator):
 
         try:
             dataset = Dataset.from_dict(dataset_dict)
+            run_config = RunConfig(
+                max_workers=1,
+                max_retries=0,
+                timeout=10,
+            )
             results = evaluate(
                 dataset=dataset,
                 metrics=eval_metrics,
                 llm=self._ragas_llm,
                 embeddings=self._ragas_embeddings,
+                run_config=run_config,
                 raise_exceptions=True,
             )
         except Exception as exc:

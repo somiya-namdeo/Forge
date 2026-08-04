@@ -2,7 +2,7 @@
 Evaluation Orchestration Service Module.
 
 Provides reusable single-response evaluation engine routing requests to metric providers
-(RAGAS, DeepEval, TruLens, Custom), running threshold quality gates, and computing weighted scores.
+(RAGAS, TruLens, Custom), running threshold quality gates, and computing weighted scores.
 """
 
 from typing import Any, Dict, List, Optional
@@ -66,7 +66,7 @@ class EvaluationService:
         self.json_exporter = json_exporter or JSONExporter()
 
     def _register_default_providers(self) -> None:
-        """Register built-in evaluation metric providers (RAGAS, DeepEval, TruLens, Custom)."""
+        """Register built-in evaluation metric providers (RAGAS, TruLens, Custom)."""
         if not self.metric_registry.exists("ragas"):
             self.metric_registry.register_provider(RagasEvaluator())
 

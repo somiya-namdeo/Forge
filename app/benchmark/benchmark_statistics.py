@@ -14,8 +14,7 @@ from app.schemas.evaluation import EvaluationStatus
 
 # ─── Known metric categories (mirrors MetricCategory enum values) ─────────────
 _GENERATION_METRICS = frozenset({
-    "faithfulness", "answer_relevancy", "context_precision", "context_recall",
-    "groundedness", "hallucination_score", "completeness", "coherence",
+    "faithfulness", "answer_relevancy",
 })
 _RETRIEVAL_METRICS = frozenset({
     "precision_at_k", "recall_at_k", "hit_rate", "mrr", "ndcg",

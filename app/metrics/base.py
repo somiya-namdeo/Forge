@@ -14,7 +14,7 @@ class BaseMetricEvaluator(ABC):
     @property
     @abstractmethod
     def provider_name(self) -> str:
-        """Unique provider identifier (e.g. ragas, deepeval)."""
+        """Unique provider identifier (e.g. ragas, trulens, custom)."""
         raise NotImplementedError
 
     @property
