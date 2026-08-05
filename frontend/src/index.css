@@ -1,53 +1,77 @@
+/* ===================================================
+   FORGE — Global Design System
+   Final Production Polish Pass
+=================================================== */
+
 :root {
-  /* Core Colors */
-  --bg-primary: #0B0D12;
+  /* ── Core Background ─────────────────────────────── */
+  --bg-primary:   #0B0D12;
   --bg-secondary: #0F1218;
-  --card-bg: #131720;
-  --card-bg-hover: #171C28;
+  --card-bg:      #131720;
+  --card-bg-hover:    #171C28;
   --card-bg-elevated: #1A2130;
-  
-  /* Borders & Shadows */
+
+  /* ── Borders ─────────────────────────────────────── */
   --border-subtle: rgba(255, 255, 255, 0.06);
-  --border-hover: rgba(255, 255, 255, 0.12);
-  --border-accent: rgba(212, 175, 99, 0.35);
-  --shadow-soft: 0 8px 30px rgba(0, 0, 0, 0.5);
-  --shadow-glow-gold: 0 0 25px rgba(212, 175, 99, 0.2);
-  
-  /* Accent — Primary */
-  --accent-gold: #D4AF63;
+  --border-hover:  rgba(255, 255, 255, 0.11);
+  --border-accent: rgba(212, 175, 99, 0.32);
+
+  /* ── Shadows — one unified elevation system ──────── */
+  --shadow-xs:   0 1px 3px rgba(0,0,0,0.4);
+  --shadow-sm:   0 4px 14px rgba(0,0,0,0.45);
+  --shadow-md:   0 8px 24px rgba(0,0,0,0.55);
+  --shadow-lg:   0 16px 40px rgba(0,0,0,0.65);
+  --shadow-glow-gold: 0 0 18px rgba(212,175,99,0.18);
+
+  /* ── Gold Accent ─────────────────────────────────── */
+  --accent-gold:       #D4AF63;
   --accent-gold-hover: #E2BF74;
-  --accent-gold-dim: rgba(212, 175, 99, 0.12);
-  
-  /* Secondary (Scores, Badges & Status Only) */
-  --status-green: #22c55e;
-  --status-green-dim: rgba(34, 197, 94, 0.15);
-  --status-blue: #3b82f6;
-  --status-blue-dim: rgba(59, 130, 246, 0.15);
-  --status-purple: #a855f7;
-  --status-purple-dim: rgba(168, 85, 247, 0.15);
-  --status-orange: #f97316;
-  --status-orange-dim: rgba(249, 115, 22, 0.15);
-  
-  /* Text */
-  --text-primary: #FFFFFF;
+  --accent-gold-dim:   rgba(212, 175, 99, 0.10);
+
+  /* ── Status Colors ───────────────────────────────── */
+  --status-green:       #22c55e;
+  --status-green-dim:   rgba(34, 197, 94, 0.12);
+  --status-blue:        #3b82f6;
+  --status-blue-dim:    rgba(59, 130, 246, 0.12);
+  --status-purple:      #a855f7;
+  --status-purple-dim:  rgba(168, 85, 247, 0.12);
+  --status-orange:      #f97316;
+  --status-orange-dim:  rgba(249, 115, 22, 0.12);
+
+  /* ── Text ────────────────────────────────────────── */
+  --text-primary:   #FFFFFF;
   --text-secondary: #94A3B8;
-  --text-muted: #64748B;
-  
-  /* Typography */
+  --text-muted:     #64748B;
+
+  /* ── Typography ──────────────────────────────────── */
   --font-heading: 'Outfit', -apple-system, sans-serif;
-  --font-body: 'Inter', -apple-system, sans-serif;
-  
-  /* Geometry */
-  --radius-card: 14px;
-  --radius-md: 10px;
-  --radius-sm: 6px;
+  --font-body:    'Inter', -apple-system, sans-serif;
+
+  /* ── Geometry ────────────────────────────────────── */
+  --radius-lg:   16px;   /* Large containers */
+  --radius-card: 14px;   /* Standard cards */
+  --radius-md:   12px;   /* Buttons, inputs */
+  --radius-sm:   8px;    /* Chips, tags */
+  --radius-xs:   6px;    /* Tiny elements */
   --radius-pill: 9999px;
 
-  /* Transitions */
-  --transition-smooth: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  /* ── Spacing Scale ───────────────────────────────── */
+  --space-xs:  0.5rem;   /* 8px  */
+  --space-sm:  0.75rem;  /* 12px */
+  --space-md:  1rem;     /* 16px */
+  --space-lg:  1.5rem;   /* 24px */
+  --space-xl:  2rem;     /* 32px */
+  --space-2xl: 3rem;     /* 48px */
+
+  /* ── Card Padding ─────────────────────────────────── */
+  --card-padding: 1.5rem;   /* 24px */
+  --card-padding-lg: 1.75rem;  /* 28px */
+
+  /* ── Transitions ─────────────────────────────────── */
+  --transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Reset & Base Setup */
+/* ── Reset & Base ──────────────────────────────────── */
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
@@ -58,44 +82,34 @@ body {
   background-color: var(--bg-primary);
   color: var(--text-primary);
   font-family: var(--font-body);
-  font-size: 13.5px;
+  font-size: 15px;
   line-height: 1.55;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  selection-background: var(--accent-gold);
-  selection-color: #000;
 }
 
+/* ── Typography Scale ──────────────────────────────── */
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading);
   font-weight: 700;
-  line-height: 1.25;
+  line-height: 1.2;
   color: var(--text-primary);
   letter-spacing: -0.02em;
 }
 
-h1 {
-  font-size: 2.1rem;
-  font-weight: 800;
-}
-
-h2 {
-  font-size: 1.5rem;
-}
-
-h3 {
-  font-size: 1.1rem;
-}
+h1 { font-size: 2rem;   font-weight: 800; }  /* 32px — page titles */
+h2 { font-size: 1.5rem;  }                   /* 24px — section titles */
+h3 { font-size: 1.125rem; }                  /* 18px — card titles */
+h4 { font-size: 0.9375rem; }                 /* 15px — sub-sections */
 
 p {
   color: var(--text-secondary);
+  font-size: 0.9375rem;
+  line-height: 1.6;
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
-}
+a  { color: inherit; text-decoration: none; }
 
 button, input, select, textarea {
   font-family: inherit;
@@ -105,31 +119,15 @@ button, input, select, textarea {
   color: inherit;
   outline: none;
 }
+button { cursor: pointer; }
 
-button {
-  cursor: pointer;
-}
+/* ── Scrollbars ─────────────────────────────────────── */
+::-webkit-scrollbar       { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: var(--bg-primary); }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.10); border-radius: var(--radius-pill); }
+::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.20); }
 
-/* Custom Scrollbars */
-::-webkit-scrollbar {
-  width: 5px;
-  height: 5px;
-}
-
-::-webkit-scrollbar-track {
-  background: var(--bg-primary);
-}
-
-::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.12);
-  border-radius: var(--radius-pill);
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.22);
-}
-
-/* Layout Utilities */
+/* ── App Layout ─────────────────────────────────────── */
 .app-container {
   display: flex;
   min-height: 100vh;
@@ -145,66 +143,102 @@ button {
   overflow-x: hidden;
 }
 
+/* ── GLOBAL CONTENT CONTAINER ────────────────────────
+   Every page uses this. One width. One padding. 
+──────────────────────────────────────────────────── */
 .main-content-scroll {
   flex: 1;
-  padding: 1.75rem 2.25rem;
+  padding: 2rem 2.5rem;
   max-width: 1600px;
   width: 100%;
   margin: 0 auto;
 }
 
+@media (max-width: 1280px) {
+  .main-content-scroll { padding: 1.75rem 2rem; }
+}
 @media (max-width: 1024px) {
-  .main-content-scroll {
-    padding: 1.25rem 1.25rem;
-  }
+  .main-content-scroll { padding: 1.5rem 1.5rem; }
+}
+@media (max-width: 768px) {
+  .main-content-scroll { padding: 1.25rem 1rem; }
 }
 
-/* Premium Card Style */
+/* ── Page Header ─────────────────────────────────────
+   Uniform header spacing across all pages
+──────────────────────────────────────────────────── */
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.page-title {
+  font-family: var(--font-heading);
+  font-size: 2rem;
+  font-weight: 800;
+  color: #FFFFFF;
+  line-height: 1.15;
+  letter-spacing: -0.025em;
+}
+
+.page-subtitle {
+  font-size: 0.9375rem;
+  color: var(--text-secondary);
+  margin-top: 0.35rem;
+  line-height: 1.55;
+}
+
+/* ── Card System ─────────────────────────────────────── */
 .forge-card {
   background-color: var(--card-bg);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-card);
-  padding: 1.25rem;
-  box-shadow: var(--shadow-soft);
-  transition: var(--transition-smooth);
+  padding: var(--card-padding);
+  box-shadow: var(--shadow-sm);
+  transition: var(--transition);
   position: relative;
-  overflow: hidden;
 }
 
 .forge-card-interactive:hover {
   background-color: var(--card-bg-hover);
   border-color: var(--border-hover);
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.65);
+  box-shadow: var(--shadow-md);
 }
 
 .forge-card-accent-border {
   border-color: var(--border-accent);
 }
 
-/* Button & Action Styles */
+/* ── Button System ────────────────────────────────────── */
 .forge-btn-primary {
   background: linear-gradient(135deg, #D4AF63 0%, #B89243 100%);
   color: #0B0D12;
-  font-weight: 600;
-  padding: 0.55rem 1.25rem;
+  font-weight: 700;
+  padding: 0.5rem 1.2rem;
   font-size: 0.875rem;
-  border-radius: var(--radius-pill);
+  border-radius: var(--radius-md);
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  box-shadow: 0 3px 14px rgba(212, 175, 99, 0.3);
-  transition: var(--transition-smooth);
+  gap: 0.45rem;
+  box-shadow: 0 2px 10px rgba(212,175,99,0.25);
+  transition: var(--transition);
+  height: 38px;
+  line-height: 1;
 }
 
 .forge-btn-primary:hover:not(:disabled) {
   transform: translateY(-1px) scale(1.01);
-  box-shadow: 0 5px 20px rgba(212, 175, 99, 0.5);
-  filter: brightness(1.06);
+  box-shadow: 0 4px 16px rgba(212,175,99,0.4);
+  filter: brightness(1.05);
 }
 
 .forge-btn-primary:active:not(:disabled) {
-  transform: translateY(0) scale(0.98);
+  transform: scale(0.98);
 }
 
 .forge-btn-primary:disabled {
@@ -214,21 +248,23 @@ button {
 }
 
 .forge-btn-secondary {
-  background-color: rgba(255, 255, 255, 0.05);
+  background-color: rgba(255,255,255,0.05);
   color: var(--text-primary);
-  border: 1px solid var(--border-subtle);
+  border: 1px solid var(--border-hover);
   font-weight: 500;
-  padding: 0.5rem 1.1rem;
+  padding: 0.5rem 1.2rem;
   font-size: 0.875rem;
-  border-radius: var(--radius-pill);
+  border-radius: var(--radius-md);
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  transition: var(--transition-smooth);
+  gap: 0.45rem;
+  transition: var(--transition);
+  height: 38px;
+  line-height: 1;
 }
 
 .forge-btn-secondary:hover:not(:disabled) {
-  background-color: rgba(255, 255, 255, 0.09);
+  background-color: rgba(255,255,255,0.09);
   border-color: var(--border-hover);
   transform: translateY(-1px);
 }
@@ -238,107 +274,271 @@ button {
   padding: 0.4rem 0.75rem;
   font-size: 0.875rem;
   border-radius: var(--radius-sm);
-  transition: var(--transition-smooth);
+  transition: var(--transition);
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
+  height: 34px;
+  line-height: 1;
 }
 
 .forge-btn-ghost:hover {
   color: var(--text-primary);
-  background-color: rgba(255, 255, 255, 0.05);
+  background-color: rgba(255,255,255,0.05);
 }
 
-/* Status & Score Badges */
+/* ── Badge System ─────────────────────────────────────── */
 .forge-badge {
   display: inline-flex;
   align-items: center;
-  gap: 0.3rem;
-  padding: 0.2rem 0.65rem;
+  gap: 0.25rem;
+  padding: 0.2rem 0.6rem;
   border-radius: var(--radius-pill);
-  font-size: 0.7rem;
+  font-size: 0.6875rem;  /* 11px */
   font-weight: 600;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.025em;
   text-transform: uppercase;
+  line-height: 1.4;
 }
 
-.forge-badge-green {
-  background: var(--status-green-dim);
-  color: var(--status-green);
-  border: 1px solid rgba(34, 197, 94, 0.3);
+.forge-badge-green  { background: var(--status-green-dim);  color: var(--status-green);  border: 1px solid rgba(34,197,94,0.25); }
+.forge-badge-blue   { background: var(--status-blue-dim);   color: var(--status-blue);   border: 1px solid rgba(59,130,246,0.25); }
+.forge-badge-purple { background: var(--status-purple-dim); color: var(--status-purple); border: 1px solid rgba(168,85,247,0.25); }
+.forge-badge-orange { background: var(--status-orange-dim); color: var(--status-orange); border: 1px solid rgba(249,115,22,0.25); }
+.forge-badge-gold   { background: var(--accent-gold-dim);   color: var(--accent-gold);   border: 1px solid var(--border-accent); }
+.forge-badge-neutral { background: rgba(255,255,255,0.05);  color: var(--text-secondary); border: 1px solid var(--border-subtle); }
+
+/* ── Table System ─────────────────────────────────────── */
+.forge-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+  text-align: left;
 }
 
-.forge-badge-blue {
-  background: var(--status-blue-dim);
-  color: var(--status-blue);
-  border: 1px solid rgba(59, 130, 246, 0.3);
+.forge-table thead th {
+  padding: 0.875rem 0.75rem;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border-subtle);
+  white-space: nowrap;
 }
 
-.forge-badge-purple {
-  background: var(--status-purple-dim);
-  color: var(--status-purple);
-  border: 1px solid rgba(168, 85, 247, 0.3);
+.forge-table tbody tr {
+  border-bottom: 1px solid var(--border-subtle);
+  transition: background-color 0.15s;
 }
 
-.forge-badge-orange {
-  background: var(--status-orange-dim);
-  color: var(--status-orange);
-  border: 1px solid rgba(249, 115, 22, 0.3);
+.forge-table tbody tr:hover {
+  background-color: rgba(255,255,255,0.025);
 }
 
-.forge-badge-gold {
-  background: var(--accent-gold-dim);
-  color: var(--accent-gold);
-  border: 1px solid var(--border-accent);
+.forge-table tbody tr:last-child {
+  border-bottom: none;
 }
 
-.forge-badge-neutral {
-  background: rgba(255, 255, 255, 0.06);
-  color: var(--text-secondary);
-  border: 1px solid var(--border-subtle);
+.forge-table tbody td {
+  padding: 0.875rem 0.75rem;
+  font-size: 0.875rem;
+  color: var(--text-primary);
+  vertical-align: middle;
 }
 
-/* Grids */
+/* ── Dividers ─────────────────────────────────────────── */
+.forge-divider {
+  border: none;
+  border-top: 1px solid var(--border-subtle);
+  margin: 0;
+}
+
+/* ── Grid System ──────────────────────────────────────── */
 .grid-2col {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 1.25rem;
+  gap: 1.5rem;
 }
 
 .grid-3col {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 1.25rem;
+  gap: 1.5rem;
 }
 
 .grid-4col {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 1rem;
+  gap: 1.25rem;
+}
+
+.grid-5col {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1.25rem;
 }
 
 @media (max-width: 1200px) {
-  .grid-3col, .grid-4col {
+  .grid-3col, .grid-4col, .grid-5col {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
 @media (max-width: 768px) {
-  .grid-2col, .grid-3col, .grid-4col {
+  .grid-2col, .grid-3col, .grid-4col, .grid-5col {
     grid-template-columns: 1fr;
   }
 }
 
-/* Text Gradient Utilities */
+/* ── Section Spacing Utility ─────────────────────────── */
+.section-gap {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;   /* 24px between sections */
+}
+
+.section-gap-lg {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;     /* 32px between major sections */
+}
+
+/* ── Tab System ───────────────────────────────────────── */
+.forge-tabs {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid var(--border-subtle);
+  margin-bottom: 1.5rem;
+}
+
+.forge-tab-btn {
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  padding: 0.625rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: var(--transition);
+  white-space: nowrap;
+  margin-bottom: -1px;
+}
+
+.forge-tab-btn.active {
+  color: var(--accent-gold);
+  font-weight: 600;
+  border-bottom-color: var(--accent-gold);
+}
+
+.forge-tab-btn:hover:not(.active) {
+  color: var(--text-secondary);
+}
+
+/* ── KPI / Metric Card ──────────────────────────────── */
+.kpi-card {
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-card);
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  box-shadow: var(--shadow-xs);
+}
+
+.kpi-value {
+  font-family: var(--font-heading);
+  font-size: 1.875rem;  /* 30px — slightly smaller than current */
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.kpi-label {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-weight: 500;
+  margin-top: 0.2rem;
+}
+
+/* ── Input ────────────────────────────────────────────── */
+.forge-input {
+  width: 100%;
+  padding: 0.625rem 1rem;
+  border-radius: var(--radius-md);
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-hover);
+  color: var(--text-primary);
+  font-size: 0.9375rem;
+  transition: var(--transition);
+}
+
+.forge-input:focus {
+  border-color: var(--accent-gold);
+  box-shadow: 0 0 0 3px rgba(212,175,99,0.12);
+  outline: none;
+}
+
+.forge-textarea {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-md);
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-hover);
+  color: var(--text-primary);
+  font-size: 0.9375rem;
+  resize: vertical;
+  transition: var(--transition);
+}
+
+.forge-textarea:focus {
+  border-color: var(--accent-gold);
+  outline: none;
+}
+
+/* ── Hover Utilities ──────────────────────────────────── */
+.hover-glow:hover {
+  border-color: var(--border-accent) !important;
+  box-shadow: var(--shadow-glow-gold) !important;
+  transform: translateY(-2px);
+}
+
+.hover-gold:hover {
+  color: var(--accent-gold) !important;
+}
+
+/* ── Tag / Chip ───────────────────────────────────────── */
+.forge-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.2rem 0.55rem;
+  border-radius: var(--radius-xs);
+  background-color: rgba(255,255,255,0.05);
+  border: 1px solid var(--border-subtle);
+  font-size: 0.75rem;
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+
+/* ── Text Utilities ───────────────────────────────────── */
 .text-gradient-gold {
   background: linear-gradient(135deg, #FFF 0%, #D4AF63 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-/* Animations & Shimmers */
+.text-xs    { font-size: 0.75rem;    }  /* 12px */
+.text-sm    { font-size: 0.875rem;   }  /* 14px */
+.text-base  { font-size: 0.9375rem;  }  /* 15px */
+.text-lg    { font-size: 1.0625rem;  }  /* 17px */
+.text-muted { color: var(--text-muted); }
+.text-secondary { color: var(--text-secondary); }
+
+/* ── Skeleton / Shimmer ───────────────────────────────── */
 @keyframes shimmer {
-  0% { transform: translateX(-100%); }
+  0%   { transform: translateX(-100%); }
   100% { transform: translateX(100%); }
 }
 
@@ -351,7 +551,12 @@ button {
 .animate-shimmer::after {
   content: '';
   position: absolute;
-  top: 0; right: 0; bottom: 0; left: 0;
-  background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.04) 50%, transparent 100%);
+  inset: 0;
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.03) 50%, transparent 100%);
   animation: shimmer 2s infinite;
+}
+
+/* ── Desktop-only sidebar helper ──────────────────────── */
+@media (max-width: 768px) {
+  .desktop-sidebar-only { display: none; }
 }

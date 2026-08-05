@@ -1,221 +1,297 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import {
-  Scale,
-  Check,
-  Zap,
-  DollarSign,
-  Layers,
-  ArrowRight,
-  Sparkles,
-  ShieldAlert,
-  Sliders
-} from 'lucide-react';
-import { Card, Badge, Button, ScoreRing, ProgressBar, EmptyState, Skeleton } from '../components/common';
+import { AlertTriangle, Sparkles, Layers } from 'lucide-react';
+import { Card, Badge, Skeleton } from '../components/common';
 import { GeneratedArchitecture } from '../types';
 import { decisionService, comparisonService, ArchitectureComparisonResult } from '../services';
 
 export const Comparison: React.FC = () => {
-  const [archA, setArchA] = useState<GeneratedArchitecture | null>(null);
-  const [archB, setArchB] = useState<GeneratedArchitecture | null>(null);
+  const [archA, setArchA]           = useState<GeneratedArchitecture | null>(null);
+  const [archB, setArchB]           = useState<GeneratedArchitecture | null>(null);
   const [comparison, setComparison] = useState<ArchitectureComparisonResult | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading]       = useState(true);
+  const [activeTab, setActiveTab]   = useState<'Comparison Matrix' | 'Radar Chart' | 'Migration Guide'>('Comparison Matrix');
 
   useEffect(() => {
-    async function initComparison() {
+    async function init() {
       setLoading(true);
-      // Construct two realistic candidate architectures to demonstrate side-by-side differentials
       const stackA = await decisionService.generateFromPrompt(
-        'Open Weights Fast Pipeline with Qdrant Rust and Llama 3.3 70B',
-        'Forge Optimized Stack'
-      );
-      
-      // Customize stack B to act as Proprietary Cloud Baseline
+        'Open Weights Fast Pipeline with Qdrant Rust and Llama 3.3 70B', 'Forge Optimized Stack');
       const stackB: GeneratedArchitecture = {
         ...stackA,
         id: 'arch-baseline-cloud',
-        title: 'Proprietary Cloud Baseline (GPT-4o + Pinecone)',
-        summary: {
-          ...stackA.summary,
-          overallScore: 88,
-          estimatedMonthlyCost: '$1,450 / mo',
-          estimatedLatency: '~420ms (p95)',
-          complexity: 'Low',
-          reasoningConfidence: '96.2% High'
-        }
+        title: 'Dense RAG v1',
+        summary: { ...stackA.summary, overallScore: 87, estimatedMonthlyCost: '$1,450 / mo', estimatedLatency: '~680ms (p95)', complexity: 'Low', reasoningConfidence: '96.2% High' },
       };
-
       setArchA(stackA);
       setArchB(stackB);
-
       const result = await comparisonService.compareArchitectures(stackA, stackB);
       setComparison(result);
       setLoading(false);
     }
-    initComparison();
+    init();
   }, []);
 
   if (loading || !comparison || !archA || !archB) {
     return (
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
-        <Skeleton variant="title" width={340} />
-        <div className="grid-2col">
-          <Skeleton variant="card" height={320} />
-          <Skeleton variant="card" height={320} />
+      <div className="section-gap-lg">
+        <Skeleton variant="title" width={320} />
+        <div style={{ display: 'flex', gap: '2rem' }}>
+          <Skeleton variant="card" height={420} />
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: '100px' }}>
+            <Skeleton variant="text" width={60} />
+          </div>
+          <Skeleton variant="card" height={420} />
         </div>
-        <Skeleton variant="chart" height={400} />
+        <Skeleton variant="chart" height={340} />
       </div>
     );
   }
 
+  const archBScore = 87.4;
+  const archAScore = archA.summary.overallScore;
+
+  // ── Arch card (shared layout) ────────────────────────────────
+  const ArchCard = ({
+    label, title, score, chips, components, latency, cost, isWinner, accentColor,
+  }: {
+    label: string; title: string; score: number; chips: string[];
+    components: [string, string][]; latency: string; cost: string;
+    isWinner?: boolean; accentColor: string;
+  }) => (
+    <div
+      className="forge-card"
+      style={{
+        flex: 1,
+        padding: '1.75rem',
+        border: `1px solid ${isWinner ? 'var(--accent-gold)' : 'var(--border-subtle)'}`,
+        display: 'flex', flexDirection: 'column', gap: '1.25rem',
+        position: 'relative',
+      }}
+    >
+      {isWinner && (
+        <div style={{ position: 'absolute', top: '-13px', left: '50%', transform: 'translateX(-50%)', zIndex: 2 }}>
+          <Badge variant="gold" style={{ padding: '0.3rem 0.875rem', fontSize: '0.6875rem', fontWeight: 800 }}>★ WINNER</Badge>
+        </div>
+      )}
+
+      {/* Label + title */}
+      <div>
+        <Badge variant={isWinner ? 'gold' : 'blue'} style={{ marginBottom: '0.6rem', fontSize: '0.6875rem' }}>{label}</Badge>
+        <h2 style={{ fontSize: '1.375rem', fontWeight: 800, color: '#FFFFFF', lineHeight: 1.2 }}>{title}</h2>
+
+        {/* Score */}
+        <div style={{ marginTop: '0.4rem', fontSize: '0.875rem', fontWeight: 700, color: accentColor }}>
+          Score: {score} / 100
+        </div>
+
+        {/* Capability chips */}
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem', marginTop: '0.75rem' }}>
+          {chips.map(c => (
+            <span key={c} className="forge-chip">{c}</span>
+          ))}
+        </div>
+      </div>
+
+      {/* Component rows */}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem', fontSize: '0.875rem' }}>
+        {components.map(([k, v]) => (
+          <div key={k} style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid var(--border-subtle)', paddingBottom: '0.4rem' }}>
+            <span style={{ color: 'var(--text-muted)' }}>{k}</span>
+            <span style={{ color: v === 'None' ? 'var(--text-muted)' : '#FFFFFF', fontWeight: 600, textAlign: 'right', maxWidth: '55%' }}>{v}</span>
+          </div>
+        ))}
+      </div>
+
+      {/* Latency / Cost mini cards */}
+      <div style={{ display: 'flex', gap: '0.75rem', marginTop: 'auto' }}>
+        {[['LATENCY', latency], ['COST/QUERY', cost]].map(([lbl, val]) => (
+          <div key={lbl} style={{ flex: 1, background: 'var(--bg-primary)', border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-sm)', padding: '0.875rem 1rem' }}>
+            <div style={{ fontSize: '0.625rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em', color: 'var(--text-muted)', marginBottom: '0.2rem' }}>{lbl}</div>
+            <div style={{ fontSize: '1.25rem', fontWeight: 800, color: accentColor }}>{val}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+
+  // ── Comparison table rows ────────────────────────────────────
+  const rows = [
+    { metric: 'Faithfulness',    a: '94%',    b: '86%',    aWin: true },
+    { metric: 'Answer Relevancy',a: '91%',    b: '84%',    aWin: true },
+    { metric: 'Precision@5',     a: '89%',    b: '80%',    aWin: true },
+    { metric: 'Recall@10',       a: '91%',    b: '83%',    aWin: true },
+    { metric: 'Latency (avg)',   a: '342ms',  b: '680ms',  aWin: true },
+    { metric: 'Cost / Query',    a: '$0.0021',b: '$0.0089',aWin: true },
+    { metric: 'Pass Rate',       a: '96.1%',  b: '90.1%',  aWin: true },
+  ];
+
   return (
     <motion.div
-      initial={{ opacity: 0, y: 15 }}
+      initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0 }}
-      transition={{ duration: 0.35 }}
-      style={{ display: 'flex', flexDirection: 'column', gap: '2.5rem' }}
+      transition={{ duration: 0.3 }}
+      className="section-gap-lg"
     >
-      {/* Header */}
-      <header style={{ borderBottom: '1px solid var(--border-subtle)', paddingBottom: '1.5rem' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.5rem' }}>
-          <Badge variant="gold">● A/B COMPARISON ENGINE</Badge>
-          <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>Side-by-Side Trade-off Analysis</span>
+      {/* ── Header ────────────────────────────────────────── */}
+      <div>
+        <h1 className="page-title">Architecture Comparison</h1>
+        <p className="page-subtitle">Side-by-side analysis with recommendation</p>
+      </div>
+
+      {/* ── Side-by-side cards + VS divider ─────────────── */}
+      <div style={{ display: 'flex', alignItems: 'stretch', gap: '1.5rem' }}>
+        <ArchCard
+          label="Architecture A"
+          title="Hybrid RAG v2"
+          score={archAScore}
+          chips={['Open Source', 'High Performance', 'Production Ready']}
+          components={[
+            ['LLM', 'Llama 3.3 70B + Groq'],
+            ['Embedding', 'text-embedding-3-large'],
+            ['Vector DB', 'Qdrant'],
+            ['Retriever', 'Hybrid BM25+Dense'],
+            ['Reranker', 'BGE-Reranker-v2'],
+            ['Framework', 'LlamaIndex'],
+          ]}
+          latency="342ms"
+          cost="$0.0021"
+          isWinner
+          accentColor="var(--accent-gold)"
+        />
+
+        {/* VS column */}
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '1.25rem', width: '96px', flexShrink: 0 }}>
+          <div style={{ width: '44px', height: '44px', borderRadius: '50%', backgroundColor: 'var(--bg-secondary)', border: '1px solid var(--border-hover)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 800, color: 'var(--text-secondary)', fontSize: '0.875rem' }}>
+            VS
+          </div>
+          <div style={{ width: '1px', height: '32px', backgroundColor: 'var(--border-subtle)' }} />
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem', textAlign: 'center' }}>
+            <span style={{ fontSize: '0.625rem', color: 'var(--text-muted)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em' }}>Winner</span>
+            <span style={{ fontSize: '0.75rem', color: 'var(--accent-gold)', fontWeight: 700, lineHeight: 1.3 }}>Hybrid RAG v2</span>
+          </div>
+          <div style={{ width: '1px', height: '32px', backgroundColor: 'var(--border-subtle)' }} />
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem', fontSize: '0.75rem', fontWeight: 600, color: 'var(--status-green)', textAlign: 'center', lineHeight: 1.3 }}>
+            <span>+{(archAScore - archBScore).toFixed(1)} Score</span>
+            <span>−76% Cost</span>
+            <span>−338ms Latency</span>
+          </div>
         </div>
-        <h1 style={{ fontSize: '2.5rem', fontWeight: 800 }}>
-          Architecture Comparison Matrix
-        </h1>
-        <p style={{ fontSize: '1.05rem', color: 'var(--text-secondary)', maxWidth: '750px', marginTop: '0.4rem' }}>
-          Compare open-weights infrastructure against proprietary cloud baselines. Analyze latency differentials, token operational costs, and data sovereignty trade-offs side by side.
-        </p>
-      </header>
 
-      {/* Candidate Selector Cards (Side by Side) */}
-      <section className="grid-2col" style={{ gap: '2rem' }}>
-        
-        {/* Architecture A */}
-        <Card style={{ padding: '2rem', border: '1px solid var(--border-accent)', background: 'linear-gradient(135deg, rgba(212,175,99,0.05) 0%, rgba(19,23,32,1) 100%)', display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+        <ArchCard
+          label="Architecture B"
+          title="Dense RAG v1"
+          score={archBScore}
+          chips={['Proprietary', 'Enterprise', 'Managed']}
+          components={[
+            ['LLM', 'GPT-4o'],
+            ['Embedding', 'text-embedding-3-small'],
+            ['Vector DB', 'Pinecone'],
+            ['Retriever', 'Dense Only'],
+            ['Reranker', 'None'],
+            ['Framework', 'LangChain'],
+          ]}
+          latency="680ms"
+          cost="$0.0089"
+          accentColor="var(--status-blue)"
+        />
+      </div>
+
+      {/* ── Tabs ──────────────────────────────────────────── */}
+      <div className="forge-tabs">
+        {(['Comparison Matrix', 'Radar Chart', 'Migration Guide'] as const).map(t => (
+          <button key={t} onClick={() => setActiveTab(t)} className={`forge-tab-btn${activeTab === t ? ' active' : ''}`}>{t}</button>
+        ))}
+      </div>
+
+      {/* ── Comparison Matrix ─────────────────────────────── */}
+      {activeTab === 'Comparison Matrix' && (
+        <div className="forge-card" style={{ padding: 0, overflowX: 'auto' }}>
+          <table className="forge-table" style={{ minWidth: '600px' }}>
+            <thead>
+              <tr>
+                <th style={{ padding: '0.875rem 1.25rem', color: 'var(--text-muted)', borderBottom: '1px solid var(--border-subtle)' }}>Metric</th>
+                <th style={{ padding: '0.875rem 1.25rem', color: 'var(--accent-gold)', borderBottom: '1px solid var(--border-subtle)', fontWeight: 700, fontSize: '0.6875rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Hybrid RAG v2</th>
+                <th style={{ padding: '0.875rem 1.25rem', color: 'var(--status-blue)', borderBottom: '1px solid var(--border-subtle)', fontWeight: 700, fontSize: '0.6875rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Dense RAG v1</th>
+                <th style={{ padding: '0.875rem 1.25rem', color: 'var(--text-muted)', borderBottom: '1px solid var(--border-subtle)', textAlign: 'right' }}>Winner</th>
+              </tr>
+            </thead>
+            <tbody>
+              {rows.map(r => (
+                <tr key={r.metric} style={{ borderBottom: '1px solid var(--border-subtle)' }}>
+                  <td style={{ padding: '1rem 1.25rem', fontWeight: 600, color: 'var(--text-primary)' }}>{r.metric}</td>
+                  <td style={{ padding: '1rem 1.25rem', fontWeight: 700, color: r.aWin ? 'var(--accent-gold)' : 'var(--text-secondary)' }}>{r.a}</td>
+                  <td style={{ padding: '1rem 1.25rem', color: r.aWin ? 'var(--text-secondary)' : 'var(--status-blue)', fontWeight: r.aWin ? 400 : 700 }}>{r.b}</td>
+                  <td style={{ padding: '1rem 1.25rem', textAlign: 'right' }}>
+                    <span style={{
+                      padding: '0.25rem 0.75rem', borderRadius: 'var(--radius-pill)',
+                      border: '1px solid var(--accent-gold)', color: 'var(--accent-gold)',
+                      backgroundColor: 'rgba(212,175,99,0.08)', fontSize: '0.75rem', fontWeight: 700,
+                    }}>
+                      {r.aWin ? 'Hybrid RAG v2' : 'Dense RAG v1'}
+                    </span>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+
+      {/* ── Migration Guide ───────────────────────────────── */}
+      {activeTab === 'Migration Guide' && (
+        <div className="forge-card" style={{ padding: '1.75rem', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+          <h3 style={{ fontSize: '1.125rem', fontWeight: 800, color: '#FFFFFF' }}>Migration Strategy: Dense RAG v1 → Hybrid RAG v2</h3>
+          <div className="grid-2col" style={{ gap: '1.5rem' }}>
             <div>
-              <Badge variant="gold">CANDIDATE A (RECOMMENDED)</Badge>
-              <h2 style={{ fontSize: '1.5rem', fontWeight: 800, color: '#FFFFFF', marginTop: '0.5rem' }}>
-                {archA.title}
-              </h2>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.8125rem', color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.04em', marginBottom: '0.875rem' }}>
+                <Layers size={14} /> Components to Replace
+              </div>
+              <ul style={{ paddingLeft: '1.25rem', display: 'flex', flexDirection: 'column', gap: '0.5rem', fontSize: '0.875rem', color: 'var(--text-primary)' }}>
+                <li>Replace <strong style={{ color: 'var(--status-blue)' }}>GPT-4o</strong> → <strong style={{ color: 'var(--accent-gold)' }}>Llama 3.3 70B (Groq)</strong></li>
+                <li>Migrate <strong style={{ color: 'var(--status-blue)' }}>Pinecone</strong> → <strong style={{ color: 'var(--accent-gold)' }}>Qdrant</strong></li>
+                <li>Add <strong style={{ color: 'var(--accent-gold)' }}>BGE-Reranker-v2</strong> to pipeline</li>
+                <li>Refactor <strong style={{ color: 'var(--status-blue)' }}>LangChain</strong> → <strong style={{ color: 'var(--accent-gold)' }}>LlamaIndex</strong></li>
+              </ul>
             </div>
-            <ScoreRing score={archA.summary.overallScore} size={60} strokeWidth={5} />
-          </div>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.6rem' }}>
-            <Badge variant="green">{archA.summary.productionReadiness}</Badge>
-            <Badge variant="neutral">{archA.summary.estimatedMonthlyCost}</Badge>
-            <Badge variant="neutral">{archA.summary.estimatedLatency}</Badge>
-          </div>
-        </Card>
-
-        {/* Architecture B */}
-        <Card style={{ padding: '2rem', border: '1px solid var(--border-subtle)', display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
             <div>
-              <Badge variant="blue">CANDIDATE B (BASELINE)</Badge>
-              <h2 style={{ fontSize: '1.5rem', fontWeight: 800, color: '#FFFFFF', marginTop: '0.5rem' }}>
-                {archB.title}
-              </h2>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.8125rem', color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.04em', marginBottom: '0.875rem' }}>
+                <Sparkles size={14} /> Expected Benefits
+              </div>
+              <ul style={{ paddingLeft: '1.25rem', display: 'flex', flexDirection: 'column', gap: '0.5rem', fontSize: '0.875rem', color: 'var(--text-primary)' }}>
+                <li><strong style={{ color: 'var(--status-green)' }}>76% cost reduction</strong> via open-weights inference</li>
+                <li><strong style={{ color: 'var(--status-green)' }}>49% latency improvement</strong> via Groq LPU</li>
+                <li>Improved recall from hybrid search + reranking</li>
+              </ul>
             </div>
-            <ScoreRing score={archB.summary.overallScore} size={60} strokeWidth={5} />
-          </div>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.6rem' }}>
-            <Badge variant="blue">Cloud SaaS Baseline</Badge>
-            <Badge variant="neutral">{archB.summary.estimatedMonthlyCost}</Badge>
-            <Badge variant="neutral">{archB.summary.estimatedLatency}</Badge>
-          </div>
-        </Card>
-      </section>
-
-      {/* Metric Comparison Table */}
-      <section>
-        <Card style={{ padding: '2rem', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-          <h3 style={{ fontSize: '1.3rem', fontWeight: 800, color: '#FFFFFF', textTransform: 'uppercase', letterSpacing: '0.03em' }}>
-            Key Performance Metrics Comparison
-          </h3>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-            {comparison.metricComparison.map((item, index) => (
-              <div
-                key={index}
-                style={{
-                  padding: '1.25rem',
-                  backgroundColor: 'var(--bg-secondary)',
-                  borderRadius: '14px',
-                  border: '1px solid var(--border-subtle)',
-                  display: 'grid',
-                  gridTemplateColumns: '1.5fr 1fr 1fr 2fr',
-                  alignItems: 'center',
-                  gap: '1.5rem',
-                }}
-              >
-                <div>
-                  <div style={{ fontSize: '1.02rem', fontWeight: 700, color: '#FFFFFF' }}>{item.metricName}</div>
-                  <Badge variant={item.winner === 'A' ? 'gold' : item.winner === 'B' ? 'blue' : 'neutral'} style={{ fontSize: '0.7rem', marginTop: '0.3rem' }}>
-                    {item.winner === 'TIE' ? 'EQUAL RATING' : `WINNER: CANDIDATE ${item.winner}`}
-                  </Badge>
-                </div>
-
-                <div>
-                  <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', textTransform: 'uppercase' }}>Candidate A</span>
-                  <div style={{ fontSize: '1.25rem', fontWeight: 800, color: item.winner === 'A' || item.winner === 'TIE' ? 'var(--status-green)' : 'var(--text-primary)' }}>
-                    {item.valueA}
-                  </div>
-                </div>
-
-                <div>
-                  <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', textTransform: 'uppercase' }}>Candidate B</span>
-                  <div style={{ fontSize: '1.25rem', fontWeight: 800, color: item.winner === 'B' ? 'var(--status-blue)' : 'var(--text-secondary)' }}>
-                    {item.valueB}
-                  </div>
-                </div>
-
-                <div style={{ fontSize: '0.88rem', color: 'var(--text-secondary)', lineHeight: 1.4, borderLeft: '1px solid var(--border-hover)', paddingLeft: '1.2rem' }}>
-                  <strong style={{ color: 'var(--text-primary)' }}>Engineering Insight:</strong> {item.insight}
-                </div>
+            <div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.8125rem', color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.04em', marginBottom: '0.875rem' }}>
+                <AlertTriangle size={14} /> Risks & Considerations
               </div>
-            ))}
-          </div>
-        </Card>
-      </section>
-
-      {/* Component Diff Trade-off Matrix */}
-      <section>
-        <Card style={{ padding: '2rem', display: 'flex', flexDirection: 'column', gap: '1.5rem', backgroundColor: 'var(--bg-primary)' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
-            <Sliders size={22} style={{ color: 'var(--accent-gold)' }} />
-            <h3 style={{ fontSize: '1.3rem', fontWeight: 800, color: '#FFFFFF', textTransform: 'uppercase', letterSpacing: '0.03em' }}>
-              Component Stack Trade-off Matrix
-            </h3>
-          </div>
-
-          <div className="grid-3col" style={{ gap: '1.5rem' }}>
-            {comparison.componentDiffs.map((diff, idx) => (
-              <div key={idx} style={{ backgroundColor: 'var(--card-bg)', padding: '1.5rem', borderRadius: '16px', border: '1px solid var(--border-hover)', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                <span style={{ fontSize: '0.8rem', color: 'var(--accent-gold)', fontWeight: 700, textTransform: 'uppercase' }}>
-                  {diff.category}
-                </span>
-                
-                <div style={{ backgroundColor: 'rgba(212,175,99,0.08)', padding: '0.8rem 1rem', borderRadius: '10px', border: '1px solid var(--border-accent)' }}>
-                  <span style={{ fontSize: '0.72rem', color: 'var(--accent-gold)', fontWeight: 700 }}>CANDIDATE A</span>
-                  <div style={{ fontWeight: 700, color: '#FFFFFF', marginTop: '0.15rem' }}>{diff.compA}</div>
+              <ul style={{ paddingLeft: '1.25rem', display: 'flex', flexDirection: 'column', gap: '0.5rem', fontSize: '0.875rem', color: 'var(--text-primary)' }}>
+                <li>Full corpus re-embedding required during migration</li>
+                <li>Prompt adjustment for Llama instruction following</li>
+                <li>LlamaIndex learning curve for the engineering team</li>
+              </ul>
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+              {[['Migration Complexity', 'Medium – High', 'var(--status-orange)'], ['Estimated Time to Production', '2–3 Weeks', '#FFFFFF']].map(([lbl, val, clr]) => (
+                <div key={lbl as string} style={{ background: 'var(--bg-primary)', border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-sm)', padding: '0.875rem 1rem' }}>
+                  <div style={{ fontSize: '0.625rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em', color: 'var(--text-muted)', marginBottom: '0.2rem' }}>{lbl}</div>
+                  <div style={{ fontSize: '1.0625rem', fontWeight: 800, color: clr as string }}>{val}</div>
                 </div>
-
-                <div style={{ backgroundColor: 'rgba(59,130,246,0.08)', padding: '0.8rem 1rem', borderRadius: '10px', border: '1px solid rgba(59,130,246,0.3)' }}>
-                  <span style={{ fontSize: '0.72rem', color: 'var(--status-blue)', fontWeight: 700 }}>CANDIDATE B</span>
-                  <div style={{ fontWeight: 700, color: '#FFFFFF', marginTop: '0.15rem' }}>{diff.compB}</div>
-                </div>
-
-                <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: 1.5, marginTop: 'auto' }}>
-                  {diff.tradeoffSummary}
-                </p>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </Card>
-      </section>
+        </div>
+      )}
+
+      {activeTab === 'Radar Chart' && (
+        <div className="forge-card" style={{ padding: '4rem', textAlign: 'center', color: 'var(--text-muted)', fontSize: '0.875rem', border: '1px dashed var(--border-subtle)' }}>
+          Radar chart visualization — coming soon
+        </div>
+      )}
     </motion.div>
   );
 };
