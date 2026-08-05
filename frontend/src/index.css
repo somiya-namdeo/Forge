@@ -1,0 +1,357 @@
+:root {
+  /* Core Colors */
+  --bg-primary: #0B0D12;
+  --bg-secondary: #0F1218;
+  --card-bg: #131720;
+  --card-bg-hover: #171C28;
+  --card-bg-elevated: #1A2130;
+  
+  /* Borders & Shadows */
+  --border-subtle: rgba(255, 255, 255, 0.06);
+  --border-hover: rgba(255, 255, 255, 0.12);
+  --border-accent: rgba(212, 175, 99, 0.35);
+  --shadow-soft: 0 8px 30px rgba(0, 0, 0, 0.5);
+  --shadow-glow-gold: 0 0 25px rgba(212, 175, 99, 0.2);
+  
+  /* Accent — Primary */
+  --accent-gold: #D4AF63;
+  --accent-gold-hover: #E2BF74;
+  --accent-gold-dim: rgba(212, 175, 99, 0.12);
+  
+  /* Secondary (Scores, Badges & Status Only) */
+  --status-green: #22c55e;
+  --status-green-dim: rgba(34, 197, 94, 0.15);
+  --status-blue: #3b82f6;
+  --status-blue-dim: rgba(59, 130, 246, 0.15);
+  --status-purple: #a855f7;
+  --status-purple-dim: rgba(168, 85, 247, 0.15);
+  --status-orange: #f97316;
+  --status-orange-dim: rgba(249, 115, 22, 0.15);
+  
+  /* Text */
+  --text-primary: #FFFFFF;
+  --text-secondary: #94A3B8;
+  --text-muted: #64748B;
+  
+  /* Typography */
+  --font-heading: 'Outfit', -apple-system, sans-serif;
+  --font-body: 'Inter', -apple-system, sans-serif;
+  
+  /* Geometry */
+  --radius-card: 14px;
+  --radius-md: 10px;
+  --radius-sm: 6px;
+  --radius-pill: 9999px;
+
+  /* Transitions */
+  --transition-smooth: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Reset & Base Setup */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 13.5px;
+  line-height: 1.55;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  selection-background: var(--accent-gold);
+  selection-color: #000;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+}
+
+h1 {
+  font-size: 2.1rem;
+  font-weight: 800;
+}
+
+h2 {
+  font-size: 1.5rem;
+}
+
+h3 {
+  font-size: 1.1rem;
+}
+
+p {
+  color: var(--text-secondary);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button, input, select, textarea {
+  font-family: inherit;
+  font-size: inherit;
+  border: none;
+  background: none;
+  color: inherit;
+  outline: none;
+}
+
+button {
+  cursor: pointer;
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius-pill);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.22);
+}
+
+/* Layout Utilities */
+.app-container {
+  display: flex;
+  min-height: 100vh;
+  width: 100vw;
+  background-color: var(--bg-primary);
+}
+
+.main-content-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow-x: hidden;
+}
+
+.main-content-scroll {
+  flex: 1;
+  padding: 1.75rem 2.25rem;
+  max-width: 1600px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+@media (max-width: 1024px) {
+  .main-content-scroll {
+    padding: 1.25rem 1.25rem;
+  }
+}
+
+/* Premium Card Style */
+.forge-card {
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-card);
+  padding: 1.25rem;
+  box-shadow: var(--shadow-soft);
+  transition: var(--transition-smooth);
+  position: relative;
+  overflow: hidden;
+}
+
+.forge-card-interactive:hover {
+  background-color: var(--card-bg-hover);
+  border-color: var(--border-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.65);
+}
+
+.forge-card-accent-border {
+  border-color: var(--border-accent);
+}
+
+/* Button & Action Styles */
+.forge-btn-primary {
+  background: linear-gradient(135deg, #D4AF63 0%, #B89243 100%);
+  color: #0B0D12;
+  font-weight: 600;
+  padding: 0.55rem 1.25rem;
+  font-size: 0.875rem;
+  border-radius: var(--radius-pill);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: 0 3px 14px rgba(212, 175, 99, 0.3);
+  transition: var(--transition-smooth);
+}
+
+.forge-btn-primary:hover:not(:disabled) {
+  transform: translateY(-1px) scale(1.01);
+  box-shadow: 0 5px 20px rgba(212, 175, 99, 0.5);
+  filter: brightness(1.06);
+}
+
+.forge-btn-primary:active:not(:disabled) {
+  transform: translateY(0) scale(0.98);
+}
+
+.forge-btn-primary:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.forge-btn-secondary {
+  background-color: rgba(255, 255, 255, 0.05);
+  color: var(--text-primary);
+  border: 1px solid var(--border-subtle);
+  font-weight: 500;
+  padding: 0.5rem 1.1rem;
+  font-size: 0.875rem;
+  border-radius: var(--radius-pill);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: var(--transition-smooth);
+}
+
+.forge-btn-secondary:hover:not(:disabled) {
+  background-color: rgba(255, 255, 255, 0.09);
+  border-color: var(--border-hover);
+  transform: translateY(-1px);
+}
+
+.forge-btn-ghost {
+  color: var(--text-secondary);
+  padding: 0.4rem 0.75rem;
+  font-size: 0.875rem;
+  border-radius: var(--radius-sm);
+  transition: var(--transition-smooth);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.forge-btn-ghost:hover {
+  color: var(--text-primary);
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* Status & Score Badges */
+.forge-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.2rem 0.65rem;
+  border-radius: var(--radius-pill);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.forge-badge-green {
+  background: var(--status-green-dim);
+  color: var(--status-green);
+  border: 1px solid rgba(34, 197, 94, 0.3);
+}
+
+.forge-badge-blue {
+  background: var(--status-blue-dim);
+  color: var(--status-blue);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+.forge-badge-purple {
+  background: var(--status-purple-dim);
+  color: var(--status-purple);
+  border: 1px solid rgba(168, 85, 247, 0.3);
+}
+
+.forge-badge-orange {
+  background: var(--status-orange-dim);
+  color: var(--status-orange);
+  border: 1px solid rgba(249, 115, 22, 0.3);
+}
+
+.forge-badge-gold {
+  background: var(--accent-gold-dim);
+  color: var(--accent-gold);
+  border: 1px solid var(--border-accent);
+}
+
+.forge-badge-neutral {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-subtle);
+}
+
+/* Grids */
+.grid-2col {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.25rem;
+}
+
+.grid-3col {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+}
+
+.grid-4col {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+}
+
+@media (max-width: 1200px) {
+  .grid-3col, .grid-4col {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .grid-2col, .grid-3col, .grid-4col {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Text Gradient Utilities */
+.text-gradient-gold {
+  background: linear-gradient(135deg, #FFF 0%, #D4AF63 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Animations & Shimmers */
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.animate-shimmer {
+  position: relative;
+  overflow: hidden;
+  background-color: var(--card-bg);
+}
+
+.animate-shimmer::after {
+  content: '';
+  position: absolute;
+  top: 0; right: 0; bottom: 0; left: 0;
+  background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.04) 50%, transparent 100%);
+  animation: shimmer 2s infinite;
+}
