@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="docs/assets/logo.png" width="180">
+  <img src="frontend/public/logo.png" width="180">
 </p>
 
 <h1 align="center">Forge</h1>
