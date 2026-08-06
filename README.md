@@ -13,15 +13,17 @@ Every Great AI System Starts with the Right Draft.
   <img src="https://img.shields.io/badge/FastAPI-009688?logo=fastapi&logoColor=white" alt="FastAPI" />
   <img src="https://img.shields.io/badge/React-61DAFB?logo=react&logoColor=black" alt="React" />
   <img src="https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white" alt="TypeScript" />
+  <img src="https://img.shields.io/badge/SQLAlchemy-D71F00?logo=sqlalchemy&logoColor=white" alt="SQLAlchemy" />
+  <img src="https://img.shields.io/badge/Qdrant-D33232?logo=qdrant&logoColor=white" alt="Qdrant" />
   <img src="https://img.shields.io/badge/LangChain-1C3C3C?logo=langchain&logoColor=white" alt="LangChain" />
-  <img src="https://img.shields.io/badge/LlamaIndex-000000?logo=llamaindex&logoColor=white" alt="LlamaIndex" />
   <img src="https://img.shields.io/badge/Sentence_Transformers-FF9D00?logo=huggingface&logoColor=white" alt="Sentence Transformers" />
   <img src="https://img.shields.io/badge/Groq-F55036?logo=groq&logoColor=white" alt="Groq" />
+  <img src="https://img.shields.io/badge/OpenAI-412991?logo=openai&logoColor=white" alt="OpenAI" />
   <img src="https://img.shields.io/badge/HuggingFace-FFD21E?logo=huggingface&logoColor=black" alt="HuggingFace" />
   <img src="https://img.shields.io/badge/RAGAS-000000?logo=ragas&logoColor=white" alt="RAGAS" />
   <img src="https://img.shields.io/badge/Docker-2496ED?logo=docker&logoColor=white" alt="Docker" />
   <img src="https://img.shields.io/badge/Vite-646CFF?logo=vite&logoColor=white" alt="Vite" />
-  <img src="https://img.shields.io/badge/TailwindCSS-06B6D4?logo=tailwindcss&logoColor=white" alt="TailwindCSS" />
+  <img src="https://img.shields.io/badge/Framer_Motion-0055FF?logo=framer&logoColor=white" alt="Framer Motion" />
 </p>
 
 ## Table of Contents
@@ -67,41 +69,91 @@ Forge exists to assist in resolving these tradeoffs. It utilizes structured know
 
 - **Decision Engine**: Transforms requirements into structured configurations utilizing a deterministic constraint-based scoring system.
 - **Architecture Recommendation**: Generates a unified technology stack recommendation spanning models, infrastructure, and deployment targets.
+- **Constraint-based Scoring**: Evaluates candidate LLMs, embedding models, and chunking strategies dynamically based on user-defined limits (e.g., latency, cost, security).
 - **Explanation Engine**: Exposes the rationale behind every selected component to ensure transparency.
-- **Alternative Comparison**: Outlines viable alternative architectures and explicitly documents the tradeoffs.
-- **Evaluation Engine**: Verifies generated outputs against standard metrics (Faithfulness, Answer Relevancy, Precision, Recall).
-- **Benchmarking**: Validates selected architectures against pre-computed RAG datasets and visualizes leaderboard latency, throughput, and accuracy.
+- **Alternative Comparison**: Outlines viable alternative architectures and explicitly documents the tradeoffs via radar chart metrics.
+- **Evaluation Engine**: Verifies generated outputs against standard metrics (Faithfulness, Answer Relevancy, Precision, Recall) using the RAGAS framework.
+- **Benchmarking**: Validates selected architectures against pre-computed RAG datasets and visualizes leaderboard latency, throughput, and accuracy without fabricating data.
 - **Knowledge Base**: Curated internal domain knowledge regarding current LLM capabilities and vector database limits.
-- **Report Generation**: Aggregates recommendations, evaluations, and benchmarks into downloadable engineering reports.
+- **Report Generation**: Aggregates recommendations, evaluations, and benchmarks into downloadable engineering reports (PDF/JSON).
 
 ## Architecture Overview
 
 ```mermaid
-flowchart TD
-    A[User] --> B[React Frontend]
-    B --> C[FastAPI Backend]
-    
-    C --> D[Decision Engine]
-    C --> G[Evaluation]
-    C --> H[Benchmark]
-    C --> I[Reports]
-    
-    D --> E[Knowledge Base]
-    E --> F[Recommendation Engine]
+flowchart TB
+    subgraph Frontend [React SPA]
+        UI[Vite + React UI]
+        State[Shared Context State]
+        UI <--> State
+    end
+
+    subgraph Backend [FastAPI Application]
+        API[FastAPI Routers]
+        
+        subgraph AI_Engine [AI Engine Module]
+            DE[Decision Engine]
+            RA[Requirement Analyzer]
+            WE[Weighting Engine]
+            RA --> DE
+            WE --> DE
+        end
+        
+        subgraph Validation_Layer [Validation & Benchmark Module]
+            EE[Evaluation Service]
+            RM[Metric Registry]
+            RAGAS[RAGAS Evaluator]
+            BR[Benchmark Runner]
+            
+            EE --> RM
+            RM --> RAGAS
+            BR --> EE
+        end
+        
+        API --> AI_Engine
+        API --> Validation_Layer
+    end
+
+    subgraph Data_Layer [Data & Storage]
+        KB[(Knowledge Base JSON)]
+        DS[(Benchmark Datasets)]
+        DB[(SQLAlchemy State)]
+    end
+
+    Frontend <--> |REST HTTP| Backend
+    AI_Engine <--> Data_Layer
+    Validation_Layer <--> Data_Layer
 ```
 
 ## System Flow
 
 ```mermaid
-flowchart TD
-    A[Requirements] --> B[Constraint Extraction]
-    B --> C[Knowledge Retrieval]
-    C --> D[Component Scoring]
-    D --> E[Tradeoff Analysis]
-    E --> F[Architecture Recommendation]
-    F --> G[Evaluation]
-    G --> H[Benchmark]
-    H --> I[Engineering Report]
+sequenceDiagram
+    participant User
+    participant Frontend
+    participant DecisionEngine as Decision Engine
+    participant EvalService as Evaluation Service
+    participant BenchmarkRunner as Benchmark Runner
+
+    User->>Frontend: Submit Project Requirements
+    Frontend->>DecisionEngine: POST /decision/recommend
+    DecisionEngine->>DecisionEngine: Extract Constraints
+    DecisionEngine->>DecisionEngine: Query Knowledge Base
+    DecisionEngine->>DecisionEngine: Score Component Candidates
+    DecisionEngine-->>Frontend: Return Optimal Architecture & Alternatives
+
+    User->>Frontend: Request Benchmark
+    Frontend->>BenchmarkRunner: POST /benchmark/run
+    BenchmarkRunner->>BenchmarkRunner: Load Dataset (legal-bench-500)
+    
+    loop For Each Sample
+        BenchmarkRunner->>EvalService: Construct EvaluationRequest
+        EvalService->>EvalService: Execute RAGAS Metrics
+        EvalService-->>BenchmarkRunner: Return Sample Metrics (Faithfulness, etc.)
+    end
+    
+    BenchmarkRunner->>BenchmarkRunner: Aggregate Statistics & Throughput
+    BenchmarkRunner-->>Frontend: Return Benchmark Report
+    Frontend-->>User: Display Leaderboard & KPI Cards
 ```
 
 ## Project Structure
@@ -110,27 +162,29 @@ flowchart TD
 forge/
 ├── backend/
 │   ├── app/
-│   │   ├── api/
-│   │   ├── benchmark/
-│   │   ├── core/
-│   │   ├── datasets/
-│   │   ├── decision/
-│   │   ├── evaluation/
-│   │   ├── history/
-│   │   ├── reports/
-│   │   └── schemas/
-│   ├── ai_engine/
-│   └── knowledge_base/
+│   │   ├── api/             # FastAPI route definitions
+│   │   ├── benchmark/       # Benchmark runner and statistics aggregation
+│   │   ├── core/            # Application config and environment variables
+│   │   ├── datasets/        # Static evaluation datasets (JSONL)
+│   │   ├── decision/        # Constraint extraction and component scoring
+│   │   ├── embeddings/      # Vector embedding wrappers
+│   │   ├── evaluation/      # Core evaluation engine
+│   │   ├── history/         # SQLAlchemy state management
+│   │   ├── metrics/         # Metric registries and RAGAS integration
+│   │   ├── reports/         # PDF and JSON export generation
+│   │   ├── schemas/         # Pydantic v2 validation models
+│   │   └── services/        # Orchestration layer for API routes
+│   ├── ai_engine/           # Core prompting and orchestration logic
+│   └── knowledge_base/      # Domain knowledge (LLMs, Vector DBs)
 ├── frontend/
 │   ├── src/
-│   │   ├── components/
-│   │   ├── context/
-│   │   ├── hooks/
-│   │   ├── pages/
-│   │   ├── services/
-│   │   └── utils/
+│   │   ├── components/      # Reusable UI elements (Cards, Badges, Loaders)
+│   │   ├── context/         # React Context for global state (ForgeContext)
+│   │   ├── pages/           # Main views (Decision, Benchmark, Evaluation, etc.)
+│   │   ├── services/        # HTTP API client services
+│   │   ├── types/           # TypeScript interfaces matching Pydantic
+│   │   └── utils/           # Formatting and pure logic utilities
 │   └── package.json
-├── docker-compose.yml
 └── README.md
 ```
 
@@ -138,12 +192,12 @@ forge/
 
 | Module | Purpose |
 | --- | --- |
-| **Decision Engine** | Analyzes system requirements against known constraints to generate optimal technology recommendations. |
-| **Knowledge Base** | Stores factual, up-to-date specifications for LLMs, embedding models, and vector stores. |
-| **Evaluation Engine** | Verifies RAG outputs using quality metrics via integration with standard frameworks. |
-| **Benchmark** | Validates generated architectures statistically against baseline datasets (latency, throughput, cost). |
+| **Decision Engine** | Analyzes system requirements against known constraints to generate optimal technology recommendations and explicit explanations. |
+| **Knowledge Base** | Stores factual, up-to-date specifications for LLMs, embedding models, and vector stores to ground decisions in reality. |
+| **Evaluation Engine** | Verifies generated RAG outputs using quality metrics via deep integration with the RAGAS framework. |
+| **Benchmark** | Validates architectures statistically against baseline datasets (latency, throughput, cost, accuracy). |
 | **Comparison** | Provides side-by-side tradeoff visualizations for alternative architectures. |
-| **Reports** | Aggregates the unified workflow data into shareable engineering documents. |
+| **Reports** | Aggregates the unified workflow data into shareable PDF/JSON engineering documents. |
 | **Frontend** | React SPA that serves as the interactive dashboard for the decision matrix. |
 | **Backend** | FastAPI application hosting the deterministic reasoning engine and evaluation services. |
 
@@ -151,9 +205,9 @@ forge/
 
 | Category | Technology | Purpose |
 | --- | --- | --- |
-| **Frontend** | React, TypeScript, Vite, TailwindCSS | High-performance, modular SPA rendering |
-| **Backend Core** | FastAPI, Python | High-throughput async REST API |
-| **Database** | PostgreSQL, Supabase | Structured application state and history storage |
+| **Frontend** | React, TypeScript, Vite, Framer Motion | High-performance, modular SPA rendering with complex micro-animations |
+| **Backend Core** | FastAPI, Python, Pydantic | High-throughput async REST API with strict schema validation |
+| **Database** | SQLAlchemy, Qdrant | Structured application state storage and vector operations |
 | **AI Orchestration** | LangChain, LlamaIndex | Graph orchestration and structured retrieval pipelines |
 | **Model Interfaces** | OpenAI, Groq, HuggingFace | Foundational intelligence and embeddings |
 | **Evaluation** | RAGAS | Statistically robust RAG generation validation |
@@ -162,15 +216,13 @@ forge/
 
 ## Engineering Workflow
 
-```mermaid
-flowchart LR
-    A[1. Requirements] --> B[2. Architecture Recommendation]
-    B --> C[3. Explanation]
-    C --> D[4. Evaluation]
-    D --> E[5. Benchmark]
-    E --> F[6. Comparison]
-    F --> G[7. Report Generation]
-```
+1. **Requirements**: User inputs their constraints (e.g., latency, cost, security, domain).
+2. **Architecture Recommendation**: Forge filters candidates and recommends a highly specific LLM, embedding model, and vector DB.
+3. **Explanation**: Forge outputs exactly *why* components were chosen or rejected.
+4. **Evaluation**: Single outputs can be validated against RAGAS metrics.
+5. **Benchmark**: Pre-computed baseline datasets are used to evaluate latency and throughput at scale.
+6. **Comparison**: The user compares alternatives side-by-side.
+7. **Report Generation**: Data is exported as a unified engineering specification.
 
 ## Installation
 
@@ -195,12 +247,11 @@ npm install
 ```
 
 ### 4. Environment Variables
-Create a `.env` file in the `backend/` directory:
+Create a `.env` file in the root `forge/` directory:
 ```env
 OPENAI_API_KEY=your_openai_key
 GROQ_API_KEY=your_groq_key
-SUPABASE_URL=your_supabase_url
-SUPABASE_KEY=your_supabase_key
+EVALUATION_MODEL=gpt-4o-mini
 ```
 
 ### 5. Run the Backend
@@ -218,11 +269,11 @@ npm run dev
 ## Example Usage
 
 1. **User enters requirements**: A user inputs their constraints (e.g., "We need a legal document QA system with high security compliance and <500ms latency").
-2. **Forge recommends architecture**: The decision engine outputs an on-premise Llama 3 configuration using hybrid retrieval and Qdrant.
+2. **Forge recommends architecture**: The decision engine outputs an on-premise configuration using hybrid retrieval and Qdrant.
 3. **User evaluates architecture**: Forge generates explanations outlining exactly why cloud services were rejected due to security compliance.
 4. **Benchmarks architectures**: The proposed architecture runs against a 500-question legal dataset to verify latency limits.
-5. **Compares alternatives**: The user views a side-by-side tradeoff matrix comparing the selected stack against a high-cost OpenAI alternative.
-6. **Generates report**: The final architecture is exported as a unified Markdown specification for the engineering team.
+5. **Compares alternatives**: The user views a side-by-side tradeoff matrix comparing the selected stack against alternatives.
+6. **Generates report**: The final architecture is exported as a unified document for the engineering team.
 
 ## Design Principles
 
