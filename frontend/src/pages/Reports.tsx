@@ -13,8 +13,8 @@ import { ArchitectureReport, GeneratedArchitecture } from '../types';
 import { decisionService, reportsService } from '../services';
 
 interface ReportsProps {
-  selectedArch?: GeneratedArchitecture | null;
-  onNavigateToArch: (arch: GeneratedArchitecture) => void;
+  selectedArch?: any | null;
+  onNavigateToArch: (arch: any) => void;
 }
 
 export const Reports: React.FC<ReportsProps> = ({ selectedArch, onNavigateToArch }) => {
@@ -22,17 +22,24 @@ export const Reports: React.FC<ReportsProps> = ({ selectedArch, onNavigateToArch
   const [loading,      setLoading]      = useState(true);
   const [exportingJson, setExportingJson] = useState(false);
 
+  const [backendUnavailable, setBackendUnavailable] = useState(false);
+
   useEffect(() => {
     async function loadReport() {
       setLoading(true);
-      let target: GeneratedArchitecture | null = selectedArch || null;
+      setBackendUnavailable(false);
+      let target: any | null = selectedArch || null;
       if (!target) {
-        const archs = await decisionService.getSessionArchitectures();
-        target = archs.length > 0
-          ? archs[0]
-          : await decisionService.generateFromPrompt('Hybrid RAG architecture for Enterprise Legal compliance', 'Legal RAG System');
+        // No arch passed — backend session endpoint missing, cannot fabricate
+        setBackendUnavailable(true);
+        setLoading(false);
+        return;
       }
-      if (target) setReport(await reportsService.generateReport(target));
+      try {
+        setReport(await reportsService.generateReport(target));
+      } catch {
+        setBackendUnavailable(true);
+      }
       setLoading(false);
     }
     loadReport();
@@ -58,6 +65,18 @@ export const Reports: React.FC<ReportsProps> = ({ selectedArch, onNavigateToArch
     URL.revokeObjectURL(url);
     setExportingJson(false);
   };
+
+  if (backendUnavailable) {
+    return (
+      <div style={{ padding: '4rem 2rem', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem', textAlign: 'center' }}>
+        <div style={{ width: '48px', height: '48px', borderRadius: '12px', backgroundColor: 'var(--accent-gold-dim)', color: 'var(--accent-gold)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.5rem' }}>📄</div>
+        <div style={{ fontSize: '1.1rem', fontWeight: 700, color: 'var(--text-primary)' }}>Backend Not Available</div>
+        <div style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', maxWidth: '460px' }}>
+          Generate an architecture from the Decision Engine or Home page first, then navigate here to view the full production report.
+        </div>
+      </div>
+    );
+  }
 
   if (loading || !report) {
     return (

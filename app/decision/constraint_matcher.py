@@ -3,6 +3,7 @@
 from typing import Any
 
 from app.schemas.decision import DecisionRequest
+from app.decision.requirement_analyzer import RequirementAnalyzer, ProjectProfile
 
 _DEPLOYMENT_FIELDS = (
     "supported_deployments",
@@ -103,37 +104,38 @@ class ConstraintMatcher:
 
     @classmethod
     def is_candidate_valid(
-        cls, entry: dict[str, Any], request: DecisionRequest
+        cls, entry: dict[str, Any], profile: ProjectProfile
     ) -> bool:
         """Evaluate whether a single candidate entity satisfies all request constraints."""
-        target_deployment = request.deployment_target.value.strip().lower()
-        if not cls._is_deployment_compatible(entry, target_deployment):
+        target_deployment = profile.deployment.value.strip().lower() if profile.deployment else ""
+        if target_deployment and not cls._is_deployment_compatible(entry, target_deployment):
             return False
 
         normalized_constraints = {
-            c.strip().lower() for c in request.constraints if c and c.strip()
+            c.strip().lower() for c in profile.constraints if c and c.strip()
         }
         if not cls._is_constraint_compatible(entry, normalized_constraints):
             return False
 
-        if not cls._is_budget_compatible(entry, request.budget_usd):
+        if not cls._is_budget_compatible(entry, profile.budget_usd):
             return False
 
         return True
 
     def apply_constraints(
         self,
-        request: DecisionRequest,
+        request: DecisionRequest | ProjectProfile,
         candidates: dict[str, list[dict[str, Any]]],
     ) -> dict[str, list[dict[str, Any]]]:
         """Filter candidate entities according to request deployment, budget, and constraint flags."""
+        profile = RequirementAnalyzer.analyze(request) if isinstance(request, DecisionRequest) else request
         filtered_candidates: dict[str, list[dict[str, Any]]] = {}
 
         for category, items in candidates.items():
             valid_items = [
                 item.copy()
                 for item in items
-                if self.is_candidate_valid(item, request)
+                if self.is_candidate_valid(item, profile)
             ]
             filtered_candidates[category] = valid_items
 

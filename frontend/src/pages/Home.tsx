@@ -20,7 +20,7 @@ import { GeneratedArchitecture, EvaluationResult } from '../types';
 import { NavPage } from '../components/navigation';
 
 interface HomeProps {
-  onNavigate: (page: NavPage, selectedArch?: GeneratedArchitecture) => void;
+  onNavigate: (page: NavPage, selectedArch?: any) => void;
 }
 
 const QUICK_TOPICS = [
@@ -39,14 +39,30 @@ export const Home: React.FC<HomeProps> = ({ onNavigate }) => {
   const [sessionArchs, setSessionArchs] = useState<GeneratedArchitecture[]>([]);
   const [sessionEvals, setSessionEvals] = useState<EvaluationResult[]>([]);
   const [loadingInitial, setLoadingInitial] = useState(true);
+  const [archError, setArchError] = useState<string | null>(null);
+  const [evalError, setEvalError] = useState<string | null>(null);
 
   useEffect(() => {
     async function loadSessionData() {
       setLoadingInitial(true);
-      const archs = await decisionService.getSessionArchitectures();
-      const latestEval = await evaluationService.getCurrentEvaluation();
-      setSessionArchs(archs);
-      if (latestEval) setSessionEvals([latestEval]);
+      try {
+        const archs = await decisionService.getSessionArchitectures();
+        setSessionArchs(archs);
+        setArchError(null);
+      } catch (err: any) {
+        setArchError(err.message === 'Backend Not Available' ? 'Backend Not Available' : 'Failed to load history');
+        setSessionArchs([]);
+      }
+      
+      try {
+        const latestEval = await evaluationService.getCurrentEvaluation();
+        if (latestEval) setSessionEvals([latestEval]);
+        setEvalError(null);
+      } catch (err: any) {
+        setEvalError(err.message === 'Backend Not Available' ? 'Backend Not Available' : 'Failed to load evaluations');
+        setSessionEvals([]);
+      }
+      
       setLoadingInitial(false);
     }
     loadSessionData();
@@ -55,14 +71,21 @@ export const Home: React.FC<HomeProps> = ({ onNavigate }) => {
   const handleGenerate = async () => {
     if (!promptInput.trim() && !selectedTopic) return;
     setGenerating(true);
-    const newArch = await decisionService.generateFromPrompt(
-      promptInput || `Build a high-precision RAG assistant optimized for ${selectedTopic}.`,
-      selectedTopic
-    );
-    setSessionArchs(prev => [newArch, ...prev]);
-    setGenerating(false);
-    // Navigate straight to the generated architecture report
-    onNavigate('new-architecture', newArch);
+    setArchError(null);
+    try {
+      const response = await decisionService.runDecisionEngine({
+        project_name: selectedTopic,
+        project_description: promptInput || `Build a high-precision RAG assistant optimized for ${selectedTopic}.`,
+        deployment_target: 'aws',
+        priority: 'balanced'
+      });
+      // Navigate straight to the generated architecture report
+      onNavigate('new-architecture', response as any);
+    } catch (err: any) {
+      setArchError(err.message || 'Failed to generate architecture');
+    } finally {
+      setGenerating(false);
+    }
   };
 
   return (
@@ -273,13 +296,19 @@ export const Home: React.FC<HomeProps> = ({ onNavigate }) => {
 
           {loadingInitial ? (
             <Skeleton variant="card" height={160} />
+          ) : archError ? (
+            <EmptyState
+              compact
+              icon={Layers}
+              title={archError}
+              description="This endpoint has not been implemented in the FastAPI backend yet."
+            />
           ) : sessionArchs.length === 0 ? (
             <EmptyState
               compact
               icon={Layers}
               title="No Session Architectures"
               description="You have not generated any architectures during this session. Use the prompt above to engineer your first stack."
-
             />
           ) : (
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
@@ -327,6 +356,13 @@ export const Home: React.FC<HomeProps> = ({ onNavigate }) => {
 
           {loadingInitial ? (
             <Skeleton variant="card" height={160} />
+          ) : evalError ? (
+            <EmptyState
+              compact
+              icon={BarChart2}
+              title={evalError}
+              description="This endpoint has not been implemented in the FastAPI backend yet."
+            />
           ) : sessionEvals.length === 0 ? (
             <EmptyState
               compact
@@ -357,10 +393,10 @@ export const Home: React.FC<HomeProps> = ({ onNavigate }) => {
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '0.45rem', marginTop: '0.1rem' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.78rem' }}>
                       <span style={{ color: 'var(--text-secondary)' }}>Faithfulness</span>
-                      <span style={{ fontWeight: 600, color: 'var(--status-green)' }}>{ev.metrics.faithfulness.score}%</span>
+                      <span style={{ fontWeight: 600, color: 'var(--status-green)' }}>{ev.generation?.faithfulness ? (ev.generation.faithfulness * 100).toFixed(1) : (ev.metrics?.faithfulness?.score || 0)}%</span>
                     </div>
                     <div style={{ width: '100%', height: '4px', backgroundColor: 'rgba(255,255,255,0.06)', borderRadius: '99px', overflow: 'hidden' }}>
-                      <div style={{ width: `${ev.metrics.faithfulness.score}%`, height: '100%', backgroundColor: 'var(--status-green)' }} />
+                      <div style={{ width: `${ev.generation?.faithfulness ? (ev.generation.faithfulness * 100) : (ev.metrics?.faithfulness?.score || 0)}%`, height: '100%', backgroundColor: 'var(--status-green)' }} />
                     </div>
                   </div>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: '0.45rem', borderTop: '1px solid var(--border-subtle)', fontSize: '0.72rem', color: 'var(--text-muted)' }}>

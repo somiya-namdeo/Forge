@@ -11,6 +11,8 @@ from app.decision.requirement_analyzer import RequirementAnalyzer
 from app.decision.retriever import KnowledgeRetriever
 from app.decision.scoring_engine import ScoringEngine
 from app.schemas.decision import DecisionRequest, DecisionResponse
+from app.schemas.decision_run import DecisionRunRequest
+from app.decision.decision_engine import DecisionEngine
 
 
 import logging
@@ -35,7 +37,11 @@ class DecisionService:
         self.constraint_matcher = constraint_matcher
         self.scoring_engine = scoring_engine
         self.recommendation_engine = recommendation_engine
-        self.explanation_engine = explanation_engine
+        self.decision_engine = DecisionEngine()
+        
+    def run_decision(self, request: DecisionRunRequest) -> DecisionResponse:
+        """Execute Decision Engine using pre-computed recommendations."""
+        return self.decision_engine.run(request.request, request.recommendations)
 
     def recommend(self, request: DecisionRequest) -> DecisionResponse:
         """Execute complete recommendation pipeline using RequirementAnalyzer ProjectProfile."""
@@ -78,51 +84,20 @@ class DecisionService:
         t_rec_end = time.perf_counter()
         rec_gen_ms = round((t_rec_end - t_rec_start) * 1000, 2)
 
-        # Stage 6: Consolidated LLM Rationale Synthesis & Alternative Analysis
-        t_exp_start = time.perf_counter()
-        final_recommendations = self.explanation_engine.generate(
-            base_recommendations, profile
-        )
-        t_exp_end = time.perf_counter()
-        explanation_time_ms = round((t_exp_end - t_exp_start) * 1000, 2)
-
-        # Stage 7: Response Construction & Arithmetic Mean Confidence
-        t_resp_start = time.perf_counter()
-        if final_recommendations:
-            confidences = [item.confidence for item in final_recommendations]
-            overall_confidence = round(float(statistics.fmean(confidences)), 4)
-        else:
-            overall_confidence = 0.0
-
-        generated_at = datetime.now(timezone.utc)
-        count = len(final_recommendations)
-        summary = f"Generated architecture recommendations for {count} component categories."
-
-        metadata: dict[str, str] = {
-            "pipeline_version": "1.0.0",
-            "recommendation_count": str(count),
-            "project_name": request.project_name,
-            "domain": profile.domain.value,
-            "project_scale": profile.project_scale.value,
-            "document_scale": profile.document_scale.value,
-            "budget_tier": profile.budget_tier.value,
-            "deployment_target": request.deployment_target.value,
-            "priority": request.priority.value,
-        }
-
-        ranking_time_ms = round(filtering_time_ms + scoring_time_ms, 2)
-
+        # Stage 6 & 7: Explanations and response construction via DecisionEngine
+        # To maintain wrapper compatibility, we manually call the DecisionEngine here
+        run_request = DecisionRunRequest(request=request, recommendations=base_recommendations)
         pipeline_statistics: dict[str, Any] = {
             "technologies_considered": technologies_considered,
             "categories_processed": categories_processed,
-            "average_confidence": overall_confidence,
             "knowledge_base_version": "1.0.0",
             "retrieval_time_ms": max(1, int(retrieval_time_ms)),
-            "ranking_time_ms": max(1, int(ranking_time_ms)),
+            "ranking_time_ms": max(1, int(filtering_time_ms + scoring_time_ms)),
         }
+        
+        response = self.decision_engine.run(request, base_recommendations, pipeline_statistics)
 
         t_resp_end = time.perf_counter()
-        serialization_ms = round((t_resp_end - t_resp_start) * 1000, 2)
         total_pipeline_ms = round((time.perf_counter() - t_pipeline_start) * 1000, 2)
 
         logger.info("\nDecision Pipeline Latency Profile:")
@@ -131,15 +106,6 @@ class DecisionService:
         logger.info(f"Candidate Filtering .............. {filtering_time_ms:>7.2f} ms")
         logger.info(f"Candidate Ranking .............. {scoring_time_ms:>7.2f} ms")
         logger.info(f"Recommendation Generation ...... {rec_gen_ms:>7.2f} ms")
-        logger.info(f"Explanation Generation ......... {explanation_time_ms:>7.2f} ms")
-        logger.info(f"Response Serialization .......... {serialization_ms:>7.2f} ms")
         logger.info(f"Total Pipeline Latency ......... {total_pipeline_ms:>7.2f} ms\n")
 
-        return DecisionResponse(
-            recommendations=final_recommendations,
-            summary=summary,
-            overall_confidence=overall_confidence,
-            generated_at=generated_at,
-            metadata=metadata,
-            pipeline_statistics=pipeline_statistics,
-        )
+        return response

@@ -19,10 +19,16 @@ import { Card, Badge, Button, ScoreRing, ProgressBar, EmptyState, Skeleton, Load
 import { EvaluationResult } from '../types';
 import { evaluationService } from '../services';
 
+const formatPercent = (val: number | undefined) => {
+  if (val === undefined || val === null) return '0.0';
+  return (val * 100).toFixed(1);
+};
+
 export const Evaluation: React.FC = () => {
   const [targetPipeline, setTargetPipeline] = useState('Legal RAG System — Hybrid Pipeline (v1.0.0)');
   const [evaluating, setEvaluating] = useState(false);
   const [result, setResult] = useState<EvaluationResult | null>(null);
+  const [evalError, setEvalError] = useState<string | null>(null);
 
   // Input states for the Evaluation Input Card
   const [question, setQuestion] = useState('What are the termination liabilities under Clause 14.2 in corporate mergers?');
@@ -33,9 +39,15 @@ export const Evaluation: React.FC = () => {
   const handleRunEvaluation = async () => {
     setEvaluating(true);
     setResult(null);
-    const data = await evaluationService.runEvaluation(targetPipeline, 'v1.0.0');
-    setResult(data);
-    setEvaluating(false);
+    setEvalError(null);
+    try {
+      const data = await evaluationService.runEvaluation(question, retrievedContext, groundTruth, generatedAnswer);
+      setResult(data);
+    } catch (err: any) {
+      setEvalError(err.message || 'Evaluation failed');
+    } finally {
+      setEvaluating(false);
+    }
   };
 
   const MetricRow = ({ name, score, description, isOptimal = true, suffix = '%' }: { name: string, score: number | string, description: string, isOptimal?: boolean, suffix?: string }) => (
@@ -142,19 +154,81 @@ export const Evaluation: React.FC = () => {
         </div>
       )}
 
-      {/* State 2: Initial Waiting */}
+      {/* State 2: Initial Waiting or Backend Error */}
       {!evaluating && !result && (
         <EmptyState
           icon={BarChart2}
-          title="Waiting for Evaluation"
-          description="Provide inputs above and click Run Evaluation to test the pipeline."
-          actionText="Run Evaluation"
-          onAction={handleRunEvaluation}
+          title={evalError ? 'Backend Not Available' : 'Waiting for Evaluation'}
+          description={
+            evalError
+              ? evalError
+              : 'Provide inputs above and click Run Evaluation to test the pipeline.'
+          }
+          actionText={evalError ? undefined : 'Run Evaluation'}
+          onAction={evalError ? undefined : handleRunEvaluation}
         />
       )}
 
       {/* State 3: Completed Animated Evaluation Results */}
-      {!evaluating && result && (
+      {!evaluating && result && (() => {
+        let displayRecs: { text: string; priority: string; color: string }[] = [];
+        let displayStrengths: string[] = [];
+        let displayWeaknesses: string[] = [];
+        
+        const fScore = result.generation?.faithfulness ?? 1.0;
+        const rScore = result.generation?.answer_relevancy ?? 1.0;
+        const hRate = Math.max(0, 1 - fScore);
+        const overall = (result.overall_score ?? (result.summary?.overall_score ?? 1.0)) * 100; 
+
+        const isNeedsImprovement = fScore < 0.85 || rScore < 0.85 || hRate > 0.15;
+        const isExcellent = fScore >= 0.95 && rScore >= 0.95 && hRate <= 0.05;
+        const isGood = !isNeedsImprovement && !isExcellent;
+
+        // Strengths
+        if (fScore >= 0.95) displayStrengths.push("Excellent factual grounding.");
+        else if (fScore >= 0.85) displayStrengths.push("Good factual consistency.");
+        
+        if (rScore >= 0.95) displayStrengths.push("Highly relevant response.");
+        else if (rScore >= 0.85) displayStrengths.push("Response addresses the user's intent effectively.");
+
+        // Weaknesses / Minor issues
+        if (isNeedsImprovement) {
+            if (fScore < 0.85) displayWeaknesses.push("Generated answer contains unsupported claims.");
+            if (rScore < 0.85) displayWeaknesses.push("Generated answer only partially addresses the user question.");
+        } else if (isGood) {
+            if (fScore < 0.95) displayWeaknesses.push("Factual completeness could be improved.");
+            if (rScore < 0.95) displayWeaknesses.push("Response could be more complete.");
+        }
+
+        // Recommendations pool
+        if (fScore < 0.85) {
+            displayRecs.push({ text: "Improve factual grounding and reduce unsupported claims.", priority: "High", color: "#f97316" });
+        } else if (fScore < 0.95) {
+            displayRecs.push({ text: "Provide a more complete response.", priority: "Minor", color: "#3b82f6" });
+        }
+
+        if (rScore < 0.85) {
+            displayRecs.push({ text: "Address the user's question more directly.", priority: "High", color: "#f97316" });
+            displayRecs.push({ text: "Refine the prompt to encourage more complete responses.", priority: "Normal", color: "#eab308" });
+            displayRecs.push({ text: "Expand the response with additional relevant information.", priority: "Normal", color: "#eab308" });
+        } else if (rScore < 0.95) {
+            displayRecs.push({ text: "Expand the response with additional relevant information from the retrieved context.", priority: "Minor", color: "#3b82f6" });
+            displayRecs.push({ text: "Provide a more complete response.", priority: "Minor", color: "#3b82f6" });
+        }
+
+        if (hRate > 0.15) {
+            displayRecs.push({ text: "Enforce stricter context grounding to reduce hallucinations.", priority: "High", color: "#ef4444" });
+        }
+
+        // Deduplicate based on text
+        displayRecs = displayRecs.filter((v, i, a) => a.findIndex(t => (t.text === v.text)) === i);
+
+        // If excellent evaluations
+        if (isExcellent) {
+            displayRecs = [];
+        }
+
+        return (
         <motion.div
           initial={{ opacity: 0, scale: 0.98 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -170,21 +244,23 @@ export const Evaluation: React.FC = () => {
                 </div>
                 <div>
                   <h3 style={{ fontSize: '1.1rem', fontWeight: 800, color: '#FFFFFF' }}>
-                    Evaluation Suite Passed: Production Ready
+                    Evaluation Status: {result.status?.toLowerCase() === 'pass' ? 'Passed' : result.status?.toLowerCase() === 'fail' ? 'Failed' : result.status}
                   </h3>
-                  <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
-                    Completed at {result.executedAt} · Zero formatting anomalies detected.
-                  </p>
+                  <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', display: 'flex', flexDirection: 'column', gap: '0.2rem', marginTop: '0.3rem' }}>
+                    <div>Grade: {result.quality_grade || 'A'}</div>
+                    <div>Overall Score: {Math.round(overall)}</div>
+                    <div>Deployment Readiness: {result.deployment_readiness || 'Production Ready'}</div>
+                  </div>
                 </div>
               </div>
               <Badge variant="green" style={{ fontSize: '0.85rem', padding: '0.4rem 1rem', fontWeight: 700 }}>
-                VERIFIED · HEALTHY
+                Evaluation Completed
               </Badge>
             </div>
           </Card>
 
-          {/* 3 Grouped Metric Sections Grid */}
-          <div className="grid-3col" style={{ gap: '1.25rem' }}>
+          {/* 2 Grouped Metric Sections Grid */}
+          <div className="grid-2col" style={{ gap: '1.25rem' }}>
             
             {/* Generation Quality */}
             <Card style={{ padding: '1.25rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
@@ -193,217 +269,146 @@ export const Evaluation: React.FC = () => {
               </h3>
               <MetricRow 
                 name="Faithfulness" 
-                score={result.metrics.faithfulness.score} 
+                score={formatPercent(result.generation?.faithfulness)} 
                 description="Consistency of answers against source." 
               />
               <MetricRow 
                 name="Answer Relevancy" 
-                score={result.metrics.relevancy.score} 
+                score={formatPercent(result.generation?.answer_relevancy)} 
                 description="Semantic proximity to user query." 
               />
               <MetricRow 
-                name="Context Precision" 
-                score={result.metrics.contextPrecision.score} 
-                description="Signal-to-noise ranking quality." 
-                isOptimal={result.metrics.contextPrecision.score > 85}
-              />
-              <MetricRow 
                 name="Hallucination Rate" 
-                score={result.metrics.hallucinationIndex.score} 
-                description="Unsupported claims in reasoning." 
+                score={formatPercent(1 - (result.generation?.faithfulness || 1))} 
+                description="Unsupported claims in reasoning (derived)." 
               />
             </Card>
 
-            {/* Retrieval Quality */}
+            {/* Performance & Provider Information */}
             <Card style={{ padding: '1.25rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
               <h3 style={{ fontSize: '0.9rem', fontWeight: 700, color: '#FFFFFF', textTransform: 'uppercase', marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                <Database size={16} color="var(--accent-gold)" /> Retrieval Quality
+                <Activity size={16} color="var(--status-purple)" /> Operational Stats
               </h3>
               <MetricRow 
-                name="Recall@10" 
-                score={94.2} 
-                description="Relevant documents in top 10 results." 
+                name="Evaluation Latency" 
+                score={Math.round(result.operational?.total_latency_ms || 0)} 
+                suffix=" ms"
+                description="Total execution end-to-end delay." 
               />
               <MetricRow 
-                name="Hit Rate@5" 
-                score={89.5} 
-                description="Queries with at least one hit in top 5." 
-              />
-              <MetricRow 
-                name="MRR" 
-                score={0.87} 
+                name="Provider" 
+                score={String(result.provider || 'ragas')} 
                 suffix=""
-                description="Mean Reciprocal Rank of first relevant doc." 
+                description="Evaluation backend engine used." 
               />
               <MetricRow 
-                name="NDCG@10" 
-                score={0.91} 
+                name="Version" 
+                score={String(result.evaluation_version || '2.0')} 
                 suffix=""
-                description="Normalized Discounted Cumulative Gain." 
-              />
-            </Card>
-
-            {/* Performance */}
-            <Card style={{ padding: '1.25rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-              <h3 style={{ fontSize: '0.9rem', fontWeight: 700, color: '#FFFFFF', textTransform: 'uppercase', marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                <Zap size={16} color="var(--status-purple)" /> Performance
-              </h3>
-              <MetricRow 
-                name="Latency P95" 
-                score={result.metrics.latencyP95.score} 
-                suffix="ms"
-                description="95th percentile execution time." 
-              />
-              <MetricRow 
-                name="Throughput" 
-                score={120} 
-                suffix=" req/s"
-                description="Requests processed per second." 
-              />
-              <MetricRow 
-                name="Token Usage" 
-                score={1450} 
-                suffix=" avg"
-                description="Average tokens per request." 
-              />
-              <MetricRow 
-                name="Error Rate" 
-                score={0.01} 
-                description="Failed requests percentage." 
+                description="Evaluation framework version." 
               />
             </Card>
           </div>
 
           {/* Recommendations Table */}
           <Card style={{ padding: '1.25rem' }}>
-            <h3 style={{ fontSize: '1rem', fontWeight: 700, color: '#FFFFFF', marginBottom: '1rem' }}>Recommendations</h3>
-            <div style={{ overflowX: 'auto' }}>
-              <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.85rem', textAlign: 'left' }}>
-                <thead>
-                  <tr style={{ borderBottom: '1px solid var(--border-subtle)', color: 'var(--text-muted)' }}>
-                    <th style={{ padding: '0.75rem', fontWeight: 600 }}>Priority</th>
-                    <th style={{ padding: '0.75rem', fontWeight: 600 }}>Issue</th>
-                    <th style={{ padding: '0.75rem', fontWeight: 600 }}>Impact</th>
-                    <th style={{ padding: '0.75rem', fontWeight: 600 }}>Recommended Fix</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr style={{ borderBottom: '1px solid var(--border-subtle)' }}>
-                    <td style={{ padding: '0.75rem', color: 'var(--text-primary)', fontWeight: 600 }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
-                        <div style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#f97316' }} /> High
-                      </div>
-                    </td>
-                    <td style={{ padding: '0.75rem', color: 'var(--text-primary)' }}>Context window saturation in Edge cases</td>
-                    <td style={{ padding: '0.75rem', color: 'var(--text-secondary)' }}>Latency spikes &gt; 300ms</td>
-                    <td style={{ padding: '0.75rem', color: 'var(--text-primary)' }}>Implement semantic chunking with 200 token overlap</td>
-                  </tr>
-                  <tr style={{ borderBottom: '1px solid var(--border-subtle)' }}>
-                    <td style={{ padding: '0.75rem', color: 'var(--text-primary)', fontWeight: 600 }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
-                        <div style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#eab308' }} /> Medium
-                      </div>
-                    </td>
-                    <td style={{ padding: '0.75rem', color: 'var(--text-primary)' }}>Sparse retrieval degradation on specific acronyms</td>
-                    <td style={{ padding: '0.75rem', color: 'var(--text-secondary)' }}>Recall@10 drops by 4%</td>
-                    <td style={{ padding: '0.75rem', color: 'var(--text-primary)' }}>Add domain-specific BM25 weighting</td>
-                  </tr>
-                  <tr>
-                    <td style={{ padding: '0.75rem', color: 'var(--text-primary)', fontWeight: 600 }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
-                        <div style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#3b82f6' }} /> Low
-                      </div>
-                    </td>
-                    <td style={{ padding: '0.75rem', color: 'var(--text-primary)' }}>Sub-optimal caching hit rate (12%)</td>
-                    <td style={{ padding: '0.75rem', color: 'var(--text-secondary)' }}>Increased API costs</td>
-                    <td style={{ padding: '0.75rem', color: 'var(--text-primary)' }}>Implement exact-match semantic caching</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+            {displayRecs.length > 0 ? (
+              <>
+                <h3 style={{ fontSize: '1rem', fontWeight: 700, color: '#FFFFFF', marginBottom: '1rem' }}>
+                  {isGood ? 'Minor Improvements' : 'Recommendations'}
+                </h3>
+                {isGood && <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: '1rem' }}>The evaluated response is accurate overall with minor opportunities for improvement.</p>}
+                <div style={{ overflowX: 'auto' }}>
+                  <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.85rem', textAlign: 'left' }}>
+                    <thead>
+                      <tr style={{ borderBottom: '1px solid var(--border-subtle)', color: 'var(--text-muted)' }}>
+                        <th style={{ padding: '0.75rem', fontWeight: 600 }}>Priority</th>
+                        <th style={{ padding: '0.75rem', fontWeight: 600 }}>Issue</th>
+                        <th style={{ padding: '0.75rem', fontWeight: 600 }}>Impact</th>
+                        <th style={{ padding: '0.75rem', fontWeight: 600 }}>Recommended Fix</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {displayRecs.map((rec, i) => (
+                        <tr key={i} style={{ borderBottom: '1px solid var(--border-subtle)' }}>
+                          <td style={{ padding: '0.75rem', color: 'var(--text-primary)', fontWeight: 600 }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
+                              <div style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: rec.color }} /> 
+                              {rec.priority}
+                            </div>
+                          </td>
+                          <td style={{ padding: '0.75rem', color: 'var(--text-primary)' }}>Optimization Opportunity</td>
+                          <td style={{ padding: '0.75rem', color: 'var(--text-secondary)' }}>Response Quality</td>
+                          <td style={{ padding: '0.75rem', color: 'var(--text-primary)' }}>{rec.text}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </>
+            ) : (
+              <div style={{ padding: '1.5rem', textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.75rem' }}>
+                <div style={{ width: '48px', height: '48px', borderRadius: '50%', backgroundColor: 'rgba(16, 185, 129, 0.1)', color: 'var(--status-green)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <CheckCircle2 size={28} />
+                </div>
+                <h4 style={{ fontSize: '1.05rem', fontWeight: 700, color: '#FFFFFF', margin: 0 }}>
+                  No recommendations available.
+                </h4>
+                <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', margin: 0, maxWidth: '400px' }}>
+                  {isExcellent ? 'The evaluated response demonstrates excellent overall quality and requires no further optimization.' : 'The evaluated response is accurate overall with minor opportunities for improvement.'}
+                </p>
+              </div>
+            )}
           </Card>
 
           {/* Deployment Assessment */}
           <Card style={{ padding: '1.5rem', backgroundColor: 'var(--bg-secondary)', border: '1px solid var(--border-hover)' }}>
             <h3 style={{ fontSize: '1.1rem', fontWeight: 800, color: '#FFFFFF', marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-              <Target size={20} color="var(--accent-gold)" /> Deployment Assessment: <span style={{ color: 'var(--status-green)' }}>Production Ready</span>
+              <Target size={20} color="var(--accent-gold)" /> Evaluation Framework Status
             </h3>
             <div className="grid-2col" style={{ gap: '1.5rem' }}>
               <div>
                 <h4 style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--status-green)', marginBottom: '0.5rem', textTransform: 'uppercase' }}>Strengths</h4>
                 <ul style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', paddingLeft: '1.25rem', display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
-                  <li>Excellent faithfulness to retrieved documents (94.8%).</li>
-                  <li>Low hallucination index perfectly suited for legal domain.</li>
-                  <li>End-to-End latency is well under the 200ms budget.</li>
+                  {displayStrengths.map((s, i) => (
+                    <li key={i}>{s}</li>
+                  ))}
+                  {displayStrengths.length === 0 && (
+                    <li>No major strengths identified.</li>
+                  )}
                 </ul>
               </div>
               <div>
-                <h4 style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--status-orange)', marginBottom: '0.5rem', textTransform: 'uppercase' }}>Areas for Optimization</h4>
-                <ul style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', paddingLeft: '1.25rem', display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
-                  <li>Context Precision could be improved to reduce prompt noise.</li>
-                  <li>Caching hit rate is lower than optimal for this architecture.</li>
-                </ul>
+                {isNeedsImprovement ? (
+                  <>
+                    <h4 style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--status-orange)', marginBottom: '0.5rem', textTransform: 'uppercase' }}>Areas for Optimization</h4>
+                    <ul style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', paddingLeft: '1.25rem', display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
+                      {displayWeaknesses.map((w, i) => (
+                        <li key={i}>{w}</li>
+                      ))}
+                    </ul>
+                  </>
+                ) : (
+                  <>
+                    <h4 style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--status-green)', marginBottom: '0.5rem', textTransform: 'uppercase' }}>Evaluation Summary</h4>
+                    {isExcellent ? (
+                      <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                        <Check size={16} color="var(--status-green)" /> No significant weaknesses detected.
+                      </div>
+                    ) : (
+                      <ul style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', paddingLeft: '1.25rem', display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
+                        {displayWeaknesses.map((w, i) => (
+                          <li key={i}>{w}</li>
+                        ))}
+                      </ul>
+                    )}
+                  </>
+                )}
               </div>
-            </div>
-            <div style={{ marginTop: '1.5rem', paddingTop: '1rem', borderTop: '1px solid var(--border-subtle)' }}>
-              <span style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-primary)' }}>Suggested Next Action: </span>
-              <span style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>Review the recommended semantic chunking fix and deploy to staging.</span>
             </div>
           </Card>
-
-          {/* Split Section: Sample Queries & Test Logs */}
-          <div className="grid-2col" style={{ gap: '1.25rem', alignItems: 'flex-start' }}>
-            
-            {/* Left: Sample Evaluated Queries */}
-            <Card style={{ padding: '1.25rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-              <h3 style={{ fontSize: '0.95rem', fontWeight: 700, color: '#FFFFFF', textTransform: 'uppercase', letterSpacing: '0.03em' }}>
-                Sample Gold Query Verifications
-              </h3>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-                {result.sampleEvaluations.map((sample, i) => (
-                  <div key={i} style={{ padding: '0.85rem', backgroundColor: 'var(--bg-secondary)', borderRadius: '8px', border: '1px solid var(--border-subtle)', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                    <div style={{ fontWeight: 600, color: 'var(--text-primary)', fontSize: '0.85rem' }}>
-                      "{sample.query}"
-                    </div>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.75rem', color: 'var(--text-secondary)' }}>
-                      <div style={{ display: 'flex', gap: '0.85rem' }}>
-                        <span>Docs: <strong>{sample.retrievedDocs}</strong></span>
-                        <span>Avg Latency: <strong>{120 + i * 14}ms</strong></span>
-                      </div>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
-                        <span>Faithfulness: <strong style={{ color: 'var(--status-green)' }}>{sample.faithfulnessScore}%</strong></span>
-                        <Badge variant={sample.hallucinationDetected ? 'orange' : 'green'} style={{ fontSize: '0.65rem', padding: '0.2rem 0.5rem' }}>
-                          {sample.hallucinationDetected ? 'Flagged' : 'Verifiable'}
-                        </Badge>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </Card>
-
-            {/* Right: Real-Time Execution Test Logs */}
-            <Card style={{ padding: '1.25rem', display: 'flex', flexDirection: 'column', gap: '1rem', backgroundColor: 'var(--bg-primary)', border: '1px solid var(--border-hover)' }}>
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                <h3 style={{ fontSize: '0.95rem', fontWeight: 700, color: 'var(--accent-gold)', textTransform: 'uppercase', letterSpacing: '0.03em', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                  <Activity size={16} /> Test Harness Logs
-                </h3>
-                <span style={{ fontSize: '0.7rem', fontFamily: 'monospace', color: 'var(--text-muted)' }}>EXIT CODE: 0</span>
-              </div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', fontFamily: 'monospace', fontSize: '0.75rem' }}>
-                {result.testLogs.map((log, li) => (
-                  <div key={li} style={{ display: 'flex', gap: '0.75rem', borderLeft: '2px solid var(--border-hover)', paddingLeft: '0.75rem' }}>
-                    <span style={{ color: 'var(--text-muted)', flexShrink: 0 }}>[{log.timestamp}]</span>
-                    <span style={{ color: log.status === 'success' ? 'var(--status-green)' : 'var(--text-primary)', flex: 1 }}>
-                      <strong>{log.step}:</strong> {log.message}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            </Card>
-          </div>
         </motion.div>
-      )}
+      )})()}
     </motion.div>
   );
 };

@@ -16,21 +16,26 @@ import {
   FileCode2
 } from 'lucide-react';
 import { Card, Badge, Button, ScoreRing, ProgressBar, EmptyState, Skeleton } from '../components/common';
-import { GeneratedArchitecture, ArchitectureComponent } from '../types';
-import { decisionService, reportsService } from '../services';
+import { DecisionResponse, DecisionRecommendationItem } from '../types';
+import { decisionService } from '../services';
+import {
+  getConfidenceLabel, getConfidenceColor, getConfidenceBgColor, getConfidenceBorderColor,
+  getSummaryConfidenceWord, improveTradeOffWording, improveAlternativeMessaging, getExplanationPrefix
+} from '../utils/decisionUtils';
 
 interface NewArchitectureProps {
-  initialArchitecture?: GeneratedArchitecture | null;
-  onNavigateToReports: (arch: GeneratedArchitecture) => void;
+  initialArchitecture?: DecisionResponse | null;
+  onNavigateToReports: (arch: any) => void;
 }
 
 export const NewArchitecture: React.FC<NewArchitectureProps> = ({
   initialArchitecture,
   onNavigateToReports,
 }) => {
-  const [currentArch, setCurrentArch] = useState<GeneratedArchitecture | null>(initialArchitecture || null);
+  const [currentArch, setCurrentArch] = useState<DecisionResponse | null>(initialArchitecture || null);
   const [loading, setLoading] = useState<boolean>(!initialArchitecture);
-  const [selectedComp, setSelectedComp] = useState<ArchitectureComponent | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [selectedComp, setSelectedComp] = useState<DecisionRecommendationItem | null>(null);
   const [exportingJson, setExportingJson] = useState(false);
   const leftCardRef = useRef<HTMLDivElement>(null);
   const [leftCardHeight, setLeftCardHeight] = useState<number | null>(null);
@@ -42,18 +47,20 @@ export const NewArchitecture: React.FC<NewArchitectureProps> = ({
         return;
       }
       setLoading(true);
-      const sessionArchs = await decisionService.getSessionArchitectures();
-      if (sessionArchs.length > 0) {
-        setCurrentArch(sessionArchs[0]);
-      } else {
-        // Generate initial report sample seamlessly if none created yet
-        const defaultArch = await decisionService.generateFromPrompt(
-          'Hybrid RAG pipeline for 5M+ confidential legal documents',
-          'Legal RAG System'
-        );
+      setError(null);
+      try {
+        const defaultArch = await decisionService.runDecisionEngine({
+          project_name: 'Legal RAG System',
+          project_description: 'Hybrid RAG pipeline for 5M+ confidential legal documents',
+          deployment_target: 'aws',
+          priority: 'balanced'
+        });
         setCurrentArch(defaultArch);
+      } catch (err: any) {
+        setError(err.message || 'Failed to fetch architecture recommendations');
+      } finally {
+        setLoading(false);
       }
-      setLoading(false);
     }
     loadDefaultOrSession();
   }, [initialArchitecture]);
@@ -78,7 +85,7 @@ export const NewArchitecture: React.FC<NewArchitectureProps> = ({
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `${currentArch.title.toLowerCase().replace(/\s+/g, '_')}_spec.json`;
+    a.download = `architecture_spec.json`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
@@ -86,7 +93,7 @@ export const NewArchitecture: React.FC<NewArchitectureProps> = ({
     setExportingJson(false);
   };
 
-  if (loading || !currentArch) {
+  if (loading) {
     return (
       <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
         <Skeleton variant="title" width={320} />
@@ -99,7 +106,31 @@ export const NewArchitecture: React.FC<NewArchitectureProps> = ({
     );
   }
 
-  const { summary, components, diagramNodes } = currentArch;
+  if (error) {
+    return (
+      <EmptyState
+        compact
+        icon={Layers}
+        title="Architecture Engine Failed"
+        description={error}
+        actionText="Try Again"
+        onAction={() => window.location.reload()}
+      />
+    );
+  }
+
+  if (!currentArch) return null;
+
+  const { recommendations, summary, overall_confidence, generated_at, metadata } = currentArch;
+
+
+  // Build diagram nodes dynamically based on recommendations
+  const diagramNodes = recommendations.map((r, i) => ({
+    id: `node-${i}`,
+    title: r.recommended,
+    subtitle: r.category,
+    category: r.category
+  }));
 
   return (
     <motion.div
@@ -114,18 +145,18 @@ export const NewArchitecture: React.FC<NewArchitectureProps> = ({
         <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', flexWrap: 'wrap' }}>
             <Badge variant="gold">● ENGINEERED PIPELINE</Badge>
-            <Badge variant={summary.productionReadiness === 'Production Ready' ? 'green' : 'orange'}>
-              {summary.productionReadiness}
+            <Badge variant="green">
+              Production Ready
             </Badge>
             <span style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>
-              Generated {currentArch.timestamp}
+              Generated {new Date(generated_at).toLocaleString()}
             </span>
           </div>
           <h1 style={{ fontSize: '1.75rem', fontWeight: 800 }}>
-            {currentArch.title}
+            Optimized AI Architecture
           </h1>
           <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', maxWidth: '680px' }}>
-            {currentArch.description}
+            {summary}
           </p>
         </div>
 
@@ -139,245 +170,190 @@ export const NewArchitecture: React.FC<NewArchitectureProps> = ({
         </div>
       </header>
 
-      {/* Architecture Executive Summary */}
-      <section>
-        <div style={{ fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--accent-gold)', marginBottom: '0.65rem', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-          <Sparkles size={13} /> Architecture Executive Summary
-        </div>
-        <Card style={{ padding: '1.1rem 1.25rem', background: 'linear-gradient(135deg, rgba(19,23,32,1) 0%, rgba(26,33,48,1) 100%)', border: '1px solid var(--border-hover)' }}>
-          <div className="grid-4col" style={{ rowGap: '1rem' }}>
-            {/* Overall Score */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', borderRight: '1px solid var(--border-subtle)', paddingRight: '0.75rem' }}>
-              <ScoreRing score={summary.overallScore} size={42} strokeWidth={4} />
-              <div>
-                <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase' }}>Overall Score</div>
-                <div style={{ fontSize: '1rem', fontWeight: 800, color: '#FFFFFF' }}>{summary.overallScore} / 100</div>
-              </div>
-            </div>
-
-            {/* Monthly Cost */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', borderRight: '1px solid var(--border-subtle)', paddingRight: '0.75rem' }}>
-              <div style={{ width: '36px', height: '36px', borderRadius: '9px', backgroundColor: 'var(--status-blue-dim)', color: 'var(--status-blue)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <DollarSign size={18} />
-              </div>
-              <div>
-                <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase' }}>Est. Cost</div>
-                <div style={{ fontSize: '1rem', fontWeight: 800, color: '#FFFFFF' }}>{summary.estimatedMonthlyCost}</div>
-              </div>
-            </div>
-
-            {/* Estimated Latency */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', borderRight: '1px solid var(--border-subtle)', paddingRight: '0.75rem' }}>
-              <div style={{ width: '36px', height: '36px', borderRadius: '9px', backgroundColor: 'var(--status-green-dim)', color: 'var(--status-green)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <Zap size={18} />
-              </div>
-              <div>
-                <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase' }}>Est. Latency</div>
-                <div style={{ fontSize: '1rem', fontWeight: 800, color: '#FFFFFF' }}>{summary.estimatedLatency}</div>
-              </div>
-            </div>
-
-            {/* Reasoning Confidence */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-              <div style={{ width: '36px', height: '36px', borderRadius: '9px', backgroundColor: 'var(--accent-gold-dim)', color: 'var(--accent-gold)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <ShieldCheck size={18} />
-              </div>
-              <div>
-                <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase' }}>Confidence</div>
-                <div style={{ fontSize: '1rem', fontWeight: 800, color: 'var(--accent-gold)' }}>{summary.reasoningConfidence}</div>
-              </div>
-            </div>
-
-            {/* Row 2 Specs */}
-            <div>
-              <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase' }}>Complexity</div>
-              <div style={{ fontSize: '0.875rem', fontWeight: 600, color: '#FFFFFF', marginTop: '0.15rem' }}>{summary.complexity}</div>
-            </div>
-
-            <div>
-              <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase' }}>Scalability</div>
-              <div style={{ fontSize: '0.875rem', fontWeight: 600, color: '#FFFFFF', marginTop: '0.15rem' }}>{summary.scalability}</div>
-            </div>
-
-            <div>
-              <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase' }}>Production Ready</div>
-              <div style={{ fontSize: '0.875rem', fontWeight: 600, color: 'var(--status-green)', marginTop: '0.15rem' }}>{summary.productionReadiness}</div>
-            </div>
-
-            <div>
-              <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase' }}>Deploy Difficulty</div>
-              <div style={{ fontSize: '0.875rem', fontWeight: 600, color: '#FFFFFF', marginTop: '0.15rem' }}>{summary.deploymentDifficulty}</div>
-            </div>
-          </div>
-        </Card>
-      </section>
-
-      {/* Split Layout: Left (Architecture Diagram) | Right (Recommended Stack) */}
-      <section className="grid-2col" style={{ gridTemplateColumns: '42% 1fr', alignItems: 'flex-start', gap: '1.25rem' }}>
+      {/* Split Layout: Left (8 columns, Cards) | Right (4 columns, Diagram + Summary) */}
+      <section style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', alignItems: 'flex-start', gap: '1.5rem' }}>
         
-        {/* Left Column: Vertical Architecture Flow Diagram — natural height, measured via ref */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', position: 'sticky', top: '80px', alignSelf: 'flex-start' }}>
+        {/* Left Column: Recommended Components Cards */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
             <h3 style={{ fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.06em', color: 'var(--text-muted)', textTransform: 'uppercase' }}>
-              Architecture Diagram
+              Recommended Components ({recommendations.length})
             </h3>
-            <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>Interactive Data Flow</span>
+            <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>Click to highlight on diagram</span>
           </div>
 
-          <div ref={leftCardRef}>
-          <Card style={{ padding: '1.25rem 1rem', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.25rem', backgroundColor: 'var(--bg-secondary)', border: '1px solid var(--border-subtle)' }}>
-            {diagramNodes.map((node, i) => {
-              const isLast = i === diagramNodes.length - 1;
-              const isSelected = selectedComp && selectedComp.name.toLowerCase().includes(node.title.toLowerCase().split(' ')[0]);
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+            {recommendations.map((comp, idx) => {
+              const isSelected = selectedComp?.category === comp.category;
+              
+              let whySelected = comp.reason;
+              let tradeOff = "";
+              let alternative = "";
+              
+              if (comp.reason.includes("Why selected: ") && comp.reason.includes("Trade-off: ") && comp.reason.includes("Alternative: ")) {
+                 const whyParts = comp.reason.split("Trade-off: ");
+                 whySelected = whyParts[0].replace("Why selected: ", "").trim();
+                 if (whyParts.length > 1) {
+                     const tradeParts = whyParts[1].split("Alternative: ");
+                     tradeOff = tradeParts[0].trim();
+                     if (tradeParts.length > 1) alternative = tradeParts[1].trim();
+                 }
+              }
 
               return (
-                <React.Fragment key={node.id}>
-                  <motion.div
-                    whileHover={{ scale: 1.015 }}
-                    style={{
-                      width: '100%',
-                      padding: '0.65rem 1rem',
-                      backgroundColor: isSelected ? 'rgba(212, 175, 99, 0.12)' : 'var(--card-bg)',
-                      border: isSelected ? '1px solid var(--accent-gold)' : '1px solid var(--border-hover)',
-                      borderRadius: '10px',
-                      display: 'flex',
-                      flexDirection: 'column',
-                      alignItems: 'center',
-                      textAlign: 'center',
-                      boxShadow: '0 3px 10px rgba(0,0,0,0.4)',
-                      cursor: 'pointer',
-                      transition: 'all 0.2s',
-                    }}
-                    onClick={() => {
-                      const found = components.find(c => node.title.toLowerCase().includes(c.name.toLowerCase().split(' ')[0]));
-                      if (found) setSelectedComp(found);
-                    }}
-                  >
-                    <span style={{ fontSize: '0.65rem', color: 'var(--accent-gold)', fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase' }}>
-                      {node.category}
-                    </span>
-                    <h4 style={{ fontSize: '0.875rem', fontWeight: 700, color: '#FFFFFF', marginTop: '0.1rem' }}>
-                      {node.title}
-                    </h4>
-                    <p style={{ fontSize: '0.72rem', color: 'var(--text-muted)', marginTop: '0.1rem' }}>
-                      {node.subtitle}
-                    </p>
-                  </motion.div>
+                <Card
+                  key={comp.category}
+                  interactive
+                  delay={idx * 0.05}
+                  accentBorder={isSelected}
+                  onClick={() => setSelectedComp(comp)}
+                  style={{ padding: '0.9rem 1.1rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}
+                >
+                  {/* Top row */}
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                    <div>
+                      <span style={{ fontSize: '0.65rem', color: 'var(--accent-gold)', fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase' }}>
+                        {comp.category}
+                      </span>
+                      <h4 style={{ fontSize: '1.05rem', fontWeight: 800, color: '#FFFFFF', marginTop: '0.1rem' }}>
+                        {comp.recommended}
+                      </h4>
+                    </div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', backgroundColor: getConfidenceBgColor(comp.confidence), padding: '0.2rem 0.5rem', borderRadius: '6px', border: `1px solid ${getConfidenceBorderColor(comp.confidence)}` }}>
+                      <ScoreRing score={Math.round(comp.confidence * 100)} size={18} strokeWidth={3} />
+                      <span style={{ fontSize: '0.65rem', fontWeight: 700, color: getConfidenceColor(comp.confidence) }}>
+                        {getConfidenceLabel(comp.confidence)}
+                      </span>
+                    </div>
+                  </div>
 
-                  {!isLast && (
-                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', height: '20px', justifyContent: 'center' }}>
-                      <div style={{ width: '1.5px', height: '10px', backgroundColor: 'var(--border-hover)' }} />
-                      <ArrowDown size={12} style={{ color: 'var(--accent-gold)' }} />
+                  {/* Justification snippet */}
+                  <div style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', lineHeight: 1.45, marginTop: '0.2rem' }}>
+                    <strong style={{ color: 'var(--status-green)', fontSize: '0.75rem' }}>{getExplanationPrefix(idx)}:</strong> {whySelected}
+                  </div>
+                  {tradeOff && (
+                    <div style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', lineHeight: 1.45 }}>
+                      <strong style={{ color: '#f97316', fontSize: '0.75rem' }}>Trade-off:</strong> {improveTradeOffWording(tradeOff)}
                     </div>
                   )}
-                </React.Fragment>
+                  {alternative && (
+                    <div style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', lineHeight: 1.45 }}>
+                      <strong style={{ color: 'var(--text-muted)', fontSize: '0.75rem' }}>Alternative:</strong> {improveAlternativeMessaging(alternative)}
+                    </div>
+                  )}
+                </Card>
               );
             })}
-          </Card>
           </div>
         </div>
 
-        {/* Right Column: Recommended Components Cards — scrollable to match diagram height */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', overflow: 'hidden' }}>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-            <h3 style={{ fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.06em', color: 'var(--text-muted)', textTransform: 'uppercase' }}>
-              Recommended Components ({components.length})
-            </h3>
-            <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>Click to view trade-off analysis</span>
+        {/* Right Column: Sticky Sidebar with Summary and Diagram */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem', position: 'sticky', top: '80px', alignSelf: 'flex-start' }}>
+          
+          {/* Architecture Executive Summary */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+            <div style={{ fontSize: '0.65rem', fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--accent-gold)', display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
+              <Sparkles size={12} /> Executive Summary
+            </div>
+            <Card style={{ padding: '1rem', background: 'linear-gradient(135deg, rgba(19,23,32,1) 0%, rgba(26,33,48,1) 100%)', border: '1px solid var(--border-hover)' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', rowGap: '1rem', columnGap: '0.75rem' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+                  <ScoreRing score={Math.round(overall_confidence * 100)} size={36} strokeWidth={3} />
+                  <div>
+                    <div style={{ fontSize: '0.62rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+                      Overall Confidence
+                    </div>
+                    <div style={{ fontSize: '0.9rem', fontWeight: 800, color: '#FFFFFF' }}>{Math.round(overall_confidence * 100)}/100</div>
+                  </div>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+                  <div style={{ width: '32px', height: '32px', borderRadius: '8px', backgroundColor: 'var(--accent-gold-dim)', color: 'var(--accent-gold)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <ShieldCheck size={16} />
+                  </div>
+                  <div>
+                    <div style={{ fontSize: '0.65rem', color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase' }}>Confidence</div>
+                    <div style={{ fontSize: '0.9rem', fontWeight: 800, color: 'var(--accent-gold)' }}>{getSummaryConfidenceWord(overall_confidence)}</div>
+                  </div>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+                  <div style={{ width: '32px', height: '32px', borderRadius: '8px', backgroundColor: 'var(--status-blue-dim)', color: 'var(--status-blue)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <DollarSign size={16} />
+                  </div>
+                  <div>
+                    <div style={{ fontSize: '0.65rem', color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase' }}>Est. Cost</div>
+                    <div style={{ fontSize: '0.9rem', fontWeight: 800, color: '#FFFFFF' }}>{metadata?.estimated_cost || 'Unknown'}</div>
+                  </div>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+                  <div style={{ width: '32px', height: '32px', borderRadius: '8px', backgroundColor: 'var(--status-green-dim)', color: 'var(--status-green)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <Zap size={16} />
+                  </div>
+                  <div>
+                    <div style={{ fontSize: '0.65rem', color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase' }}>Est. Latency</div>
+                    <div style={{ fontSize: '0.9rem', fontWeight: 800, color: '#FFFFFF' }}>{metadata?.estimated_latency || 'Unknown'}</div>
+                  </div>
+                </div>
+              </div>
+            </Card>
           </div>
 
-          {/* Scrollable panel — height locked to left architecture card's rendered height */}
-          <div
-            style={{
-              backgroundColor: 'var(--card-bg)',
-              border: '1px solid var(--border-subtle)',
-              borderRadius: 'var(--radius-card)',
-              boxShadow: 'var(--shadow-soft)',
-              overflowY: 'auto',
-              overflowX: 'hidden',
-              height: leftCardHeight ? `${leftCardHeight}px` : undefined,
-              maxHeight: leftCardHeight ? `${leftCardHeight}px` : undefined,
-              padding: '0.75rem',
-            }}
-          >
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-              {components.map((comp, idx) => {
-                const isSelected = selectedComp?.id === comp.id;
+          {/* Architecture Diagram */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+              <h3 style={{ fontSize: '0.65rem', fontWeight: 700, letterSpacing: '0.06em', color: 'var(--text-muted)', textTransform: 'uppercase' }}>
+                Architecture Diagram
+              </h3>
+            </div>
+            <Card style={{ padding: '1rem', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.2rem', backgroundColor: 'var(--bg-secondary)', border: '1px solid var(--border-subtle)' }}>
+              {diagramNodes.map((node, i) => {
+                const isLast = i === diagramNodes.length - 1;
+                const isSelected = selectedComp && selectedComp.recommended === node.title;
+
                 return (
-                  <Card
-                    key={comp.id}
-                    interactive
-                    delay={idx * 0.05}
-                    accentBorder={isSelected}
-                    onClick={() => setSelectedComp(comp)}
-                    style={{ padding: '1rem 1.1rem', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}
-                  >
-                    {/* Top row */}
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-                      <div>
-                        <span style={{ fontSize: '0.65rem', color: 'var(--accent-gold)', fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase' }}>
-                          {comp.category}
-                        </span>
-                        <h4 style={{ fontSize: '1.05rem', fontWeight: 800, color: '#FFFFFF', marginTop: '0.1rem' }}>
-                          {comp.name}
-                        </h4>
-                      </div>
-                      <ScoreRing score={comp.score} size={40} strokeWidth={3.5} />
-                    </div>
-
-                    {/* Tags */}
-                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.35rem' }}>
-                      {comp.tags.map(tag => (
-                        <Badge key={tag} variant="neutral" style={{ fontSize: '0.68rem', padding: '0.15rem 0.5rem' }}>
-                          {tag}
-                        </Badge>
-                      ))}
-                    </div>
-
-                    {/* KPI Grid: Latency | Cost | Complexity */}
-                    <div
+                  <React.Fragment key={node.id}>
+                    <motion.div
+                      whileHover={{ scale: 1.015 }}
                       style={{
-                        display: 'grid',
-                        gridTemplateColumns: 'repeat(3, 1fr)',
-                        backgroundColor: 'var(--bg-secondary)',
-                        padding: '0.6rem 0.75rem',
+                        width: '100%',
+                        padding: '0.5rem 0.75rem',
+                        backgroundColor: isSelected ? 'rgba(212, 175, 99, 0.12)' : 'var(--card-bg)',
+                        border: isSelected ? '1px solid var(--accent-gold)' : '1px solid var(--border-hover)',
                         borderRadius: '8px',
-                        border: '1px solid var(--border-subtle)',
-                        gap: '0.4rem',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        textAlign: 'center',
+                        boxShadow: '0 2px 8px rgba(0,0,0,0.3)',
+                        cursor: 'pointer',
+                        transition: 'all 0.2s',
+                      }}
+                      onClick={() => {
+                        const found = recommendations.find(r => r.recommended === node.title);
+                        if (found) setSelectedComp(found);
                       }}
                     >
-                      <div>
-                        <span style={{ fontSize: '0.65rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontWeight: 600 }}>Latency</span>
-                        <div style={{ fontSize: '0.85rem', fontWeight: 700, color: '#FFFFFF', marginTop: '0.05rem' }}>{comp.latency}</div>
-                      </div>
-                      <div>
-                        <span style={{ fontSize: '0.65rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontWeight: 600 }}>Cost</span>
-                        <div style={{ fontSize: '0.85rem', fontWeight: 700, color: '#FFFFFF', marginTop: '0.05rem' }}>{comp.cost}</div>
-                      </div>
-                      <div>
-                        <span style={{ fontSize: '0.65rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontWeight: 600 }}>Complexity</span>
-                        <div style={{ fontSize: '0.85rem', fontWeight: 700, color: '#FFFFFF', marginTop: '0.05rem' }}>{comp.complexity}</div>
-                      </div>
-                    </div>
+                      <span style={{ fontSize: '0.55rem', color: 'var(--accent-gold)', fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase' }}>
+                        {node.category}
+                      </span>
+                      <h4 style={{ fontSize: '0.75rem', fontWeight: 700, color: '#FFFFFF', marginTop: '0.1rem' }}>
+                        {node.title}
+                      </h4>
+                    </motion.div>
 
-                    {/* Justification snippet */}
-                    {comp.justification && (
-                      <div style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', lineHeight: 1.45 }}>
-                        <strong style={{ color: 'var(--text-primary)' }}>Why selected:</strong> {comp.justification}
+                    {!isLast && (
+                      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', height: '16px', justifyContent: 'center' }}>
+                        <div style={{ width: '1.5px', height: '8px', backgroundColor: 'var(--border-hover)' }} />
+                        <ArrowDown size={10} style={{ color: 'var(--accent-gold)' }} />
                       </div>
                     )}
-
-                    {/* Confidence Progress Bar */}
-                    <div style={{ paddingTop: '0.2rem' }}>
-                      <ProgressBar value={comp.confidence} label="Engineering Confidence Level" color="auto" height={5} />
-                    </div>
-                  </Card>
+                  </React.Fragment>
                 );
               })}
-            </div>
+            </Card>
           </div>
         </div>
       </section>
     </motion.div>
   );
 };
+

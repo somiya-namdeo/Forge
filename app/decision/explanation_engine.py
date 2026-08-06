@@ -155,35 +155,32 @@ class ExplanationEngine:
 
         context_clause = ", ".join(context_parts) if context_parts else "specified architectural requirements"
 
-        sentence1 = (
-            f"Selected {tech_name} for {category} because your project {context_clause}. "
-            f"This technology scored highest in {top_factors_str}."
-        )
-
-        sentence2 = ""
+        why_selected = f"{tech_name} aligns well with {profile.priority.value} priorities, scoring highest in {top_factors_str}."
+        
+        trade_off = "No major trade-offs."
         if runner_up:
-            runner_up_name = runner_up.get("display_name") or runner_up.get("name") or runner_up.get("technology") or "Alternative"
             runner_subscores = runner_up.get("subscores", {})
-
             trade_offs: list[str] = []
             if runner_subscores.get("constraint_match", 1.0) < subscores.get("constraint_match", 1.0):
-                trade_offs.append("less alignment with project constraints (e.g. open source or local execution)")
+                trade_offs.append("less constraint alignment")
             if runner_subscores.get("deployment_match", 1.0) < subscores.get("deployment_match", 1.0):
-                trade_offs.append(f"lower deployment compatibility with {profile.deployment.value}")
+                trade_offs.append(f"lower compatibility with {profile.deployment.value}")
             if runner_subscores.get("budget_match", 1.0) < subscores.get("budget_match", 1.0):
-                trade_offs.append("higher estimated operating cost")
+                trade_offs.append("higher cost")
             if runner_subscores.get("scale_match", 1.0) < subscores.get("scale_match", 1.0):
-                trade_offs.append("lower scale/throughput capacity")
-
+                trade_offs.append("lower scale capacity")
             if trade_offs:
-                sentence2 = f" Alternative '{runner_up_name}' ranked lower due to {', '.join(trade_offs)}."
-            else:
-                top_s = float(top_candidate.get("score", 0.0))
-                run_s = float(runner_up.get("score", 0.0))
-                score_diff = round(max(0.0, top_s - run_s) * 100, 1)
-                sentence2 = f" Alternative '{runner_up_name}' ranked second with a {score_diff}% score margin."
+                trade_off = f"Slightly {trade_offs[0]}."
 
-        return sentence1 + sentence2
+        alternative = "None available."
+        if runner_up:
+            runner_up_name = runner_up.get("display_name") or runner_up.get("name") or runner_up.get("technology") or "Alternative"
+            top_s = float(top_candidate.get("score", 0.0))
+            run_s = float(runner_up.get("score", 0.0))
+            score_diff = round(max(0.0, top_s - run_s) * 100, 1)
+            alternative = f"{runner_up_name} — rejected due to {score_diff}% lower score."
+            
+        return f"Why selected: {why_selected} Trade-off: {trade_off} Alternative: {alternative}"
 
     @classmethod
     def _build_alternative_analysis(
@@ -261,16 +258,35 @@ class ExplanationEngine:
         self,
         base_reasons: dict[str, str],
         recommendations: list[RecommendationItem],
+        profile: ProjectProfile,
     ) -> dict[str, str]:
         """Perform ONE single Groq API completion request to enhance explanations for all recommendations in batch.
 
         Expects a JSON response mapping category names to enhanced explanation strings.
-        If parsing fails or any exception occurs, automatically returns base_reasons without retrying.
+        If parsing fails or hallucination validation triggers, automatically returns base_reasons without retrying.
         """
         import json
 
         if not base_reasons:
             return base_reasons
+
+        # 1. Compact Project Context for the LLM
+        # Included to prevent the LLM from guessing missing architectural constraints
+        project_context = {
+            "deployment_target": profile.deployment.value if profile.deployment else None,
+            "local_execution_required": profile.requires_local_execution,
+            "open_source_required": profile.requires_open_source,
+            "budget_tier": profile.budget_tier.value if profile.budget_tier else None,
+            "project_scale": profile.project_scale.value if profile.project_scale else None,
+            "document_scale": profile.document_scale.value if profile.document_scale else None,
+            "latency_priority": profile.requires_low_latency,
+            "compliance_requirements": {
+                "enterprise_security": profile.requires_enterprise_security,
+                "privacy": profile.requires_privacy,
+                "high_availability": profile.requires_high_availability,
+                "citations": profile.requires_citations,
+            }
+        }
 
         items_payload = []
         for item in recommendations:
@@ -285,12 +301,20 @@ class ExplanationEngine:
 
 Rewrite the following architectural recommendation explanations to be more natural, professional, and concise.
 
-Rules:
-- Keep the exact same technical meaning and facts.
-- Do not change any recommended technology names.
-- Mention trade-offs if already present.
+- Rewrite only.
+- Preserve all technical meaning.
+- Keep explanations concise (maximum 2-3 sentences total).
+- Do not repeat project requirements multiple times.
+- Format the explanation as exactly three parts in a single string, prefixed exactly as follows:
+  Why selected: <short explanation>
+  Trade-off: <one sentence>
+  Alternative: <Technology> — rejected because ...
+- Never invent new facts or technologies.
+- Never add additional reasoning or markdown block formatting.
 - Return ONLY a valid JSON object mapping each category name to its enhanced explanation string.
-- Do not include markdown block formatting or extraneous text outside the JSON object.
+
+Project Context:
+{json.dumps(project_context, indent=2)}
 
 Input Recommendations:
 {json.dumps(items_payload, indent=2)}
@@ -313,10 +337,31 @@ JSON Output Format:
             parsed = json.loads(raw_response)
             if isinstance(parsed, dict) and parsed:
                 enhanced: dict[str, str] = {}
+                
+                # 4. Validate output for hallucinations
+                # Reject enhanced explanations introducing new cloud/enterprise terms
+                restricted_terms = ["aws", "azure", "gcp", "enterprise", "hipaa", "soc2", "gdpr", "kubernetes"]
+                context_str = json.dumps(project_context).lower()
+                
                 for cat, base_txt in base_reasons.items():
                     val = parsed.get(cat) or parsed.get(cat.lower())
                     if val and isinstance(val, str) and val.strip():
-                        enhanced[cat] = val.strip()
+                        val_str = val.strip()
+                        val_lower = val_str.lower()
+                        base_lower = base_txt.lower()
+                        
+                        # Check for hallucinations
+                        is_hallucinated = False
+                        for term in restricted_terms:
+                            if term in val_lower and term not in base_lower and term not in context_str:
+                                is_hallucinated = True
+                                break
+                                
+                        if is_hallucinated:
+                            logger.warning("Hallucination detected in category '%s'. Falling back to base reason.", cat)
+                            enhanced[cat] = base_txt
+                        else:
+                            enhanced[cat] = val_str
                     else:
                         enhanced[cat] = base_txt
                 return enhanced
@@ -358,7 +403,7 @@ JSON Output Format:
                 "alt_candidates": alt_candidates,
             }
 
-        enhanced_reasons = self._batch_enhance_reasons_with_llm(base_reasons, recommendations)
+        enhanced_reasons = self._batch_enhance_reasons_with_llm(base_reasons, recommendations, profile)
 
         for item in recommendations:
             category_data = item_data_map.get(item.category, {})

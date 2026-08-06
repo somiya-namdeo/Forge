@@ -48,9 +48,9 @@ class ErrorBoundary extends Component<{ children: ReactNode }, { hasError: boole
 
 export function App() {
   const [activePage, setActivePage] = useState<NavPage>('home');
-  const [selectedArchitecture, setSelectedArchitecture] = useState<GeneratedArchitecture | null>(null);
+  const [selectedArchitecture, setSelectedArchitecture] = useState<any | null>(null);
 
-  const handleNavigate = (page: NavPage, arch?: GeneratedArchitecture) => {
+  const handleNavigate = (page: NavPage, arch?: any) => {
     if (arch !== undefined) {
       setSelectedArchitecture(arch);
     }

@@ -1,17 +1,55 @@
-import { simulateLatency } from './apiClient';
-import { GeneratedArchitecture } from '../types';
+import { request } from './apiClient';
 
 export interface ArchitectureComparisonResult {
-  archA: GeneratedArchitecture;
-  archB: GeneratedArchitecture;
-  metricComparison: {
+  comparison_id: string;
+  comparison_name: string;
+  winner: {
+    rank: number;
+    architecture_id: string;
+    architecture_name: string;
+    overall_score: number;
+    benchmark_score: number;
+    average_latency_ms: number;
+    faithfulness: number;
+    answer_relevancy: number;
+    strengths: string[];
+    weaknesses: string[];
+    reason: string;
+    quality_grade?: string;
+    deployment_readiness?: string;
+    recommendations?: string[];
+  };
+  runner_up?: {
+    rank: number;
+    architecture_id: string;
+    architecture_name: string;
+    overall_score: number;
+    reason: string;
+  } | null;
+  rankings: any[];
+  summary: string;
+  recommendations: string[];
+  metric_winners?: any[];
+  trade_off_analysis?: any[];
+  radar_metrics?: Record<string, Record<string, number>>;
+  executive_summary?: {
+    overall_winner?: string;
+    overall_verdict?: string;
+    best_architecture?: string;
+    primary_reason?: string;
+    major_tradeoff?: string;
+    deployment_recommendation?: string;
+    risk_analysis?: string;
+  } | null;
+  /** Legacy field kept for UI compatibility */
+  metricComparison?: {
     metricName: string;
     valueA: string | number;
     valueB: string | number;
     winner: 'A' | 'B' | 'TIE';
     insight: string;
   }[];
-  componentDiffs: {
+  componentDiffs?: {
     category: string;
     compA: string;
     compB: string;
@@ -20,63 +58,35 @@ export interface ArchitectureComparisonResult {
 }
 
 class ComparisonService {
-  async compareArchitectures(archA: GeneratedArchitecture, archB: GeneratedArchitecture): Promise<ArchitectureComparisonResult> {
-    await simulateLatency(800);
-
-    return {
-      archA,
-      archB,
-      metricComparison: [
+  /**
+   * Compare two architectures via POST /comparison/run.
+   * Accepts any two architecture objects and maps them into ArchitectureCandidates.
+   */
+  async compareArchitectures(archA: any, archB: any): Promise<ArchitectureComparisonResult> {
+    const payload = {
+      comparison_name: `${archA.project_name || 'Architecture A'} vs ${archB.project_name || 'Architecture B'}`,
+      optimization_goal: 'balanced',
+      ranking_strategy: 'weighted_score',
+      architectures: [
         {
-          metricName: 'Overall Engineering Score',
-          valueA: archA.summary.overallScore,
-          valueB: archB.summary.overallScore,
-          winner: archA.summary.overallScore >= archB.summary.overallScore ? 'A' : 'B',
-          insight: 'Reflects composite weighting across accuracy, latency, infrastructure reliability, and financial scale.'
+          architecture_id: archA.id || `arch-a-${Date.now()}`,
+          architecture_name: archA.project_name || 'Architecture A',
+          configuration: { priority: archA.priority || 'balanced', deployment_target: archA.deployment_target || 'aws' },
+          metadata: {},
         },
         {
-          metricName: 'Estimated Monthly Cost',
-          valueA: archA.summary.estimatedMonthlyCost,
-          valueB: archB.summary.estimatedMonthlyCost,
-          winner: 'A',
-          insight: 'Open weights and self-hosted Rust vector indexes reduce recurring token API overhead significantly.'
+          architecture_id: archB.id || `arch-b-${Date.now()}`,
+          architecture_name: archB.project_name || 'Architecture B',
+          configuration: { priority: archB.priority || 'quality', deployment_target: archB.deployment_target || 'gcp' },
+          metadata: {},
         },
-        {
-          metricName: 'End-to-End Latency (p95)',
-          valueA: archA.summary.estimatedLatency,
-          valueB: archB.summary.estimatedLatency,
-          winner: 'A',
-          insight: 'Eliminating external network hops between cloud retrieval endpoints cuts overall roundtrip delay.'
-        },
-        {
-          metricName: 'Reasoning Confidence',
-          valueA: archA.summary.reasoningConfidence,
-          valueB: archB.summary.reasoningConfidence,
-          winner: 'TIE',
-          insight: 'Both architectures meet strict regulatory faithfulness thresholds (>90% evaluation target).'
-        }
       ],
-      componentDiffs: [
-        {
-          category: 'LLM Engine',
-          compA: 'Llama 3.3 70B (vLLM / Groq)',
-          compB: 'OpenAI GPT-4o / Claude 3.5 Sonnet',
-          tradeoffSummary: 'Open weights provide complete data governance and cost predictability; proprietary models offer slightly higher zero-shot edge domain handling.'
-        },
-        {
-          category: 'Vector DB & Search',
-          compA: 'Qdrant Enterprise (Rust)',
-          compB: 'Pinecone Serverless / Managed Cloud',
-          tradeoffSummary: 'Qdrant delivers superior HNSW filtering speed and local memory footprint; Pinecone offers turnkey multi-region serverless auto-scaling.'
-        },
-        {
-          category: 'Retrieval Layer',
-          compA: 'Hybrid (BM25 + Dense + BGE Reranker)',
-          compB: 'Dense Vector-Only Retrieval',
-          tradeoffSummary: 'Hybrid retrieval guarantees lexical matching on acronyms and exact serial numbers at the cost of slight compute indexing complexity.'
-        }
-      ]
     };
+
+    return request<ArchitectureComparisonResult>('/comparison/run', {
+      method: 'POST',
+      body: JSON.stringify(payload),
+    });
   }
 }
 

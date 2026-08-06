@@ -17,22 +17,31 @@ export const KnowledgeBase: React.FC = () => {
   const [searchQuery,  setSearchQuery]  = useState('');
   const [registry,     setRegistry]     = useState<KnowledgeRegistryResponse | null>(null);
   const [loading,      setLoading]      = useState(true);
+  const [error,        setError]        = useState<string | null>(null);
 
   useEffect(() => {
     let cancelled = false;
     setLoading(true);
-    knowledgeService.getRegistry(selectedCat, searchQuery).then(res => {
-      if (cancelled) return;
-      if (res?.components) {
-        const priorities = ['FORGE RECOMMENDED', 'POPULAR', 'ENTERPRISE', undefined, undefined, 'EXPERIMENTAL'];
-        res.components = res.components.map((c: any, i: number) => ({
-          ...c,
-          priorityIndicator: priorities[i] ?? undefined,
-        }));
-      }
-      setRegistry(res);
-      setLoading(false);
-    });
+    setError(null);
+    knowledgeService.getRegistry(selectedCat, searchQuery)
+      .then(res => {
+        if (cancelled) return;
+        if (res?.components) {
+          const priorities = ['FORGE RECOMMENDED', 'POPULAR', 'ENTERPRISE', undefined, undefined, 'EXPERIMENTAL'];
+          res.components = res.components.map((c: any, i: number) => ({
+            ...c,
+            priorityIndicator: priorities[i] ?? undefined,
+          }));
+        }
+        setRegistry(res);
+        setLoading(false);
+      })
+      .catch(err => {
+        if (!cancelled) {
+          setError(err.message || 'Backend Not Available');
+          setLoading(false);
+        }
+      });
     return () => { cancelled = true; };
   }, [selectedCat, searchQuery]);
 
@@ -87,6 +96,12 @@ export const KnowledgeBase: React.FC = () => {
         <div className="grid-3col">
           {[...Array(6)].map((_, i) => <Skeleton key={i} variant="card" height={300} />)}
         </div>
+      ) : error ? (
+        <EmptyState
+          icon={BookOpen}
+          title="Backend Not Available"
+          description={error}
+        />
       ) : !registry || registry.components.length === 0 ? (
         <EmptyState
           icon={BookOpen}

@@ -1,46 +1,44 @@
 export type Priority = 'cost' | 'quality' | 'latency' | 'balanced';
-/** Alias used by pages that import DecisionPriority */
 export type DecisionPriority = Priority;
-export type DeploymentTarget = 'aws' | 'gcp' | 'azure' | 'on_prem' | 'on-prem' | 'local';
+export type DeploymentTarget = 'aws' | 'gcp' | 'azure' | 'on_prem' | 'local';
 
 export interface DecisionRequest {
-  projectName: string;
-  projectDescription: string;
-  expectedUsers?: number;
-  documentCount?: number;
-  budgetUsd?: number;
-  deploymentTarget: DeploymentTarget;
+  project_name: string;
+  project_description: string;
+  expected_users?: number;
+  document_count?: number;
+  budget_usd?: number;
+  deployment_target: DeploymentTarget;
   priority: Priority;
-  preferredLlm?: string;
+  preferred_llm?: string;
   constraints?: string[];
 }
 
 export interface AlternativeDetail {
   name: string;
   reason: string;
-  scorePenalty: string;
 }
 
 export interface DecisionRecommendationItem {
   category: string;
   recommended: string;
-  confidence: number; // 0 - 100
-  confidenceLevel: 'Very High' | 'High' | 'Medium' | 'Low';
+  confidence: number;
+  confidence_level: string;
   reason: string;
   alternatives: string[];
-  alternativeAnalysis: AlternativeDetail[];
-  scoreBreakdown: { [key: string]: number };
-  decisionTrace: string[];
-  benchmarkEvidence: { metric: string; score: string; comparison: string };
-  costVsPerformance: { costIndex: number; perfIndex: number; note: string };
-  latencyVsAccuracy: { latencyMs: number; accuracyPct: number; note: string };
+  alternative_analysis: AlternativeDetail[];
+  score_breakdown: Record<string, number>;
+  decision_trace: string[];
+  evidence: Record<string, any>;
+  metadata_used: string[];
 }
 
 export interface DecisionResponse {
-  id: string;
+  id?: string;
   recommendations: DecisionRecommendationItem[];
   summary: string;
-  overallConfidence: number;
-  generatedAt: string;
-  pipelineStatistics: { durationMs: number; evaluatedCandidates: number };
+  overall_confidence: number;
+  generated_at: string;
+  metadata?: Record<string, string>;
+  pipeline_statistics?: Record<string, any>;
 }

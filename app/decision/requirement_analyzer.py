@@ -3,6 +3,7 @@
 from dataclasses import dataclass, field
 from enum import Enum
 import logging
+import re
 from typing import List, Optional
 
 from app.decision.domain_detector import Domain, DomainDetector
@@ -10,6 +11,21 @@ from app.schemas.decision import DecisionRequest, DeploymentTarget, Priority
 
 logger = logging.getLogger(__name__)
 
+def _parse_number_with_multiplier(match_str: str) -> int:
+    """Parse string like '5 million', '5M', '100k', '5000000' into integer."""
+    s = match_str.lower().replace(',', '')
+    multiplier = 1
+    if 'm' in s or 'million' in s:
+        multiplier = 1_000_000
+    elif 'b' in s or 'billion' in s:
+        multiplier = 1_000_000_000
+    elif 'k' in s or 'thousand' in s:
+        multiplier = 1_000
+    
+    num_match = re.search(r'[\d\.]+', s)
+    if not num_match:
+        return 0
+    return int(float(num_match.group()) * multiplier)
 
 class ScaleTier(str, Enum):
     """User scale classification tiers."""
@@ -114,9 +130,26 @@ class RequirementAnalyzer:
     @classmethod
     def analyze(cls, request: DecisionRequest) -> ProjectProfile:
         """Parse, classify, and infer structured ProjectProfile from raw DecisionRequest."""
+        desc = request.project_description.lower()
+
         users = request.expected_users or 0
+        if users == 0:
+            user_match = re.search(r'([\d\.,]+(?:\s*(?:m|b|k|million|billion|thousand))?)\s*(?:\w+\s*){0,3}(?:users|customers|active users)', desc)
+            if user_match:
+                users = _parse_number_with_multiplier(user_match.group(1))
+
         docs = request.document_count or 0
+        if docs == 0:
+            doc_match = re.search(r'([\d\.,]+(?:\s*(?:m|b|k|million|billion|thousand))?)\s*(?:\w+\s*){0,3}(?:documents|docs|records)', desc)
+            if doc_match:
+                docs = _parse_number_with_multiplier(doc_match.group(1))
+
         budget = request.budget_usd
+        if budget is None or budget == 0:
+            budget_match = re.search(r'(?:\$([\d\.,]+(?:k|m)?)|([\d\.,]+(?:k|m)?)\s*(?:usd|dollars)|budget\s+([\d\.,]+(?:k|m)?))', desc)
+            if budget_match:
+                b_str = budget_match.group(1) or budget_match.group(2) or budget_match.group(3)
+                budget = float(_parse_number_with_multiplier(b_str))
 
         # 1. Infer Domain
         domain = DomainDetector.detect(request.project_description)
@@ -155,6 +188,7 @@ class RequirementAnalyzer:
         requires_low_latency = (
             request.priority == Priority.LATENCY
             or any(kw in all_text for kw in ("latency", "realtime", "real-time", "fast", "<100ms", "sub-100ms"))
+            or bool(re.search(r'\d+\s*ms', all_text))
         )
         requires_privacy = (
             requires_local_execution
@@ -192,6 +226,16 @@ class RequirementAnalyzer:
                 pref_framework = kw.capitalize()
                 break
 
+        unified_constraints = set(c.strip().lower() for c in request.constraints if c and c.strip())
+        if requires_open_source: unified_constraints.add("open_source")
+        if requires_local_execution: unified_constraints.add("local_execution")
+        if requires_privacy: unified_constraints.add("privacy")
+        if requires_low_latency: unified_constraints.add("low_latency")
+        if requires_citations: unified_constraints.add("citations")
+        if requires_gpu: unified_constraints.add("gpu")
+        if requires_enterprise_security: unified_constraints.add("enterprise_security")
+        if requires_high_availability: unified_constraints.add("high_availability")
+
         profile = ProjectProfile(
             project_name=request.project_name,
             project_description=request.project_description,
@@ -218,7 +262,7 @@ class RequirementAnalyzer:
             preferred_llm=pref_llm,
             preferred_vector_db=pref_vdb,
             preferred_framework=pref_framework,
-            constraints=request.constraints,
+            constraints=list(unified_constraints),
         )
 
         # 7. Development & Pipeline Structured INFO Logging

@@ -156,12 +156,24 @@ class RecommendationEngine:
         # Calculate calibrated confidence score
         confidence = cls._calculate_dynamic_confidence(top_candidate, runner_up)
 
-        reason = f"Recommended for {category} based on multi-factor suitability scoring."
+        if confidence >= 0.90:
+            confidence_level = "Very High"
+        elif confidence >= 0.80:
+            confidence_level = "High"
+        elif confidence >= 0.70:
+            confidence_level = "Good"
+        elif confidence >= 0.60:
+            confidence_level = "Moderate"
+        else:
+            confidence_level = "Low"
+
+        reason = f"Why selected: Recommended for {category} based on multi-factor suitability scoring. Trade-off: None. Alternative: None — no alternatives found."
 
         rec = RecommendationItem(
             category=category,
             recommended=recommended_name,
             confidence=confidence,
+            confidence_level=confidence_level,
             reason=reason,
             alternatives=alt_names,
         )

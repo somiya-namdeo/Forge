@@ -48,7 +48,7 @@ export const Benchmark: React.FC = () => {
   };
 
   const sortedLeaderboard = useMemo(() => {
-    if (!report) return [];
+    if (!report || !report.leaderboard) return [];
     return [...report.leaderboard]
       .map((entry, i) => ({
         ...entry,

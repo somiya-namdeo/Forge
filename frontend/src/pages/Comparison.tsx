@@ -6,33 +6,32 @@ import { GeneratedArchitecture } from '../types';
 import { decisionService, comparisonService, ArchitectureComparisonResult } from '../services';
 
 export const Comparison: React.FC = () => {
-  const [archA, setArchA]           = useState<GeneratedArchitecture | null>(null);
-  const [archB, setArchB]           = useState<GeneratedArchitecture | null>(null);
   const [comparison, setComparison] = useState<ArchitectureComparisonResult | null>(null);
   const [loading, setLoading]       = useState(true);
   const [activeTab, setActiveTab]   = useState<'Comparison Matrix' | 'Radar Chart' | 'Migration Guide'>('Comparison Matrix');
 
+  const [error, setError] = useState<string | null>(null);
+
   useEffect(() => {
     async function init() {
       setLoading(true);
-      const stackA = await decisionService.generateFromPrompt(
-        'Open Weights Fast Pipeline with Qdrant Rust and Llama 3.3 70B', 'Forge Optimized Stack');
-      const stackB: GeneratedArchitecture = {
-        ...stackA,
-        id: 'arch-baseline-cloud',
-        title: 'Dense RAG v1',
-        summary: { ...stackA.summary, overallScore: 87, estimatedMonthlyCost: '$1,450 / mo', estimatedLatency: '~680ms (p95)', complexity: 'Low', reasoningConfidence: '96.2% High' },
-      };
-      setArchA(stackA);
-      setArchB(stackB);
-      const result = await comparisonService.compareArchitectures(stackA, stackB);
-      setComparison(result);
-      setLoading(false);
+      setError(null);
+      try {
+        const result = await comparisonService.compareArchitectures(
+          { project_name: 'Forge Optimized Stack', deployment_target: 'aws', priority: 'latency' },
+          { project_name: 'Dense RAG v1', deployment_target: 'gcp', priority: 'quality' }
+        );
+        setComparison(result);
+      } catch (err: any) {
+        setError(err.message || 'Failed to load comparison data');
+      } finally {
+        setLoading(false);
+      }
     }
     init();
   }, []);
 
-  if (loading || !comparison || !archA || !archB) {
+  if (loading) {
     return (
       <div className="section-gap-lg">
         <Skeleton variant="title" width={320} />
@@ -48,8 +47,20 @@ export const Comparison: React.FC = () => {
     );
   }
 
-  const archBScore = 87.4;
-  const archAScore = archA.summary.overallScore;
+  if (error || !comparison || !comparison.winner || !comparison.runner_up) {
+    return (
+      <div style={{ padding: '3rem', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem' }}>
+        <div style={{ fontSize: '2rem' }}>⚠️</div>
+        <div style={{ fontSize: '1.1rem', fontWeight: 700, color: 'var(--text-primary)' }}>Backend Not Available</div>
+        <div style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', textAlign: 'center', maxWidth: '460px' }}>
+          {error || 'The comparison endpoint could not be reached. Start the FastAPI backend to see live comparison data.'}
+        </div>
+      </div>
+    );
+  }
+
+  const winnerScore = Math.round((comparison.winner.overall_score || 0) * 100);
+  const runnerUpScore = Math.round((comparison.runner_up.overall_score || 0) * 100);
 
   // ── Arch card (shared layout) ────────────────────────────────
   const ArchCard = ({
@@ -116,14 +127,15 @@ export const Comparison: React.FC = () => {
   );
 
   // ── Comparison table rows ────────────────────────────────────
-  const rows = [
-    { metric: 'Faithfulness',    a: '94%',    b: '86%',    aWin: true },
-    { metric: 'Answer Relevancy',a: '91%',    b: '84%',    aWin: true },
-    { metric: 'Precision@5',     a: '89%',    b: '80%',    aWin: true },
-    { metric: 'Recall@10',       a: '91%',    b: '83%',    aWin: true },
-    { metric: 'Latency (avg)',   a: '342ms',  b: '680ms',  aWin: true },
-    { metric: 'Cost / Query',    a: '$0.0021',b: '$0.0089',aWin: true },
-    { metric: 'Pass Rate',       a: '96.1%',  b: '90.1%',  aWin: true },
+  const rows = comparison.metric_winners?.map((mw: any) => ({
+    metric: mw.metric,
+    a: mw.winner === comparison.winner.architecture_name ? mw.winner_score.toFixed(2) : (mw.runner_up_score?.toFixed(2) || 'N/A'),
+    b: mw.winner === comparison.runner_up?.architecture_name ? mw.winner_score.toFixed(2) : (mw.runner_up_score?.toFixed(2) || 'N/A'),
+    aWin: mw.winner === comparison.winner.architecture_name
+  })) || [
+    { metric: 'Faithfulness',    a: (comparison.winner.faithfulness * 100).toFixed(1) + '%',    b: 'N/A',    aWin: true },
+    { metric: 'Answer Relevancy',a: (comparison.winner.answer_relevancy * 100).toFixed(1) + '%',    b: 'N/A',    aWin: true },
+    { metric: 'Latency (avg)',   a: comparison.winner.average_latency_ms.toFixed(0) + 'ms',  b: 'N/A',  aWin: true },
   ];
 
   return (
@@ -144,19 +156,17 @@ export const Comparison: React.FC = () => {
       <div style={{ display: 'flex', alignItems: 'stretch', gap: '1.5rem' }}>
         <ArchCard
           label="Architecture A"
-          title="Hybrid RAG v2"
-          score={archAScore}
-          chips={['Open Source', 'High Performance', 'Production Ready']}
+          title={comparison.winner.architecture_name}
+          score={winnerScore}
+          chips={comparison.winner.strengths || ['High Performance', 'Production Ready']}
           components={[
-            ['LLM', 'Llama 3.3 70B + Groq'],
-            ['Embedding', 'text-embedding-3-large'],
-            ['Vector DB', 'Qdrant'],
-            ['Retriever', 'Hybrid BM25+Dense'],
-            ['Reranker', 'BGE-Reranker-v2'],
-            ['Framework', 'LlamaIndex'],
+            ['LLM', 'Auto-Selected'],
+            ['Vector DB', 'Auto-Selected'],
+            ['Retriever', 'Auto-Selected'],
+            ['Framework', 'Auto-Selected'],
           ]}
-          latency="342ms"
-          cost="$0.0021"
+          latency={`${Math.round(comparison.winner.average_latency_ms)}ms`}
+          cost="N/A"
           isWinner
           accentColor="var(--accent-gold)"
         />
@@ -169,31 +179,27 @@ export const Comparison: React.FC = () => {
           <div style={{ width: '1px', height: '32px', backgroundColor: 'var(--border-subtle)' }} />
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem', textAlign: 'center' }}>
             <span style={{ fontSize: '0.625rem', color: 'var(--text-muted)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em' }}>Winner</span>
-            <span style={{ fontSize: '0.75rem', color: 'var(--accent-gold)', fontWeight: 700, lineHeight: 1.3 }}>Hybrid RAG v2</span>
+            <span style={{ fontSize: '0.75rem', color: 'var(--accent-gold)', fontWeight: 700, lineHeight: 1.3 }}>{comparison.winner.architecture_name}</span>
           </div>
           <div style={{ width: '1px', height: '32px', backgroundColor: 'var(--border-subtle)' }} />
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem', fontSize: '0.75rem', fontWeight: 600, color: 'var(--status-green)', textAlign: 'center', lineHeight: 1.3 }}>
-            <span>+{(archAScore - archBScore).toFixed(1)} Score</span>
-            <span>−76% Cost</span>
-            <span>−338ms Latency</span>
+            <span>+{Math.abs(winnerScore - runnerUpScore).toFixed(1)} Score</span>
           </div>
         </div>
 
         <ArchCard
           label="Architecture B"
-          title="Dense RAG v1"
-          score={archBScore}
-          chips={['Proprietary', 'Enterprise', 'Managed']}
+          title={comparison.runner_up.architecture_name}
+          score={runnerUpScore}
+          chips={['Baseline']}
           components={[
-            ['LLM', 'GPT-4o'],
-            ['Embedding', 'text-embedding-3-small'],
-            ['Vector DB', 'Pinecone'],
-            ['Retriever', 'Dense Only'],
-            ['Reranker', 'None'],
-            ['Framework', 'LangChain'],
+            ['LLM', 'Auto-Selected'],
+            ['Vector DB', 'Auto-Selected'],
+            ['Retriever', 'Auto-Selected'],
+            ['Framework', 'Auto-Selected'],
           ]}
-          latency="680ms"
-          cost="$0.0089"
+          latency="N/A"
+          cost="N/A"
           accentColor="var(--status-blue)"
         />
       </div>
@@ -218,7 +224,7 @@ export const Comparison: React.FC = () => {
               </tr>
             </thead>
             <tbody>
-              {rows.map(r => (
+              {rows.map((r: any) => (
                 <tr key={r.metric} style={{ borderBottom: '1px solid var(--border-subtle)' }}>
                   <td style={{ padding: '1rem 1.25rem', fontWeight: 600, color: 'var(--text-primary)' }}>{r.metric}</td>
                   <td style={{ padding: '1rem 1.25rem', fontWeight: 700, color: r.aWin ? 'var(--accent-gold)' : 'var(--text-secondary)' }}>{r.a}</td>
@@ -226,10 +232,12 @@ export const Comparison: React.FC = () => {
                   <td style={{ padding: '1rem 1.25rem', textAlign: 'right' }}>
                     <span style={{
                       padding: '0.25rem 0.75rem', borderRadius: 'var(--radius-pill)',
-                      border: '1px solid var(--accent-gold)', color: 'var(--accent-gold)',
-                      backgroundColor: 'rgba(212,175,99,0.08)', fontSize: '0.75rem', fontWeight: 700,
+                      border: r.aWin ? '1px solid var(--accent-gold)' : '1px solid var(--status-blue)', 
+                      color: r.aWin ? 'var(--accent-gold)' : 'var(--status-blue)',
+                      backgroundColor: r.aWin ? 'rgba(212,175,99,0.08)' : 'rgba(59,130,246,0.08)', 
+                      fontSize: '0.75rem', fontWeight: 700,
                     }}>
-                      {r.aWin ? 'Hybrid RAG v2' : 'Dense RAG v1'}
+                      {r.aWin ? comparison.winner.architecture_name : (comparison.runner_up?.architecture_name || 'Runner-Up')}
                     </span>
                   </td>
                 </tr>

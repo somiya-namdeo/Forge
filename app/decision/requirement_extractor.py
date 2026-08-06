@@ -1,11 +1,28 @@
 """Requirement extraction module for AI Architecture Recommendation Engine."""
 
+import re
 from dataclasses import dataclass, field
 from typing import List, Optional
 
 from app.decision.domain_detector import Domain, DomainDetector
 from app.schemas.decision import DecisionRequest, DeploymentTarget, Priority
 
+
+def _parse_number_with_multiplier(match_str: str) -> int:
+    """Parse string like '5 million', '5M', '100k', '5000000' into integer."""
+    s = match_str.lower().replace(',', '')
+    multiplier = 1
+    if 'm' in s or 'million' in s:
+        multiplier = 1_000_000
+    elif 'b' in s or 'billion' in s:
+        multiplier = 1_000_000_000
+    elif 'k' in s or 'thousand' in s:
+        multiplier = 1_000
+    
+    num_match = re.search(r'[\d\.]+', s)
+    if not num_match:
+        return 0
+    return int(float(num_match.group()) * multiplier)
 
 @dataclass
 class RequirementProfile:
@@ -43,9 +60,26 @@ class RequirementExtractor:
     @staticmethod
     def extract(request: DecisionRequest) -> RequirementProfile:
         """Extract structured profile features and domain signals from a DecisionRequest."""
+        desc = request.project_description.lower()
+
         users = request.expected_users or 0
+        if users == 0:
+            user_match = re.search(r'([\d\.,]+(?:\s*(?:m|b|k|million|billion|thousand))?)\s*(?:\w+\s*){0,3}(?:users|customers|active users)', desc)
+            if user_match:
+                users = _parse_number_with_multiplier(user_match.group(1))
+
         docs = request.document_count or 0
+        if docs == 0:
+            doc_match = re.search(r'([\d\.,]+(?:\s*(?:m|b|k|million|billion|thousand))?)\s*(?:\w+\s*){0,3}(?:documents|docs|records)', desc)
+            if doc_match:
+                docs = _parse_number_with_multiplier(doc_match.group(1))
+
         budget = request.budget_usd
+        if budget is None or budget == 0:
+            budget_match = re.search(r'(?:\$([\d\.,]+(?:k|m)?)|([\d\.,]+(?:k|m)?)\s*(?:usd|dollars)|budget\s+([\d\.,]+(?:k|m)?))', desc)
+            if budget_match:
+                b_str = budget_match.group(1) or budget_match.group(2) or budget_match.group(3)
+                budget = float(_parse_number_with_multiplier(b_str))
 
         domain = DomainDetector.detect(request.project_description)
 
@@ -70,6 +104,7 @@ class RequirementExtractor:
         requires_low_latency = (
             request.priority == Priority.LATENCY
             or any(kw in all_text for kw in ("latency", "realtime", "real-time", "fast", "<100ms", "sub-100ms"))
+            or bool(re.search(r'\d+\s*ms', all_text))
         )
         requires_privacy = (
             requires_local_execution

@@ -1,0 +1,463 @@
+[
+  {
+    "id": "legal_001",
+    "title": "Enterprise Legal RAG",
+    "category": "legal",
+    "prompt": "Build a legal RAG assistant for 5 million confidential documents with low latency, high factual accuracy, a budget of $500/month, and open-source models.",
+    "expected": {
+      "domain": "legal",
+      "deployment": "local",
+      "document_scale": "massive",
+      "project_scale": "tiny",
+      "budget_tier": "medium",
+      "constraints": [
+        "open_source",
+        "local_execution",
+        "low_latency",
+        "privacy"
+      ]
+    }
+  },
+  {
+    "id": "healthcare_001",
+    "title": "HIPAA Compliant Patient Analyzer",
+    "category": "healthcare",
+    "prompt": "We need an AI system on AWS to process patient records for a hospital network. It must be strictly HIPAA compliant, highly secure, and handle around 100k patients. Budget is not an issue.",
+    "expected": {
+      "domain": "healthcare",
+      "deployment": "AWS",
+      "document_scale": "tiny",
+      "project_scale": "enterprise",
+      "budget_tier": "high_unlimited",
+      "constraints": [
+        "enterprise_security",
+        "privacy",
+        "hipaa"
+      ]
+    }
+  },
+  {
+    "id": "finance_001",
+    "title": "Real-time Trading Signal Generator",
+    "category": "finance",
+    "prompt": "Deploy a real-time sub-100ms latency application on GCP for 200,000 active users. It must handle financial transactions securely and comply with GDPR. We need high availability.",
+    "expected": {
+      "domain": "finance",
+      "deployment": "GCP",
+      "document_scale": "tiny",
+      "project_scale": "enterprise",
+      "budget_tier": "high_unlimited",
+      "constraints": [
+        "low_latency",
+        "enterprise_security",
+        "privacy",
+        "high_availability"
+      ]
+    }
+  },
+  {
+    "id": "research_001",
+    "title": "Academic Paper Citation Assistant",
+    "category": "research",
+    "prompt": "Create an open-source academic assistant that can search through 50,000 research papers and generate strict citations. The tool will be run locally on researcher laptops with a $20/month budget.",
+    "expected": {
+      "domain": "research",
+      "deployment": "local",
+      "document_scale": "medium",
+      "project_scale": "tiny",
+      "budget_tier": "free_low",
+      "constraints": [
+        "open_source",
+        "local_execution",
+        "citations",
+        "privacy"
+      ]
+    }
+  },
+  {
+    "id": "customer_support_001",
+    "title": "Global E-commerce Chatbot",
+    "category": "customer_support",
+    "prompt": "We want an Azure-based customer support chatbot for our e-commerce platform. It needs to handle 500,000 users globally with multi-region failover and high availability. Budget is around $5000/month.",
+    "expected": {
+      "domain": "general",
+      "deployment": "Azure",
+      "document_scale": "tiny",
+      "project_scale": "enterprise",
+      "budget_tier": "high_unlimited",
+      "constraints": [
+        "high_availability",
+        "enterprise_security"
+      ]
+    }
+  },
+  {
+    "id": "code_assistant_001",
+    "title": "Internal Developer Copilot",
+    "category": "code_assistant",
+    "prompt": "Build an offline coding assistant for a team of 50 developers. It must run on-premise on our own GPUs. We need an open source model. Privacy is our top priority.",
+    "expected": {
+      "domain": "enterprise",
+      "deployment": "local",
+      "document_scale": "tiny",
+      "project_scale": "tiny",
+      "budget_tier": "medium",
+      "constraints": [
+        "open_source",
+        "local_execution",
+        "gpu",
+        "privacy"
+      ]
+    }
+  },
+  {
+    "id": "enterprise_kb_001",
+    "title": "Fortune 500 Knowledge Base",
+    "category": "enterprise_kb",
+    "prompt": "Develop an enterprise search system for a Fortune 500 company. We have 2 million documents and 50,000 employees. Needs strict SOC2 compliance, SSO integration, and hybrid deployment.",
+    "expected": {
+      "domain": "enterprise",
+      "deployment": "hybrid",
+      "document_scale": "massive",
+      "project_scale": "large",
+      "budget_tier": "high_unlimited",
+      "constraints": [
+        "enterprise_security",
+        "high_availability"
+      ]
+    }
+  },
+  {
+    "id": "education_001",
+    "title": "Open Source Student Tutor",
+    "category": "education",
+    "prompt": "A university project to build an AI tutor for 15,000 students. We have a tiny budget of $100/month, so it must use open source tools and run on cheap GCP instances.",
+    "expected": {
+      "domain": "general",
+      "deployment": "GCP",
+      "document_scale": "tiny",
+      "project_scale": "large",
+      "budget_tier": "free_low",
+      "constraints": [
+        "open_source"
+      ]
+    }
+  },
+  {
+    "id": "government_001",
+    "title": "Classified Intelligence Analyzer",
+    "category": "government",
+    "prompt": "Design a highly secure intelligence analysis system for government use. It will process 10,000 classified docs. Deployment must be fully air-gapped on-premise. Budget is unlimited.",
+    "expected": {
+      "domain": "enterprise",
+      "deployment": "local",
+      "document_scale": "medium",
+      "project_scale": "tiny",
+      "budget_tier": "high_unlimited",
+      "constraints": [
+        "enterprise_security",
+        "local_execution",
+        "privacy"
+      ]
+    }
+  },
+  {
+    "id": "e_commerce_001",
+    "title": "Retail Product Recommender",
+    "category": "e_commerce",
+    "prompt": "We need a product recommendation engine on AWS for our retail app. Must serve 2 million customers with very low latency. Needs multi-region setup and a budget of $5000 USD.",
+    "expected": {
+      "domain": "general",
+      "deployment": "AWS",
+      "document_scale": "tiny",
+      "project_scale": "enterprise",
+      "budget_tier": "high_unlimited",
+      "constraints": [
+        "low_latency",
+        "high_availability",
+        "enterprise_security"
+      ]
+    }
+  },
+  {
+    "id": "personal_assistant_001",
+    "title": "Local Privacy-First Assistant",
+    "category": "personal_assistant",
+    "prompt": "I want a personal AI assistant that runs entirely locally on my MacBook. Absolute privacy first, no cloud. Should be open source. Budget is 0.",
+    "expected": {
+      "domain": "general",
+      "deployment": "local",
+      "document_scale": "tiny",
+      "project_scale": "tiny",
+      "budget_tier": "free_low",
+      "constraints": [
+        "open_source",
+        "local_execution",
+        "privacy"
+      ]
+    }
+  },
+  {
+    "id": "legal_002",
+    "title": "Law Firm Contract Reviewer",
+    "category": "legal",
+    "prompt": "Small law firm needs an Azure AI system to review about 5,000 contracts. Budget is $100. Must be secure and accurate.",
+    "expected": {
+      "domain": "legal",
+      "deployment": "Azure",
+      "document_scale": "small",
+      "project_scale": "tiny",
+      "budget_tier": "free_low",
+      "constraints": [
+        "enterprise_security"
+      ]
+    }
+  },
+  {
+    "id": "healthcare_002",
+    "title": "Local Clinic Assistant",
+    "category": "healthcare",
+    "prompt": "A local clinic with 5 doctors needs an on-prem AI to summarize 2,000 patient records. Must be isolated and open source for privacy.",
+    "expected": {
+      "domain": "healthcare",
+      "deployment": "local",
+      "document_scale": "small",
+      "project_scale": "tiny",
+      "budget_tier": "medium",
+      "constraints": [
+        "open_source",
+        "local_execution",
+        "privacy",
+        "enterprise_security"
+      ]
+    }
+  },
+  {
+    "id": "finance_002",
+    "title": "Startup Fintech Advisor",
+    "category": "finance",
+    "prompt": "Fintech startup needs a robust GCP backend for an AI financial advisor serving 10,000 users. Real-time fast responses required. Open source preferred. Budget $500/month.",
+    "expected": {
+      "domain": "finance",
+      "deployment": "GCP",
+      "document_scale": "tiny",
+      "project_scale": "large",
+      "budget_tier": "medium",
+      "constraints": [
+        "low_latency",
+        "open_source",
+        "enterprise_security"
+      ]
+    }
+  },
+  {
+    "id": "research_002",
+    "title": "Massive Genome Analysis AI",
+    "category": "research",
+    "prompt": "Deploy an AI system to process 10 million genomic records. Need citations for academic journals. Budget is completely unlimited. Running on AWS with GPUs.",
+    "expected": {
+      "domain": "research",
+      "deployment": "AWS",
+      "document_scale": "massive",
+      "project_scale": "tiny",
+      "budget_tier": "high_unlimited",
+      "constraints": [
+        "citations",
+        "gpu",
+        "enterprise_security"
+      ]
+    }
+  },
+  {
+    "id": "customer_support_002",
+    "title": "SaaS Helpdesk Bot",
+    "category": "customer_support",
+    "prompt": "Helpdesk chatbot for a B2B SaaS with 2,000 users. Needs to read 15,000 support docs. Deployed on Azure. High availability is a must.",
+    "expected": {
+      "domain": "enterprise",
+      "deployment": "Azure",
+      "document_scale": "medium",
+      "project_scale": "medium",
+      "budget_tier": "medium",
+      "constraints": [
+        "high_availability",
+        "enterprise_security"
+      ]
+    }
+  },
+  {
+    "id": "code_assistant_002",
+    "title": "Open Source Code Search",
+    "category": "code_assistant",
+    "prompt": "Deploy an open source code search tool for a team of 300 engineers. Needs to index 500,000 files. Running on GCP. Low latency.",
+    "expected": {
+      "domain": "enterprise",
+      "deployment": "GCP",
+      "document_scale": "massive",
+      "project_scale": "small",
+      "budget_tier": "medium",
+      "constraints": [
+        "open_source",
+        "low_latency",
+        "enterprise_security"
+      ]
+    }
+  },
+  {
+    "id": "enterprise_kb_002",
+    "title": "Air-gapped Intranet Search",
+    "category": "enterprise_kb",
+    "prompt": "We need an offline intranet search for 5,000 employees. Must be fully air-gapped and use open-source. High accuracy required. 100,000 documents.",
+    "expected": {
+      "domain": "enterprise",
+      "deployment": "local",
+      "document_scale": "large",
+      "project_scale": "medium",
+      "budget_tier": "medium",
+      "constraints": [
+        "local_execution",
+        "open_source",
+        "privacy",
+        "enterprise_security"
+      ]
+    }
+  },
+  {
+    "id": "education_002",
+    "title": "K-12 Educational Platform",
+    "category": "education",
+    "prompt": "Scalable AI reading assistant for 300,000 K-12 students. Needs strict privacy (COPPA), low budget ($500), running on AWS.",
+    "expected": {
+      "domain": "general",
+      "deployment": "AWS",
+      "document_scale": "tiny",
+      "project_scale": "enterprise",
+      "budget_tier": "medium",
+      "constraints": [
+        "privacy",
+        "enterprise_security",
+        "high_availability"
+      ]
+    }
+  },
+  {
+    "id": "government_002",
+    "title": "Public Services Portal",
+    "category": "government",
+    "prompt": "Public portal chatbot serving 5 million citizens. Multi-region hybrid deployment. High availability failover. Needs to handle 20k public records.",
+    "expected": {
+      "domain": "general",
+      "deployment": "hybrid",
+      "document_scale": "medium",
+      "project_scale": "enterprise",
+      "budget_tier": "high_unlimited",
+      "constraints": [
+        "high_availability"
+      ]
+    }
+  },
+  {
+    "id": "e_commerce_002",
+    "title": "Boutique Shop AI",
+    "category": "e_commerce",
+    "prompt": "Small boutique with 5,000 customers wants a local AI to recommend products based on 1,000 inventory items. Using a local GPU.",
+    "expected": {
+      "domain": "general",
+      "deployment": "local",
+      "document_scale": "small",
+      "project_scale": "medium",
+      "budget_tier": "medium",
+      "constraints": [
+        "local_execution",
+        "gpu",
+        "privacy"
+      ]
+    }
+  },
+  {
+    "id": "personal_assistant_002",
+    "title": "Smart Home Hub",
+    "category": "personal_assistant",
+    "prompt": "I'm building an open-source smart home AI for my family (4 users). Running on a Raspberry Pi locally. Super fast response time (<100ms) needed.",
+    "expected": {
+      "domain": "general",
+      "deployment": "local",
+      "document_scale": "tiny",
+      "project_scale": "tiny",
+      "budget_tier": "medium",
+      "constraints": [
+        "open_source",
+        "local_execution",
+        "low_latency",
+        "privacy"
+      ]
+    }
+  },
+  {
+    "id": "healthcare_003",
+    "title": "Medical Imaging RAG",
+    "category": "healthcare",
+    "prompt": "A radiology network needs to query 200,000 medical reports. Serving 500 doctors. AWS deployment, GPU required, SOC2 compliant, unlimited budget.",
+    "expected": {
+      "domain": "healthcare",
+      "deployment": "AWS",
+      "document_scale": "large",
+      "project_scale": "small",
+      "budget_tier": "high_unlimited",
+      "constraints": [
+        "gpu",
+        "enterprise_security"
+      ]
+    }
+  },
+  {
+    "id": "finance_003",
+    "title": "Personal Finance Tracker",
+    "category": "finance",
+    "prompt": "Mobile app MVP for personal finance. Azure deployment. Will serve 100 users initially. Needs GDPR privacy. Open source. Budget $100.",
+    "expected": {
+      "domain": "finance",
+      "deployment": "Azure",
+      "document_scale": "tiny",
+      "project_scale": "small",
+      "budget_tier": "free_low",
+      "constraints": [
+        "privacy",
+        "open_source",
+        "enterprise_security"
+      ]
+    }
+  },
+  {
+    "id": "research_003",
+    "title": "Patent Search Engine",
+    "category": "research",
+    "prompt": "Build a patent search engine over 2 million patent documents for a team of 20 researchers. Deployed on GCP. Needs academic citations. Budget $5000.",
+    "expected": {
+      "domain": "research",
+      "deployment": "GCP",
+      "document_scale": "massive",
+      "project_scale": "tiny",
+      "budget_tier": "high_unlimited",
+      "constraints": [
+        "citations"
+      ]
+    }
+  },
+  {
+    "id": "legal_003",
+    "title": "GDPR Compliance Checker",
+    "category": "legal",
+    "prompt": "A GDPR compliance checker for a mid-sized company (1,000 users). Needs to analyze 50,000 internal documents on AWS. High security.",
+    "expected": {
+      "domain": "legal",
+      "deployment": "AWS",
+      "document_scale": "medium",
+      "project_scale": "medium",
+      "budget_tier": "medium",
+      "constraints": [
+        "enterprise_security"
+      ]
+    }
+  }
+]
