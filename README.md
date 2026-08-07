@@ -13,8 +13,6 @@ Every Great AI System Starts with the Right Draft.
   <img src="https://img.shields.io/badge/FastAPI-009688?logo=fastapi&logoColor=white" alt="FastAPI" />
   <img src="https://img.shields.io/badge/React-61DAFB?logo=react&logoColor=black" alt="React" />
   <img src="https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white" alt="TypeScript" />
-  <img src="https://img.shields.io/badge/PostgreSQL-4169E1?logo=postgresql&logoColor=white" alt="PostgreSQL" />
-  <img src="https://img.shields.io/badge/Supabase-3ECF8E?logo=supabase&logoColor=white" alt="Supabase" />
   <img src="https://img.shields.io/badge/LangChain-1C3C3C?logo=langchain&logoColor=white" alt="LangChain" />
   <img src="https://img.shields.io/badge/LlamaIndex-000000?logo=llamaindex&logoColor=white" alt="LlamaIndex" />
   <img src="https://img.shields.io/badge/Sentence_Transformers-FF9D00?logo=huggingface&logoColor=white" alt="Sentence Transformers" />
