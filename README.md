@@ -17,7 +17,6 @@ Every Great AI System Starts with the Right Draft.
   <img src="https://img.shields.io/badge/LlamaIndex-000000?logo=llamaindex&logoColor=white" alt="LlamaIndex" />
   <img src="https://img.shields.io/badge/Sentence_Transformers-FF9D00?logo=huggingface&logoColor=white" alt="Sentence Transformers" />
   <img src="https://img.shields.io/badge/Groq-F55036?logo=groq&logoColor=white" alt="Groq" />
-  <img src="https://img.shields.io/badge/OpenAI-412991?logo=openai&logoColor=white" alt="OpenAI" />
   <img src="https://img.shields.io/badge/HuggingFace-FFD21E?logo=huggingface&logoColor=black" alt="HuggingFace" />
   <img src="https://img.shields.io/badge/RAGAS-000000?logo=ragas&logoColor=white" alt="RAGAS" />
   <img src="https://img.shields.io/badge/Docker-2496ED?logo=docker&logoColor=white" alt="Docker" />
