@@ -9,54 +9,68 @@ import {
   CheckSquare,
 } from 'lucide-react';
 import { Card, Badge, Button, ScoreRing, Skeleton } from '../components/common';
-import { ArchitectureReport, GeneratedArchitecture } from '../types';
-import { decisionService, reportsService } from '../services';
+import { ArchitectureReport } from '../types';
+import { useForgeContext } from '../context';
+import { reportsService } from '../services/reportsService';
 
 interface ReportsProps {
-  selectedArch?: any | null;
   onNavigateToArch: (arch: any) => void;
 }
 
-export const Reports: React.FC<ReportsProps> = ({ selectedArch, onNavigateToArch }) => {
+export const Reports: React.FC<ReportsProps> = ({ onNavigateToArch }) => {
+  const { decisionResult, benchmarkResult, evaluationResult } = useForgeContext();
   const [report,       setReport]       = useState<ArchitectureReport | null>(null);
   const [loading,      setLoading]      = useState(true);
   const [exportingJson, setExportingJson] = useState(false);
-
+  const [exportingPdf,  setExportingPdf]  = useState(false);
   const [backendUnavailable, setBackendUnavailable] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     async function loadReport() {
       setLoading(true);
       setBackendUnavailable(false);
-      let target: any | null = selectedArch || null;
-      if (!target) {
-        // No arch passed — backend session endpoint missing, cannot fabricate
+      setError(null);
+      
+      if (!decisionResult) {
         setBackendUnavailable(true);
         setLoading(false);
         return;
       }
+
       try {
-        setReport(await reportsService.generateReport(target));
-      } catch {
+        const payload = {
+          decision_result: decisionResult,
+          benchmark_result: benchmarkResult,
+          evaluation_result: evaluationResult,
+        };
+        const generatedReport = await reportsService.generateReport(payload);
+        setReport(generatedReport);
+      } catch (err: any) {
+        console.error('Failed to generate report:', err);
+        setError(err.message || 'An error occurred while generating the report.');
         setBackendUnavailable(true);
+      } finally {
+        setLoading(false);
       }
-      setLoading(false);
     }
     loadReport();
-  }, [selectedArch]);
+  }, [decisionResult, benchmarkResult, evaluationResult]);
 
   const toggleChecklist = (id: string) => {
     if (!report) return;
     setReport({
       ...report,
-      deploymentChecklist: report.deploymentChecklist.map(c => c.id === id ? { ...c, completed: !c.completed } : c),
+      deployment_checklist: report.deployment_checklist.map(c => 
+        c.id === id ? { ...c, completed: !c.completed } : c
+      ),
     });
   };
 
   const handleExportJson = async () => {
     if (!report) return;
     setExportingJson(true);
-    const jsonStr = await reportsService.exportReportAsJson(report);
+    const jsonStr = JSON.stringify(report, null, 2);
     const blob    = new Blob([jsonStr], { type: 'application/json' });
     const url     = URL.createObjectURL(blob);
     const a       = document.createElement('a');
@@ -66,13 +80,33 @@ export const Reports: React.FC<ReportsProps> = ({ selectedArch, onNavigateToArch
     setExportingJson(false);
   };
 
-  if (backendUnavailable) {
+  const handleExportPdf = async () => {
+    if (!report) return;
+    setExportingPdf(true);
+    try {
+      const payload = {
+        decision_result: decisionResult,
+        benchmark_result: benchmarkResult,
+        evaluation_result: evaluationResult,
+      };
+      await reportsService.triggerPrintablePdf(payload, `forge_report_${Date.now()}.pdf`);
+    } catch (err) {
+      console.error(err);
+      alert('Failed to generate PDF');
+    } finally {
+      setExportingPdf(false);
+    }
+  };
+
+  if (backendUnavailable || error) {
     return (
       <div style={{ padding: '4rem 2rem', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem', textAlign: 'center' }}>
         <div style={{ width: '48px', height: '48px', borderRadius: '12px', backgroundColor: 'var(--accent-gold-dim)', color: 'var(--accent-gold)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.5rem' }}>📄</div>
-        <div style={{ fontSize: '1.1rem', fontWeight: 700, color: 'var(--text-primary)' }}>Backend Not Available</div>
+        <div style={{ fontSize: '1.1rem', fontWeight: 700, color: 'var(--text-primary)' }}>
+          {error ? 'Report Generation Failed' : 'No Data Available'}
+        </div>
         <div style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', maxWidth: '460px' }}>
-          Generate an architecture from the Decision Engine or Home page first, then navigate here to view the full production report.
+          {error ? error : 'Generate an architecture from the Decision Engine first, then navigate here to view the full production report.'}
         </div>
       </div>
     );
@@ -91,9 +125,11 @@ export const Reports: React.FC<ReportsProps> = ({ selectedArch, onNavigateToArch
     );
   }
 
-  const completedCount = report.deploymentChecklist.filter(c => c.completed).length;
+  const completedCount = report.deployment_checklist.filter(c => c.completed).length;
   const barColors      = ['var(--status-blue)', 'var(--accent-gold)', 'var(--status-green)', 'var(--status-purple)'];
 
+  const fmtScore = (score: number | null) => score === null ? 'Not Evaluated' : `${(score * 100).toFixed(0)}%`;
+  
   return (
     <motion.div
       initial={{ opacity: 0, y: 12 }}
@@ -106,7 +142,7 @@ export const Reports: React.FC<ReportsProps> = ({ selectedArch, onNavigateToArch
       <div style={{ display: 'flex', flexDirection: 'column' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.75rem' }}>
           <Badge variant="gold" style={{ fontSize: '0.6875rem' }}>● PRODUCTION REPORT</Badge>
-          <span style={{ fontSize: '0.8125rem', color: 'var(--text-muted)' }}>Generated {report.generatedAt}</span>
+          <span style={{ fontSize: '0.8125rem', color: 'var(--text-muted)' }}>Generated {report.generated_at}</span>
         </div>
         <h1 style={{ fontSize: '2.25rem', fontWeight: 800, color: '#FFFFFF', lineHeight: 1.2, marginBottom: '0.5rem' }}>
           {report.title}
@@ -119,8 +155,8 @@ export const Reports: React.FC<ReportsProps> = ({ selectedArch, onNavigateToArch
           <Button variant="secondary" icon={Download} onClick={handleExportJson} disabled={exportingJson} style={{ height: '42px', fontSize: '0.875rem', padding: '0 1.25rem' }}>
             Export JSON
           </Button>
-          <Button variant="primary" icon={Printer} onClick={() => reportsService.triggerPrintablePdf(report.title)} style={{ height: '42px', fontSize: '0.875rem', padding: '0 1.25rem' }}>
-            Export PDF
+          <Button variant="secondary" icon={Printer} onClick={handleExportPdf} disabled={exportingPdf} style={{ height: '42px', fontSize: '0.875rem', padding: '0 1.25rem' }}>
+            Download PDF
           </Button>
         </div>
       </div>
@@ -137,20 +173,38 @@ export const Reports: React.FC<ReportsProps> = ({ selectedArch, onNavigateToArch
         }}
       >
         <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
-          <ScoreRing score={report.architecture.summary.overallScore} size={60} strokeWidth={5} />
+          {report.readiness_summary.overall_confidence !== null ? (
+            <ScoreRing score={report.readiness_summary.overall_confidence} size={60} strokeWidth={5} />
+          ) : (
+            <div style={{ width: '60px', height: '60px', borderRadius: '50%', border: '2px solid var(--border-subtle)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-muted)', fontSize: '12px', textAlign: 'center' }}>N/A</div>
+          )}
           <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.4rem' }}>
-              <Badge variant="green" style={{ fontSize: '0.6875rem' }}>✔ DEPLOYMENT READY</Badge>
-              <span style={{ fontSize: '0.8125rem', color: 'var(--text-muted)' }}>{report.productionReadinessSummary.passCount} checks passed</span>
+              <Badge variant={report.readiness_summary.ready ? 'green' : 'orange'} style={{ fontSize: '0.6875rem' }}>
+                {report.readiness_summary.ready ? '✔ DEPLOYMENT READY' : '⚠ NEEDS REVIEW'}
+              </Badge>
+              <span style={{ fontSize: '0.8125rem', color: 'var(--text-muted)' }}>{report.readiness_summary.pass_count} checks passed</span>
             </div>
             <h3 style={{ fontSize: '1.25rem', fontWeight: 700, color: '#FFFFFF', lineHeight: 1.2 }}>
-              {report.productionReadinessSummary.riskSummary}
+              {report.readiness_summary.risk_summary}
             </h3>
           </div>
         </div>
-        <Button variant="secondary" onClick={() => onNavigateToArch(report.architecture)} style={{ height: '42px', fontSize: '0.875rem', padding: '0 1.25rem' }}>
-          View Diagram →
-        </Button>
+      </div>
+
+      {/* ── Architecture Summary ────────────────────────────── */}
+      <div className="forge-card" style={{ padding: '30px', borderRadius: '14px' }}>
+        <h3 style={{ fontSize: '1.25rem', fontWeight: 700, color: '#FFFFFF', marginBottom: '20px' }}>Architecture Components</h3>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '16px' }}>
+          {Object.entries(report.architecture_summary.components).map(([key, value]) => (
+            <div key={key} style={{ padding: '16px', backgroundColor: 'var(--bg-secondary)', borderRadius: '10px', border: '1px solid var(--border-subtle)' }}>
+              <div style={{ fontSize: '0.75rem', color: 'var(--accent-gold)', fontWeight: 700, textTransform: 'uppercase', marginBottom: '8px' }}>
+                {key.replace(/_/g, ' ')}
+              </div>
+              <div style={{ fontSize: '0.9375rem', color: '#FFFFFF', fontWeight: 600 }}>{String(value)}</div>
+            </div>
+          ))}
+        </div>
       </div>
 
       {/* ── 2-col body ────────────────────────────────────── */}
@@ -165,11 +219,11 @@ export const Reports: React.FC<ReportsProps> = ({ selectedArch, onNavigateToArch
               </h3>
               <p style={{ fontSize: '0.875rem', color: 'var(--text-muted)', marginTop: '0.4rem' }}>Click checkbox to toggle verification state</p>
             </div>
-            <Badge variant="neutral" style={{ fontSize: '0.75rem', flexShrink: 0 }}>{completedCount} / {report.deploymentChecklist.length}</Badge>
+            <Badge variant="neutral" style={{ fontSize: '0.75rem', flexShrink: 0 }}>{completedCount} / {report.deployment_checklist.length}</Badge>
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', flex: 1, overflowY: 'auto', paddingRight: '16px' }}>
-            {report.deploymentChecklist.map(chk => (
+            {report.deployment_checklist.map(chk => (
               <div
                 key={chk.id}
                 onClick={() => toggleChecklist(chk.id)}
@@ -211,31 +265,36 @@ export const Reports: React.FC<ReportsProps> = ({ selectedArch, onNavigateToArch
             </div>
             <div style={{ textAlign: 'right', flexShrink: 0 }}>
               <div style={{ fontSize: '0.6875rem', color: 'var(--text-muted)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.2rem' }}>Monthly Cap</div>
-              <div style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--status-blue)' }}>{report.architecture.summary.estimatedMonthlyCost}</div>
+              <div style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--status-blue)' }}>{report.architecture_summary.estimated_monthly_cost || 'Not Evaluated'}</div>
             </div>
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', flex: 1, overflowY: 'auto', paddingRight: '12px' }}>
-            {report.costBreakdown.map((item, idx) => (
-              <div key={idx} style={{ display: 'flex', flexDirection: 'column', gap: '0.625rem' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.9375rem', fontWeight: 600, color: '#FFFFFF' }}>
-                  <span>{item.item}</span>
-                  <span style={{ color: 'var(--text-secondary)' }}>${item.monthlyCostUsd}/mo <span style={{ color: 'var(--text-muted)', fontSize: '0.8125rem' }}>({item.share}%)</span></span>
+            {!report.cost_breakdown || report.cost_breakdown.length === 0 ? (
+              <div style={{ color: 'var(--text-muted)' }}>Not Evaluated</div>
+            ) : (
+              report.cost_breakdown.map((item, idx) => (
+                <div key={idx} style={{ display: 'flex', flexDirection: 'column', gap: '0.625rem' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.9375rem', fontWeight: 600, color: '#FFFFFF' }}>
+                    <span>{item.item}</span>
+                    <span style={{ color: 'var(--text-secondary)' }}>${item.monthly_cost_usd}/mo <span style={{ color: 'var(--text-muted)', fontSize: '0.8125rem' }}>({item.share_percentage}%)</span></span>
+                  </div>
+                  <div style={{ width: '100%', height: '8px', backgroundColor: 'rgba(255,255,255,0.06)', borderRadius: '4px', overflow: 'hidden' }}>
+                    <motion.div
+                      initial={{ width: 0 }}
+                      animate={{ width: `${item.share_percentage}%` }}
+                      transition={{ duration: 0.7, ease: 'easeOut', delay: idx * 0.08 }}
+                      style={{ height: '100%', backgroundColor: barColors[idx % barColors.length], borderRadius: '4px' }}
+                    />
+                  </div>
                 </div>
-                <div style={{ width: '100%', height: '8px', backgroundColor: 'rgba(255,255,255,0.06)', borderRadius: '4px', overflow: 'hidden' }}>
-                  <motion.div
-                    initial={{ width: 0 }}
-                    animate={{ width: `${item.share}%` }}
-                    transition={{ duration: 0.7, ease: 'easeOut', delay: idx * 0.08 }}
-                    style={{ height: '100%', backgroundColor: barColors[idx % barColors.length], borderRadius: '4px' }}
-                  />
-                </div>
-              </div>
-            ))}
+              ))
+            )}
           </div>
-
+          
           <div style={{ marginTop: 'auto', padding: '20px', backgroundColor: 'var(--bg-primary)', borderRadius: '10px', border: '1px solid var(--border-subtle)', fontSize: '0.875rem', color: 'var(--text-secondary)', lineHeight: 1.6, flexShrink: 0 }}>
-            <strong style={{ color: 'var(--accent-gold)' }}>Cost Efficiency:</strong> Deploying open weights on reserved endpoints reduces variable inference overhead by up to 65% under persistent loads.
+            <strong style={{ color: 'var(--accent-gold)' }}>Scores: </strong> 
+            Decision: {fmtScore(report.metrics.overall_score)} | Benchmark: {fmtScore(report.metrics.benchmark_score)} | Eval: {fmtScore(report.metrics.evaluation_score)}
           </div>
         </div>
       </div>

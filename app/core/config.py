@@ -18,12 +18,12 @@ TOP_K = 5
 # --- Independent Dual-Groq Provider Configurations ---
 # Decision Module LLM Settings (Groq Account #1)
 DECISION_PROVIDER = os.getenv("DECISION_PROVIDER", "groq")
-DECISION_MODEL = os.getenv("DECISION_MODEL", "llama-3.3-70b-versatile")
+DECISION_MODEL = os.getenv("DECISION_MODEL", "openai/gpt-oss-20b")
 DECISION_API_KEY = os.getenv("DECISION_API_KEY", os.getenv("GROQ_API_KEY"))
 
 # Evaluation Module LLM Settings (Groq Account #2)
 EVALUATION_PROVIDER = os.getenv("EVALUATION_PROVIDER", "groq")
-EVALUATION_MODEL = os.getenv("EVALUATION_MODEL", "llama-3.3-70b-versatile")
+EVALUATION_MODEL = os.getenv("EVALUATION_MODEL", "openai/gpt-oss-20b")
 EVALUATION_API_KEY = os.getenv("EVALUATION_API_KEY")
 
 # Legacy/Default fallback settings (maintained for backward compatibility)

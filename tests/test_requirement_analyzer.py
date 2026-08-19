@@ -119,6 +119,31 @@ def test_five_projects_produce_different_project_profiles():
     for idx, p in enumerate([profile1, profile2, profile3, profile4, profile5], 1):
         print(f"Project {idx} ({p.project_name}): Domain={p.domain.value}, Scale={p.project_scale.value}, DocScale={p.document_scale.value}, BudgetTier={p.budget_tier.value}")
 
+def test_document_count_regex_parsing():
+    """Test various string representations of document counts correctly parse."""
+    cases = [
+        ("Build for 500,000 documents.", 500000),
+        ("Build for 500000 documents.", 500000),
+        ("Build for 2 million clinical documents.", 2000000),
+        ("Build for 10 million knowledge-base articles.", 10000000),
+        ("Build for 5.0M docs.", 5000000),
+        ("Build for 20M documents.", 20000000),
+        ("1 billion documents", 1000000000),
+        ("500 thousand documents", 500000),
+        ("Build for 500,000 market and research documents", 500000),
+    ]
+
+    for desc, expected in cases:
+        req = DecisionRequest(
+            project_name="Test",
+            project_description=desc,
+            deployment_target=DeploymentTarget.AWS,
+            priority=Priority.BALANCED,
+            constraints=[]
+        )
+        profile = RequirementAnalyzer.analyze(req)
+        assert profile.document_count == expected, f"Failed on '{desc}': got {profile.document_count}, expected {expected}"
 
 if __name__ == "__main__":
     test_five_projects_produce_different_project_profiles()
+    test_document_count_regex_parsing()

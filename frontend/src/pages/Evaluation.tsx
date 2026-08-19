@@ -18,6 +18,7 @@ import {
 import { Card, Badge, Button, ScoreRing, ProgressBar, EmptyState, Skeleton, LoadingIndicator } from '../components/common';
 import { EvaluationResult } from '../types';
 import { evaluationService } from '../services';
+import { useForgeContext } from '../context';
 
 const formatPercent = (val: number | undefined) => {
   if (val === undefined || val === null) return '0.0';
@@ -25,6 +26,7 @@ const formatPercent = (val: number | undefined) => {
 };
 
 export const Evaluation: React.FC = () => {
+  const { setEvaluationResult } = useForgeContext();
   const [targetPipeline, setTargetPipeline] = useState('Legal RAG System — Hybrid Pipeline (v1.0.0)');
   const [evaluating, setEvaluating] = useState(false);
   const [result, setResult] = useState<EvaluationResult | null>(null);
@@ -43,6 +45,7 @@ export const Evaluation: React.FC = () => {
     try {
       const data = await evaluationService.runEvaluation(question, retrievedContext, groundTruth, generatedAnswer);
       setResult(data);
+      setEvaluationResult(data);
     } catch (err: any) {
       setEvalError(err.message || 'Evaluation failed');
     } finally {

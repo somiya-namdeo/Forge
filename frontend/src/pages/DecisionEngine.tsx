@@ -12,8 +12,10 @@ import {
   formatProvider, formatDeploymentReadiness, getSummaryConfidenceWord, improveTradeOffWording,
   improveAlternativeMessaging, improveRejectedAlternativeReason, getExplanationPrefix, getContextualRecommendations
 } from '../utils/decisionUtils';
+import { useForgeContext } from '../context';
 
 export const DecisionEngine: React.FC = () => {
+  const { setDecisionResult, addSessionArchitecture } = useForgeContext();
   const [priority, setPriority] = useState<DecisionPriority>('balanced');
   const [deploymentTarget, setDeploymentTarget] = useState<DeploymentTarget>('aws');
   const [budgetUsd, setBudgetUsd] = useState<number>(500);
@@ -24,26 +26,46 @@ export const DecisionEngine: React.FC = () => {
   const [expandedAlts, setExpandedAlts] = useState<Record<string, boolean>>({});
 
   const handleRunDecisionEngine = async () => {
+    if (executing) return;
     setExecuting(true);
     setResponse(null);
     setExpandedAlts({});
-    const result = await decisionService.runDecisionEngine({
-      project_name: 'Forge UI Configured Architecture',
-      project_description: `${priority} optimized pipeline targeting ${deploymentTarget} infrastructure`,
-      priority,
-      deployment_target: deploymentTarget,
-      budget_usd: budgetUsd,
-      document_count: documentCount,
-      preferred_llm: preferredLlm,
-    });
-    setResponse(result);
-    setExecuting(false);
+    try {
+      const result = await decisionService.runDecisionEngine({
+        project_name: `${deploymentTarget === 'aws' ? 'AWS' : deploymentTarget === 'gcp' ? 'GCP' : deploymentTarget === 'azure' ? 'Azure' : deploymentTarget === 'on_prem' ? 'On-Prem' : 'Local'} ${priority.charAt(0).toUpperCase() + priority.slice(1)} Architecture`,
+        project_description: `${priority} optimized pipeline targeting ${deploymentTarget} infrastructure`,
+        priority,
+        deployment_target: deploymentTarget,
+        budget_usd: budgetUsd,
+        document_count: documentCount,
+        preferred_llm: preferredLlm,
+      });
+      console.log("[DecisionEngine] API response", result);
+      
+      // Handle potential wrapped response structures (e.g. { data: ... })
+      const actualResult = (result as any).data || (result as any).result || result;
+      
+      
+      console.log('[ARCHITECTURE CREATED]', {
+          id: actualResult?.id,
+          architecture_name: actualResult?.architecture_name,
+          recommendations: actualResult?.recommendations,
+          metadata: actualResult?.metadata
+      });
+setResponse(actualResult);
+      setDecisionResult(actualResult);
+      addSessionArchitecture(actualResult);
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setExecuting(false);
+    }
   };
 
   const toggleAlt = (key: string) =>
     setExpandedAlts(prev => ({ ...prev, [key]: !prev[key] }));
 
-  const llmRec = response?.recommendations.find(r =>
+  const llmRec = response?.recommendations?.find(r =>
     r.category.toLowerCase().includes('llm')
   );
 
@@ -426,7 +448,7 @@ export const DecisionEngine: React.FC = () => {
                 Deployment Target
               </div>
               <div style={{ fontSize: '0.85rem', fontWeight: 700, color: '#FFFFFF', marginBottom: '0.15rem' }}>
-                {formatDeploymentReadiness(response.deployment_readiness)}
+                {formatDeploymentReadiness(response.metadata?.deployment_target || 'Target Specified')}
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
                 <CheckCircle2 size={12} style={{ color: 'var(--status-green)' }} />

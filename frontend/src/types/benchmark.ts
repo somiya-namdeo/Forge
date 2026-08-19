@@ -108,6 +108,9 @@ export interface BenchmarkLeaderboardEntry {
   latencyP99: number;
   throughputTokSec: number;
   accuracyScore: number;
+  precision: number;
+  recall: number;
+  passRate: number;
   costPerMillionTokens: number;
-  status: 'Verified' | 'Beta' | 'Unverified';
+  status: 'Verified' | 'Beta' | 'Unverified' | 'Not Yet Benchmarked';
 }

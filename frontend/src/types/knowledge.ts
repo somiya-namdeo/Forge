@@ -1,33 +1,29 @@
-export type KnowledgeCategory = 
-  | 'llms' 
-  | 'vectordbs' 
-  | 'frameworks' 
-  | 'rerankers' 
-  | 'retrieval' 
-  | 'embeddings' 
-  | 'chunking' 
-  | 'prompting' 
-  | 'deployment' 
-  | 'fine_tuning' 
-  | 'evaluation';
+export interface KnowledgeCategoryCount {
+  name: string;
+  count: number;
+  label: string;
+}
 
 export interface KnowledgeComponent {
   id: string;
-  category: KnowledgeCategory;
+  category: string;
   name: string;
-  organization: string;
+  organization?: string;
   officialDocumentation?: string;
   githubRepository?: string;
-  license: string;
-  priority: 'high' | 'medium' | 'low';
-  lastVerified: string;
-  description: string;
+  license?: string;
+  priority?: string;
+  lastVerified?: string;
+  description?: string;
   keyFeatures: string[];
 }
 
 export interface KnowledgeRegistryResponse {
   totalComponents: number;
   lastSync: string;
-  categories: { name: KnowledgeCategory; count: number; label: string }[];
+  categories: KnowledgeCategoryCount[];
   components: KnowledgeComponent[];
+  page: number;
+  page_size: number;
+  total_pages: number;
 }

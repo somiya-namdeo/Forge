@@ -20,7 +20,6 @@ from app.services.decision_service import DecisionService
 from app.services.evaluation_service import EvaluationService
 from app.thresholds.threshold_manager import ThresholdManager
 from app.utils.weighting import WeightingEngine
-from app.services.comparison_service import ComparisonService
 
 
 @lru_cache
@@ -180,12 +179,5 @@ def get_decision_service(
         explanation_engine=explanation_engine,
     )
 
-def get_comparison_service(
-    benchmark_service: BenchmarkService | None = Depends(get_benchmark_service),
-) -> ComparisonService:
-    """Return ComparisonService instance."""
-    if hasattr(benchmark_service, "dependency") or benchmark_service is None:
-        benchmark_service = get_benchmark_service()
-    return ComparisonService(benchmark_service=benchmark_service)
 
 

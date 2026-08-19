@@ -22,48 +22,21 @@ import {
   getConfidenceLabel, getConfidenceColor, getConfidenceBgColor, getConfidenceBorderColor,
   getSummaryConfidenceWord, improveTradeOffWording, improveAlternativeMessaging, getExplanationPrefix
 } from '../utils/decisionUtils';
+import { useForgeContext } from '../context';
 
 interface NewArchitectureProps {
-  initialArchitecture?: DecisionResponse | null;
   onNavigateToReports: (arch: any) => void;
 }
 
 export const NewArchitecture: React.FC<NewArchitectureProps> = ({
-  initialArchitecture,
   onNavigateToReports,
 }) => {
-  const [currentArch, setCurrentArch] = useState<DecisionResponse | null>(initialArchitecture || null);
-  const [loading, setLoading] = useState<boolean>(!initialArchitecture);
-  const [error, setError] = useState<string | null>(null);
+  const { decisionResult } = useForgeContext();
+  const currentArch = decisionResult;
   const [selectedComp, setSelectedComp] = useState<DecisionRecommendationItem | null>(null);
   const [exportingJson, setExportingJson] = useState(false);
   const leftCardRef = useRef<HTMLDivElement>(null);
   const [leftCardHeight, setLeftCardHeight] = useState<number | null>(null);
-
-  useEffect(() => {
-    async function loadDefaultOrSession() {
-      if (currentArch) {
-        setLoading(false);
-        return;
-      }
-      setLoading(true);
-      setError(null);
-      try {
-        const defaultArch = await decisionService.runDecisionEngine({
-          project_name: 'Legal RAG System',
-          project_description: 'Hybrid RAG pipeline for 5M+ confidential legal documents',
-          deployment_target: 'aws',
-          priority: 'balanced'
-        });
-        setCurrentArch(defaultArch);
-      } catch (err: any) {
-        setError(err.message || 'Failed to fetch architecture recommendations');
-      } finally {
-        setLoading(false);
-      }
-    }
-    loadDefaultOrSession();
-  }, [initialArchitecture]);
 
   // Measure the left architecture card's rendered height so the right panel matches it exactly
   useEffect(() => {
@@ -93,33 +66,17 @@ export const NewArchitecture: React.FC<NewArchitectureProps> = ({
     setExportingJson(false);
   };
 
-  if (loading) {
+  if (!currentArch) {
     return (
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
-        <Skeleton variant="title" width={320} />
-        <Skeleton variant="card" height={150} />
-        <div className="grid-2col">
-          <Skeleton variant="chart" height={520} />
-          <Skeleton variant="chart" height={520} />
-        </div>
+      <div style={{ padding: '4rem 2rem', display: 'flex', justifyContent: 'center' }}>
+        <EmptyState
+          icon={Sparkles}
+          title="No Architecture Generated"
+          description="Run the Decision Engine first to generate a production-ready AI architecture."
+        />
       </div>
     );
   }
-
-  if (error) {
-    return (
-      <EmptyState
-        compact
-        icon={Layers}
-        title="Architecture Engine Failed"
-        description={error}
-        actionText="Try Again"
-        onAction={() => window.location.reload()}
-      />
-    );
-  }
-
-  if (!currentArch) return null;
 
   const { recommendations, summary, overall_confidence, generated_at, metadata } = currentArch;
 

@@ -3,5 +3,4 @@ export * from './decisionService';
 export * from './evaluationService';
 export * from './benchmarkService';
 export * from './knowledgeService';
-export * from './comparisonService';
 export * from './reportsService';

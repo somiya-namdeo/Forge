@@ -1,17 +1,13 @@
 """
-Evaluation Reports Package.
-
-Provides evaluation report generation, comparative analysis, PDF formatting,
-and JSON data export engines.
+Reports Package.
 """
 
-from app.reports.export_json import JSONExporter
 from app.reports.export_pdf import PDFExporter
-from app.reports.report_generator import EvaluationReport, ReportGenerator
+from app.reports.report_generator import ReportGenerator
+from app.schemas.report import ArchitectureReport
 
 __all__ = [
-    "EvaluationReport",
+    "ArchitectureReport",
     "ReportGenerator",
     "PDFExporter",
-    "JSONExporter",
 ]

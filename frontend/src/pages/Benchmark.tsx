@@ -4,13 +4,34 @@ import { Trophy, Play, Check } from 'lucide-react';
 import { Card, Badge, Button, EmptyState, Skeleton, LoadingIndicator } from '../components/common';
 import { BenchmarkReport, BenchmarkLeaderboardEntry } from '../types';
 import { benchmarkService } from '../services';
+import { useForgeContext } from '../context';
+import { 
+  formatLatency, 
+  formatPercentage, 
+  formatCost, 
+  formatThroughput, 
+  generateArchitectureName 
+} from '../utils/benchmarkUtils';
 
 export const Benchmark: React.FC = () => {
-  const allArchs = [
-    { id: 'Hybrid RAG + BGE Reranker', color: '#eab308' },
-    { id: 'Dense RAG + GPT-4o',        color: '#22c55e' },
-    { id: 'BM25 Only + Claude 3.5',    color: '#3b82f6' },
+  const { sessionArchitectures, setBenchmarkResult } = useForgeContext();
+
+  const baselineArchs = [
+    { id: 'Hybrid RAG + BGE Reranker', name: 'Hybrid RAG + BGE Reranker', color: '#eab308' },
+    { id: 'Dense RAG + GPT-4o',        name: 'Dense RAG + GPT-4o',        color: '#22c55e' },
+    { id: 'BM25 Only + Claude 3.5',    name: 'BM25 Only + Claude 3.5',    color: '#3b82f6' },
   ];
+
+  const sessionArchList = sessionArchitectures.map((arch, i) => {
+    const displayName = generateArchitectureName(arch, i);
+    return {
+      id: arch.id || displayName,
+      name: displayName,
+      color: '#a855f7' // Purple for session archs
+    };
+  });
+
+  const allArchs = [...sessionArchList, ...baselineArchs];
 
   const allMetrics = ['Faithfulness', 'Relevancy', 'Precision@5', 'Recall@10', 'MRR', 'Latency', 'Cost'];
 
@@ -33,6 +54,7 @@ export const Benchmark: React.FC = () => {
       architectures: selectedArchs,
     });
     setReport(data);
+    setBenchmarkResult(data);
     setRunning(false);
   };
 
@@ -50,14 +72,18 @@ export const Benchmark: React.FC = () => {
   const sortedLeaderboard = useMemo(() => {
     if (!report || !report.leaderboard) return [];
     return [...report.leaderboard]
-      .map((entry, i) => ({
-        ...entry,
-        score:     entry.accuracyScore,
-        precision: Math.max(60, entry.accuracyScore - 5.2),
-        recall:    Math.max(60, entry.accuracyScore - 3.1),
-        passRate:  Math.min(100, entry.accuracyScore + 1.9),
-        color:     allArchs.find(a => a.id === entry.architectureName)?.color ?? '#9ca3af',
-      }))
+      .map((entry, i) => {
+        const archInfo = allArchs.find(a => a.id === entry.architectureName) || allArchs.find(a => a.name === entry.architectureName);
+        return {
+          ...entry,
+          architectureName: archInfo?.name || entry.architectureName,
+          score:     entry.accuracyScore,
+          precision: entry.precision,
+          recall:    entry.recall,
+          passRate:  entry.passRate,
+          color:     archInfo?.color ?? '#9ca3af',
+        };
+      })
       .sort((a, b) => {
         const getVal = (r: typeof a) =>
           sortField === 'score'    ? r.score
@@ -118,11 +144,18 @@ export const Benchmark: React.FC = () => {
             padding: '1.25rem',
             textAlign: 'center',
           }}>
-            <div style={{ fontSize: '0.9375rem', fontWeight: 700, color: 'var(--accent-gold)' }}>legal-bench-500.jsonl</div>
-            <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginTop: '0.25rem' }}>500 Q&A pairs · 2.1 MB</div>
+            <div style={{ fontSize: '0.9375rem', fontWeight: 700, color: 'var(--accent-gold)' }}>
+              {report?.benchmark_name || 'legal-bench-500.jsonl'}
+            </div>
+            <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginTop: '0.25rem' }}>
+              {report?.statistics?.total_samples || 500} Q&A pairs · {report?.metadata?.size || '2.1 MB'}
+            </div>
           </div>
           <div style={{ display: 'flex', gap: '0.75rem' }}>
-            {[['SAMPLES', '500'], ['DOMAIN', 'Legal']].map(([label, val]) => (
+            {[
+              ['SAMPLES', (report?.statistics?.total_samples || 500).toString()],
+              ['DOMAIN', report?.metadata?.domain || 'Legal']
+            ].map(([label, val]) => (
               <div key={label} style={{ flex: 1, background: 'var(--bg-primary)', border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-sm)', padding: '0.75rem 1rem' }}>
                 <div style={{ fontSize: '0.625rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em', color: 'var(--text-muted)', marginBottom: '0.2rem' }}>{label}</div>
                 <div style={{ fontSize: '1.125rem', fontWeight: 700, color: '#FFFFFF' }}>{val}</div>
@@ -143,7 +176,7 @@ export const Benchmark: React.FC = () => {
               >
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
                   <div style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: arch.color, flexShrink: 0 }} />
-                  <span style={{ fontSize: '0.875rem', fontWeight: 600, color: selectedArchs.includes(arch.id) ? '#FFFFFF' : 'var(--text-muted)', transition: 'color 0.15s' }}>{arch.id}</span>
+                  <span style={{ fontSize: '0.875rem', fontWeight: 600, color: selectedArchs.includes(arch.id) ? '#FFFFFF' : 'var(--text-muted)', transition: 'color 0.15s' }}>{arch.name}</span>
                 </div>
                 <div style={{
                   width: '18px', height: '18px', borderRadius: '4px',
@@ -235,11 +268,11 @@ export const Benchmark: React.FC = () => {
           {/* KPI row */}
           <div className="grid-5col">
             {[
-              { val: '94.2%', label: 'Best Score',        color: 'var(--accent-gold)' },
-              { val: '85.6%', label: 'Avg Score',         color: '#FFFFFF' },
-              { val: '390ms', label: 'Median Latency',    color: '#FFFFFF' },
-              { val: '96.1%', label: 'Pass Rate (Best)',  color: 'var(--status-green)' },
-              { val: '145',   label: 'Throughput (QPS)',  color: 'var(--status-blue)' },
+              { val: formatPercentage(report?.statistics?.maximum_score !== undefined ? report.statistics.maximum_score * 100 : undefined), label: 'Best Score',        color: 'var(--accent-gold)' },
+              { val: formatPercentage(report?.statistics?.average_score !== undefined ? report.statistics.average_score * 100 : undefined), label: 'Avg Score',         color: '#FFFFFF' },
+              { val: formatLatency(report?.statistics?.average_execution_time_ms), label: 'Median Latency',    color: '#FFFFFF' },
+              { val: formatPercentage(report?.statistics?.success_rate !== undefined ? report.statistics.success_rate * 100 : undefined), label: 'Pass Rate',  color: 'var(--status-green)' },
+              { val: formatThroughput(report?.statistics?.average_execution_time_ms),   label: 'Throughput (QPS)',  color: 'var(--status-blue)' },
             ].map(k => (
               <div key={k.label} className="kpi-card">
                 <div className="kpi-value" style={{ color: k.color }}>{k.val}</div>
@@ -305,18 +338,34 @@ export const Benchmark: React.FC = () => {
                             </div>
                           </td>
                           <td style={{ padding: '0.875rem 0.75rem', color: 'var(--text-secondary)', fontSize: '0.8125rem' }}>{row.llmModel}</td>
-                          <td style={{ padding: '0.875rem 0.75rem', fontWeight: 700, color: isTop ? 'var(--accent-gold)' : '#FFFFFF', fontSize: '0.875rem' }}>{row.score.toFixed(1)}</td>
-                          <td style={{ padding: '0.875rem 0.75rem', color: 'var(--text-secondary)', fontSize: '0.8125rem' }}>{row.precision.toFixed(0)}%</td>
-                          <td style={{ padding: '0.875rem 0.75rem', color: 'var(--text-secondary)', fontSize: '0.8125rem' }}>{row.recall.toFixed(0)}%</td>
-                          <td style={{ padding: '0.875rem 0.75rem', color: '#FFFFFF', fontSize: '0.8125rem' }}>{row.latencyP95}ms</td>
-                          <td style={{ padding: '0.875rem 0.75rem', color: '#FFFFFF', fontSize: '0.8125rem' }}>${(row.costPerMillionTokens * 0.0001).toFixed(4)}</td>
+                          <td style={{ padding: '0.875rem 0.75rem', fontWeight: 700, color: isTop ? 'var(--accent-gold)' : '#FFFFFF', fontSize: '0.875rem' }}>
+                            {row.status === 'Not Yet Benchmarked' ? '-' : formatPercentage(row.score).replace('%', '')}
+                          </td>
+                          <td style={{ padding: '0.875rem 0.75rem', color: 'var(--text-secondary)', fontSize: '0.8125rem' }}>
+                            {row.precision !== undefined ? formatPercentage(row.precision) : 'Not Evaluated'}
+                          </td>
+                          <td style={{ padding: '0.875rem 0.75rem', color: 'var(--text-secondary)', fontSize: '0.8125rem' }}>
+                            {row.recall !== undefined ? formatPercentage(row.recall) : 'Not Evaluated'}
+                          </td>
+                          <td style={{ padding: '0.875rem 0.75rem', color: '#FFFFFF', fontSize: '0.8125rem' }}>
+                            {row.status === 'Not Yet Benchmarked' ? '-' : formatLatency(row.latencyP95)}
+                          </td>
+                          <td style={{ padding: '0.875rem 0.75rem', color: '#FFFFFF', fontSize: '0.8125rem' }}>
+                            {row.status === 'Not Yet Benchmarked' ? '-' : formatCost(row.costPerMillionTokens * 0.0001)}
+                          </td>
                           <td style={{ padding: '0.875rem 0.75rem', minWidth: '130px' }}>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                              <div style={{ flex: 1, height: '4px', backgroundColor: 'var(--bg-primary)', borderRadius: '2px', overflow: 'hidden' }}>
-                                <div style={{ width: `${row.passRate}%`, height: '100%', backgroundColor: row.color }} />
+                            {row.status === 'Not Yet Benchmarked' ? (
+                              <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Not Yet Benchmarked</span>
+                            ) : (
+                              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                                <div style={{ flex: 1, height: '4px', backgroundColor: 'var(--bg-primary)', borderRadius: '2px', overflow: 'hidden' }}>
+                                  <div style={{ width: `${row.passRate || 0}%`, height: '100%', backgroundColor: row.color }} />
+                                </div>
+                                <span style={{ fontSize: '0.75rem', fontWeight: 600, color: '#FFFFFF', minWidth: '38px', textAlign: 'right' }}>
+                                  {row.passRate !== undefined ? formatPercentage(row.passRate) : '-'}
+                                </span>
                               </div>
-                              <span style={{ fontSize: '0.75rem', fontWeight: 600, color: '#FFFFFF', minWidth: '38px', textAlign: 'right' }}>{row.passRate.toFixed(1)}%</span>
-                            </div>
+                            )}
                           </td>
                         </tr>
                       );

@@ -47,13 +47,9 @@ class BenchmarkRunner:
         config: BenchmarkRunConfig,
     ) -> EvaluationRequest:
         """Construct single-sample EvaluationRequest payload from BenchmarkSample and config."""
-        answer_text = (
-            sample.expected_answer
-            if sample.expected_answer and sample.expected_answer.strip()
-            else sample.ground_truth
-        )
+        answer_text = sample.expected_answer
         if not answer_text or not answer_text.strip():
-            answer_text = f"Evaluated RAG answer for prompt: {sample.question}"
+            raise ValueError(f"No actual generated answer available for sample {sample.sample_id}.")
 
         threshold_cfg = config.threshold_config
         if isinstance(threshold_cfg, list):
@@ -66,7 +62,7 @@ class BenchmarkRunner:
         return EvaluationRequest(
             question=sample.question,
             answer=answer_text,
-            contexts=sample.contexts if sample.contexts else [],
+            contexts=sample.contexts if sample.contexts else None,
             ground_truth=sample.ground_truth if sample.ground_truth else None,
             provider=config.provider,
             metric_config=config.metric_config,
@@ -81,6 +77,12 @@ class BenchmarkRunner:
     ) -> list[BenchmarkSampleResult]:
         """Execute benchmark samples by delegating each sample evaluation to EvaluationService."""
         _ = benchmark_name
+
+        # We only have pre-computed inference outputs (in the dataset) for baseline architectures.
+        # Generated custom architectures do not have recorded results yet.
+        # Return empty results to trigger 'Not Yet Benchmarked' state in the UI.
+        if config.rag_architecture_id and config.rag_architecture_id.startswith("forge_custom"):
+            return []
 
         samples = self._load_samples(config, dataset_path)
 

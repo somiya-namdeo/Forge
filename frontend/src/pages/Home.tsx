@@ -18,21 +18,23 @@ import { Card, Badge, Button, EmptyState, Skeleton, ScoreRing } from '../compone
 import { decisionService, evaluationService } from '../services';
 import { GeneratedArchitecture, EvaluationResult } from '../types';
 import { NavPage } from '../components/navigation';
+import { useForgeContext } from '../context';
 
 interface HomeProps {
-  onNavigate: (page: NavPage, selectedArch?: any) => void;
+  onNavigate: (page: NavPage) => void;
 }
 
 const QUICK_TOPICS = [
-  'Healthcare AI',
-  'Finance Copilot',
-  'Code Assistant',
-  'Research Agent',
-  'Legal AI',
-  'Support AI',
+  { name: 'Healthcare AI', prompt: 'Build a healthcare RAG assistant for 2 million clinical documents with strict data privacy, high factual accuracy, and low-latency responses.' },
+  { name: 'Finance Copilot', prompt: 'Build a financial analysis copilot for 500,000 market and research documents with strong security, reliable retrieval, and moderate operating costs.' },
+  { name: 'Code Assistant', prompt: 'Build a code assistant for a large enterprise repository that provides accurate code search and generation with low latency and support for private deployments.' },
+  { name: 'Research Agent', prompt: 'Build a research agent that processes academic papers and technical reports, retrieves relevant evidence, and generates cited research summaries.' },
+  { name: 'Legal AI', prompt: 'Build a legal RAG assistant for 5 million confidential documents with low latency, high factual accuracy, and strict data privacy.' },
+  { name: 'Support AI', prompt: 'Build an AI customer support assistant for 10 million knowledge-base articles with high availability, fast responses, and accurate answers.' },
 ];
 
 export const Home: React.FC<HomeProps> = ({ onNavigate }) => {
+  const { setDecisionResult, addSessionArchitecture } = useForgeContext();
   const [promptInput, setPromptInput] = useState('');
   const [selectedTopic, setSelectedTopic] = useState('Legal AI');
   const [generating, setGenerating] = useState(false);
@@ -79,8 +81,10 @@ export const Home: React.FC<HomeProps> = ({ onNavigate }) => {
         deployment_target: 'aws',
         priority: 'balanced'
       });
+      setDecisionResult(response as any);
+      addSessionArchitecture(response as any);
       // Navigate straight to the generated architecture report
-      onNavigate('new-architecture', response as any);
+      onNavigate('new-architecture');
     } catch (err: any) {
       setArchError(err.message || 'Failed to generate architecture');
     } finally {
@@ -156,12 +160,15 @@ export const Home: React.FC<HomeProps> = ({ onNavigate }) => {
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.45rem', alignItems: 'center' }}>
                 <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)', fontWeight: 600, marginRight: '0.15rem' }}>TOPICS:</span>
                 {QUICK_TOPICS.map((topic) => {
-                  const isSelected = selectedTopic === topic;
+                  const isSelected = selectedTopic === topic.name;
                   return (
                     <button
-                      key={topic}
+                      key={topic.name}
                       type="button"
-                      onClick={() => setSelectedTopic(topic)}
+                      onClick={() => {
+                        setSelectedTopic(topic.name);
+                        setPromptInput(topic.prompt);
+                      }}
                       style={{
                         padding: '0.2rem 0.65rem',
                         borderRadius: 'var(--radius-pill)',
@@ -173,7 +180,7 @@ export const Home: React.FC<HomeProps> = ({ onNavigate }) => {
                         transition: 'all 0.2s',
                       }}
                     >
-                      {topic}
+                      {topic.name}
                     </button>
                   );
                 })}
@@ -317,7 +324,7 @@ export const Home: React.FC<HomeProps> = ({ onNavigate }) => {
                   key={arch.id}
                   interactive
                   delay={index * 0.06}
-                  onClick={() => onNavigate('new-architecture', arch)}
+                  onClick={() => onNavigate('new-architecture')}
                   style={{ padding: '0.9rem 1rem', display: 'flex', flexDirection: 'column', gap: '0.6rem' }}
                 >
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
@@ -451,19 +458,6 @@ export const Home: React.FC<HomeProps> = ({ onNavigate }) => {
               <div style={{ flex: 1 }}>
                 <h4 style={{ fontSize: '0.875rem', fontWeight: 600, color: '#FFFFFF' }}>Run Evaluation</h4>
                 <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>Test your RAG pipeline faithfulness</p>
-              </div>
-              <ArrowRight size={14} style={{ color: 'var(--text-muted)' }} />
-            </Card>
-
-            <Card
-              interactive
-              onClick={() => onNavigate('comparison')}
-              style={{ padding: '0.8rem 1rem', display: 'flex', alignItems: 'center', gap: '0.75rem' }}
-            >
-              <div style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: 'var(--status-purple)' }} />
-              <div style={{ flex: 1 }}>
-                <h4 style={{ fontSize: '0.875rem', fontWeight: 600, color: '#FFFFFF' }}>Compare Models</h4>
-                <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>A/B test two engineering architectures</p>
               </div>
               <ArrowRight size={14} style={{ color: 'var(--text-muted)' }} />
             </Card>

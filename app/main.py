@@ -7,11 +7,14 @@ from typing import Union
 from fastapi import FastAPI, HTTPException, Request, status
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
+from fastapi.middleware.cors import CORSMiddleware
 
 from app.api.routes.benchmark import router as benchmark_router
-from app.api.routes.comparison import router as comparison_router
 from app.api.routes.decision import router as decision_router
+from app.api.routes.reports import router as reports_router
+from app.api.routes.knowledge import router as knowledge_router
 from app.routes.evaluation import router as evaluation_router
+import os
 
 # Configure logger for global exception tracking
 logger = logging.getLogger("forge.api")
@@ -24,6 +27,16 @@ app = FastAPI(
         " recommendation, and Retrieval-Augmented Generation (RAG)."
     ),
     version="1.0.0",
+)
+
+FRONTEND_URL = os.getenv("FRONTEND_URL", "http://localhost:5173")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[FRONTEND_URL, "http://localhost:5173", "http://localhost:3000"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 
@@ -161,7 +174,11 @@ app.include_router(
     prefix="/api/v1",
 )
 app.include_router(
-    comparison_router,
+    reports_router,
+    prefix="/api/v1",
+)
+app.include_router(
+    knowledge_router,
     prefix="/api/v1",
 )
 

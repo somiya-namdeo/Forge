@@ -303,21 +303,18 @@ Rewrite the following architectural recommendation explanations to be more natur
 
 - Rewrite only.
 - Preserve all technical meaning.
-- Keep explanations concise (maximum 2-3 sentences total).
-- Do not repeat project requirements multiple times.
-- Format the explanation as exactly three parts in a single string, prefixed exactly as follows:
-  Why selected: <short explanation>
-  Trade-off: <one sentence>
-  Alternative: <Technology> — rejected because ...
+- KEEP TEXT EXTREMELY BRIEF (maximum 2-3 sentences total, under 40 words per category) to prevent token limits.
+- Do not repeat project requirements.
+- Format the explanation exactly as:
+  Why selected: <short explanation> Trade-off: <one sentence> Alternative: <Technology> — rejected because ...
 - Never invent new facts or technologies.
-- Never add additional reasoning or markdown block formatting.
 - Return ONLY a valid JSON object mapping each category name to its enhanced explanation string.
 
 Project Context:
-{json.dumps(project_context, indent=2)}
+{json.dumps(project_context)}
 
 Input Recommendations:
-{json.dumps(items_payload, indent=2)}
+{json.dumps(items_payload)}
 
 JSON Output Format:
 {{
@@ -325,7 +322,7 @@ JSON Output Format:
 }}
 """
         try:
-            raw_response = self._llm.reason(prompt).strip()
+            raw_response = self._llm.reason(prompt, json_mode=True).strip()
             if raw_response.startswith("```"):
                 lines = raw_response.splitlines()
                 if lines[0].startswith("```"):

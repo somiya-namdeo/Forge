@@ -15,11 +15,12 @@ def _parse_number_with_multiplier(match_str: str) -> int:
     """Parse string like '5 million', '5M', '100k', '5000000' into integer."""
     s = match_str.lower().replace(',', '')
     multiplier = 1
-    if 'm' in s or 'million' in s:
+    
+    if re.search(r'(?<![a-z])(?:m|million)(?![a-z])', s):
         multiplier = 1_000_000
-    elif 'b' in s or 'billion' in s:
+    elif re.search(r'(?<![a-z])(?:b|billion)(?![a-z])', s):
         multiplier = 1_000_000_000
-    elif 'k' in s or 'thousand' in s:
+    elif re.search(r'(?<![a-z])(?:k|thousand)(?![a-z])', s):
         multiplier = 1_000
     
     num_match = re.search(r'[\d\.]+', s)
@@ -134,19 +135,19 @@ class RequirementAnalyzer:
 
         users = request.expected_users or 0
         if users == 0:
-            user_match = re.search(r'([\d\.,]+(?:\s*(?:m|b|k|million|billion|thousand))?)\s*(?:\w+\s*){0,3}(?:users|customers|active users)', desc)
+            user_match = re.search(r'([\d\.,]+(?:\s*(?:m|b|k|million|billion|thousand)(?![a-z]))?)\s*(?:\w+\s*){0,3}(?:users|customers|active users)', desc)
             if user_match:
                 users = _parse_number_with_multiplier(user_match.group(1))
 
         docs = request.document_count or 0
         if docs == 0:
-            doc_match = re.search(r'([\d\.,]+(?:\s*(?:m|b|k|million|billion|thousand))?)\s*(?:\w+\s*){0,3}(?:documents|docs|records)', desc)
+            doc_match = re.search(r'([\d\.,]+(?:\s*(?:m|b|k|million|billion|thousand)(?![a-z]))?)\s*(?:[\w-]+\s*){0,4}(?:documents|docs|records|articles)', desc)
             if doc_match:
                 docs = _parse_number_with_multiplier(doc_match.group(1))
 
         budget = request.budget_usd
         if budget is None or budget == 0:
-            budget_match = re.search(r'(?:\$([\d\.,]+(?:k|m)?)|([\d\.,]+(?:k|m)?)\s*(?:usd|dollars)|budget\s+([\d\.,]+(?:k|m)?))', desc)
+            budget_match = re.search(r'(?:\$([\d\.,]+(?:k|m)(?![a-z])?)|([\d\.,]+(?:k|m)(?![a-z])?)\s*(?:usd|dollars)|budget\s+([\d\.,]+(?:k|m)(?![a-z])?))', desc)
             if budget_match:
                 b_str = budget_match.group(1) or budget_match.group(2) or budget_match.group(3)
                 budget = float(_parse_number_with_multiplier(b_str))

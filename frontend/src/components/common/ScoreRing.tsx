@@ -29,8 +29,20 @@ export const ScoreRing: React.FC<ScoreRingProps> = ({
   }
 
   return (
-    <div style={{ position: 'relative', width: size, height: size, display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>
-      <svg width={size} height={size} style={{ transform: 'rotate(-90deg)' }}>
+    <div style={{ 
+      position: 'relative', 
+      width: size, 
+      height: size, 
+      minWidth: size,
+      minHeight: size,
+      flexShrink: 0,
+      display: 'inline-flex', 
+      alignItems: 'center', 
+      justifyContent: 'center',
+      borderRadius: '50%',
+      overflow: 'hidden'
+    }}>
+      <svg width={size} height={size} style={{ transform: 'rotate(-90deg)', display: 'block' }}>
         <circle
           cx={size / 2}
           cy={size / 2}
@@ -53,7 +65,7 @@ export const ScoreRing: React.FC<ScoreRingProps> = ({
           strokeLinecap="round"
         />
       </svg>
-      <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'var(--font-heading)', fontSize: size < 50 ? '0.85rem' : '1.1rem', fontWeight: 700, color: strokeColor }}>
+      <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'var(--font-heading)', fontSize: size < 30 ? '0.55rem' : (size < 50 ? '0.85rem' : '1.1rem'), fontWeight: 700, color: strokeColor }}>
         {Math.round(clampedScore)}
       </div>
     </div>

@@ -8,12 +8,12 @@ import {
   DecisionEngine,
   Evaluation,
   Benchmark,
-  Comparison,
   KnowledgeBase,
   Reports
 } from './pages';
 import { GeneratedArchitecture } from './types';
 import { ErrorState } from './components/common';
+import { ForgeProvider } from './context';
 
 // Simple Error Boundary to ensure enterprise UI resilience
 class ErrorBoundary extends Component<{ children: ReactNode }, { hasError: boolean; errorMsg: string }> {
@@ -48,12 +48,8 @@ class ErrorBoundary extends Component<{ children: ReactNode }, { hasError: boole
 
 export function App() {
   const [activePage, setActivePage] = useState<NavPage>('home');
-  const [selectedArchitecture, setSelectedArchitecture] = useState<any | null>(null);
 
-  const handleNavigate = (page: NavPage, arch?: any) => {
-    if (arch !== undefined) {
-      setSelectedArchitecture(arch);
-    }
+  const handleNavigate = (page: NavPage) => {
     setActivePage(page);
     // Smooth scroll to top when changing views
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -66,8 +62,7 @@ export function App() {
       case 'new-architecture':
         return (
           <NewArchitecture
-            initialArchitecture={selectedArchitecture}
-            onNavigateToReports={(arch) => handleNavigate('reports', arch)}
+            onNavigateToReports={() => handleNavigate('reports')}
           />
         );
       case 'decision-engine':
@@ -76,15 +71,12 @@ export function App() {
         return <Evaluation />;
       case 'benchmark':
         return <Benchmark />;
-      case 'comparison':
-        return <Comparison />;
       case 'knowledge-base':
         return <KnowledgeBase />;
       case 'reports':
         return (
           <Reports
-            selectedArch={selectedArchitecture}
-            onNavigateToArch={(arch) => handleNavigate('new-architecture', arch)}
+            onNavigateToArch={() => handleNavigate('new-architecture')}
           />
         );
       default:
@@ -93,15 +85,17 @@ export function App() {
   };
 
   return (
-    <ErrorBoundary>
-      <MainLayout activePage={activePage} onSelectPage={(p) => handleNavigate(p)}>
-        <AnimatePresence mode="wait">
-          <div key={activePage} style={{ width: '100%' }}>
-            {renderActivePage()}
-          </div>
-        </AnimatePresence>
-      </MainLayout>
-    </ErrorBoundary>
+    <ForgeProvider>
+      <ErrorBoundary>
+        <MainLayout activePage={activePage} onSelectPage={(p) => handleNavigate(p)}>
+          <AnimatePresence mode="wait">
+            <div key={activePage} style={{ width: '100%' }}>
+              {renderActivePage()}
+            </div>
+          </AnimatePresence>
+        </MainLayout>
+      </ErrorBoundary>
+    </ForgeProvider>
   );
 }
 

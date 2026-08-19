@@ -20,7 +20,6 @@ export type NavPage =
   | 'decision-engine'
   | 'evaluation'
   | 'benchmark'
-  | 'comparison'
   | 'knowledge-base'
   | 'reports';
 
@@ -36,7 +35,6 @@ const NAV_ITEMS: NavItem[] = [
   { id: 'decision-engine', label: 'Decision Engine', icon: Brain },
   { id: 'evaluation', label: 'Evaluation', icon: BarChart2 },
   { id: 'benchmark', label: 'Benchmark', icon: Trophy },
-  { id: 'comparison', label: 'Comparison', icon: Scale },
   { id: 'knowledge-base', label: 'Knowledge Base', icon: BookOpen },
   { id: 'reports', label: 'Reports', icon: FileText },
 ];

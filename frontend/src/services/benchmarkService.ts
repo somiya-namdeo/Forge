@@ -49,11 +49,14 @@ class BenchmarkService {
         latencyP50: stats?.average_execution_time_ms || 0,
         latencyP95: stats?.p95_execution_time_ms || 0,
         latencyP99: stats?.p95_execution_time_ms || 0,
-        throughputTokSec: stats?.total_samples || 0,
+        throughputTokSec: stats?.average_execution_time_ms ? 1000 / stats.average_execution_time_ms : 0,
         accuracyScore: (stats?.average_score || 0) * 100,
+        precision: stats?.metric_averages?.precision !== undefined ? stats.metric_averages.precision * 100 : undefined,
+        recall: stats?.metric_averages?.recall !== undefined ? stats.metric_averages.recall * 100 : undefined,
+        passRate: stats?.success_rate !== undefined ? stats.success_rate * 100 : undefined,
         costPerMillionTokens: 0,
-        status: 'Verified'
-      };
+        status: (stats?.total_samples || 0) === 0 ? 'Not Yet Benchmarked' : 'Verified'
+      } as any;
     });
 
     // Return an object that has both the real backend fields and the legacy fields the UI needs
