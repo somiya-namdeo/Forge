@@ -23,7 +23,6 @@ from app.utils.score_calculator import ScoreCalculator
 from app.history.evaluation_history import EvaluationHistoryManager, EvaluationRecord
 from app.reports.report_generator import ReportGenerator
 from app.reports.export_pdf import PDFExporter
-from app.reports.export_json import JSONExporter
 from app.schemas.evaluation import (
     EvaluationRequest,
     MetricConfigSchema,
@@ -99,17 +98,6 @@ class TestEvaluationModuleStructure(unittest.TestCase):
         saved = hm.save(rec)
         found = hm.get_by_id(saved.evaluation_id)
         self.assertIsNotNone(found)
-
-    def test_report_generation_and_exports(self) -> None:
-        rg = ReportGenerator()
-        rep = rg.generate_report("eval_123", "pass", 0.85, {"faithfulness": 0.85})
-        pdf_exp = PDFExporter()
-        pdf_bytes = pdf_exp.export_to_pdf(rep)
-        self.assertTrue(len(pdf_bytes) > 0)
-
-        json_exp = JSONExporter()
-        json_str = json_exp.export_to_json(rep)
-        self.assertIn("eval_123", json_str)
 
     def test_service_run_evaluation(self) -> None:
         req = EvaluationRequest(

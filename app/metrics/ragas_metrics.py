@@ -51,24 +51,22 @@ class RagasEvaluator(BaseMetricEvaluator):
 
     _circuit_breaker_until: float = 0.0
 
-    @classmethod
-    def is_circuit_open(cls) -> bool:
+    def is_circuit_open(self) -> bool:
         """Return True if circuit breaker is currently open (cooling down)."""
-        return time.time() < cls._circuit_breaker_until
+        return time.time() < self._circuit_breaker_until
 
-    @classmethod
-    def trip_circuit_breaker(cls, cooldown_seconds: float = 60.0) -> None:
+    def trip_circuit_breaker(self, cooldown_seconds: float = 60.0) -> None:
         """Trip circuit breaker for cooldown_seconds on 429/timeout/provider failures."""
-        cls._circuit_breaker_until = time.time() + cooldown_seconds
+        self._circuit_breaker_until = time.time() + cooldown_seconds
         logger.info("RAGAS circuit breaker TRIP OPEN (60s cooldown initiated).")
 
-    @classmethod
-    def reset_circuit_breaker(cls) -> None:
+    def reset_circuit_breaker(self) -> None:
         """Reset circuit breaker state (for testing)."""
-        cls._circuit_breaker_until = 0.0
+        self._circuit_breaker_until = 0.0
 
     def __init__(self) -> None:
         """Initialize RAGAS evaluator with Evaluation Groq account LLM and BGE embeddings wrappers."""
+        self._circuit_breaker_until = 0.0
         self._llm = ChatOpenAI(
             model=EVALUATION_MODEL,
             api_key=EVALUATION_API_KEY,

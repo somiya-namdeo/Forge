@@ -281,7 +281,7 @@ class EvaluationEngine:
         provider_cache.clear()
         logger.info("Evaluation Complete")
 
-        flat_metrics: Dict[str, float] = {k: (r.score if r.success else 0.0) for k, r in results.items()}
+        flat_metrics: Dict[str, float] = {k: r.score for k, r in results.items() if r.success and r.metadata.get('status') != 'skipped'}
 
         weights = self._extract_weights(request)
         overall_score = sum(

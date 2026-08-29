@@ -64,10 +64,14 @@ class DecisionEngine:
             "project_scale": profile.project_scale.value,
             "document_scale": profile.document_scale.value,
             "budget_tier": profile.budget_tier.value,
+            "budget_usd": str(request.budget_usd) if request.budget_usd is not None else "",
             "deployment_target": request.deployment_target.value,
             "priority": request.priority.value,
             "estimated_cost": f"${int(total_estimated_cost)}/mo" if cost_available else "Unknown",
             "estimated_latency": f"{int(total_estimated_latency)}ms p95" if latency_available else "Unknown",
+            "privacy": "true" if profile.requires_privacy else "false",
+            "low_latency": "true" if profile.requires_low_latency else "false",
+            "enterprise_security": "true" if profile.requires_enterprise_security else "false",
         }
 
         stats = pipeline_statistics or {}

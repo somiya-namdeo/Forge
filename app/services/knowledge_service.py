@@ -137,6 +137,27 @@ class KnowledgeService:
             else:
                 features = []
                 
+            raw_desc = p.get("description")
+            if not raw_desc:
+                text_lines = p.get("text", "").split("\n")
+                clean_lines = []
+                for line in text_lines:
+                    line = line.strip()
+                    if len(line) < 45: continue
+                    if line.startswith("-") or line.startswith("*"): continue
+                    if line.count("|") > 2: continue
+                    # Filter out common scraped UI navigation/artifacts
+                    lower_line = line.lower()
+                    if " spaces " in lower_line or "leaderboard" in lower_line or "fetching metadata" in lower_line: continue
+                    clean_lines.append(line)
+                
+                if clean_lines:
+                    raw_desc = clean_lines[0]
+                    if len(raw_desc) > 250:
+                        raw_desc = raw_desc[:247] + "..."
+                else:
+                    raw_desc = "Description unavailable"
+
             components.append(
                 KnowledgeComponent(
                     id=tech_id,
@@ -146,9 +167,9 @@ class KnowledgeService:
                     officialDocumentation=p.get("url") or p.get("officialDocumentation"),
                     githubRepository=p.get("github") or p.get("githubRepository"),
                     license=p.get("license"),
-                    priority=p.get("priority"),
-                    lastVerified=p.get("update_frequency") or p.get("lastVerified"),
-                    description=p.get("description") or p.get("text", "")[:200] + "...",
+                    priority=None,
+                    lastVerified=None,
+                    description=raw_desc,
                     keyFeatures=features
                 )
             )

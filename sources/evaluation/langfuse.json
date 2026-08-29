@@ -1,6 +1,6 @@
 {
   "id": "source-langfuse",
-  "category": "deployment",
+  "category": "evaluation",
   "name": "Langfuse",
   "organization": "Langfuse",
   "official_documentation": [

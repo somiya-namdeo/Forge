@@ -15,7 +15,12 @@ from pathlib import Path
 temp_qdrant = Path("temp_qdrant_test")
 if temp_qdrant.exists():
     shutil.rmtree(temp_qdrant)
-shutil.copytree("knowledge_base/vector_store", temp_qdrant)
+
+vs_path = Path("knowledge_base/vector_store_new")
+if not vs_path.exists():
+    vs_path = Path("knowledge_base/vector_store")
+
+shutil.copytree(vs_path, temp_qdrant)
 app.core.config.QDRANT_PATH = temp_qdrant
 import app.retriever.qdrant_retriever
 app.retriever.qdrant_retriever.QDRANT_PATH = temp_qdrant
@@ -67,7 +72,7 @@ def test_enterprise_aws(decision_service):
     response = decision_service.recommend(req)
     deployment_rec = next(r for r in response.recommendations if r.category.lower() == "deployment")
     # Verify a cloud/enterprise option is recommended
-    assert any(k in deployment_rec.recommended.lower() for k in ("ray", "aws", "langfuse", "sagemaker", "weights"))
+    assert any(k in deployment_rec.recommended.lower() for k in ("ray", "aws", "sagemaker", "weights"))
 
 def test_open_source_only(decision_service):
     """Open Source only -> Proprietary technologies must be excluded."""
@@ -114,3 +119,21 @@ def test_no_explicit_constraints(decision_service):
     
     response = decision_service.recommend(req)
     assert len(response.recommendations) > 0
+
+def test_langfuse_is_evaluation(decision_service):
+    """Ensure Langfuse is categorized under evaluation and not deployment."""
+    req = DecisionRequest(
+        project_name="Evaluation Project",
+        project_description="I need a tool for LLM observability and evaluation like Langfuse.",
+        deployment_target=DeploymentTarget.AWS,
+        priority=Priority.QUALITY,
+        budget_usd=1000
+    )
+    
+    response = decision_service.recommend(req)
+    
+    evaluation_candidates = [r.recommended.lower() for r in response.recommendations if r.category.lower() == "evaluation"]
+    deployment_candidates = [r.recommended.lower() for r in response.recommendations if r.category.lower() == "deployment"]
+    
+    assert any("langfuse" in name for name in evaluation_candidates), "Langfuse should be recommended for evaluation"
+    assert not any("langfuse" in name for name in deployment_candidates), "Langfuse must NOT be in deployment"

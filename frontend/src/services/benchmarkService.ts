@@ -12,56 +12,114 @@ class BenchmarkService {
    * are provided, this will run them sequentially or in parallel and aggregate the results.
    */
   async runBenchmark(config: any): Promise<any> {
+    
+    const metricMapping: Record<string, string> = {
+      'Faithfulness': 'faithfulness',
+      'Relevancy': 'answer_relevance',
+      'Latency': 'latency',
+      'Cost': 'cost'
+    };
+
     const archsToRun = config.architectures && config.architectures.length > 0 
       ? config.architectures 
       : ['arch_v1'];
 
-    // Run benchmarks for all selected architectures
-    const reports = await Promise.all(
-      archsToRun.map(async (archName: string) => {
-        const payload: BenchmarkRunConfig = {
-          benchmark_name: config.dataset || 'Forge Benchmark Suite',
-          rag_architecture_id: archName,
-          samples: [],
-          provider: 'ragas',
-          weight_preset: 'balanced_rag',
-        };
+    const reports = [];
+    for (const archName of archsToRun) {
+      const payload: BenchmarkRunConfig = {
+        benchmark_name: config.dataset || 'Forge Benchmark Suite',
+        rag_architecture_id: archName,
+        samples: [],
+        provider: 'ragas',
+        weight_preset: 'balanced_rag',
+        metric_config: config.metrics ? config.metrics.map((m: string) => ({ metric_type: metricMapping[m] || 'custom', provider: 'ragas', weight: 1.0 })) : undefined,
+      };
 
-        return request<BenchmarkReport>('/benchmark/run', {
+      try {
+        const res = await request<BenchmarkReport>('/benchmark/run', {
           method: 'POST',
           body: JSON.stringify(payload),
         });
-      })
-    );
+        reports.push({ success: true, archName, data: res });
+      } catch (err: any) {
+        reports.push({ success: false, archName, error: err.message || 'Benchmark failed' });
+      }
+    }
 
-    // If we only ran one, or we want to aggregate them into a single report object
-    // that fits the frontend's legacy BenchmarkReport structure for the Leaderboard:
-    const primaryReport = reports[0];
+    // Pick a primary report for the baseline structure if one succeeded
+    const successfulReports = reports.filter(r => r.success);
+    let primaryReport = successfulReports.length > 0 ? successfulReports[0].data : null;
     
-    // Construct the leaderboard from the multiple BenchmarkReport responses
+    // Construct the leaderboard
     const leaderboard = reports.map((rep, index) => {
-      const stats = rep.statistics;
+      if (!rep.success || !rep.data) {
+         return {
+            rank: index + 1,
+            architectureName: rep.archName,
+            llmModel: '-',
+            vectorDb: '-',
+            latencyP50: null,
+            latencyP95: null,
+            latencyP99: null,
+            throughputTokSec: null,
+            accuracyScore: null,
+            precision: null,
+            recall: null,
+            passRate: null,
+            costPerMillionTokens: null,
+            status: 'Failed',
+            reason: rep.error
+         };
+      }
+      const stats = rep.data.statistics;
+      const isUnbenchmarked = (stats?.total_samples || 0) === 0;
       return {
         rank: index + 1, // Will be sorted by the UI
-        architectureName: rep.benchmark_name === config.dataset ? archsToRun[index] : archsToRun[index],
-        llmModel: 'Auto-Selected', // Backend doesn't return this in BenchmarkReport directly
+        architectureName: rep.archName,
+        llmModel: 'Auto-Selected',
         vectorDb: 'Auto-Selected',
-        latencyP50: stats?.average_execution_time_ms || 0,
-        latencyP95: stats?.p95_execution_time_ms || 0,
-        latencyP99: stats?.p95_execution_time_ms || 0,
-        throughputTokSec: stats?.average_execution_time_ms ? 1000 / stats.average_execution_time_ms : 0,
-        accuracyScore: (stats?.average_score || 0) * 100,
-        precision: stats?.metric_averages?.precision !== undefined ? stats.metric_averages.precision * 100 : undefined,
-        recall: stats?.metric_averages?.recall !== undefined ? stats.metric_averages.recall * 100 : undefined,
-        passRate: stats?.success_rate !== undefined ? stats.success_rate * 100 : undefined,
-        costPerMillionTokens: 0,
-        status: (stats?.total_samples || 0) === 0 ? 'Not Yet Benchmarked' : 'Verified'
+        latencyP50: isUnbenchmarked ? null : stats?.average_execution_time_ms || 0,
+        latencyP95: isUnbenchmarked ? null : stats?.p95_execution_time_ms || 0,
+        latencyP99: isUnbenchmarked ? null : stats?.p95_execution_time_ms || 0,
+        throughputTokSec: isUnbenchmarked ? null : (stats?.average_execution_time_ms ? 1000 / stats.average_execution_time_ms : 0),
+        accuracyScore: isUnbenchmarked ? null : (stats?.average_score || 0) * 100,
+        precision: isUnbenchmarked ? null : (stats?.metric_averages?.precision_at_k !== undefined ? stats.metric_averages.precision_at_k * 100 : null),
+        recall: isUnbenchmarked ? null : (stats?.metric_averages?.recall_at_k !== undefined ? stats.metric_averages.recall_at_k * 100 : null),
+        passRate: isUnbenchmarked ? null : (stats?.success_rate !== undefined ? stats.success_rate * 100 : null),
+        costPerMillionTokens: isUnbenchmarked ? null : 0,
+        status: isUnbenchmarked ? 'Not Yet Benchmarked' : 'Verified'
       } as any;
     });
+
+    if (!primaryReport) {
+       // if all failed
+       primaryReport = {
+         benchmark_name: config.dataset,
+         results: [],
+         provider: 'ragas',
+         started_at: '',
+         completed_at: '',
+         statistics: {
+            total_samples: 0,
+            passed_samples: 0,
+            failed_samples: 0,
+            average_score: 0,
+            median_score: 0,
+            minimum_score: 0,
+            maximum_score: 0,
+            score_standard_deviation: 0,
+            average_execution_time_ms: 0,
+            p95_execution_time_ms: 0,
+            success_rate: 0,
+            failure_rate: 0
+         }
+       };
+    }
 
     // Return an object that has both the real backend fields and the legacy fields the UI needs
     return {
       ...primaryReport,
+      all_reports: reports,
       leaderboard: leaderboard,
       dataset: config.dataset,
     };

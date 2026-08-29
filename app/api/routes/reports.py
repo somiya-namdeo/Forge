@@ -15,7 +15,7 @@ pdf_exporter = PDFExporter()
     response_model=ArchitectureReport,
     status_code=status.HTTP_200_OK,
     summary="Generate Architecture Report",
-    description="Generate a comprehensive production readiness report from Forge session data.",
+    description="Generate a comprehensive architecture decision report from Forge session data.",
 )
 def generate_report(request: ReportGenerationRequest) -> ArchitectureReport:
     """Generate synchronous architecture report."""
@@ -27,7 +27,7 @@ def generate_report(request: ReportGenerationRequest) -> ArchitectureReport:
     "/pdf",
     status_code=status.HTTP_200_OK,
     summary="Generate Architecture Report PDF",
-    description="Generate a PDF export of the production readiness report.",
+    description="Generate a PDF export of the architecture decision report.",
 )
 def generate_report_pdf(request: ReportGenerationRequest) -> Response:
     """Generate synchronous PDF architecture report."""

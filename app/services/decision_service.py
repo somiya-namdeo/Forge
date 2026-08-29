@@ -87,18 +87,20 @@ class DecisionService:
         # Stage 6 & 7: Explanations and response construction via DecisionEngine
         # To maintain wrapper compatibility, we manually call the DecisionEngine here
         run_request = DecisionRunRequest(request=request, recommendations=base_recommendations)
+        t_resp_end = time.perf_counter()
+        total_pipeline_ms = round((time.perf_counter() - t_pipeline_start) * 1000, 2)
+
         pipeline_statistics: dict[str, Any] = {
             "technologies_considered": technologies_considered,
+            "evaluatedCandidates": technologies_considered,
             "categories_processed": categories_processed,
             "knowledge_base_version": "1.0.0",
             "retrieval_time_ms": max(1, int(retrieval_time_ms)),
             "ranking_time_ms": max(1, int(filtering_time_ms + scoring_time_ms)),
+            "durationMs": max(1, int(total_pipeline_ms)),
         }
         
         response = self.decision_engine.run(request, base_recommendations, pipeline_statistics)
-
-        t_resp_end = time.perf_counter()
-        total_pipeline_ms = round((time.perf_counter() - t_pipeline_start) * 1000, 2)
 
         logger.info("\nDecision Pipeline Latency Profile:")
         logger.info(f"Requirement Analysis ............ {req_analysis_ms:>7.2f} ms")

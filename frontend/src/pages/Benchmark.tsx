@@ -31,9 +31,9 @@ export const Benchmark: React.FC = () => {
     };
   });
 
-  const allArchs = [...sessionArchList, ...baselineArchs];
+  const allArchs = [...baselineArchs];
 
-  const allMetrics = ['Faithfulness', 'Relevancy', 'Precision@5', 'Recall@10', 'MRR', 'Latency', 'Cost'];
+  const allMetrics = ['Faithfulness', 'Relevancy', 'Latency', 'Cost'];
 
   const [selectedArchs,   setSelectedArchs]   = useState<string[]>(allArchs.map(a => a.id));
   const [selectedMetrics, setSelectedMetrics] = useState<string[]>(allMetrics);
@@ -45,18 +45,6 @@ export const Benchmark: React.FC = () => {
   const [sortField, setSortField]     = useState<SortKey>('score');
   const [sortDir,   setSortDir]       = useState<'asc' | 'desc'>('desc');
 
-  const handleRunBenchmark = async () => {
-    setRunning(true);
-    setReport(null);
-    const data = await benchmarkService.runBenchmark({
-      dataset: 'legal-bench-500.jsonl',
-      metrics: selectedMetrics,
-      architectures: selectedArchs,
-    });
-    setReport(data);
-    setBenchmarkResult(data);
-    setRunning(false);
-  };
 
   const toggleArch   = (id: string) => setSelectedArchs(prev =>
     prev.includes(id) ? (prev.length > 1 ? prev.filter(a => a !== id) : prev) : [...prev, id]);
@@ -213,8 +201,8 @@ export const Benchmark: React.FC = () => {
             ))}
           </div>
           <button
-            onClick={handleRunBenchmark}
-            disabled={running}
+            
+            disabled={true}
             style={{
               width: '100%',
               padding: '0.75rem',
@@ -251,9 +239,9 @@ export const Benchmark: React.FC = () => {
         <EmptyState
           icon={Trophy}
           title="Leaderboard Offline"
-          description="Select your dataset and metrics above, then click Run Benchmark."
-          actionText="Run Benchmark"
-          onAction={handleRunBenchmark}
+          description="Reference datasets are required to generate the leaderboard."
+          actionText="Awaiting Data"
+          onAction={() => {}}
         />
       )}
 
@@ -339,7 +327,7 @@ export const Benchmark: React.FC = () => {
                           </td>
                           <td style={{ padding: '0.875rem 0.75rem', color: 'var(--text-secondary)', fontSize: '0.8125rem' }}>{row.llmModel}</td>
                           <td style={{ padding: '0.875rem 0.75rem', fontWeight: 700, color: isTop ? 'var(--accent-gold)' : '#FFFFFF', fontSize: '0.875rem' }}>
-                            {row.status === 'Not Yet Benchmarked' ? '-' : formatPercentage(row.score).replace('%', '')}
+                            {row.status === 'Not Yet Benchmarked' || row.status === 'Failed' ? '-' : formatPercentage(row.score).replace('%', '')}
                           </td>
                           <td style={{ padding: '0.875rem 0.75rem', color: 'var(--text-secondary)', fontSize: '0.8125rem' }}>
                             {row.precision !== undefined ? formatPercentage(row.precision) : 'Not Evaluated'}
@@ -348,10 +336,10 @@ export const Benchmark: React.FC = () => {
                             {row.recall !== undefined ? formatPercentage(row.recall) : 'Not Evaluated'}
                           </td>
                           <td style={{ padding: '0.875rem 0.75rem', color: '#FFFFFF', fontSize: '0.8125rem' }}>
-                            {row.status === 'Not Yet Benchmarked' ? '-' : formatLatency(row.latencyP95)}
+                            {row.status === 'Not Yet Benchmarked' || row.status === 'Failed' ? '-' : formatLatency(row.latencyP95)}
                           </td>
                           <td style={{ padding: '0.875rem 0.75rem', color: '#FFFFFF', fontSize: '0.8125rem' }}>
-                            {row.status === 'Not Yet Benchmarked' ? '-' : formatCost(row.costPerMillionTokens * 0.0001)}
+                            {row.status === 'Not Yet Benchmarked' || row.status === 'Failed' ? '-' : formatCost(row.costPerMillionTokens * 0.0001)}
                           </td>
                           <td style={{ padding: '0.875rem 0.75rem', minWidth: '130px' }}>
                             {row.status === 'Not Yet Benchmarked' ? (
@@ -385,11 +373,85 @@ export const Benchmark: React.FC = () => {
             </div>
           )}
 
-          {activeTab !== 'Leaderboard' && (
-            <div className="forge-card" style={{ padding: '4rem', textAlign: 'center', color: 'var(--text-muted)', fontSize: '0.875rem', border: '1px dashed var(--border-subtle)' }}>
-              {activeTab} visualization — coming soon
+
+          {activeTab === 'Distribution' && (
+            <div className="section-gap">
+              {(report as any).all_reports?.map((r: any, idx: number) => {
+                if (!r.success || !r.data || !r.data.statistics || r.data.statistics.total_samples === 0) {
+                  return (
+                    <div key={idx} className="forge-card" style={{ padding: '2rem', textAlign: 'center', color: 'var(--text-muted)' }}>
+                      <h4 style={{ color: '#FFFFFF', marginBottom: '0.5rem' }}>{r.archName}</h4>
+                      {r.error ? `Benchmark failed — ${r.error}` : 'No benchmark samples available.'}
+                    </div>
+                  );
+                }
+                const stats = r.data.statistics;
+                return (
+                  <div key={idx} className="forge-card" style={{ padding: '1.5rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                    <h4 style={{ color: '#FFFFFF', fontSize: '1.125rem' }}>{r.archName} Distribution</h4>
+                    <div className="grid-5col">
+                      <div style={{ backgroundColor: 'var(--bg-secondary)', padding: '1rem', borderRadius: '8px' }}>
+                        <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginBottom: '4px' }}>Average Score</div>
+                        <div style={{ color: '#FFFFFF', fontWeight: 'bold' }}>{formatPercentage(stats.average_score * 100)}</div>
+                      </div>
+                      <div style={{ backgroundColor: 'var(--bg-secondary)', padding: '1rem', borderRadius: '8px' }}>
+                        <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginBottom: '4px' }}>Pass Rate</div>
+                        <div style={{ color: 'var(--status-green)', fontWeight: 'bold' }}>{formatPercentage(stats.success_rate * 100)}</div>
+                      </div>
+                      <div style={{ backgroundColor: 'var(--bg-secondary)', padding: '1rem', borderRadius: '8px' }}>
+                        <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginBottom: '4px' }}>Average Latency</div>
+                        <div style={{ color: '#FFFFFF', fontWeight: 'bold' }}>{formatLatency(stats.average_execution_time_ms)}</div>
+                      </div>
+                      {Object.entries(stats.metric_averages || {}).slice(0,2).map(([mName, mVal]: any) => (
+                        <div key={mName} style={{ backgroundColor: 'var(--bg-secondary)', padding: '1rem', borderRadius: '8px' }}>
+                          <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginBottom: '4px', textTransform: 'capitalize' }}>{mName}</div>
+                          <div style={{ color: '#FFFFFF', fontWeight: 'bold' }}>{formatPercentage(mVal * 100)}</div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           )}
+
+          {activeTab === 'Samples' && (
+            <div className="section-gap">
+              {(report as any).all_reports?.map((r: any, idx: number) => {
+                if (!r.success || !r.data || !r.data.results || r.data.results.length === 0) {
+                  return (
+                    <div key={idx} className="forge-card" style={{ padding: '2rem', textAlign: 'center', color: 'var(--text-muted)' }}>
+                      <h4 style={{ color: '#FFFFFF', marginBottom: '0.5rem' }}>{r.archName}</h4>
+                      {r.error ? `Benchmark failed — ${r.error}` : 'No benchmark samples available.'}
+                    </div>
+                  );
+                }
+                return (
+                  <div key={idx} className="forge-card" style={{ padding: '1.5rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                    <h4 style={{ color: '#FFFFFF', fontSize: '1.125rem', borderBottom: '1px solid var(--border-subtle)', paddingBottom: '0.5rem' }}>{r.archName} - Samples ({r.data.results.length})</h4>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                      {r.data.results.slice(0, 50).map((sampleRes: any, sIdx: number) => (
+                        <div key={sIdx} style={{ backgroundColor: 'var(--bg-secondary)', padding: '1rem', borderRadius: '8px', border: '1px solid var(--border-subtle)' }}>
+                          <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
+                            <span style={{ fontWeight: 'bold', color: '#FFFFFF' }}>{sampleRes.sample_id}</span>
+                            <Badge variant={sampleRes.evaluation_response?.status === 'PASS' ? 'green' : 'orange'}>{sampleRes.evaluation_response?.status}</Badge>
+                          </div>
+                          <div style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', marginBottom: '0.5rem' }}>
+                            <strong>Latency:</strong> {formatLatency(sampleRes.execution_time_ms)} | 
+                            <strong> Score:</strong> {formatPercentage((sampleRes.evaluation_response?.overall_score || 0) * 100)}
+                          </div>
+                        </div>
+                      ))}
+                      {r.data.results.length > 50 && (
+                        <div style={{ textAlign: 'center', color: 'var(--text-muted)', fontSize: '0.875rem' }}>... and {r.data.results.length - 50} more samples.</div>
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+
         </motion.div>
       )}
     </motion.div>

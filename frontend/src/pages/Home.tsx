@@ -5,18 +5,14 @@ import {
   ArrowRight,
   Brain,
   BarChart2,
-  Trophy,
-  Scale,
   BookOpen,
-  PlusCircle,
   Cpu,
-  Layers,
   CheckCircle2,
-  Clock
+  FileText
 } from 'lucide-react';
-import { Card, Badge, Button, EmptyState, Skeleton, ScoreRing } from '../components/common';
-import { decisionService, evaluationService } from '../services';
-import { GeneratedArchitecture, EvaluationResult } from '../types';
+import { Card, Badge, Button } from '../components/common';
+import { decisionService } from '../services';
+import { GeneratedArchitecture } from '../types';
 import { NavPage } from '../components/navigation';
 import { useForgeContext } from '../context';
 
@@ -38,42 +34,10 @@ export const Home: React.FC<HomeProps> = ({ onNavigate }) => {
   const [promptInput, setPromptInput] = useState('');
   const [selectedTopic, setSelectedTopic] = useState('Legal AI');
   const [generating, setGenerating] = useState(false);
-  const [sessionArchs, setSessionArchs] = useState<GeneratedArchitecture[]>([]);
-  const [sessionEvals, setSessionEvals] = useState<EvaluationResult[]>([]);
-  const [loadingInitial, setLoadingInitial] = useState(true);
-  const [archError, setArchError] = useState<string | null>(null);
-  const [evalError, setEvalError] = useState<string | null>(null);
-
-  useEffect(() => {
-    async function loadSessionData() {
-      setLoadingInitial(true);
-      try {
-        const archs = await decisionService.getSessionArchitectures();
-        setSessionArchs(archs);
-        setArchError(null);
-      } catch (err: any) {
-        setArchError(err.message === 'Backend Not Available' ? 'Backend Not Available' : 'Failed to load history');
-        setSessionArchs([]);
-      }
-      
-      try {
-        const latestEval = await evaluationService.getCurrentEvaluation();
-        if (latestEval) setSessionEvals([latestEval]);
-        setEvalError(null);
-      } catch (err: any) {
-        setEvalError(err.message === 'Backend Not Available' ? 'Backend Not Available' : 'Failed to load evaluations');
-        setSessionEvals([]);
-      }
-      
-      setLoadingInitial(false);
-    }
-    loadSessionData();
-  }, []);
 
   const handleGenerate = async () => {
     if (!promptInput.trim() && !selectedTopic) return;
     setGenerating(true);
-    setArchError(null);
     try {
       const response = await decisionService.runDecisionEngine({
         project_name: selectedTopic,
@@ -86,7 +50,7 @@ export const Home: React.FC<HomeProps> = ({ onNavigate }) => {
       // Navigate straight to the generated architecture report
       onNavigate('new-architecture');
     } catch (err: any) {
-      setArchError(err.message || 'Failed to generate architecture');
+      console.error(err.message || 'Failed to generate architecture');
     } finally {
       setGenerating(false);
     }
@@ -290,191 +254,135 @@ export const Home: React.FC<HomeProps> = ({ onNavigate }) => {
         </div>
       </section>
 
-      {/* 3 Columns Section: Recent Architectures | Recent Evaluations | Quick Start */}
-      <section className="grid-3col">
-        {/* Column 1: Recent Architectures (Strict No Fabricated Data) */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem' }}>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-            <h3 style={{ fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.06em', color: 'var(--text-muted)', textTransform: 'uppercase' }}>
-              Recent Architectures
+      {/* Quick Start Section */}
+      <section style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', marginTop: '0.5rem' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '1rem' }}>
+          <div style={{ height: '1px', flex: 1, background: 'linear-gradient(90deg, transparent, var(--border-accent))', opacity: 0.5 }} />
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <Sparkles size={14} style={{ color: 'var(--accent-gold)' }} />
+            <h3 style={{ fontSize: '0.85rem', fontWeight: 700, letterSpacing: '0.15em', color: 'var(--text-primary)', textTransform: 'uppercase' }}>
+              QUICK START
             </h3>
-            <Badge variant="neutral">{sessionArchs.length} Active</Badge>
+            <Sparkles size={14} style={{ color: 'var(--accent-gold)' }} />
           </div>
-
-          {loadingInitial ? (
-            <Skeleton variant="card" height={160} />
-          ) : archError ? (
-            <EmptyState
-              compact
-              icon={Layers}
-              title={archError}
-              description="This endpoint has not been implemented in the FastAPI backend yet."
-            />
-          ) : sessionArchs.length === 0 ? (
-            <EmptyState
-              compact
-              icon={Layers}
-              title="No Session Architectures"
-              description="You have not generated any architectures during this session. Use the prompt above to engineer your first stack."
-            />
-          ) : (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
-              {sessionArchs.map((arch, index) => (
-                <Card
-                  key={arch.id}
-                  interactive
-                  delay={index * 0.06}
-                  onClick={() => onNavigate('new-architecture')}
-                  style={{ padding: '0.9rem 1rem', display: 'flex', flexDirection: 'column', gap: '0.6rem' }}
-                >
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-                    <div>
-                      <h4 style={{ fontSize: '0.9rem', fontWeight: 700, color: '#FFFFFF' }}>
-                        {arch.title}
-                      </h4>
-                      <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', marginTop: '0.1rem' }}>
-                        {arch.components.find(c => c.category === 'LLM')?.name || 'Llama 3.3 70B'}
-                      </p>
-                    </div>
-                    <ScoreRing score={arch.summary.overallScore} size={34} strokeWidth={3} />
-                  </div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: '0.5rem', borderTop: '1px solid var(--border-subtle)' }}>
-                    <span style={{ fontSize: '0.72rem', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
-                      <Clock size={11} /> {arch.timestamp}
-                    </span>
-                    <Badge variant={arch.summary.productionReadiness === 'Production Ready' ? 'green' : 'orange'}>
-                      {arch.summary.productionReadiness}
-                    </Badge>
-                  </div>
-                </Card>
-              ))}
-            </div>
-          )}
+          <div style={{ height: '1px', flex: 1, background: 'linear-gradient(270deg, transparent, var(--border-accent))', opacity: 0.5 }} />
         </div>
 
-        {/* Column 2: Recent Evaluations (Strict No Fabricated Data) */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem' }}>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-            <h3 style={{ fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.06em', color: 'var(--text-muted)', textTransform: 'uppercase' }}>
-              Recent Evaluations
-            </h3>
-            <Badge variant="neutral">{sessionEvals.length} Runs</Badge>
-          </div>
-
-          {loadingInitial ? (
-            <Skeleton variant="card" height={160} />
-          ) : evalError ? (
-            <EmptyState
-              compact
-              icon={BarChart2}
-              title={evalError}
-              description="This endpoint has not been implemented in the FastAPI backend yet."
-            />
-          ) : sessionEvals.length === 0 ? (
-            <EmptyState
-              compact
-              icon={BarChart2}
-              title="No Evaluation Logs"
-              description="Execute an evaluation run against your pipeline to analyze faithfulness, relevancy, and hallucinations."
-              actionText="Open Evaluation Suite"
-              onAction={() => onNavigate('evaluation')}
-            />
-          ) : (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
-              {sessionEvals.map((ev, idx) => (
-                <Card
-                  key={ev.id}
-                  interactive
-                  delay={idx * 0.06}
-                  onClick={() => onNavigate('evaluation')}
-                  style={{ padding: '0.9rem 1rem', display: 'flex', flexDirection: 'column', gap: '0.6rem' }}
-                >
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <h4 style={{ fontSize: '0.9rem', fontWeight: 700, color: '#FFFFFF' }}>
-                      {ev.pipelineName}
-                    </h4>
-                    <Badge variant={ev.overallHealth === 'PASSED' ? 'green' : 'orange'}>
-                      {ev.overallHealth}
-                    </Badge>
-                  </div>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '0.45rem', marginTop: '0.1rem' }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.78rem' }}>
-                      <span style={{ color: 'var(--text-secondary)' }}>Faithfulness</span>
-                      <span style={{ fontWeight: 600, color: 'var(--status-green)' }}>{ev.generation?.faithfulness ? (ev.generation.faithfulness * 100).toFixed(1) : (ev.metrics?.faithfulness?.score || 0)}%</span>
-                    </div>
-                    <div style={{ width: '100%', height: '4px', backgroundColor: 'rgba(255,255,255,0.06)', borderRadius: '99px', overflow: 'hidden' }}>
-                      <div style={{ width: `${ev.generation?.faithfulness ? (ev.generation.faithfulness * 100) : (ev.metrics?.faithfulness?.score || 0)}%`, height: '100%', backgroundColor: 'var(--status-green)' }} />
-                    </div>
-                  </div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: '0.45rem', borderTop: '1px solid var(--border-subtle)', fontSize: '0.72rem', color: 'var(--text-muted)' }}>
-                    <span>Executed at {ev.executedAt}</span>
-                    <span style={{ color: 'var(--accent-gold)' }}>View Details →</span>
-                  </div>
-                </Card>
-              ))}
-            </div>
-          )}
-        </div>
-
-        {/* Column 3: Quick Start Actions */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem' }}>
-          <h3 style={{ fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.06em', color: 'var(--text-muted)', textTransform: 'uppercase' }}>
-            Quick Start
-          </h3>
-
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(190px, 1fr))',
+          gap: '1.25rem',
+          alignItems: 'stretch'
+        }}>
+          {/* Card 1: New Architecture */}
+          <motion.div whileHover="hover" initial="initial">
             <Card
               interactive
               onClick={() => onNavigate('new-architecture')}
-              style={{ padding: '0.8rem 1rem', display: 'flex', alignItems: 'center', gap: '0.75rem', background: 'linear-gradient(135deg, rgba(212,175,99,0.05) 0%, rgba(19,23,32,1) 100%)', borderColor: 'var(--border-accent)' }}
+              style={{ padding: '1.25rem', display: 'flex', flexDirection: 'column', gap: '1rem', height: '100%', cursor: 'pointer', background: 'linear-gradient(135deg, rgba(212,175,99,0.05) 0%, rgba(19,23,32,1) 100%)', borderColor: 'var(--border-accent)' }}
             >
-              <div style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: 'var(--accent-gold)', boxShadow: '0 0 8px var(--accent-gold)' }} />
-              <div style={{ flex: 1 }}>
-                <h4 style={{ fontSize: '0.875rem', fontWeight: 600, color: '#FFFFFF' }}>New Architecture</h4>
-                <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>Design custom stack from scratch</p>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '42px', height: '42px', borderRadius: '50%', border: '1px solid var(--accent-gold)', backgroundColor: 'rgba(212,175,99,0.1)' }}>
+                <Sparkles size={20} style={{ color: 'var(--accent-gold)' }} />
               </div>
-              <ArrowRight size={14} style={{ color: 'var(--accent-gold)' }} />
+              <div style={{ flex: 1 }}>
+                <h4 style={{ fontSize: '0.95rem', fontWeight: 700, color: '#FFFFFF', marginBottom: '0.35rem' }}>New Architecture</h4>
+                <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', lineHeight: 1.4 }}>Design a custom stack from scratch</p>
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 'auto' }}>
+                <motion.div variants={{ hover: { x: 4 } }} transition={{ duration: 0.2 }}>
+                  <ArrowRight size={16} style={{ color: 'var(--accent-gold)' }} />
+                </motion.div>
+              </div>
             </Card>
+          </motion.div>
 
+          {/* Card 2: Decision Engine */}
+          <motion.div whileHover="hover" initial="initial">
             <Card
               interactive
               onClick={() => onNavigate('decision-engine')}
-              style={{ padding: '0.8rem 1rem', display: 'flex', alignItems: 'center', gap: '0.75rem' }}
+              style={{ padding: '1.25rem', display: 'flex', flexDirection: 'column', gap: '1rem', height: '100%', cursor: 'pointer' }}
             >
-              <div style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: 'var(--status-blue)' }} />
-              <div style={{ flex: 1 }}>
-                <h4 style={{ fontSize: '0.875rem', fontWeight: 600, color: '#FFFFFF' }}>Decision Engine</h4>
-                <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>Configure latency, budget & scale constraints</p>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '42px', height: '42px', borderRadius: '50%', border: '1px solid var(--status-blue)', backgroundColor: 'rgba(56, 189, 248, 0.1)' }}>
+                <Brain size={20} style={{ color: 'var(--status-blue)' }} />
               </div>
-              <ArrowRight size={14} style={{ color: 'var(--text-muted)' }} />
+              <div style={{ flex: 1 }}>
+                <h4 style={{ fontSize: '0.95rem', fontWeight: 700, color: '#FFFFFF', marginBottom: '0.35rem' }}>Decision Engine</h4>
+                <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', lineHeight: 1.4 }}>Get evidence-backed architecture recommendations</p>
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 'auto' }}>
+                <motion.div variants={{ hover: { x: 4 } }} transition={{ duration: 0.2 }}>
+                  <ArrowRight size={16} style={{ color: 'var(--status-blue)' }} />
+                </motion.div>
+              </div>
             </Card>
+          </motion.div>
 
+          {/* Card 3: Run Evaluation */}
+          <motion.div whileHover="hover" initial="initial">
             <Card
               interactive
               onClick={() => onNavigate('evaluation')}
-              style={{ padding: '0.8rem 1rem', display: 'flex', alignItems: 'center', gap: '0.75rem' }}
+              style={{ padding: '1.25rem', display: 'flex', flexDirection: 'column', gap: '1rem', height: '100%', cursor: 'pointer' }}
             >
-              <div style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: 'var(--status-green)' }} />
-              <div style={{ flex: 1 }}>
-                <h4 style={{ fontSize: '0.875rem', fontWeight: 600, color: '#FFFFFF' }}>Run Evaluation</h4>
-                <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>Test your RAG pipeline faithfulness</p>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '42px', height: '42px', borderRadius: '50%', border: '1px solid var(--status-green)', backgroundColor: 'rgba(34, 197, 94, 0.1)' }}>
+                <CheckCircle2 size={20} style={{ color: 'var(--status-green)' }} />
               </div>
-              <ArrowRight size={14} style={{ color: 'var(--text-muted)' }} />
+              <div style={{ flex: 1 }}>
+                <h4 style={{ fontSize: '0.95rem', fontWeight: 700, color: '#FFFFFF', marginBottom: '0.35rem' }}>Run Evaluation</h4>
+                <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', lineHeight: 1.4 }}>Evaluate RAG pipeline quality</p>
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 'auto' }}>
+                <motion.div variants={{ hover: { x: 4 } }} transition={{ duration: 0.2 }}>
+                  <ArrowRight size={16} style={{ color: 'var(--status-green)' }} />
+                </motion.div>
+              </div>
             </Card>
+          </motion.div>
 
+          {/* Card 4: Browse Knowledge Base */}
+          <motion.div whileHover="hover" initial="initial">
             <Card
               interactive
               onClick={() => onNavigate('knowledge-base')}
-              style={{ padding: '0.8rem 1rem', display: 'flex', alignItems: 'center', gap: '0.75rem' }}
+              style={{ padding: '1.25rem', display: 'flex', flexDirection: 'column', gap: '1rem', height: '100%', cursor: 'pointer' }}
             >
-              <div style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#f97316' }} />
-              <div style={{ flex: 1 }}>
-                <h4 style={{ fontSize: '0.875rem', fontWeight: 600, color: '#FFFFFF' }}>Browse Knowledge Base</h4>
-                <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>Verified canonical AI components</p>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '42px', height: '42px', borderRadius: '50%', border: '1px solid var(--status-purple)', backgroundColor: 'rgba(168, 85, 247, 0.1)' }}>
+                <BookOpen size={20} style={{ color: 'var(--status-purple)' }} />
               </div>
-              <ArrowRight size={14} style={{ color: 'var(--text-muted)' }} />
+              <div style={{ flex: 1 }}>
+                <h4 style={{ fontSize: '0.95rem', fontWeight: 700, color: '#FFFFFF', marginBottom: '0.35rem' }}>Browse Knowledge Base</h4>
+                <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', lineHeight: 1.4 }}>Explore verified AI technologies</p>
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 'auto' }}>
+                <motion.div variants={{ hover: { x: 4 } }} transition={{ duration: 0.2 }}>
+                  <ArrowRight size={16} style={{ color: 'var(--status-purple)' }} />
+                </motion.div>
+              </div>
             </Card>
-          </div>
+          </motion.div>
+
+          {/* Card 5: View Reports */}
+          <motion.div whileHover="hover" initial="initial">
+            <Card
+              interactive
+              onClick={() => onNavigate('reports')}
+              style={{ padding: '1.25rem', display: 'flex', flexDirection: 'column', gap: '1rem', height: '100%', cursor: 'pointer' }}
+            >
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '42px', height: '42px', borderRadius: '50%', border: '1px solid #f97316', backgroundColor: 'rgba(249, 115, 22, 0.1)' }}>
+                <FileText size={20} style={{ color: '#f97316' }} />
+              </div>
+              <div style={{ flex: 1 }}>
+                <h4 style={{ fontSize: '0.95rem', fontWeight: 700, color: '#FFFFFF', marginBottom: '0.35rem' }}>View Reports</h4>
+                <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', lineHeight: 1.4 }}>Generate and export architecture reports</p>
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 'auto' }}>
+                <motion.div variants={{ hover: { x: 4 } }} transition={{ duration: 0.2 }}>
+                  <ArrowRight size={16} style={{ color: '#f97316' }} />
+                </motion.div>
+              </div>
+            </Card>
+          </motion.div>
         </div>
       </section>
     </motion.div>

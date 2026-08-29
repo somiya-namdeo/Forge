@@ -74,7 +74,7 @@ export const improveTradeOffWording = (tradeOff: string): string => {
 export const improveAlternativeMessaging = (alternative: string): string => {
   const generic = alternative.toLowerCase();
   if (generic.includes("none available") || generic.includes("none") || generic.trim() === "") {
-    return "No competitive alternative satisfied the selected engineering constraints.";
+    return "No strong alternative met the selected engineering constraints.";
   }
   return alternative;
 };

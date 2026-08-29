@@ -20,6 +20,12 @@ from app.schemas.evaluation import (
 )
 
 
+class ArchitectureRecord(BaseModel):
+    """Pre-recorded benchmark generation results for a specific architecture."""
+    generated_answer: str
+    contexts: List[str] = Field(default_factory=list)
+    execution_time_ms: Optional[float] = None
+
 class BenchmarkSample(BaseModel):
     """Single evaluation sample within a benchmark dataset."""
 
@@ -27,9 +33,14 @@ class BenchmarkSample(BaseModel):
     category: str = Field(default="general", description="Domain category or subject area of the sample.")
     difficulty: Literal["easy", "medium", "hard"] = Field(default="medium", description="Difficulty level of the evaluation prompt.")
     question: str = Field(..., description="Question or prompt for evaluation.")
-    contexts: List[str] = Field(default_factory=list, description="Retrieved context document chunks.")
+    contexts: List[str] = Field(default_factory=list, description="Retrieved context document chunks (legacy/default).")
     ground_truth: str = Field(default="", description="Reference ground truth answer.")
     expected_answer: Optional[str] = Field(default=None, description="Optional expected reference output.")
+    
+    architectures: Dict[str, ArchitectureRecord] = Field(
+        default_factory=dict,
+        description="Architecture-specific pre-recorded generated outputs and contexts."
+    )
 
     model_config = ConfigDict(frozen=True)
 

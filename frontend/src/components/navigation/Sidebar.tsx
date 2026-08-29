@@ -179,52 +179,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
     </div>
   );
 
-  const renderUserCard = () => (
-    <div
-      style={{
-        padding: collapsed ? '0.75rem 0' : '0.75rem 1rem',
-        borderTop: '1px solid var(--border-subtle)',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: collapsed ? 'center' : 'flex-start',
-        gap: '0.65rem',
-        backgroundColor: 'rgba(0, 0, 0, 0.2)',
-      }}
-    >
-      <div
-        style={{
-          width: '32px',
-          height: '32px',
-          borderRadius: '50%',
-          background: 'linear-gradient(135deg, #D4AF63 0%, #B89243 100%)',
-          color: '#0B0D12',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          fontWeight: 700,
-          fontSize: '0.75rem',
-          flexShrink: 0,
-          boxShadow: '0 2px 8px rgba(212, 175, 99, 0.2)',
-          cursor: 'pointer',
-        }}
-        title={collapsed ? 'Alex Engineer — Enterprise v2.4.1' : undefined}
-      >
-        AE
-      </div>
-      {!collapsed && (
-        <div style={{ overflow: 'hidden' }}>
-          <div style={{ fontWeight: 600, color: 'var(--text-primary)', fontSize: '0.82rem', whiteSpace: 'nowrap' }}>
-            Alex Engineer
-          </div>
-          <div style={{ fontSize: '0.71rem', color: 'var(--text-secondary)', display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
-            <span style={{ color: 'var(--accent-gold)', fontWeight: 600 }}>Enterprise</span>
-            <span>·</span>
-            <span>v2.4.1</span>
-          </div>
-        </div>
-      )}
-    </div>
-  );
+
 
   return (
     <>
@@ -303,7 +258,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
         </div>
 
         {/* Bottom User Card */}
-        {renderUserCard()}
+        
       </motion.aside>
 
       {/* Mobile Drawer Backdrop */}
@@ -346,7 +301,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
               <div style={{ flex: 1, padding: '1.25rem 0', overflowY: 'auto' }}>
                 {renderNavList()}
               </div>
-              {renderUserCard()}
+              
             </motion.aside>
           </div>
         )}

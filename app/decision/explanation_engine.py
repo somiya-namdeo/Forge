@@ -155,8 +155,14 @@ class ExplanationEngine:
 
         context_clause = ", ".join(context_parts) if context_parts else "specified architectural requirements"
 
-        why_selected = f"{tech_name} aligns well with {profile.priority.value} priorities, scoring highest in {top_factors_str}."
+        why_selected = f"{tech_name} aligns well with {profile.priority.value} priorities, scoring highest among eligible candidates in {top_factors_str}."
         
+        if profile.requires_privacy:
+            tech_lower = tech_name.lower()
+            is_cloud_api = any(c in tech_lower for c in ("claude", "gpt", "openai", "anthropic", "gemini", "cohere"))
+            if is_cloud_api:
+                why_selected += " Note: Requires dedicated private VPC endpoints or zero-data-retention agreements to satisfy strict privacy constraints."
+
         trade_off = "No major trade-offs."
         if runner_up:
             runner_subscores = runner_up.get("subscores", {})

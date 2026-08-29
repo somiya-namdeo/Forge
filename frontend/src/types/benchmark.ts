@@ -29,6 +29,7 @@ export interface BenchmarkRunConfig {
   metrics?: string[];
   /** @deprecated Not used by backend */
   concurrency?: number;
+  metric_config?: { metric_type: string; provider: string; weight: number }[];
 }
 
 export interface BenchmarkMetricStatistics {

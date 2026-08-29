@@ -5,13 +5,8 @@ from typing import Any, Dict
 from app.schemas.report import (
     ArchitectureReport,
     ProjectInfo,
-    ArchitectureSummary,
-    ReadinessSummary,
-    ReportMetrics,
-    ChecklistItem,
-    CostItem,
-    TradeOff,
-    Alternative
+    ArchitectureDetails,
+    ArchitectureRationale
 )
 
 
@@ -31,112 +26,48 @@ class ReportGenerator:
 
         # 1. Project Info
         metadata = decision.get("metadata", {})
+        b_val = metadata.get("budget_usd", "")
+        budget_display = "Not specified" if not b_val else f"${float(b_val):.0f}/mo"
+        
         project_info = ProjectInfo(
             project_name=metadata.get("project_name", "Forge Project"),
             domain=metadata.get("domain", "general"),
-            scale=metadata.get("scale", "prototype"),
-            budget=f"${metadata.get('budget_usd', 0)}/mo",
+            scale=metadata.get("document_scale") or metadata.get("project_scale") or metadata.get("scale", "prototype"),
+            budget=budget_display,
             deployment_target=metadata.get("deployment_target", "aws"),
             optimization_priority=metadata.get("priority", "balanced")
         )
 
-        # 2. Architecture Summary
-        components = decision.get("components", {})
-        arch_summary = ArchitectureSummary(
+        # 2. Architecture Details
+        recs = decision.get('recommendations', [])
+        components = {}
+        rationale = []
+        for r in recs:
+            if isinstance(r, dict):
+                components[r.get('category', 'Unknown')] = r.get('recommended', '')
+                rationale.append(ArchitectureRationale(
+                    category=r.get('category', 'Unknown'),
+                    recommended=r.get('recommended', ''),
+                    reason=r.get('reason', 'Selected based on priority constraints.')
+                ))
+        
+        decision_signals = {
+            'privacy': metadata.get('privacy', 'false'),
+            'low_latency': metadata.get('low_latency', 'false'),
+            'enterprise_security': metadata.get('enterprise_security', 'false'),
+        }
+
+        arch_details = ArchitectureDetails(
             components=components,
-            estimated_monthly_cost=decision.get("cost_estimate", "Not Evaluated")
+            decision_signals=decision_signals,
+            rationale=rationale
         )
-
-        # 3. Readiness Summary
-        conf = decision.get("overall_confidence")
-        is_ready = bool(conf and conf > 0.8)
-        
-        pass_count = 0
-        if conf and conf > 0.8: pass_count += 5
-        elif conf: pass_count += 3
-        
-        if benchmark: pass_count += 2
-        eval_score = evaluation.get("overall_score")
-        if eval_score and eval_score > 0.8: pass_count += 2
-
-        readiness = ReadinessSummary(
-            ready=is_ready,
-            pass_count=pass_count,
-            warn_count=2,
-            risk_summary="Ready for Staging" if is_ready else "Review Recommendations",
-            overall_confidence=conf
-        )
-
-        # 4. Metrics
-        stats = benchmark.get("statistics", {})
-        metrics = ReportMetrics(
-            overall_score=conf,
-            benchmark_score=stats.get("average_score"),
-            evaluation_score=evaluation.get("overall_score"),
-            success_rate=stats.get("success_rate"),
-            median_latency_ms=stats.get("average_execution_time_ms"),
-            throughput_qps=None # Throughput calculation if present
-        )
-
-        # 5. Checklist
-        deployment = metadata.get("deployment_target", "aws").lower()
-        checklist = [
-            ChecklistItem(
-                id="chk-1",
-                category="Infrastructure",
-                task=f"Provision {deployment.upper()} Environment",
-                description=f"Set up VPC, subnets, and IAM roles for {deployment.upper()}.",
-                criticality="Required",
-                completed=False
-            ),
-            ChecklistItem(
-                id="chk-2",
-                category="Vector DB",
-                task="Deploy Vector Database",
-                description=f"Set up and secure the vector database for {components.get('vector_db', 'Vector DB')}.",
-                criticality="Required",
-                completed=False
-            ),
-            ChecklistItem(
-                id="chk-3",
-                category="Security",
-                task="Configure API Keys",
-                description="Store LLM and external service API keys in a secret manager.",
-                criticality="Required",
-                completed=False
-            )
-        ]
-
-        # 6. TradeOffs & Alternatives
-        trade_offs = [
-            TradeOff(benefit=t.get("benefit", ""), compromise=t.get("compromise", ""))
-            for t in decision.get("trade_offs", [])
-        ]
-        alternatives = [
-            Alternative(architecture_name=a.get("architecture_name", ""), rejection_reason=a.get("rejection_reason", ""))
-            for a in decision.get("alternatives", [])
-        ]
-
-        # 7. Cost Breakdown (Simple estimation logic)
-        cost_breakdown = None
-        budget = metadata.get("budget_usd")
-        if budget:
-            cost_breakdown = [
-                CostItem(item="Compute", monthly_cost_usd=budget * 0.4, share_percentage=40),
-                CostItem(item="Vector DB", monthly_cost_usd=budget * 0.3, share_percentage=30),
-                CostItem(item="LLM APIs", monthly_cost_usd=budget * 0.3, share_percentage=30),
-            ]
 
         return ArchitectureReport(
             id=f"report-{uuid.uuid4().hex[:8]}",
-            title="Production Readiness Report",
+            title="Architecture Decision Report",
             generated_at=datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC"),
-            project_info=project_info,
-            architecture_summary=arch_summary,
-            readiness_summary=readiness,
-            metrics=metrics,
-            trade_offs=trade_offs,
-            alternatives=alternatives,
-            deployment_checklist=checklist,
-            cost_breakdown=cost_breakdown
+            project_profile=project_info,
+            architecture=arch_details
         )
+

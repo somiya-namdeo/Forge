@@ -69,6 +69,75 @@ setResponse(actualResult);
     r.category.toLowerCase().includes('llm')
   );
 
+  const handleExportJson = () => {
+    if (!response) return;
+    const jsonString = JSON.stringify(response, null, 2);
+    const blob = new Blob([jsonString], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `decision_result_${Date.now()}.json`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  };
+
+  const handleExportMarkdown = () => {
+    if (!response) return;
+    
+    let md = `# Architecture Decision Report\n\n`;
+    
+    md += `## Project Profile\n\n`;
+    md += `- **Priority:** ${response.metadata?.priority || 'balanced'}\n`;
+    md += `- **Deployment Target:** ${response.metadata?.deployment_target || 'N/A'}\n`;
+    md += `- **Document Scale:** ${response.metadata?.document_scale || 'N/A'}\n`;
+    md += `- **Budget USD:** ${response.metadata?.budget_usd || 'N/A'}\n\n`;
+    
+    md += `## Decision Signals\n\n`;
+    md += `- **Privacy:** ${response.metadata?.privacy || 'false'}\n`;
+    md += `- **Enterprise Security:** ${response.metadata?.enterprise_security || 'false'}\n`;
+    md += `- **Low Latency:** ${response.metadata?.low_latency || 'false'}\n\n`;
+
+    md += `## Architecture Components\n\n`;
+    response.recommendations.forEach((rec) => {
+      md += `### ${rec.category}: ${rec.recommended}\n\n`;
+      
+      let whySelected = rec.reason;
+      let tradeOff = "";
+      let alternative = "";
+      
+      if (rec.reason.includes("Why selected: ") && rec.reason.includes("Trade-off: ") && rec.reason.includes("Alternative: ")) {
+         const whyParts = rec.reason.split("Trade-off: ");
+         whySelected = whyParts[0].replace("Why selected: ", "").trim();
+         if (whyParts.length > 1) {
+             const tradeParts = whyParts[1].split("Alternative: ");
+             tradeOff = tradeParts[0].trim();
+             if (tradeParts.length > 1) alternative = tradeParts[1].trim();
+         }
+      }
+      
+      md += `- **Explanation:** ${whySelected}\n`;
+      if (tradeOff) {
+        md += `- **Trade-off:** ${improveTradeOffWording(tradeOff)}\n`;
+      }
+      if (alternative) {
+        md += `- **Alternative:** ${improveAlternativeMessaging(alternative)}\n`;
+      }
+      md += `\n`;
+    });
+    
+    const blob = new Blob([md], { type: 'text/markdown' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `decision_result_${Date.now()}.md`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 12 }}
@@ -235,7 +304,7 @@ setResponse(actualResult);
                   <ScoreRing score={Math.round(response.overall_confidence * 100)} size={42} strokeWidth={3.5} />
                   <div>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', marginBottom: '0.15rem' }}>
-                      <Badge variant="green">✔ DEDUCTION COMPLETE</Badge>
+                      <Badge variant="green">✔ DECISION COMPLETE</Badge>
                       <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>
                         {response.pipeline_statistics?.evaluatedCandidates ?? 84} candidates · {response.pipeline_statistics?.durationMs ?? 1200}ms
                       </span>
@@ -244,10 +313,10 @@ setResponse(actualResult);
                   </div>
                 </div>
                 <div style={{ display: 'flex', gap: '0.35rem' }}>
-                  <button style={{ padding: '0.3rem 0.6rem', borderRadius: '6px', backgroundColor: 'var(--bg-secondary)', border: '1px solid var(--border-subtle)', color: 'var(--text-secondary)', fontSize: '0.7rem', fontWeight: 600, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
+                  <button onClick={handleExportJson} style={{ padding: '0.3rem 0.6rem', borderRadius: '6px', backgroundColor: 'var(--bg-secondary)', border: '1px solid var(--border-subtle)', color: 'var(--text-secondary)', fontSize: '0.7rem', fontWeight: 600, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
                     <FileJson size={11} /> JSON
                   </button>
-                  <button style={{ padding: '0.3rem 0.6rem', borderRadius: '6px', backgroundColor: 'var(--bg-secondary)', border: '1px solid var(--border-subtle)', color: 'var(--text-secondary)', fontSize: '0.7rem', fontWeight: 600, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
+                  <button onClick={handleExportMarkdown} style={{ padding: '0.3rem 0.6rem', borderRadius: '6px', backgroundColor: 'var(--bg-secondary)', border: '1px solid var(--border-subtle)', color: 'var(--text-secondary)', fontSize: '0.7rem', fontWeight: 600, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
                     <FileText size={11} /> Markdown
                   </button>
                 </div>
@@ -347,7 +416,7 @@ setResponse(actualResult);
                   
                   {/* Tiny Evidence Chips */}
                   <div style={{ display: 'flex', gap: '0.35rem', flexWrap: 'wrap', marginTop: '0.65rem' }}>
-                    {['BEIR', 'MTEB', 'Official Documentation', 'Internal Benchmark'].slice(0, (index % 3) + 2).map((chip, ci) => (
+                    {rec.metadata_used?.map((chip, ci) => (
                       <span key={ci} style={{ fontSize: '0.58rem', fontWeight: 600, color: 'var(--text-muted)', backgroundColor: 'rgba(255,255,255,0.03)', padding: '0.15rem 0.4rem', borderRadius: '4px', border: '1px solid var(--border-subtle)' }}>
                         {chip}
                       </span>

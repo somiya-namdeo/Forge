@@ -177,7 +177,18 @@ export const KnowledgeBase: React.FC = () => {
                   </div>
 
                   {/* Description */}
-                  <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', lineHeight: 1.55, flex: 1, whiteSpace: 'pre-wrap', wordBreak: 'break-word' }}>
+                  <p style={{ 
+                    fontSize: '0.875rem', 
+                    color: 'var(--text-secondary)', 
+                    lineHeight: 1.55, 
+                    flex: 1, 
+                    whiteSpace: 'pre-wrap', 
+                    wordBreak: 'break-word',
+                    display: '-webkit-box',
+                    WebkitLineClamp: 4,
+                    WebkitBoxOrient: 'vertical',
+                    overflow: 'hidden'
+                  }}>
                     {item.description}
                   </p>
 

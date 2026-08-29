@@ -102,9 +102,6 @@ export const NewArchitecture: React.FC<NewArchitectureProps> = ({
         <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', flexWrap: 'wrap' }}>
             <Badge variant="gold">● ENGINEERED PIPELINE</Badge>
-            <Badge variant="green">
-              Production Ready
-            </Badge>
             <span style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>
               Generated {new Date(generated_at).toLocaleString()}
             </span>
@@ -122,7 +119,7 @@ export const NewArchitecture: React.FC<NewArchitectureProps> = ({
             Export JSON
           </Button>
           <Button variant="primary" icon={FileCode2} onClick={() => onNavigateToReports(currentArch)}>
-            Production Report →
+            Decision Report →
           </Button>
         </div>
       </header>
@@ -176,11 +173,15 @@ export const NewArchitecture: React.FC<NewArchitectureProps> = ({
                         {comp.recommended}
                       </h4>
                     </div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', backgroundColor: getConfidenceBgColor(comp.confidence), padding: '0.2rem 0.5rem', borderRadius: '6px', border: `1px solid ${getConfidenceBorderColor(comp.confidence)}` }}>
-                      <ScoreRing score={Math.round(comp.confidence * 100)} size={18} strokeWidth={3} />
-                      <span style={{ fontSize: '0.65rem', fontWeight: 700, color: getConfidenceColor(comp.confidence) }}>
-                        {getConfidenceLabel(comp.confidence)}
-                      </span>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', backgroundColor: getConfidenceBgColor(comp.confidence), padding: '0.4rem 0.6rem', borderRadius: '8px', border: `1px solid ${getConfidenceBorderColor(comp.confidence)}` }}>
+                      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', lineHeight: 1.1 }}>
+                        <span style={{ fontSize: '1.1rem', fontWeight: 800, color: '#FFFFFF' }}>
+                          {Math.round(comp.confidence * 100)}<span style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>/100</span>
+                        </span>
+                        <span style={{ fontSize: '0.6rem', fontWeight: 700, textTransform: 'uppercase', color: getConfidenceColor(comp.confidence), letterSpacing: '0.04em' }}>
+                          {getConfidenceLabel(comp.confidence)}
+                        </span>
+                      </div>
                     </div>
                   </div>
 
@@ -251,6 +252,20 @@ export const NewArchitecture: React.FC<NewArchitectureProps> = ({
                   </div>
                 </div>
               </div>
+            </Card>
+          </div>
+
+          {/* Decision Signals */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+            <h3 style={{ fontSize: '0.65rem', fontWeight: 700, letterSpacing: '0.06em', color: 'var(--text-muted)', textTransform: 'uppercase' }}>
+              Decision Signals
+            </h3>
+            <Card style={{ padding: '1rem', backgroundColor: 'var(--bg-secondary)', border: '1px solid var(--border-subtle)', display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
+              {metadata?.privacy === 'true' && <Badge variant="green">Strict Privacy</Badge>}
+              {metadata?.low_latency === 'true' && <Badge variant="blue">Low Latency</Badge>}
+              {metadata?.enterprise_security === 'true' && <Badge variant="purple">Enterprise Security</Badge>}
+              {metadata?.document_scale && <Badge variant="orange">Scale: {metadata.document_scale}</Badge>}
+              {metadata?.domain && <Badge variant="neutral">Domain: {metadata.domain}</Badge>}
             </Card>
           </div>
 
