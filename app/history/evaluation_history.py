@@ -52,7 +52,6 @@ class BaseEvaluationHistoryRepository(ABC):
         Returns:
             EvaluationRecord: Saved evaluation record.
         """
-        pass
 
     @abstractmethod
     def get_by_id(self, evaluation_id: str) -> Optional[EvaluationRecord]:
@@ -64,7 +63,6 @@ class BaseEvaluationHistoryRepository(ABC):
         Returns:
             Optional[EvaluationRecord]: Found record or None.
         """
-        pass
 
     @abstractmethod
     def search(
@@ -85,7 +83,6 @@ class BaseEvaluationHistoryRepository(ABC):
         Returns:
             List[EvaluationRecord]: Matching evaluation records.
         """
-        pass
 
 
 class EvaluationHistoryManager(BaseEvaluationHistoryRepository):

@@ -4,17 +4,15 @@ import {
   Download,
   Printer,
 } from 'lucide-react';
-import { Card, Badge, Button, Skeleton } from '../components/common';
+import { Badge, Button, Skeleton } from '../components/common';
 import { ArchitectureReport } from '../types';
 import { useForgeContext } from '../context';
 import { reportsService } from '../services/reportsService';
 
-interface ReportsProps {
-  onNavigateToArch: (arch: any) => void;
-}
+interface ReportsProps { onNavigateToArch: (arch: any) => void; }
 
-export const Reports: React.FC<ReportsProps> = ({ onNavigateToArch }) => {
-  const { decisionResult, benchmarkResult, evaluationResult } = useForgeContext();
+export const Reports: React.FC<ReportsProps> = () => {
+  const { decisionResult, evaluationResult } = useForgeContext();
   const [report,       setReport]       = useState<ArchitectureReport | null>(null);
   const [loading,      setLoading]      = useState(true);
   const [exportingJson, setExportingJson] = useState(false);
@@ -27,7 +25,7 @@ export const Reports: React.FC<ReportsProps> = ({ onNavigateToArch }) => {
       setLoading(true);
       setBackendUnavailable(false);
       setError(null);
-      
+
       if (!decisionResult) {
         setBackendUnavailable(true);
         setLoading(false);
@@ -37,7 +35,7 @@ export const Reports: React.FC<ReportsProps> = ({ onNavigateToArch }) => {
       try {
         const payload = {
           decision_result: decisionResult,
-          benchmark_result: benchmarkResult,
+
           evaluation_result: evaluationResult,
         };
         const generatedReport = await reportsService.generateReport(payload);
@@ -51,7 +49,7 @@ export const Reports: React.FC<ReportsProps> = ({ onNavigateToArch }) => {
       }
     }
     loadReport();
-  }, [decisionResult, benchmarkResult, evaluationResult]);
+  }, [decisionResult, evaluationResult]);
 
   const handleExportJson = async () => {
     if (!report) return;
@@ -72,7 +70,7 @@ export const Reports: React.FC<ReportsProps> = ({ onNavigateToArch }) => {
     try {
       const payload = {
         decision_result: decisionResult,
-        benchmark_result: benchmarkResult,
+
         evaluation_result: evaluationResult,
       };
       await reportsService.triggerPrintablePdf(payload, `forge_report_${Date.now()}.pdf`);
@@ -131,7 +129,7 @@ export const Reports: React.FC<ReportsProps> = ({ onNavigateToArch }) => {
         <p style={{ fontSize: '1rem', color: 'var(--text-secondary)', lineHeight: 1.6, maxWidth: '700px' }}>
           Comprehensive architecture recommendation, decision signals, and technical rationale.
         </p>
-        
+
         <div style={{ display: 'flex', gap: '16px', alignItems: 'center', marginTop: '24px' }}>
           <Button variant="secondary" icon={Download} onClick={handleExportJson} disabled={exportingJson} style={{ height: '42px', fontSize: '0.875rem', padding: '0 1.25rem' }}>
             Export JSON

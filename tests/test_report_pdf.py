@@ -1,11 +1,8 @@
-import pytest
 from app.schemas.report import (
     ArchitectureReport,
     ProjectInfo,
     ArchitectureDetails,
-    ArchitectureRationale,
-    ReadinessSummary,
-    ChecklistItem
+    ArchitectureRationale
 )
 from app.reports.export_pdf import PDFExporter
 
@@ -37,26 +34,7 @@ def test_pdf_export_generates_valid_pdf():
                 ArchitectureRationale(category="llms", recommended="Anthropic Claude", reason="Quality"),
                 ArchitectureRationale(category="vectordbs", recommended="Qdrant", reason="Scale")
             ]
-        ),
-        deployment_readiness=ReadinessSummary(
-            ready=True,
-            pass_count=5,
-            warn_count=0,
-            risk_summary="All checks passed.",
-            overall_confidence=0.9
-        ),
-        checklist=[
-            ChecklistItem(
-                id="c-1",
-                category="Security",
-                task="Enable SSO",
-                description="Use SAML for AWS.",
-                criticality="Required",
-                completed=True
-            )
-        ],
-        cost_breakdown=[],
-        estimated_monthly_cost="$500"
+        )
     )
 
     # Act

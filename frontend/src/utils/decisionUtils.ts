@@ -64,7 +64,7 @@ export const improveTradeOffWording = (tradeOff: string): string => {
       "Minimal performance trade-offs identified.",
       "No significant compromises were required.",
       "Selected candidate satisfies the evaluated constraints with minimal drawbacks.",
-      "Strong overall balance across benchmark dimensions."
+      "Strong overall balance across evaluation dimensions."
     ];
     return options[Math.floor(Math.random() * options.length)];
   }
@@ -84,7 +84,7 @@ export const improveRejectedAlternativeReason = (reason: string, index: number):
   if (generic.includes("rejected due to lower score") || generic.includes("lower score")) {
     const options = [
       "Lower deployment compatibility",
-      "Lower benchmark performance",
+      "Lower evaluation performance",
       "Inferior metadata quality",
       "Reduced scalability",
       "Higher operational cost",
@@ -112,13 +112,13 @@ export const getContextualRecommendations = (priority: string): string[] => {
   if (p.includes('enterprise') || p.includes('production')) {
     return [
       "Validate on production-sized datasets",
-      "Benchmark under expected workload",
+      "Evaluate under expected workload",
       "Configure monitoring and observability"
     ];
   }
   if (p.includes('cost')) {
     return [
-      "Benchmark inference cost",
+      "Evaluate inference cost",
       "Validate throughput targets",
       "Compare operational expenses"
     ];
@@ -126,13 +126,13 @@ export const getContextualRecommendations = (priority: string): string[] => {
   if (p.includes('latency') || p.includes('speed')) {
     return [
       "Measure end-to-end response latency",
-      "Benchmark concurrent requests",
+      "Evaluate concurrent requests",
       "Validate caching strategy"
     ];
   }
   return [
     "Perform human evaluation",
     "Run RAG evaluation suite",
-    "Validate benchmark robustness"
+    "Validate evaluation robustness"
   ];
 };

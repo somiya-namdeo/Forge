@@ -3,7 +3,6 @@ import { request } from './apiClient';
 
 export interface ReportGenerationRequest {
   decision_result?: any;
-  benchmark_result?: any;
   evaluation_result?: any;
 }
 

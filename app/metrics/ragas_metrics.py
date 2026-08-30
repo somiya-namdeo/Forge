@@ -18,7 +18,6 @@ from ragas.metrics import (
 from app.core.config import (
     EVALUATION_API_KEY,
     EVALUATION_MODEL,
-    EVALUATION_PROVIDER,
 )
 from app.embeddings.embedding_service import get_embedding_model
 from app.metrics.base import BaseMetricEvaluator

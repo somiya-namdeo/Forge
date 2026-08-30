@@ -5,7 +5,7 @@ Provides reusable single-response evaluation engine routing requests to metric p
 (RAGAS, TruLens, Custom), running threshold quality gates, and computing weighted scores.
 """
 
-from typing import Any, Dict, List, Optional
+from typing import Any, List, Optional
 from uuid import uuid4
 
 from app.history.evaluation_history import (
@@ -15,7 +15,6 @@ from app.history.evaluation_history import (
 from app.metrics import (
     EvaluationProvider,
     MetricRegistry,
-    PassFailStatus,
 )
 from app.metrics.ragas_metrics import RagasEvaluator
 from app.schemas.evaluation import (

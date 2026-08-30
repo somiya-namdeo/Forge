@@ -1,7 +1,6 @@
 import pytest
 from app.schemas.decision import DecisionRequest, DeploymentTarget, Priority
 from app.services.decision_service import DecisionService
-from app.decision.requirement_analyzer import RequirementAnalyzer
 from app.decision.retriever import KnowledgeRetriever
 from app.decision.constraint_matcher import ConstraintMatcher
 from app.decision.scoring_engine import ScoringEngine

@@ -1,11 +1,8 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import {
-  Brain, Sliders, CheckCircle2, ChevronDown, ChevronRight,
-  Award, Sparkles, Target, FileJson, FileText, XCircle,
-} from 'lucide-react';
+import { Brain, Sliders, CheckCircle2, ChevronDown, ChevronRight, Award, Sparkles, Target, FileJson, FileText } from 'lucide-react';
 import { Card, Badge, Button, ScoreRing, LoadingIndicator, EmptyState } from '../components/common';
-import { DecisionRequest, DecisionResponse, DecisionPriority, DeploymentTarget } from '../types';
+import { DecisionResponse, DecisionPriority, DeploymentTarget } from '../types';
 import { decisionService } from '../services';
 import {
   getConfidenceLabel, getConfidenceColor, getConfidenceBgColor, getConfidenceBorderColor,
@@ -154,7 +151,7 @@ setResponse(actualResult);
         </div>
         <h1 style={{ fontSize: '1.5rem', fontWeight: 800 }}>AI Engineering Decision Engine</h1>
         <p style={{ fontSize: '0.82rem', color: 'var(--text-secondary)', maxWidth: '680px', marginTop: '0.2rem', lineHeight: 1.55 }}>
-          Configure operational constraints. Forge evaluates candidates against real benchmark
+          Configure operational constraints. Forge evaluates candidates against real evaluation
           telemetry to explain component selection and alternative rejection.
         </p>
       </header>
@@ -358,7 +355,7 @@ setResponse(actualResult);
                 <div style={{ display: 'flex', gap: '0.35rem', flexWrap: 'wrap' }}>
                   {rec.evidence?.benchmark_score && (
                     <div style={{ display: 'flex', alignItems: 'center', gap: '0.2rem', backgroundColor: 'var(--bg-secondary)', padding: '0.2rem 0.5rem', borderRadius: '5px', border: '1px solid var(--border-subtle)' }}>
-                      <span style={{ fontSize: '0.6rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.04em' }}>Benchmark</span>
+                      <span style={{ fontSize: '0.6rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.04em' }}>Evaluation</span>
                       <span style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--status-purple)' }}>{rec.evidence.benchmark_score}</span>
                     </div>
                   )}

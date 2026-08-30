@@ -24,7 +24,7 @@ class DecisionEngine:
         pipeline_statistics: dict[str, Any] = None,
     ) -> DecisionResponse:
         """Generate full DecisionResponse from base recommendations."""
-        t_start = time.perf_counter()
+        time.perf_counter()
 
         profile = RequirementAnalyzer.analyze(request)
         final_recommendations = self.explanation_engine.generate(base_recommendations, profile)

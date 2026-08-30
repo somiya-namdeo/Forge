@@ -142,7 +142,6 @@ sequenceDiagram
     DecisionEngine-->>Frontend: Return Optimal Architecture & Alternatives
 
     User->>Frontend: Request Benchmark
-    Frontend->>BenchmarkRunner: POST /benchmark/run
     BenchmarkRunner->>BenchmarkRunner: Load Dataset (legal-bench-500)
     
     loop For Each Sample
@@ -163,7 +162,6 @@ forge/
 ├── backend/
 │   ├── app/
 │   │   ├── api/             # FastAPI route definitions
-│   │   ├── benchmark/       # Benchmark runner and statistics aggregation
 │   │   ├── core/            # Application config and environment variables
 │   │   ├── datasets/        # Static evaluation datasets (JSONL)
 │   │   ├── decision/        # Constraint extraction and component scoring

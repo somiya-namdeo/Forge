@@ -9,7 +9,6 @@ from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.api.routes.benchmark import router as benchmark_router
 from app.api.routes.decision import router as decision_router
 from app.api.routes.reports import router as reports_router
 from app.api.routes.knowledge import router as knowledge_router
@@ -167,10 +166,6 @@ app.include_router(
 )
 app.include_router(
     evaluation_router,
-    prefix="/api/v1",
-)
-app.include_router(
-    benchmark_router,
     prefix="/api/v1",
 )
 app.include_router(

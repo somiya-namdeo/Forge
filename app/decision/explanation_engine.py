@@ -137,7 +137,7 @@ class ExplanationEngine:
     ) -> str:
         """Construct factor-driven rationale citing top subscores, metrics, and alternative trade-offs."""
         tech_name = item.recommended
-        category = item.category
+        item.category
         subscores = top_candidate.get("subscores", {})
 
         top_factors = cls._get_top_scoring_factors(subscores)
@@ -153,7 +153,7 @@ class ExplanationEngine:
         if profile.document_count > 0:
             context_parts.append(f"indexes approximately {profile.document_count:,} documents")
 
-        context_clause = ", ".join(context_parts) if context_parts else "specified architectural requirements"
+        ", ".join(context_parts) if context_parts else "specified architectural requirements"
 
         why_selected = f"{tech_name} aligns well with {profile.priority.value} priorities, scoring highest among eligible candidates in {top_factors_str}."
         

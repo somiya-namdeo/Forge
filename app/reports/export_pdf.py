@@ -3,7 +3,7 @@ from app.schemas.report import ArchitectureReport
 
 try:
     from reportlab.lib.pagesizes import letter
-    from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+    from reportlab.lib.styles import getSampleStyleSheet
     from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle
     from reportlab.lib import colors
     REPORTLAB_AVAILABLE = True
@@ -26,7 +26,7 @@ class PDFExporter:
         title_style = styles['Heading1']
         title_style.alignment = 1
         h2_style = styles['Heading2']
-        h3_style = styles['Heading3']
+        styles['Heading3']
         normal_style = styles['Normal']
         
         Story = []

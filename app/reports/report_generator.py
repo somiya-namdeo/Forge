@@ -21,8 +21,7 @@ class ReportGenerator:
             request_data: Contains decision_result, benchmark_result, evaluation_result.
         """
         decision = request_data.get("decision_result") or {}
-        benchmark = request_data.get("benchmark_result") or {}
-        evaluation = request_data.get("evaluation_result") or {}
+        request_data.get("evaluation_result") or {}
 
         # 1. Project Info
         metadata = decision.get("metadata", {})

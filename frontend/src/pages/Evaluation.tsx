@@ -1,21 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import {
-  BarChart2,
-  CheckCircle2,
-  AlertTriangle,
-  Play,
-  Activity,
-  FileText,
-  HelpCircle,
-  Database,
-  Search,
-  Check,
-  Zap,
-  RotateCcw,
-  Target
-} from 'lucide-react';
-import { Card, Badge, Button, ScoreRing, ProgressBar, EmptyState, Skeleton, LoadingIndicator } from '../components/common';
+import { BarChart2, Play, Activity, FileText, Search } from 'lucide-react';
+import { Card, Badge, Button, EmptyState, Skeleton, LoadingIndicator } from '../components/common';
 import { EvaluationResult } from '../types';
 import { evaluationService } from '../services';
 import { useForgeContext } from '../context';

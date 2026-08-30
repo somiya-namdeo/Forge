@@ -1,6 +1,5 @@
 from typing import List, Optional, Any, Dict
-from pydantic import BaseModel, Field
-from datetime import datetime
+from pydantic import BaseModel
 
 
 class ProjectInfo(BaseModel):
@@ -31,5 +30,4 @@ class ArchitectureReport(BaseModel):
 
 class ReportGenerationRequest(BaseModel):
     decision_result: Optional[Dict[str, Any]] = None
-    benchmark_result: Optional[Dict[str, Any]] = None
     evaluation_result: Optional[Dict[str, Any]] = None

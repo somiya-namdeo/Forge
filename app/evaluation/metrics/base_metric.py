@@ -65,19 +65,16 @@ class MetricCalculator(ABC):
     @abstractmethod
     def metric_name(self) -> str:
         """Unique identifier for the evaluation metric."""
-        pass
 
     @property
     @abstractmethod
     def metric_category(self) -> MetricCategory:
         """Category classification (retrieval, generation, operational)."""
-        pass
 
     @property
     @abstractmethod
     def description(self) -> str:
         """Human-readable description of what the metric measures."""
-        pass
 
     @abstractmethod
     def evaluate(self, metric_input: MetricInput) -> MetricResult:
@@ -90,7 +87,6 @@ class MetricCalculator(ABC):
         Returns:
             MetricResult: Calculated metric score, execution latency, and metadata.
         """
-        pass
 
     @staticmethod
     def normalize_score(score: float, min_val: float = 0.0, max_val: float = 1.0) -> float:

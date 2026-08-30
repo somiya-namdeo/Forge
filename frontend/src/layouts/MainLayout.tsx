@@ -1,6 +1,6 @@
 import React, { ReactNode, useState, useEffect } from 'react';
 import { Sidebar, NavPage } from '../components/navigation';
-import { Menu, Sparkles } from 'lucide-react';
+import { Menu } from 'lucide-react';
 
 interface MainLayoutProps {
   children: ReactNode;

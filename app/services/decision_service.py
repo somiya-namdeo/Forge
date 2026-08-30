@@ -1,7 +1,5 @@
 """Decision service module orchestrating the AI architecture recommendation pipeline."""
 
-from datetime import datetime, timezone
-import statistics
 import time
 
 from app.decision.constraint_matcher import ConstraintMatcher
@@ -87,7 +85,7 @@ class DecisionService:
         # Stage 6 & 7: Explanations and response construction via DecisionEngine
         # To maintain wrapper compatibility, we manually call the DecisionEngine here
         run_request = DecisionRunRequest(request=request, recommendations=base_recommendations)
-        t_resp_end = time.perf_counter()
+        time.perf_counter()
         total_pipeline_ms = round((time.perf_counter() - t_pipeline_start) * 1000, 2)
 
         pipeline_statistics: dict[str, Any] = {

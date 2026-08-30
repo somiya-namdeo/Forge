@@ -1,25 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import {
-  Home,
-  Sparkles,
-  Brain,
-  BarChart2,
-  Trophy,
-  Scale,
-  BookOpen,
-  FileText,
-  ChevronLeft,
-  ChevronRight,
-  Menu
-} from 'lucide-react';
+import { Home, Sparkles, Brain, BarChart2, BookOpen, FileText, ChevronLeft, ChevronRight } from 'lucide-react';
 
 export type NavPage =
   | 'home'
   | 'new-architecture'
   | 'decision-engine'
   | 'evaluation'
-  | 'benchmark'
   | 'knowledge-base'
   | 'reports';
 
@@ -34,7 +21,6 @@ const NAV_ITEMS: NavItem[] = [
   { id: 'new-architecture', label: 'New Architecture', icon: Sparkles },
   { id: 'decision-engine', label: 'Decision Engine', icon: Brain },
   { id: 'evaluation', label: 'Evaluation', icon: BarChart2 },
-  { id: 'benchmark', label: 'Benchmark', icon: Trophy },
   { id: 'knowledge-base', label: 'Knowledge Base', icon: BookOpen },
   { id: 'reports', label: 'Reports', icon: FileText },
 ];

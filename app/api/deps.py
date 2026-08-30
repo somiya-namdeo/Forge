@@ -4,10 +4,6 @@ from functools import lru_cache
 
 from fastapi import Depends
 
-from app.benchmark.benchmark_report import BenchmarkReportBuilder
-from app.benchmark.benchmark_runner import BenchmarkRunner
-from app.benchmark.benchmark_statistics import BenchmarkStatisticsEngine
-from app.datasets.benchmark_loader import BenchmarkLoader
 from app.decision.constraint_matcher import ConstraintMatcher
 from app.decision.explanation_engine import ExplanationEngine
 from app.decision.recommendation_engine import RecommendationEngine
@@ -15,7 +11,6 @@ from app.decision.retriever import KnowledgeRetriever
 from app.decision.scoring_engine import ScoringEngine
 from app.metrics.ragas_metrics import RagasEvaluator
 from app.metrics.registry import MetricRegistry
-from app.services.benchmark_service import BenchmarkService
 from app.services.decision_service import DecisionService
 from app.services.evaluation_service import EvaluationService
 from app.thresholds.threshold_manager import ThresholdManager
@@ -62,64 +57,9 @@ def get_evaluation_service(
     )
 
 
-@lru_cache
-def get_benchmark_loader() -> BenchmarkLoader:
-    """Provide a singleton BenchmarkLoader instance."""
-    return BenchmarkLoader()
 
 
-@lru_cache
-def get_benchmark_statistics_engine() -> BenchmarkStatisticsEngine:
-    """Provide a singleton BenchmarkStatisticsEngine instance."""
-    return BenchmarkStatisticsEngine()
 
-
-def get_benchmark_report_builder(
-    statistics_engine: BenchmarkStatisticsEngine | None = Depends(get_benchmark_statistics_engine),
-) -> BenchmarkReportBuilder:
-    """Inject dependencies into BenchmarkReportBuilder for route handlers."""
-    if hasattr(statistics_engine, "dependency") or statistics_engine is None:
-        statistics_engine = get_benchmark_statistics_engine()
-    return BenchmarkReportBuilder(statistics_engine=statistics_engine)
-
-
-def get_benchmark_runner(
-    evaluation_service: EvaluationService | None = Depends(get_evaluation_service),
-    loader: BenchmarkLoader | None = Depends(get_benchmark_loader),
-) -> BenchmarkRunner:
-    """Inject dependencies into BenchmarkRunner for route handlers."""
-    if hasattr(evaluation_service, "dependency") or evaluation_service is None:
-        evaluation_service = get_evaluation_service()
-    if hasattr(loader, "dependency") or loader is None:
-        loader = get_benchmark_loader()
-    return BenchmarkRunner(
-        evaluation_service=evaluation_service,
-        loader=loader,
-    )
-
-
-def get_benchmark_service(
-    evaluation_service: EvaluationService | None = Depends(get_evaluation_service),
-    loader: BenchmarkLoader | None = Depends(get_benchmark_loader),
-    runner: BenchmarkRunner | None = Depends(get_benchmark_runner),
-    report_builder: BenchmarkReportBuilder | None = Depends(get_benchmark_report_builder),
-) -> BenchmarkService:
-    """Inject dependencies into BenchmarkService for route handlers."""
-    if hasattr(evaluation_service, "dependency") or evaluation_service is None:
-        evaluation_service = get_evaluation_service()
-    if hasattr(loader, "dependency") or loader is None:
-        loader = get_benchmark_loader()
-    if hasattr(runner, "dependency") or runner is None:
-        runner = get_benchmark_runner()
-    if hasattr(report_builder, "dependency") or report_builder is None:
-        report_builder = get_benchmark_report_builder()
-
-    return BenchmarkService(
-        evaluation_service=evaluation_service,
-        loader=loader,
-        runner=runner,
-        report_builder=report_builder,
-    )
 
 
 @lru_cache

@@ -12,22 +12,16 @@ from app.metrics import (
 from app.metrics.ragas_metrics import RagasEvaluator
 from app.metrics.custom_metrics import CustomEvaluator, TruLensEvaluator
 from app.datasets.golden_dataset import GoldenDataset, GoldenSample
-from app.datasets.benchmark_loader import LocalBenchmarkLoader, RemoteBenchmarkLoader
 from app.thresholds.threshold_manager import (
     ThresholdManager,
     ThresholdRule,
     ThresholdOperator,
 )
-from app.utils.weighting import WeightConfig, WeightingEngine, WeightPreset
+from app.utils.weighting import WeightingEngine, WeightPreset
 from app.utils.score_calculator import ScoreCalculator
 from app.history.evaluation_history import EvaluationHistoryManager, EvaluationRecord
-from app.reports.report_generator import ReportGenerator
-from app.reports.export_pdf import PDFExporter
 from app.schemas.evaluation import (
     EvaluationRequest,
-    MetricConfigSchema,
-    ThresholdConfigSchema,
-    EvaluationHistoryFilter,
 )
 from app.services.evaluation_service import EvaluationService
 

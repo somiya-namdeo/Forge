@@ -7,7 +7,6 @@ import {
   NewArchitecture,
   DecisionEngine,
   Evaluation,
-  Benchmark,
   KnowledgeBase,
   Reports
 } from './pages';
@@ -69,9 +68,7 @@ export function App() {
         return <DecisionEngine />;
       case 'evaluation':
         return <Evaluation />;
-      case 'benchmark':
-        return <Benchmark />;
-      case 'knowledge-base':
+            case 'knowledge-base':
         return <KnowledgeBase />;
       case 'reports':
         return (

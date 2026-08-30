@@ -1,10 +1,9 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
-import { DecisionResponse, BenchmarkReport, EvaluationResult } from '../types';
+import { DecisionResponse, EvaluationResult } from '../types';
 
 export interface ForgeContextState {
   decisionResult: DecisionResponse | null;
   sessionArchitectures: DecisionResponse[];
-  benchmarkResult: BenchmarkReport | null;
   evaluationResult: EvaluationResult | null;
   comparisonSelection: {
     archA: DecisionResponse | null;
@@ -15,7 +14,6 @@ export interface ForgeContextState {
 export interface ForgeContextType extends ForgeContextState {
   setDecisionResult: (result: DecisionResponse | null) => void;
   addSessionArchitecture: (result: DecisionResponse) => void;
-  setBenchmarkResult: (result: BenchmarkReport | null) => void;
   setEvaluationResult: (result: EvaluationResult | null) => void;
   setComparisonSelection: (archA: DecisionResponse | null, archB: DecisionResponse | null) => void;
 }
@@ -25,7 +23,6 @@ const ForgeContext = createContext<ForgeContextType | undefined>(undefined);
 export const ForgeProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [decisionResult, setDecisionResultState] = useState<DecisionResponse | null>(null);
   const [sessionArchitectures, setSessionArchitectures] = useState<DecisionResponse[]>([]);
-  const [benchmarkResult, setBenchmarkResult] = useState<BenchmarkReport | null>(null);
   const [evaluationResult, setEvaluationResult] = useState<EvaluationResult | null>(null);
   const [comparisonSelection, setComparisonSelectionState] = useState<{ archA: DecisionResponse | null, archB: DecisionResponse | null }>({ archA: null, archB: null });
 
@@ -68,8 +65,6 @@ export const ForgeProvider: React.FC<{ children: ReactNode }> = ({ children }) =
         setDecisionResult,
         sessionArchitectures,
         addSessionArchitecture,
-        benchmarkResult,
-        setBenchmarkResult,
         evaluationResult,
         setEvaluationResult,
         comparisonSelection,

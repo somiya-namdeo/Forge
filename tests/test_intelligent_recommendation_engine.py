@@ -1,12 +1,7 @@
 """Unit tests for Phase 3.1 Intelligent Recommendation Engine."""
 
 from app.api.deps import (
-    get_constraint_matcher,
     get_decision_service,
-    get_explanation_engine,
-    get_knowledge_retriever,
-    get_recommendation_engine,
-    get_scoring_engine,
 )
 from app.schemas.decision import DecisionRequest, DeploymentTarget, Priority
 

@@ -5,7 +5,7 @@ from collections.abc import Sequence
 from typing import TYPE_CHECKING, Any, Dict
 
 if TYPE_CHECKING:
-    from app.schemas.evaluation import EvaluationRequest
+    pass
 
 
 class BaseMetricEvaluator(ABC):
