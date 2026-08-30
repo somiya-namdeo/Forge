@@ -1,38 +1,52 @@
-# Forge
+<p align="center">
+  <img src="./frontend/public/forge-logo.png" alt="Forge Logo" width="120"/>
+</p>
 
-### AI Engineering Decision Support Platform
+<h1 align="center">Forge</h1>
 
-Forge is an AI engineering decision-support platform that transforms natural-language system requirements into structured, evidence-backed architecture recommendations. By retrieving real-world engineering constraints from a vector knowledge base and applying deterministic scoring, Forge reasons about trade-offs and produces a comprehensive architecture decision report.
+<p align="center">
+  AI Engineering Decision Support Platform
+</p>
 
-[![Python Version](https://img.shields.io/badge/Python-3.12-blue.svg)](https://python.org)
-[![FastAPI](https://img.shields.io/badge/FastAPI-0.118-009688.svg?logo=fastapi)](https://fastapi.tiangolo.com)
-[![React](https://img.shields.io/badge/React-18-61DAFB.svg?logo=react)](https://reactjs.org)
-[![Qdrant](https://img.shields.io/badge/Qdrant-Vector_Store-FF5252.svg?logo=qdrant)](https://qdrant.tech)
-[![Hugging Face](https://img.shields.io/badge/Hugging_Face-Inference_API-F9AB00.svg?logo=huggingface)](https://huggingface.co)
-[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![Tests](https://img.shields.io/badge/Tests-25_Passed-success.svg)](#testing)
+<p align="center">
+  Forge transforms natural-language AI project requirements into evidence-backed architecture recommendations by analyzing constraints, retrieving relevant technologies, scoring candidates, and generating structured decision reports.
+</p>
 
-[Live Demo](https://forge-beta-gilt-16.vercel.app) | [GitHub Repository](https://github.com/somiya-namdeo/Forge) | [Backend API](https://forge-mmz3.onrender.com)
+<p align="center">
+  <img src="https://img.shields.io/badge/Python-3.12-blue.svg" alt="Python">
+  <img src="https://img.shields.io/badge/FastAPI-0.118-009688.svg?logo=fastapi" alt="FastAPI">
+  <img src="https://img.shields.io/badge/React-18-61DAFB.svg?logo=react" alt="React">
+  <img src="https://img.shields.io/badge/Qdrant-Vector_Store-FF5252.svg?logo=qdrant" alt="Qdrant">
+  <img src="https://img.shields.io/badge/Hugging_Face-Inference_API-F9AB00.svg?logo=huggingface" alt="Hugging Face">
+  <img src="https://img.shields.io/badge/License-MIT-green.svg" alt="License">
+  <img src="https://img.shields.io/badge/Tests-25_Passed-success.svg" alt="Tests">
+</p>
+
+<p align="center">
+  <a href="#project-overview">Overview</a> •
+  <a href="#system-architecture">Architecture</a> •
+  <a href="#system-flow">System Flow</a> •
+  <a href="#data-and-knowledge-architecture">Knowledge Base</a> •
+  <a href="#evaluation">Evaluation</a> •
+  <a href="#api-overview">API</a> •
+  <a href="#local-development">Setup</a> •
+  <a href="#testing">Testing</a> •
+  <a href="#deployment">Deployment</a>
+</p>
 
 ---
 
 ## Table of Contents
-- [Overview](#overview)
-- [Problem](#problem)
-- [Solution](#solution)
+- [Project Overview](#project-overview)
 - [Key Capabilities](#key-capabilities)
+- [Technology Stack](#technology-stack)
 - [System Architecture](#system-architecture)
-  - [High-Level Architecture](#high-level-architecture)
-  - [System Flow](#system-flow)
-  - [Recommendation Sequence](#recommendation-sequence)
+- [System Flow](#system-flow)
+- [Recommendation Sequence](#recommendation-sequence)
 - [Data and Knowledge Architecture](#data-and-knowledge-architecture)
-  - [Retrieval Architecture](#retrieval-architecture)
-  - [Knowledge Data Model](#knowledge-data-model)
-- [Decision Pipeline](#decision-pipeline)
-- [Embedding Architecture](#embedding-architecture)
+- [Decision Engine Pipeline](#decision-engine-pipeline)
 - [Report Generation](#report-generation)
 - [Evaluation](#evaluation)
-- [Technology Stack](#technology-stack)
 - [API Overview](#api-overview)
 - [Project Structure](#project-structure)
 - [Local Development](#local-development)
@@ -45,80 +59,55 @@ Forge is an AI engineering decision-support platform that transforms natural-lan
 
 ---
 
-## Overview
+## Project Overview
 
-Forge is an AI engineering decision-support platform that converts natural-language system requirements into structured architecture recommendations.
+Forge is an AI engineering decision-support platform designed to convert natural-language system requirements into structured, interoperable architecture recommendations.
 
-The complete high-level lifecycle executes as follows:
+Designing a modern Retrieval-Augmented Generation (RAG) or AI stack requires balancing complex engineering constraints: cost, latency, compliance, domain specificity, and scalability. Engineers often spend weeks reading documentation and benchmarking models before writing any code. Forge automates this foundational architectural phase.
 
-User requirements &rarr; requirement analysis &rarr; project profile &rarr; constraint detection &rarr; embedding generation &rarr; knowledge retrieval &rarr; candidate technologies &rarr; scoring and recommendation &rarr; architecture synthesis &rarr; structured report &rarr; optional PDF export.
+Forge operates strictly as a deterministic engineering co-pilot, distinguishing it from generic LLM text-generation chatbots. Rather than relying on LLM probabilities to guess an architecture, Forge grounds its decisions in verified technology specifications retrieved via semantic search. It explicitly scores engineering trade-offs and outputs a highly defensible architecture draft.
 
-This platform operates as a deterministic engineering co-pilot. Rather than relying on generic LLM probabilities, Forge grounds its decisions in verified technology specifications, explicitly scoring trade-offs such as latency, cost, and deployment constraints to output a highly defensible engineering draft.
+**The Decision Pipeline:**
+Natural Language Requirements &rarr; Requirement Analysis &rarr; Project Profile &rarr; Semantic Retrieval &rarr; Candidate Scoring &rarr; Architecture Recommendation &rarr; Structured Decision Report.
 
 <p align="center">
-  <img src="./docs/screenshots/landing-page.png" alt="Natural-Language Requirements — Describe an AI system and its engineering constraints in plain language." width="900">
+  <img src="./docs/screenshots/landing-page.png" alt="Forge Landing Page" width="900">
 </p>
-<p align="center"><i>Natural-Language Requirements — Describe an AI system and its engineering constraints in plain language.</i></p>
-
-## Problem
-
-When building an AI, LLM, or Retrieval-Augmented Generation (RAG) system, engineers must choose among many alternatives:
-
-- LLMs
-- embedding models
-- vector databases
-- retrieval strategies
-- rerankers
-- frameworks
-- deployment approaches
-
-The correct choice depends on strict project constraints such as:
-
-- privacy and compliance
-- document volume and scale
-- latency requirements
-- budget and cost
-- deployment target (e.g., on-premise vs. SaaS)
-- open-source requirements
-- output quality requirements
-
-Manually comparing these choices is difficult. Technology landscapes shift weekly, documentation is fragmented, and evaluating the interplay of dozens of variables across multiple components often costs engineering teams weeks of upfront research before a single line of code is written.
-
-## Solution
-
-Forge addresses this research bottleneck through an automated, evidence-backed decision pipeline:
-
-1. **Requirement ingestion**: Accepts plain-language descriptions of the intended system.
-2. **Requirement analysis**: Uses an LLM to parse the intent into structured parameters.
-3. **Constraint extraction**: Identifies hard blockers (e.g., "must be open source").
-4. **Project profile generation**: Constructs a unified project schema representing the workload.
-5. **Semantic retrieval**: Embeds the profile and queries the Qdrant knowledge base for relevant components.
-6. **Candidate filtering**: Eliminates technologies that violate hard constraints.
-7. **Decision scoring**: Evaluates remaining candidates against a deterministic matrix (cost vs. latency vs. scale).
-8. **Architecture recommendation**: Selects the optimal combination of components.
-9. **Technical rationale**: Generates explicit evidence explaining why each component was chosen and why alternatives were rejected.
-10. **Report generation**: Aggregates the findings into a downloadable JSON or PDF document.
+<p align="center"><i>Natural-Language Requirements — Engineers describe their AI system and its constraints in plain language.</i></p>
 
 ## Key Capabilities
 
 | Capability | Description |
 |---|---|
-| **Natural-language requirements** | Converts unstructured user prompts into structured system constraints. |
-| **Requirement analysis** | Extracts scale, budget, and deployment targets deterministically. |
-| **Constraint detection** | Enforces hard blockers such as privacy mandates or cloud-agnostic requirements. |
-| **Semantic retrieval** | Queries a vector database for technically viable technology candidates. |
-| **Technology comparison** | Analyzes the trade-offs between competing LLMs, vector stores, and embedders. |
-| **Decision scoring** | Ranks candidates using weighted matrices prioritizing latency, cost, or quality. |
-| **Architecture recommendation** | Suggests a cohesive, interoperable AI stack. |
-| **Evidence-backed reasoning** | Provides explicit "why" and "why not" rationales for every selection. |
-| **Report generation** | Compiles unified architecture decision documents. |
-| **PDF export** | Exports decisions to shareable ReportLab PDF files natively. |
+| **Requirement Analysis** | Converts unstructured user prompts into structured constraints. |
+| **Constraint Detection** | Identifies strict engineering blockers (e.g., privacy mandates or cloud-agnostic deployment). |
+| **Semantic Retrieval** | Queries a Qdrant vector database for technically viable technology candidates. |
+| **Technology Ranking** | Analyzes trade-offs between competing LLMs, vector stores, and embedders. |
+| **Architecture Recommendation** | Suggests a cohesive, interoperable AI stack prioritizing the user's constraints. |
+| **Evidence-backed Decisions** | Generates explicit "why" and "why not" rationales for every selected component. |
+| **Evaluation** | Synthetically validates the retrieved rationale against the prompt using the RAGAS framework. |
+| **Report Generation** | Compiles unified architecture decision documents outlining the selected stack. |
+| **JSON Export** | Exposes the complete architecture recommendation payload via REST APIs. |
+| **PDF Export** | Generates shareable ReportLab PDF files natively from the final architecture. |
+
+## Technology Stack
+
+| Layer | Technology | Purpose |
+|---|---|---|
+| **Frontend** | React / TypeScript / Vite | High-performance SPA rendering and strict type safety |
+| **Backend** | FastAPI / Python 3.12 | High-throughput asynchronous REST API with rigid Pydantic schema validation |
+| **AI / Orchestration**| OpenAI / LangChain | Foundational intelligence and semantic requirement parsing |
+| **Embeddings** | BAAI/bge-base-en-v1.5 | Semantic representation of requirements and technology profiles |
+| **Embedding Host** | Hugging Face Inference API | Serverless, remote embedding generation to maintain a lightweight API footprint |
+| **Vector Database** | Qdrant | Fast semantic similarity search and local persistent technology profile storage |
+| **Evaluation** | RAGAS | Statistically robust generation validation against known ground truth |
+| **Reporting** | ReportLab | Programmatic PDF document synthesis for exportable reports |
+| **Testing** | Pytest | Comprehensive unit and integration test execution |
+| **Deployment** | Vercel / Render | CI/CD enabled platforms for decoupled frontend/backend hosting |
 
 ## System Architecture
 
-### High-Level Architecture
-
-The system utilizes a modern decoupled architecture, separating the client application from the heavy decision-engine microservices.
+The system utilizes a decoupled microservice architecture, separating the client application from the heavy decision-engine orchestration.
 
 \\\mermaid
 flowchart TB
@@ -141,11 +130,11 @@ flowchart TB
         RET[Qdrant Retriever]
     end
 
-    subgraph Knowledge Layer
+    subgraph Knowledge Store
         QD[(Qdrant Vector DB)]
     end
 
-    subgraph External Services
+    subgraph External Providers
         HF[Hugging Face Inference API]
         OAI[OpenAI / LLM API]
     end
@@ -171,13 +160,13 @@ flowchart TB
     RG --> PDF
 \\\
 
-### System Flow
+## System Flow
 
-The end-to-end request flow traces a user requirement through semantic translation, retrieval, and scoring.
+The end-to-end flow traces a requirement through semantic translation, retrieval, and mathematical scoring.
 
 \\\mermaid
 flowchart TD
-    User([User]) -->|enters project requirements| Frontend[React Frontend]
+    User([User]) -->|Enters project requirements| Frontend[React Frontend]
     Frontend -->|POST /decision/recommend| API[FastAPI]
     API --> RA[Requirement Analyzer]
     RA --> PP[Project Profile]
@@ -185,16 +174,16 @@ flowchart TD
     ES -->|Hugging Face API| Vec[768-dim Vector]
     Vec --> QD[Qdrant Semantic Retrieval]
     QD --> CT[Candidate Technologies]
-    CT --> DS[Decision Scoring & Filtering]
+    CT --> DS[Decision Scoring]
     DS --> Rec[Architecture Recommendation]
     Rec --> AR[Architecture Report]
     AR -->|JSON Response| Frontend
     Frontend -->|Renders UI| User
 \\\
 
-### Recommendation Sequence
+## Recommendation Sequence
 
-This sequence diagram illustrates the synchronous processes and external API boundaries during a recommendation request.
+This sequence diagram details the strict synchronous processing pipeline and external API boundaries during a recommendation request.
 
 \\\mermaid
 sequenceDiagram
@@ -216,38 +205,18 @@ sequenceDiagram
     FastAPI->>Retriever: query_candidates(Vector)
     Retriever-->>FastAPI: List[TechnologyComponent]
     FastAPI->>Engine: score_candidates(Components, Profile)
-    Engine-->>FastAPI: ArchitectureRecommendation + Rationale
+    Engine-->>FastAPI: ArchitectureRecommendation
     FastAPI-->>Frontend: DecisionResponse
 \\\
 
+<p align="center">
+  <img src="./docs/screenshots/decision-engine.png" alt="Decision Engine Interface" width="900">
+</p>
+<p align="center"><i>The Decision Engine synchronously processes the pipeline stages, visualizing each deterministic step to the user.</i></p>
+
 ## Data and Knowledge Architecture
 
-### Retrieval Architecture
-
-Forge stores its engineering knowledge (technology specifications, limits, costs) as structured JSON embedded in Qdrant.
-
-- **Knowledge Entities**: Technologies are represented as components (e.g., an LLM entity contains context window size, licensing, and benchmark data).
-- **Embedding Generation**: User requirements are summarized and embedded.
-- **Semantic Search**: Qdrant performs cosine-similarity searches to fetch candidates that architecturally align with the prompt.
-- **Decision Integration**: Retrieved candidates are passed into the scoring engine, ensuring the LLM only reasons over verified, retrieved specifications rather than hallucinating capabilities.
-
-\\\mermaid
-flowchart TD
-    Req[Project Requirements] -->|Summarize| Sum[Requirement Summary]
-    Sum -->|Embed| Vec[Requirement Vector]
-
-    subgraph Knowledge Base
-        Tech[Technology Specifications] -->|Pre-embedded| QD[(Qdrant Collections)]
-    end
-
-    Vec -->|Cosine Similarity| QD
-    QD -->|Top K Candidates| Filt[Hard Constraint Filter]
-    Filt -->|Valid Candidates| Score[Scoring Engine]
-\\\
-
-### Knowledge Data Model
-
-Forge does not use a relational database (e.g., PostgreSQL or MySQL). All persistent data structures reside in Qdrant as semantic vectors with rich payload metadata, validated in memory via Pydantic schemas.
+Forge avoids traditional relational databases (e.g., PostgreSQL or MySQL). All persistent data structures reside directly in Qdrant as semantic vectors with rich payload metadata. These payloads are validated strictly in-memory using Pydantic schemas.
 
 \\\mermaid
 erDiagram
@@ -290,41 +259,15 @@ erDiagram
     }
 \\\
 
-## Decision Pipeline
+## Decision Engine Pipeline
 
-Forge converts retrieved candidates into recommendations using a deterministic, multi-stage pipeline:
+Forge converts retrieved candidates into structured recommendations using a deterministic, multi-stage pipeline:
 
-1. **Filtering**: The \scoring_engine.py\ applies hard filters based on the \ProjectProfile\. If a user requires an open-source model, all proprietary APIs (e.g., GPT-4, Claude) are immediately dropped from the candidate pool.
-2. **Prioritization**: The engine applies weights based on the user's \optimization_priority\ (e.g., latency, cost, quality).
-3. **Scoring**: Remaining candidates are scored on a normalized matrix. A model with high throughput scores highly on latency-optimized requests.
-4. **Recommendation Generation**: The highest-scoring combination of LLM, vector database, and embedding model is selected.
-5. **Trade-off Analysis**: The \TradeoffAnalyzer\ compares the winning stack against the runner-up components to generate explicit, readable rationales explaining the engineering compromises made.
-
-<p align="center">
-  <img src="./docs/screenshots/decision-engine.png" alt="Decision Engine Interface" width="900">
-</p>
-<p align="center"><i>The Decision Engine interface processes the pipeline stages synchronously.</i></p>
-
-## Embedding Architecture
-
-Forge utilizes a remote embedding architecture to maintain a lightweight deployment footprint.
-
-- **Model**: \BAAI/bge-base-en-v1.5\
-- **Implementation**: \HuggingFaceInferenceClientEmbeddings\
-
-Rather than loading large PyTorch binaries and \SentenceTransformer\ models directly into the FastAPI server memory, Forge offloads feature extraction to the Hugging Face Inference API via the \huggingface_hub\ InferenceClient.
-
-This architectural decision significantly reduces CPU and RAM usage, enabling the backend to run reliably on resource-constrained platforms (like Render free tiers) while still generating high-quality 768-dimensional semantic vectors for Qdrant.
-
-## Report Generation
-
-The backend aggregates all decision signals, architecture components, and technical rationales into a final \ArchitectureReport\ schema.
-
-- **JSON Export**: The structured data is returned to the frontend for interactive rendering.
-- **PDF Generation**: If requested, the FastAPI backend invokes \ReportLab\ to programmatically format the JSON data into a styled engineering document.
-
-**Frontend PDF Download Flow:**
-Frontend &rarr; API request &rarr; FastAPI PDF endpoint &rarr; ReportLab generation &rarr; binary PDF response &rarr; Browser handles the Blob download.
+1. **Filtering**: The scoring engine applies hard filters based on the parsed ProjectProfile. If a user requires an open-source model, proprietary APIs (e.g., GPT-4) are immediately eliminated.
+2. **Prioritization**: The engine applies weights derived from the user's optimization_priority (latency, cost, or quality).
+3. **Scoring**: Remaining candidates are scored mathematically. A model with high throughput scores highly on latency-optimized configurations.
+4. **Recommendation Generation**: The highest-scoring combination of LLM, vector database, and embedding model is designated the winner.
+5. **Trade-off Analysis**: The engine compares the winning stack against runner-up components to generate explicit readable rationales explaining the necessary engineering compromises.
 
 <p align="center">
   <img src="./docs/screenshots/architecture-report-1.png" alt="Architecture Decision Report - Overview" width="900">
@@ -335,6 +278,16 @@ Frontend &rarr; API request &rarr; FastAPI PDF endpoint &rarr; ReportLab generat
 </p>
 <p align="center"><i>Architecture Decision Report — Forge transforms project requirements into structured, evidence-backed architecture decisions containing explicit trade-off reasoning.</i></p>
 
+## Report Generation
+
+The backend aggregates all decision signals and technical rationales into a final ArchitectureReport schema.
+
+- **JSON Export**: The structured data is returned to the frontend for interactive rendering.
+- **PDF Generation**: When requested, the FastAPI backend invokes ReportLab to programmatically format the JSON data into a styled engineering document.
+
+**Frontend PDF Download Flow:**
+Frontend &rarr; API request &rarr; FastAPI PDF endpoint &rarr; ReportLab generation &rarr; binary PDF response &rarr; Browser handles the download blob.
+
 <p align="center">
   <img src="./docs/screenshots/pdf-report.png" alt="Exportable Architecture Report" width="900">
 </p>
@@ -342,31 +295,19 @@ Frontend &rarr; API request &rarr; FastAPI PDF endpoint &rarr; ReportLab generat
 
 ## Evaluation
 
-Forge includes a synthetic evaluation engine powered by the **RAGAS** framework. This system validates the quality of the architecture recommendation by comparing the generated response against the retrieved context and known ground truth.
+Forge includes an explicit synthetic evaluation engine powered by the **RAGAS** framework. This system validates the quality of the architecture recommendation by statistically scoring the generated response against the retrieved context and known ground truth.
 
-- **Evaluation Input**: The initial user query.
+- **Evaluation Input**: The initial user query constraint.
 - **Retrieved Context**: The technology specifications provided by Qdrant.
 - **Generated Answer**: The rationale produced by the decision engine.
-- **Metrics**: Calculates statistical scores for **Faithfulness** (is the rationale supported by the retrieved spec?) and **Answer Relevancy** (does the architecture actually solve the user's prompt?).
+- **Metrics**:
+  - **Faithfulness**: Measures whether the rationale is factually supported by the retrieved technology specifications.
+  - **Answer Relevancy**: Measures whether the generated architecture directly addresses the user's explicit prompt.
 
 <p align="center">
   <img src="./docs/screenshots/evaluation.png" alt="Evaluation Pipeline" width="900">
 </p>
-<p align="center"><i>Evaluation Pipeline — Forge evaluates retrieved context and generated responses against known ground truth.</i></p>
-
-## Technology Stack
-
-| Layer | Technologies | Purpose |
-|---|---|---|
-| **Frontend** | React, TypeScript, Vite, Tailwind CSS | High-performance SPA rendering and strict type safety |
-| **Backend Core** | FastAPI, Python 3.12, Pydantic | High-throughput async REST API with rigid schema validation |
-| **AI / LLM** | OpenAI, LangChain | Foundational intelligence and requirement parsing |
-| **Embeddings** | Hugging Face Inference API | Serverless embedding generation (\BAAI/bge-base-en-v1.5\) |
-| **Vector Database** | Qdrant | Semantic similarity search and technology profile storage |
-| **Validation** | RAGAS | Statistically robust generation validation |
-| **PDF Generation**| ReportLab | Programmatic PDF document synthesis |
-| **Testing** | Pytest, anyio | Comprehensive unit and integration test execution |
-| **Deployment** | Vercel, Render | CI/CD enabled platforms for decoupled hosting |
+<p align="center"><i>Evaluation Pipeline — Forge statistically evaluates retrieved context and generated responses against known ground truth.</i></p>
 
 ## API Overview
 
@@ -374,15 +315,15 @@ The FastAPI backend exposes the following core capabilities:
 
 | Method | Endpoint | Purpose |
 |---|---|---|
-| \POST\ | \/api/v1/decision/recommend\ | Generates architecture recommendations and rationale from project requirements. |
-| \GET\ | \/api/v1/knowledge\ | Retrieves paginated specifications of registered AI technologies from the Qdrant store. |
-| \POST\ | \/api/v1/reports/generate\ | Generates a structured JSON architecture decision report from decision data. |
-| \POST\ | \/api/v1/reports/pdf\ | Generates the architecture report as a binary PDF download. |
-| \POST\ | \/api/v1/evaluation/evaluate\ | Runs Ragas metrics against a provided architecture recommendation and context payload. |
+| POST | /api/v1/decision/recommend | Generates architecture recommendations and rationale from project requirements. |
+| GET | /api/v1/knowledge | Retrieves paginated specifications of registered AI technologies from the Qdrant store. |
+| POST | /api/v1/reports/generate | Generates a structured JSON architecture decision report from decision data. |
+| POST | /api/v1/reports/pdf | Generates the architecture report as a binary PDF download. |
+| POST | /api/v1/evaluation/evaluate | Runs Ragas metrics against a provided architecture recommendation and context payload. |
 
 ## Project Structure
 
-\\\	ext
+`	ext
 Forge/
 ├── app/                     # FastAPI Backend Application
 │   ├── api/                 # Route definitions and controllers
@@ -397,7 +338,7 @@ Forge/
 ├── docs/                    # Documentation assets
 │   └── screenshots/         # Professional UI screenshots
 ├── frontend/                # React Single Page Application
-│   ├── public/              # Static assets
+│   ├── public/              # Static assets (including forge-logo.png)
 │   └── src/
 │       ├── components/      # Reusable UI elements
 │       ├── context/         # React Context for global state
@@ -408,7 +349,7 @@ Forge/
 ├── .env.example             # Template for required environment variables
 ├── requirements.txt         # Backend Python dependencies
 └── README.md                # Project documentation
-\\\
+`
 
 ## Local Development
 
@@ -420,14 +361,14 @@ Forge/
 
 ### Clone Repository
 
-\\\ash
+`ash
 git clone https://github.com/somiya-namdeo/Forge.git
 cd Forge
-\\\
+`
 
 ### Backend Setup
 
-\\\ash
+`ash
 # Create and activate virtual environment
 python -m venv .venv
 
@@ -438,39 +379,39 @@ source .venv/bin/activate
 
 # Install dependencies
 pip install -r requirements.txt
-\\\
+`
 
 ### Frontend Setup
 
-\\\ash
+`ash
 cd frontend
 npm install
-\\\
+`
 
 ### Environment Variables
 
-Create a \.env\ file in the root directory based on \.env.example\:
+Create a .env file in the root directory based on .env.example:
 
 | Variable | Required | Purpose | Example |
 |---|---|---|---|
-| \OPENAI_API_KEY\ | Yes | Requirement extraction and rationale generation | \sk-...\ |
-| \HUGGINGFACEHUB_API_TOKEN\ | Yes | Remote embedding generation | \hf_...\ |
-| \EMBEDDING_MODEL\ | No | Overrides the default embedding model | \BAAI/bge-base-en-v1.5\ |
-| \FRONTEND_URL\ | No | Configures CORS for the backend | \http://localhost:5173\ |
+| OPENAI_API_KEY | Yes | Requirement extraction and rationale generation | sk-... |
+| HUGGINGFACEHUB_API_TOKEN | Yes | Remote embedding generation | hf_... |
+| EMBEDDING_MODEL | No | Overrides the default embedding model | BAAI/bge-base-en-v1.5 |
+| FRONTEND_URL | No | Configures CORS for the backend | http://localhost:5173 |
 
 ### Run Application
 
 Start the backend (from the repository root):
 
-\\\ash
+`ash
 uvicorn app.main:app --reload --port 8000
-\\\
+`
 
-Start the frontend (from the \rontend/\ directory):
+Start the frontend (from the rontend/ directory):
 
-\\\ash
+`ash
 npm run dev
-\\\
+`
 
 ## Testing
 
@@ -478,44 +419,44 @@ The backend includes a comprehensive pytest suite covering decision scoring, API
 
 To run the test suite:
 
-\\\ash
+`ash
 pytest tests/
-\\\
+`
 
 ## Deployment
 
 The application utilizes a decoupled deployment architecture:
 
-\\\mermaid
+`mermaid
 flowchart LR
     User([User]) --> Vercel[Frontend - Vercel]
     Vercel --> Render[Backend - Render]
     Render --> HF[Hugging Face API]
     Render --> OAI[OpenAI API]
-\\\
+`
 
-- **Frontend**: Deployed on Vercel as a static SPA. Requires \VITE_API_URL\ pointing to the backend.
-- **Backend**: Deployed on Render as a Python Web Service. Requires \OPENAI_API_KEY\ and \HUGGINGFACEHUB_API_TOKEN\ configured in the Render dashboard.
+- **Frontend**: Deployed on Vercel as a static SPA. Requires VITE_API_URL pointing to the backend.
+- **Backend**: Deployed on Render as a Python Web Service. Requires OPENAI_API_KEY and HUGGINGFACEHUB_API_TOKEN configured in the Render dashboard.
 - **Data**: Qdrant runs locally within the Render instance utilizing local disk persistence.
 
 ## Engineering Design Decisions
 
-- **Semantic Retrieval over Hardcoding**: Instead of hardcoding model limits in \if/else\ statements, Forge dynamically queries Qdrant. This allows the knowledge base to be updated without altering application logic.
-- **Schema-less Vector Storage**: Avoiding a relational database simplifies deployment and allows unstructured documentation to be seamlessly embedded and retrieved alongside structured limits.
-- **Remote Embedding Inference**: Offloading the \BAAI/bge-base-en-v1.5\ workload to Hugging Face prevents the FastAPI server from crashing under memory pressure on lightweight cloud instances.
-- **Separation of Analysis and Scoring**: The LLM is only used to parse requirements into structured schemas. The actual technology selection is handled by a deterministic mathematical scoring engine. This prevents LLM hallucinations from recommending incompatible architectures.
+- **Semantic Retrieval over Hardcoding**: Instead of hardcoding model limits in standard conditional statements, Forge dynamically queries Qdrant. This allows the knowledge base to be updated rapidly without altering application logic.
+- **Schema-less Vector Storage**: By avoiding a relational database, Forge streamlines deployment and allows unstructured documentation to be seamlessly embedded alongside structured capability limits.
+- **Remote Embedding Inference**: Forge offloads the BAAI/bge-base-en-v1.5 workload to Hugging Face rather than running local PyTorch SentenceTransformer binaries. This architectural decision significantly reduces CPU and RAM usage, enabling the backend to run reliably on resource-constrained platforms (like the Render free tier).
+- **Separation of Analysis and Scoring**: The LLM is only used to parse requirements into structured schemas. The actual technology selection is handled by a deterministic mathematical scoring engine. This rigidly prevents LLM hallucinations from recommending incompatible architectures.
 
 ## Limitations
 
-- **Knowledge Freshness**: The accuracy of recommendations is strictly bound to the freshness of the Qdrant knowledge base. If new models (e.g., Llama 4) are released, the database must be manually updated.
+- **Knowledge Freshness**: The accuracy of recommendations is strictly bound to the freshness of the Qdrant knowledge base. If new models are released, the database must be manually updated.
 - **External API Dependency**: The system relies heavily on the availability of the Hugging Face Inference API and OpenAI APIs. Network degradation heavily impacts recommendation latency.
-- **Domain Coverage**: Currently limited to standard RAG architectures, missing deep coverage for multi-agent systems or edge-deployment specific technologies.
+- **Domain Coverage**: Currently limited to standard RAG architectures, missing deep coverage for multi-agent systems or edge-deployment specific constraints.
 
 ## Future Improvements
 
-- **Automated Knowledge Refresh**: Implementing cron jobs to automatically scrape and embed new model specifications from Hugging Face Model Hub.
-- **Expanded Inference Providers**: Adding fallback logic to Anthropic or Groq if OpenAI is rate-limited.
-- **Cost Estimation**: Providing estimated monthly infrastructure costs based on the recommended architecture and projected scale.
+- **Automated Knowledge Refresh**: Implementing pipelines to automatically scrape and embed new model specifications from the Hugging Face Model Hub.
+- **Expanded Inference Providers**: Adding fallback logic to Anthropic or Groq if primary APIs are rate-limited.
+- **Cost Estimation**: Providing estimated monthly infrastructure costs based on the recommended architecture and projected request scale.
 - **Expanded Evaluation Coverage**: Adding multi-turn context evaluations and retrieval precision metrics.
 
 ## License
