@@ -1,13 +1,10 @@
-from sentence_transformers import SentenceTransformer
-from app.core.config import EMBEDDING_MODEL
+from app.embeddings.embedding_service import get_embedding_model
 import numpy as np
-import torch
 
 
 class QueryEncoder:
     def __init__(self):
-        self.model = SentenceTransformer(EMBEDDING_MODEL)
-        self.model.eval()
+        self.model = get_embedding_model()
 
     def encode(self, query: str) -> np.ndarray:
         query = query.strip()
@@ -15,11 +12,12 @@ class QueryEncoder:
         if not query:
             raise ValueError("Query cannot be empty.")
 
-        with torch.no_grad():
-            embedding = self.model.encode(
-                query,
-                convert_to_numpy=True,
-                normalize_embeddings=True
-            )
+        embedding_list = self.model.embed_query(query)
+        embedding = np.array(embedding_list, dtype=np.float32)
+
+        # Ensure normalized like the original implementation
+        norm = np.linalg.norm(embedding)
+        if norm > 0:
+            embedding = embedding / norm
 
         return embedding
