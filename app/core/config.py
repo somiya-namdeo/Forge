@@ -13,6 +13,8 @@ COLLECTION_NAME = "forge_knowledge"
 
 EMBEDDING_MODEL = "BAAI/bge-base-en-v1.5"
 
+HUGGINGFACEHUB_API_TOKEN = os.getenv("HUGGINGFACEHUB_API_TOKEN")
+
 TOP_K = 5
 
 # --- Independent Dual-Groq Provider Configurations ---
