@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="frontend/public/forge-logo.png" alt="Forge Logo" width="120"/>
+  <img src="./frontend/public/forge-logo.png" alt="Forge Logo" width="120"/>
 
 # Forge
 
@@ -59,7 +59,7 @@ When building a modern AI system, engineers must choose among many alternatives:
 Forge automates this foundational architectural phase. Unlike a generic text-generation chatbot, Forge operates as a deterministic engineering co-pilot. It transforms natural language requirements into a structured Project Profile, uses Semantic Retrieval to fetch verified technology specifications from Qdrant, applies Constraint-Aware Scoring, and outputs a highly defensible Architecture Recommendation alongside explicit trade-off rationale in a structured JSON or exportable PDF report.
 
 <p align="center">
-  <img src="docs/screenshots/landing-page.png" alt="Forge Landing Page" width="900">
+  <img src="./docs/screenshots/landing-page.png" alt="Forge Landing Page" width="900">
 </p>
 
 ## Key Capabilities
@@ -97,7 +97,7 @@ Forge automates this foundational architectural phase. Unlike a generic text-gen
 ## System Architecture
 
 <p align="center">
-  <img src="docs/diagrams/architecture.svg" alt="System Architecture Diagram" width="100%">
+  <img src="./docs/diagrams/architecture.svg" alt="System Architecture Diagram" width="100%">
 </p>
 
 | Layer | Component | Responsibility |
@@ -112,7 +112,7 @@ Forge automates this foundational architectural phase. Unlike a generic text-gen
 ## End-to-End System Flow
 
 <p align="center">
-  <img src="docs/diagrams/system-flow.svg" alt="End-to-End System Flow Diagram" width="100%">
+  <img src="./docs/diagrams/system-flow.svg" alt="End-to-End System Flow Diagram" width="100%">
 </p>
 
 1. **User input**: The user enters natural-language requirements in the React frontend.
@@ -130,7 +130,7 @@ Forge automates this foundational architectural phase. Unlike a generic text-gen
 ## Request Sequence
 
 <p align="center">
-  <img src="docs/diagrams/sequence.svg" alt="Request Sequence Diagram" width="100%">
+  <img src="./docs/diagrams/sequence.svg" alt="Request Sequence Diagram" width="100%">
 </p>
 
 This sequence demonstrates the synchronous execution pipeline for the `/api/v1/decision/recommend` endpoint. The process coordinates multiple external API boundaries (Hugging Face, OpenAI) and local storage (Qdrant) to compile a deterministic response.
@@ -138,7 +138,7 @@ This sequence demonstrates the synchronous execution pipeline for the `/api/v1/d
 ## Decision Engine
 
 <p align="center">
-  <img src="docs/diagrams/decision-pipeline.svg" alt="Decision Pipeline Diagram" width="100%">
+  <img src="./docs/diagrams/decision-pipeline.svg" alt="Decision Pipeline Diagram" width="100%">
 </p>
 
 The core of Forge is the deterministic decision pipeline. Unlike LLM text generators, Forge does not rely on probability to guess an architecture. It leverages explicitly retrieved facts.
@@ -153,7 +153,7 @@ The core of Forge is the deterministic decision pipeline. Unlike LLM text genera
 ## Knowledge Base and Retrieval
 
 <p align="center">
-  <img src="docs/screenshots/knowledge-base.png" alt="Knowledge Base UI" width="900">
+  <img src="./docs/screenshots/knowledge-base.png" alt="Knowledge Base UI" width="900">
 </p>
 
 Forge stores its engineering knowledge as structured JSON schemas embedded in Qdrant across three main domains: **LLMs**, **Embeddings**, and **Vector Databases**.
@@ -163,7 +163,7 @@ The application encodes incoming profiles into 768-dimensional vectors. Rather t
 ## Data Model and Vector Storage
 
 <p align="center">
-  <img src="docs/diagrams/data-model.svg" alt="Data Model ER Diagram" width="100%">
+  <img src="./docs/diagrams/data-model.svg" alt="Data Model ER Diagram" width="100%">
 </p>
 
 Forge strictly avoids traditional relational databases (like PostgreSQL). All persistent data structures reside in Qdrant as semantic vectors with rich payload metadata, validated in memory via Pydantic schemas.
@@ -177,7 +177,7 @@ Forge strictly avoids traditional relational databases (like PostgreSQL). All pe
 ## Evaluation
 
 <p align="center">
-  <img src="docs/screenshots/evaluation.png" alt="Evaluation Dashboard" width="900">
+  <img src="./docs/screenshots/evaluation.png" alt="Evaluation Dashboard" width="900">
 </p>
 
 Forge includes an explicit synthetic evaluation engine powered by the RAGAS framework. The evaluation interface compares the Evaluation Input, Retrieved Context, Ground Truth, and Generated Answer to calculate Faithfulness and Answer Relevancy metrics, ensuring recommendations remain factually anchored to the Qdrant knowledge base.
@@ -185,7 +185,7 @@ Forge includes an explicit synthetic evaluation engine powered by the RAGAS fram
 ## Generated Architecture Report
 
 <p align="center">
-  <img src="docs/screenshots/architecture-report-1.png" alt="Architecture Report UI" width="900">
+  <img src="./docs/screenshots/architecture-report-1.png" alt="Architecture Report UI" width="900">
 </p>
 
 The backend aggregates all decision signals and technical rationales into a final structured Architecture Report. This payload includes the extracted decision signals, the selected architecture components, technical recommendations, and deep trade-off rationale. It is available directly in the frontend UI or as a raw JSON export.
@@ -193,7 +193,7 @@ The backend aggregates all decision signals and technical rationales into a fina
 ## PDF Generation
 
 <p align="center">
-  <img src="docs/screenshots/pdf-report.png" alt="PDF Report Export" width="900">
+  <img src="./docs/screenshots/pdf-report.png" alt="PDF Report Export" width="900">
 </p>
 
 Recommendations can be natively exported as a structured engineering PDF artifact. The FastAPI backend utilizes the Python `reportlab` library to programmatically draw the document based on the report payload, returning it as a binary stream for frontend download.
@@ -201,7 +201,7 @@ Recommendations can be natively exported as a structured engineering PDF artifac
 ## Deployment Architecture
 
 <p align="center">
-  <img src="docs/diagrams/deployment.svg" alt="Deployment Diagram" width="100%">
+  <img src="./docs/diagrams/deployment.svg" alt="Deployment Diagram" width="100%">
 </p>
 
 The application utilizes a decoupled microservice deployment architecture, distributing the frontend to Vercel and the backend to Render, while securely proxying external inference services (Hugging Face, OpenAI).
