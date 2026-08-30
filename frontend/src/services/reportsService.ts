@@ -1,5 +1,5 @@
 import { ArchitectureReport } from '../types';
-import { request } from './apiClient';
+import { request, API_BASE_URL } from './apiClient';
 
 export interface ReportGenerationRequest {
   decision_result?: any;
@@ -20,7 +20,7 @@ class ReportsService {
   }
 
   async triggerPrintablePdf(payload: ReportGenerationRequest, filename: string = 'forge_report.pdf'): Promise<void> {
-    const response = await fetch('http://localhost:8000/api/v1/reports/pdf', {
+    const response = await fetch(`${API_BASE_URL}/reports/pdf`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
