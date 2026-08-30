@@ -97,7 +97,7 @@ Forge automates this foundational architectural phase. Unlike a generic text-gen
 ## System Architecture
 
 <p align="center">
-  <img src="./docs/diagrams/architecture.svg" alt="System Architecture Diagram" width="100%">
+  <img src="./docs/diagrams/architecture.png" alt="System Architecture Diagram" width="100%">
 </p>
 
 | Layer | Component | Responsibility |
@@ -112,7 +112,7 @@ Forge automates this foundational architectural phase. Unlike a generic text-gen
 ## End-to-End System Flow
 
 <p align="center">
-  <img src="./docs/diagrams/system-flow.svg" alt="End-to-End System Flow Diagram" width="100%">
+  <img src="./docs/diagrams/system-flow.png" alt="End-to-End System Flow Diagram" width="100%">
 </p>
 
 1. **User input**: The user enters natural-language requirements in the React frontend.
@@ -130,7 +130,7 @@ Forge automates this foundational architectural phase. Unlike a generic text-gen
 ## Request Sequence
 
 <p align="center">
-  <img src="./docs/diagrams/sequence.svg" alt="Request Sequence Diagram" width="100%">
+  <img src="./docs/diagrams/sequence.png" alt="Request Sequence Diagram" width="100%">
 </p>
 
 This sequence demonstrates the synchronous execution pipeline for the `/api/v1/decision/recommend` endpoint. The process coordinates multiple external API boundaries (Hugging Face, OpenAI) and local storage (Qdrant) to compile a deterministic response.
@@ -138,7 +138,7 @@ This sequence demonstrates the synchronous execution pipeline for the `/api/v1/d
 ## Decision Engine
 
 <p align="center">
-  <img src="./docs/diagrams/decision-pipeline.svg" alt="Decision Pipeline Diagram" width="100%">
+  <img src="./docs/diagrams/decision-pipeline.png" alt="Decision Pipeline Diagram" width="100%">
 </p>
 
 The core of Forge is the deterministic decision pipeline. Unlike LLM text generators, Forge does not rely on probability to guess an architecture. It leverages explicitly retrieved facts.
@@ -163,7 +163,7 @@ The application encodes incoming profiles into 768-dimensional vectors. Rather t
 ## Data Model and Vector Storage
 
 <p align="center">
-  <img src="./docs/diagrams/data-model.svg" alt="Data Model ER Diagram" width="100%">
+  <img src="./docs/diagrams/data-model.png" alt="Data Model ER Diagram" width="100%">
 </p>
 
 Forge strictly avoids traditional relational databases (like PostgreSQL). All persistent data structures reside in Qdrant as semantic vectors with rich payload metadata, validated in memory via Pydantic schemas.
@@ -201,7 +201,7 @@ Recommendations can be natively exported as a structured engineering PDF artifac
 ## Deployment Architecture
 
 <p align="center">
-  <img src="./docs/diagrams/deployment.svg" alt="Deployment Diagram" width="100%">
+  <img src="./docs/diagrams/deployment.png" alt="Deployment Diagram" width="100%">
 </p>
 
 The application utilizes a decoupled microservice deployment architecture, distributing the frontend to Vercel and the backend to Render, while securely proxying external inference services (Hugging Face, OpenAI).
