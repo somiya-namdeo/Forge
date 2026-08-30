@@ -1,68 +1,54 @@
 ﻿import urllib.request
 import base64
+import re
 
 diagrams = {
-    "architecture.svg": """flowchart TB
-    U[User]
-
+    "architecture.svg": """flowchart LR
+    U[User] --> UI[Forge Web Interface]
     subgraph Frontend["Frontend"]
-        UI[Forge Web Interface]
-        INPUT[Requirement Input]
-        REPORT[Architecture Report]
+        UI
         EXPORT[JSON / PDF Export]
     end
-
     subgraph Backend["FastAPI Backend"]
         API[REST API]
         ANALYZER[Requirement Analyzer]
-        PROFILE[Project Profile]
         RETRIEVAL[Retrieval Pipeline]
-        SCORING[Decision Scoring]
+        SCORING[Decision Scoring Engine]
         REPORTING[Report Generator]
     end
-
     subgraph AI["AI Services"]
         EMB[Embedding Service]
         LLM[LLM Service / OpenAI]
     end
-
     subgraph Knowledge["Knowledge Infrastructure"]
         QDRANT[(Qdrant Vector Database)]
-        KB[Technology Knowledge Base]
     end
-
-    U --> UI
-    UI --> INPUT
-    INPUT --> API
+    UI --> API
     API --> ANALYZER
     ANALYZER --> LLM
-    LLM --> PROFILE
-    PROFILE --> RETRIEVAL
+    LLM --> RETRIEVAL
     RETRIEVAL --> EMB
     EMB --> QDRANT
-    KB --> QDRANT
     QDRANT --> RETRIEVAL
     RETRIEVAL --> SCORING
     SCORING --> LLM
     LLM --> REPORTING
-    REPORTING --> REPORT
-    REPORT --> EXPORT
-    REPORT --> UI
+    REPORTING --> EXPORT
+    EXPORT --> UI
 """,
-    "system-flow.svg": """flowchart TD
-    User([User]) -->|enters project requirements| Frontend[React Frontend]
-    Frontend -->|POST /decision/recommend| API[FastAPI]
-    API --> RA[Requirement Analyzer]
+    "system-flow.svg": """flowchart LR
+    User([User Requirements]) --> Frontend[React Frontend]
+    Frontend --> API[FastAPI Backend]
+    API --> RA[Requirement Analysis]
     RA --> PP[Project Profile]
-    PP --> ES[Embedding Generation]
-    ES -->|Hugging Face API| Vec[768-dim Vector]
-    Vec --> QD[Qdrant Semantic Retrieval]
-    QD --> CT[Candidate Technologies]
-    CT --> DS[Decision Scoring & Filtering]
-    DS --> Rec[Architecture Recommendation]
-    Rec --> AR[Architecture Report]
-    AR -->|JSON Response| Frontend
-    Frontend -->|Renders UI| User
+    PP --> ES[Query Embedding]
+    ES --> QD[Semantic Retrieval]
+    QD --> CT[Candidate Filtering]
+    CT --> DS[Decision Scoring]
+    DS --> Rec[Architecture Selection]
+    Rec --> Rationale[Rationale Generation]
+    Rationale --> AR[Architecture Report]
+    AR --> Frontend
 """,
     "sequence.svg": """sequenceDiagram
     participant U as User
@@ -116,7 +102,7 @@ diagrams = {
     ArchitectureRecommendation ||--o{ Rationale : includes
     ArchitectureRecommendation {
         string id
-        float total_confidence_score
+        float total_score
     }
     Rationale {
         string component_id
@@ -132,25 +118,32 @@ diagrams = {
     R --> QD[(Local Qdrant Data)]
 """,
     "decision-pipeline.svg": """flowchart LR
-    A[Requirements] --> B[Requirement Analysis]
-    B --> C[Project Profile]
-    C --> D[Query Embedding]
+    A[Requirement Input] --> B[Requirement Analysis]
+    B --> C[Constraint Extraction]
+    C --> D[Project Profile]
     D --> E[Semantic Retrieval]
     E --> F[Candidate Filtering]
-    F --> G[Scoring]
+    F --> G[Weighted Scoring]
     G --> H[Architecture Selection]
-    H --> I[Rationale]
-    I --> J[Report]
+    H --> I[Rationale Generation]
+    I --> J[Final Recommendation]
 """
 }
+
+import os
+os.makedirs("docs/diagrams", exist_ok=True)
 
 for filename, mmd in diagrams.items():
     b64 = base64.b64encode(mmd.encode('utf-8')).decode('utf-8')
     url = f"https://mermaid.ink/svg/{b64}"
     req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
     try:
-        with urllib.request.urlopen(req) as response, open(f"docs/diagrams/{filename}", "wb") as out_file:
-            out_file.write(response.read())
-        print(f"Downloaded {filename}")
+        with urllib.request.urlopen(req) as response:
+            svg_content = response.read().decode('utf-8')
+            # Inject solid white background to fix checkerboard transparency issues in dark mode
+            svg_content = re.sub(r'(<svg[^>]+)', r'\1 style="background-color: white;"', svg_content, count=1)
+            with open(f"docs/diagrams/{filename}", "w", encoding='utf-8') as out_file:
+                out_file.write(svg_content)
+        print(f"Downloaded and patched {filename}")
     except Exception as e:
         print(f"Failed to download {filename}: {e}")
